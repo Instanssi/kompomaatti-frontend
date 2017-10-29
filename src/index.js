@@ -1,4 +1,8 @@
 import 'regenerator-runtime/runtime';
+
+import 'moment/locale/en-GB';
+import 'moment/locale/fi';
+
 import './index.scss';
 import Vue from 'vue';
 import VueRouter from 'vue-router';
