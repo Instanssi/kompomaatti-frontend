@@ -1,0 +1,65 @@
+{
+    "session": {
+        "loginTitle": "Kirjautuminen",
+        "login": "Kirjaudu sisään",
+        "logout": "Kirjaudu ulos"
+    },
+    "nav": {
+        "login": "Kirjaudu",
+        "compos": "Kompot"
+    },
+    "user": {
+        "username": "Käyttäjätunnus",
+        "password": "Salasana"
+    },
+    "dashboard": {
+    },
+    "footer": {
+        "copyright": "(c) 2017-",
+        "toTop": "Palaa alkuun"
+    },
+    "data": {
+        "entry": {
+            "user": {
+                "title": "Käyttäjä",
+                "help": "Käyttäjä jolle teos kuuluu."
+            },
+            "compo": {
+                "title": "Kompo",
+                "help": "Kompo johon teos kuuluu."
+            },
+            "name": {
+                "title": "Nimi",
+                "help": "Teoksen nimi."
+            },
+            "description": {
+                "title": "Kuvaus",
+                "help": "Kuvaus käytetyistä tekniikoista tai muuta sanottavaa."
+            },
+            "creator": {
+                "title": "Tekijä",
+                "help": "Tekijän tai tekijäryhmän nimi."
+            },
+            "entryfile": {
+                "title": "Tiedosto",
+                "help": "Teos paketoituna."
+            },
+            "sourcefile": {
+                "title": "Lähdekoodi",
+                "help": "Paketti, jossa lähdekoodi tms. materiaali."
+            },
+            "imagefileOriginal": {
+                "title": "Kuva",
+                "help": "Edustava kuva teokselle. Ei pakollinen, mutta suositeltava."
+            },
+            "youtubeUrl": {
+                "title": "YouTube URL",
+                "help": "Linkki teoksen YouTube-videoon."
+            },
+            "disqualified": {
+                "title": "Diskattu",
+                "help": "Teos hylätty sääntöjen rikkomisen tai teknisten ongelmien takia."
+            }
+        }
+    }
+}

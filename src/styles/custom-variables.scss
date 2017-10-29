@@ -1,0 +1,86 @@
+// _no_ rules here! variables and mixins only.
+
+$body-color: #111;
+$text-muted: #444;
+
+$body-bg: #f4f4f4;
+$brand-primary: #00a8ff;
+
+$spacer: 10px;
+
+// Implement Bootstrap 4-ish grid and breakpoints.
+$grid-breakpoints: (xs: 0, sm: 576px, lg: 992px, xl: 1200px);
+$spacers: (
+    0: 0,
+    1: ($spacer * .25),
+    2: ($spacer * .5),
+    3: $spacer,
+    4: ($spacer * 1.5),
+    5: ($spacer * 3),
+);
+
+$theme-colors: (
+    primary: $brand-primary,
+    secondary: #FFFFFF,
+);
+@function theme-color($key: 'primary') {
+    @return map-get($theme-colors, $key);
+}
+
+$font-family-sans-serif:
+    // Safari for OS X and iOS (San Francisco)
+    -apple-system,
+    // Chrome >= 56 for OS X (San Francisco), Windows, Linux and Android
+    system-ui,
+    // Chrome < 56 for OS X (San Francisco)
+    BlinkMacSystemFont,
+    // Windows
+    "Segoe UI",
+    // Android
+    "Roboto",
+    // Basic web fallback
+    "Helvetica Neue", Arial, sans-serif !default;
+
+// Bootstrap 4 reboot compatibility
+$grid-columns: 12;
+
+/*
+@mixin hover {
+    &:hover {
+        @content;
+    }
+}
+@mixin hover-focus {
+    &:focus,
+    &:hover {
+        @content;
+    }
+}
+@mixin plain-hover-focus {
+    &,
+    &:focus,
+    &:hover {
+        @content;
+    }
+}
+
+@mixin hover-focus-active {
+    &:focus,
+    &:active,
+    &:hover {
+        @content;
+    }
+}*/
+
+$font-family-base: $font-family-sans-serif;
+$font-size-base: 16px;
+$font-weight-base: 400;
+$line-height-base: 1.5;
+$paragraph-margin-bottom: $spacer;
+$dt-font-weight: 600;
+$link-color: $brand-primary;
+$link-decoration: none;
+$link-hover-color: lighten($brand-primary, 5%);
+$link-hover-decoration: underline;
+
+$table-cell-padding: $spacer;

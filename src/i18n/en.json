@@ -1,0 +1,27 @@
+{
+    "session": {
+        "loginTitle": "Log in",
+        "login": "Log in",
+        "logout": "Log out"
+    },
+    "nav": {
+        "login": "Log in",
+        "compos": "Compos",
+        "events": "Events"
+    },
+    "user": {
+        "username": "User name",
+        "password": "Password"
+    },
+    "events": {
+        "title": "Events"
+    },
+    "event": {
+        "compos": "Compos",
+        "competitions": "Competitions"
+    },
+    "footer": {
+        "copyright": "(c) 2017-",
+        "toTop": "Back to top"
+    }
+}

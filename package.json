@@ -1,0 +1,45 @@
+{
+    "name": "kompomaatti-frontend",
+    "author": "Tommi Teistelä <totateis@gmail.com>",
+    "license": "MIT",
+    "scripts": {
+        "build": "cross-env NODE_ENV=production webpack",
+        "build:analyze": "cross-env NODE_ENV=production BUNDLE_ANALYZER=1 webpack",
+        "start": "cross-env NODE_ENV=development webpack-dev-server",
+        "test": "cross-env NODE_ENV=test jest --env=jsdom",
+        "clean": "rimraf build"
+    },
+    "dependencies": {
+        "bootstrap-sass": "~3.3.7",
+        "lodash": "~4.17.4",
+        "moment": "^2.18.1",
+        "qs": "~6.5.1",
+        "regenerator-runtime": "~0.11.0",
+        "vue": "~2.4.4",
+        "vue-router": "~2.7.0"
+    },
+    "devDependencies": {
+        "babel-core": "~6.26.0",
+        "babel-eslint": "~8.0.1",
+        "babel-loader": "~7.1.2",
+        "babel-plugin-syntax-dynamic-import": "^6.18.0",
+        "babel-plugin-transform-class-properties": "^6.24.1",
+        "babel-plugin-transform-object-rest-spread": "^6.26.0",
+        "babel-preset-env": "~1.6.0",
+        "cross-env": "~5.0.5",
+        "css-loader": "~0.28.7",
+        "extract-text-webpack-plugin": "~3.0.0",
+        "file-loader": "~0.11.2",
+        "html-loader": "~0.5.1",
+        "html-webpack-plugin": "~2.30.1",
+        "jest": "~21.1.0",
+        "node-sass": "~4.5.3",
+        "raw-loader": "~0.5.1",
+        "rimraf": "~2.6.2",
+        "sass-loader": "~6.0.6",
+        "style-loader": "~0.18.2",
+        "webpack": "~3.6.0",
+        "webpack-bundle-analyzer": "~2.9.0",
+        "webpack-dev-server": "~2.8.2"
+    }
+}
