@@ -22,6 +22,9 @@
         "competitions": "Kilpailut",
         "programme": "Ohjelma"
     },
+    "events": {
+        "title": "Tapahtumat"
+    },
     "footer": {
         "copyright": "(c) 2017-",
         "toTop": "Palaa alkuun"
