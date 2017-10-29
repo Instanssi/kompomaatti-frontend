@@ -9,6 +9,14 @@ export default class BaseAPI {
         this.config = config || {};
     }
 
+    list(args) {
+        return this.fetch('GET', this.url, args);
+    }
+
+    get(id) {
+        return this.fetch('GET', this.url + id + '/');
+    }
+
     /**
      * Make a HTTP request.
      * @param {string} method - HTTP method to use, if applicable

@@ -6,13 +6,21 @@
     },
     "nav": {
         "login": "Kirjaudu",
-        "compos": "Kompot"
+        "compos": "Kompot",
+        "events": "Tapahtumat"
     },
     "user": {
         "username": "Käyttäjätunnus",
         "password": "Salasana"
     },
-    "dashboard": {
+    "list": {
+        "noResults": "Ei hakutuloksia.",
+        "pagination": "Näytetään {{ first }}-{{ last }}. Yhteensä {{ total }}."
+    },
+    "event": {
+        "compos": "Kompot",
+        "competitions": "Kilpailut",
+        "programme": "Ohjelma"
     },
     "footer": {
         "copyright": "(c) 2017-",

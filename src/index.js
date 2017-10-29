@@ -8,6 +8,7 @@ import routes from './views';
 import globalState from 'src/state';
 import i18nComponents from 'src/common/i18n';
 import layoutComponents from 'src/layout';
+import listComponents from 'src/common/list';
 
 console.info('Starting app with routes:', routes);
 
@@ -22,6 +23,10 @@ Vue.filter('translate', function(value) {
     return globalState.translate(value);
 });
 
+Object.keys(listComponents).forEach(key => {
+    Vue.component(key, listComponents[key]);
+});
+
 /* eslint-disable no-unused-vars */
 const app = new Vue({
     el: '#app',
@@ -29,6 +34,7 @@ const app = new Vue({
     components: {
         ...i18nComponents,
         ...layoutComponents,
+        ...listComponents,
     },
     data: {
         globalState,

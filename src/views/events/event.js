@@ -3,6 +3,7 @@ import Time from 'src/common/time';
 
 import eventCompos from './event-compos';
 import eventCompetitions from './event-competitions';
+import eventProgramme from './event-programme';
 
 import template from './event.html';
 
@@ -13,6 +14,7 @@ const EventView = {
         ...Time,
         eventCompos,
         eventCompetitions,
+        eventProgramme
     },
     data: () => ({
         globalState,

@@ -13,12 +13,17 @@
         "username": "User name",
         "password": "Password"
     },
+    "list": {
+        "noResults": "Nothing found.",
+        "pagination": "Displaying {{ first }}-{{ last }} out of {{ total }}."
+    },
     "events": {
         "title": "Events"
     },
     "event": {
         "compos": "Compos",
-        "competitions": "Competitions"
+        "competitions": "Competitions",
+        "programme": "Programme"
     },
     "footer": {
         "copyright": "(c) 2017-",

@@ -1,3 +1,4 @@
 <ul>
     <li v-for="competition in competitions">{{ competition.name }}</li>
+    <i-no-results v-if="!competitions.length" />
 </ul>

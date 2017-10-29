@@ -52,7 +52,7 @@ const config = {
                 }
             },
             {
-                test: /\.(png|jpg|jpeg|svg)$/,
+                test: /\.(png|jpg|jpeg|svg|ttf|otf|woff|woff2)$/,
                 loader: 'file-loader',
             }
         ]
