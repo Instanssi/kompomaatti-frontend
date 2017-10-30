@@ -29,6 +29,33 @@
         "copyright": "(c) 2017-",
         "toTop": "Palaa alkuun"
     },
+    "compo": {
+        "entries": "Teokset",
+        "description": "Kuvaus"
+    },
+    "dashboard": {
+        "welcome": "Tervetuloa Kompomaattiin, Instanssin viralliseen kompojärjestelmään!",
+        "notLoggedIn": "Et ole kirjautunut sisään. Jos haluat äänestää tai osallistua, kirjaudu pääsivuston puolella.",
+        "events": {
+            "title": "Tapahtumat",
+            "empty": "Ei tapahtumia menossa.",
+            "viewAll": "Selaa tapahtumia"
+        },
+        "programme": {
+            "title": "Ohjelma",
+            "empty": "Ei mitään käynnissä tällä hetkellä.",
+            "viewAll": "Selaa ohjelmaa"
+        },
+        "compos": {
+            "title": "Kompot",
+            "empty": "Ei aktiivisia kompoja.",
+            "viewMy": "Näytä omat"
+        },
+        "competitions": {
+            "title": "Kilpailut",
+            "empty": "Ei aktiivisia kilpailuja."
+        }
+    },
     "data": {
         "entry": {
             "user": {

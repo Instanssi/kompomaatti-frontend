@@ -15,6 +15,7 @@
         "no-unused-vars": [2, {
             "argsIgnorePattern": "^_[A-Za-z0-9]+$",
             "args": "all"
-        }]
+        }],
+        "semi": 2
     }
 }

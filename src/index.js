@@ -38,7 +38,6 @@ const app = new Vue({
     components: {
         ...i18nComponents,
         ...layoutComponents,
-        ...listComponents,
     },
     data: {
         globalState,

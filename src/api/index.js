@@ -2,15 +2,7 @@ import BaseAPI from './base';
 
 class SessionAPI extends BaseAPI {
     constructor(baseUrl, config) {
-        super(baseUrl + '/session/', config);
-    }
-
-    login(request) {
-        return this.fetch('POST', this.url, null, request);
-    }
-
-    logout() {
-        return this.fetch('DELETE', this.url);
+        super(baseUrl + '/user/', config);
     }
 
     checkSession() {
@@ -40,9 +32,25 @@ class ProgrammeAPI extends BaseAPI {
     constructor(baseUrl, config) {
         super(baseUrl + '/programme_events/', config);
     }
-
 }
 
+class CompoEntriesAPI extends BaseAPI {
+    constructor(baseUrl, config) {
+        super(baseUrl + '/compo_entries/', config);
+    }
+}
+
+class CompetitionParticipationsAPI extends BaseAPI {
+    constructor(baseUrl, config) {
+        super(baseUrl + '/competition_participations/', config);
+    }
+}
+
+class SongsAPI extends BaseAPI {
+    constructor(baseUrl, config) {
+        super(baseUrl + '/songs/', config);
+    }
+}
 /**
  * Abstracts backend endpoints.
  */
@@ -53,5 +61,8 @@ export default class InstanssiREST {
         this.compos = new ComposAPI(baseUrl, config);
         this.competitions = new CompetitionsAPI(baseUrl, config);
         this.programme = new ProgrammeAPI(baseUrl, config);
+        this.compoEntries = new CompoEntriesAPI(baseUrl, config);
+        this.competitionParticipations = new CompetitionParticipationsAPI(baseUrl, config);
+        this.songs = new SongsAPI(baseUrl, config);
     }
 }

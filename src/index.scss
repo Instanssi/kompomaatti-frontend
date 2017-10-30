@@ -1,5 +1,10 @@
 @import 'styles/bootstrap';
 
+body {
+    // if we don't use Bootstrap modals, this should avoid some bouncing.
+    overflow-y: scroll;
+}
+
 .app-wrap {
     min-height: 100vh;
     display: flex;

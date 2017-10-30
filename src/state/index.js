@@ -4,7 +4,7 @@ import i18n from '../i18n';
 
 
 // TODO: Add config file for this. Currently proxied through webpack dev server.
-const api = new InstanssiREST('/api');
+const api = new InstanssiREST('/api/v1');
 window._api = api;
 
 /**

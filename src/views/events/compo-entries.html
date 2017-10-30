@@ -1,0 +1,7 @@
+<ul>
+    <li v-for="entry in entries">
+        <router-link :to="getEntryPath(entry)">
+            {{ entry.name }}
+        </router-link> - {{ entry.creator }}
+    </li>
+</ul>

@@ -17,6 +17,9 @@ export default {
         async refresh() {
             const { api } = this.globalState;
             this.compos = await api.compos.list({ event: this.eventId });
+        },
+        getCompoPath(compo) {
+            return this.$route.path + '/compos/' + compo.id;
         }
     }
 };

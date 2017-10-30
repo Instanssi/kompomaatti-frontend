@@ -17,6 +17,33 @@
         "noResults": "Nothing found.",
         "pagination": "Displaying {{ first }}-{{ last }} out of {{ total }}."
     },
+    "compo": {
+        "description": "Description",
+        "entries": "Entries"
+    },
+    "dashboard": {
+        "welcome": "Welcome to Kompomaatti, the official compo management system of Instanssi.org!",
+        "notLoggedIn": "You are not logged in. To vote or participate in events, log in at the main Instanssi site first.",
+        "events": {
+            "title": "Events",
+            "empty": "No ongoing events.",
+            "viewAll": "View all events"
+        },
+        "programme": {
+            "title": "Programme",
+            "empty": "Nothing going on at the moment.",
+            "viewAll": "View full programme"
+        },
+        "compos": {
+            "title": "Compos",
+            "empty": "No compos going on right now.",
+            "viewMy": "View my entries"
+        },
+        "competitions": {
+            "title": "Competitions",
+            "empty": "No competitions available."
+        }
+    },
     "events": {
         "title": "Events"
     },

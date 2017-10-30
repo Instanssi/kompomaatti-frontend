@@ -1,0 +1,17 @@
+<div class="event-compo">
+    <div class="compo-title" v-if="compo">
+        <h2>{{ compo.name }}</h2>
+        <p><i-time :value="compo.compo_start" /></p>
+    </div>
+    <div class="compo-description" v-if="compo">
+        <h3>{{ 'compo.description' | translate }}</h3>
+        <div v-html="compo.description" />
+    </div>
+    <div class="compo-entries" v-if="compo">
+        <h3>{{ 'compo.entries' | translate }}</h3>
+        <compo-entries :compo-id="compo.id" />
+    </div>
+    <div class="compo-results" v-if="compo">
+
+    </div>
+</div>
