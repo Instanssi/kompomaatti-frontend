@@ -84,3 +84,21 @@ $link-hover-color: lighten($brand-primary, 5%);
 $link-hover-decoration: underline;
 
 $table-cell-padding: $spacer;
+
+// bootstrap 3 compatibility
+
+// Just override every 15px-ish value with $spacer for consistency
+$grid-gutter-width: ($spacer * 2);
+$modal-inner-padding: $spacer;
+$modal-title-padding: $spacer;
+$alert-padding: $spacer;
+$panel-body-padding: $spacer;
+$panel-heading-padding: $spacer;
+$breadcrumb-padding-vertical: ($spacer / 2);
+$breadcrumb-padding-horizontal: $spacer;
+$form-group-margin-bottom: $spacer;
+$nav-link-padding: ($spacer * 0.5) $spacer;
+$pager-border-radius: $spacer;
+
+// nice and blocky
+$border-radius-base: 0;

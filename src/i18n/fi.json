@@ -45,7 +45,7 @@
             },
             "description": {
                 "title": "Kuvaus",
-                "help": "Kuvaus käytetyistä tekniikoista tai muuta sanottavaa."
+                "help": "Kuvaus käytetyistä tekniikoista, selityksiä tai muuta sanottavaa."
             },
             "creator": {
                 "title": "Tekijä",

@@ -11,15 +11,27 @@
     }
 }
 
+.p-3 {
+    padding: $spacer;
+}
+
+.app-wrap {
+    background: #fff;
+}
+@mixin bg-brand() {
+    background: theme-color();
+    color: #fff;
+}
+.bg-brand {
+    @include bg-brand;
+}
+
 /*
 @mixin shadow-box() {
     box-shadow: rgba(#000, .25) 0 0 20px;
 }
 
-@mixin bg-brand() {
-    background: theme-color();
-    color: #fff;
-}
+
 @mixin bg-brand-interactive() {
     @include bg-brand();
     &:hover, &:active {
@@ -67,9 +79,6 @@ button {
     border: 0;
 }
 
-.bg-brand {
-    @include bg-brand;
-}
 
 nav h1 {
     font-size: inherit;
