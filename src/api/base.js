@@ -31,6 +31,7 @@ export default class BaseAPI {
         return _fetch(this.encodeQuery(url, query), {
             method,
             body: this.encodePayload(payload),
+            credentials: 'include',
         }).then(res => this.handleResponse(res),
         ).catch(err => this.handleError(err));
     }
