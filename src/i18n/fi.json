@@ -15,7 +15,7 @@
     },
     "list": {
         "noResults": "Ei hakutuloksia.",
-        "pagination": "Näytetään {{ first }}-{{ last }}. Yhteensä {{ total }}."
+        "pagination": "Näytetään ${ first }-${ last }. Yhteensä ${ total }."
     },
     "event": {
         "compos": "Kompot",

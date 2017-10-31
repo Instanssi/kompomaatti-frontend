@@ -25,8 +25,8 @@ Vue.use(VueRouter);
 Vue.component('i-tl', i18nComponents['i-tl']);
 
 // Same for the translation filter.
-Vue.filter('translate', function(value) {
-    return globalState.translate(value);
+Vue.filter('translate', function(key, values) {
+    return globalState.translate(key, values);
 });
 
 Object.keys(listComponents).forEach(key => {

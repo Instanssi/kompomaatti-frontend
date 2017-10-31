@@ -1,4 +1,5 @@
 import _get from 'lodash/get';
+import _template from 'lodash/template';
 import InstanssiREST from '../api';
 import i18n from '../i18n';
 
@@ -10,6 +11,22 @@ const api = new InstanssiREST(config.API_URL);
 if(process.env.NODE_ENV === 'development') {
     window._api = api;
 }
+
+
+
+
+
+
+
+
+//FIXME: Save language in localstorage for now
+
+
+
+
+
+
+
 
 /**
  * @typedef {object} LoginRequest
@@ -62,9 +79,13 @@ class GlobalState {
      * @param {object} [values] - Optional arguments for translation (spec pending)
      * @returns {string} - Translated text
      */
-    translate(name, _values) {
-        // TODO: Implement values (translation args), pluralisation, etc.
-        return _get(this.translation, name, name);
+    translate(name, values) {
+        const text = _get(this.translation, name, name);
+        // TODO: Spec pluralisation, etc.
+        if(values) {
+            return _template(text)(values);
+        }
+        return text;
     }
 
     /**
