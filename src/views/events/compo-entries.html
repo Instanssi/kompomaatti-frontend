@@ -1,5 +1,6 @@
 <ul>
-    <li v-for="entry in entries">
+    <li v-for="entry in allEntriesSorted">
+        {{ entry.rank ? entry.rank + '. ' : '' }}
         <router-link :to="getEntryPath(entry)">
             {{ entry.name }}
         </router-link> - {{ entry.creator }}

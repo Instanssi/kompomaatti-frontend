@@ -4,10 +4,6 @@ class SessionAPI extends BaseAPI {
     constructor(baseUrl, config) {
         super(baseUrl + '/user/', config);
     }
-
-    checkSession() {
-        return this.fetch('GET', this.url);
-    }
 }
 
 class EventsAPI extends BaseAPI {
@@ -56,7 +52,7 @@ class SongsAPI extends BaseAPI {
  */
 export default class InstanssiREST {
     constructor(baseUrl, config) {
-        this.session = new SessionAPI(baseUrl, config);
+        this.currentUser = new SessionAPI(baseUrl, config);
         this.events = new EventsAPI(baseUrl, config);
         this.compos = new ComposAPI(baseUrl, config);
         this.competitions = new CompetitionsAPI(baseUrl, config);
