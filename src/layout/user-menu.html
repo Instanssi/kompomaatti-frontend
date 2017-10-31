@@ -1,7 +1,6 @@
 <li>
-    <!-- FIXME: Just add a separate menu for this. -->
-    <router-link to="/login" v-if="!hasUser">
-        <a href="#">{{ 'nav.login' | translate }}</a>
-    </router-link>
-    <a href="/users/profile" v-if="user">{{ user.email }}</a>
+    <a href="/users/login" v-if="!hasUser">
+        {{ 'nav.login' | translate }}
+    </a>
+    <a href="/users/profile" v-if="hasUser">{{ user.email }}</a>
 </li>

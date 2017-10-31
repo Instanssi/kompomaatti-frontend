@@ -2,13 +2,14 @@ import _get from 'lodash/get';
 import InstanssiREST from '../api';
 import i18n from '../i18n';
 
+import config from 'src/config';
 
-// TODO: Add config file for this. Currently proxied through webpack dev server.
-const api = new InstanssiREST('/api/v1');
-const DEFAULT_LANGUAGE_CODE = 'en';
+const { DEFAULT_LOCALE } = config;
+const api = new InstanssiREST(config.API_URL);
 
-window._api = api;
-
+if(process.env.NODE_ENV === 'development') {
+    window._api = api;
+}
 
 /**
  * @typedef {object} LoginRequest
@@ -17,7 +18,7 @@ window._api = api;
 */
 
 const anon = {
-    language: DEFAULT_LANGUAGE_CODE,
+    language: DEFAULT_LOCALE,
 };
 
 class GlobalState {
@@ -48,11 +49,11 @@ class GlobalState {
 
     get momentLocale() {
         // TODO: Are lang codes always the same as moment locales?
-        return this.user.language || DEFAULT_LANGUAGE_CODE;
+        return this.user.language || DEFAULT_LOCALE;
     }
 
     get languageCode() {
-        return this.user.language || DEFAULT_LANGUAGE_CODE;
+        return this.user.language || DEFAULT_LOCALE;
     }
 
     /**
@@ -107,7 +108,7 @@ class GlobalState {
             }
         } else {
             console.warn('No translation:', code);
-            return DEFAULT_LANGUAGE_CODE;
+            return DEFAULT_LOCALE;
         }
         return code;
     }
