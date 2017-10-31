@@ -26,6 +26,9 @@ body {
 @mixin bg-brand() {
     background: theme-color();
     color: #fff;
+    a {
+        color: #fff;
+    }
 }
 .bg-brand {
     @include bg-brand;

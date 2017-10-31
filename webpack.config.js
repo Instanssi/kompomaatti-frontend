@@ -2,13 +2,14 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const getBuildId = require('./scripts/build-id');
 
 const NODE_ENV = process.env.NODE_ENV;
 const PRODUCTION_BUILD = NODE_ENV === 'production';
 
 // Remove (chunk)hashes from names in non-production build to stop dev-server from
 // caching a new bundle every time something is changed.
-const namePattern = name => PRODUCTION_BUILD ? name : name.replace(/\.\[(?:chunk)?hash\]/, '')
+const namePattern = name => PRODUCTION_BUILD ? name : name.replace(/\.\[(?:chunk)?hash\]/, '');
 
 const config = {
     entry: 'src/index.js',
@@ -63,7 +64,8 @@ const config = {
         }),
         new ExtractTextPlugin(namePattern('res/[name].[hash].css')),
         new webpack.DefinePlugin({
-            'process.env.NODE_ENV': JSON.stringify(NODE_ENV)
+            'process.env.NODE_ENV': JSON.stringify(NODE_ENV),
+            'process.env.BUILD_ID': JSON.stringify(getBuildId()),
         }),
         new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     ]

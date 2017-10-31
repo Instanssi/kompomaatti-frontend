@@ -16,6 +16,8 @@ import listComponents from 'src/common/list';
 
 console.info('Starting app with routes:', routes);
 
+window.BUILD_ID = process.env.BUILD_ID;
+
 const router = new VueRouter({ routes });
 Vue.use(VueRouter);
 
