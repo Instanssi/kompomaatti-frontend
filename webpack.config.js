@@ -113,12 +113,12 @@ if(PRODUCTION_BUILD) {
         host: '0.0.0.0',
         // proxy the local Instanssi server to get around CORS issues
         proxy: {
-            '/api': {
-                target: 'http://localhost:8000'
+            '/': {
+                target: 'http://localhost:8000',
             }
-        }
-    }
-
+        },
+        publicPath: '/kompomaatti/',
+    };
 }
 
 module.exports = config;
