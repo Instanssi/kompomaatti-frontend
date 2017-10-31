@@ -58,14 +58,18 @@ class GlobalState {
 
     /**
      * This should be the only place where we access the translations.
+     * @param {string} name - Translation name, e.g. 'user.firstName'
+     * @param {object} [values] - Optional arguments for translation (spec pending)
+     * @returns {string} - Translated text
      */
-    translate(name, values) {
+    translate(name, _values) {
         // TODO: Implement values (translation args), pluralisation, etc.
         return _get(this.translation, name, name);
     }
 
     /**
      * Check for existing session, assign user, fetch translations before continuing.
+     * @returns {Promise.<object>} - User profile after session check
      */
     async continueSession() {
         return this._setUser(await api.currentUser.get());
@@ -94,8 +98,8 @@ class GlobalState {
     }
 
     /**
-     * Try to switch the current language.
-     * Returns whatever code matched closely enough (e.g. 'en' may map to 'en-GB').
+     * Try to find a matching language and switch to it.
+     * Returns whatever matched closely enough (e.g. 'en' may map to 'en-GB').
      */
     async _findLanguage(code) {
         const getTranslation = i18n[code];

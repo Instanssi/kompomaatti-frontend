@@ -39,7 +39,7 @@ const LanguageSwitch = {
         options: () => Object.keys(i18n),
         current: () => globalState.languageCode,
     },
-    template: '<select :value="current" @change="setLanguage"><option v-for="option in options" :value="option">{{option}}</option></select>',
+    template: '<select class="form-control" :value="current" @change="setLanguage"><option v-for="option in options" :value="option">{{option}}</option></select>',
 }
 
 // TODO: Can we declare a custom Vue v-prop that localizes element props?
