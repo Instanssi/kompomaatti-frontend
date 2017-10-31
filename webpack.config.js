@@ -109,6 +109,9 @@ if(PRODUCTION_BUILD) {
 } else {
     config.devtool = 'source-map';
     config.devServer = {
+        // default is 'localhost', but this is easier to demo
+        host: '0.0.0.0',
+        // proxy the local Instanssi server to get around CORS issues
         proxy: {
             '/api': {
                 target: 'http://localhost:8000'
