@@ -5,7 +5,10 @@ import i18n from '../i18n';
 
 // TODO: Add config file for this. Currently proxied through webpack dev server.
 const api = new InstanssiREST('/api/v1');
+const DEFAULT_LANGUAGE_CODE = 'en';
+
 window._api = api;
+
 
 /**
  * @typedef {object} LoginRequest
@@ -14,7 +17,7 @@ window._api = api;
 */
 
 const anon = {
-    language: 'en',
+    language: DEFAULT_LANGUAGE_CODE,
 };
 
 class GlobalState {
@@ -39,16 +42,17 @@ class GlobalState {
         setInterval(() => {
             this.currentTime = new Date().valueOf();
         }, 500);
-        this._useLanguage(this.languageCode);
+        this._findLanguage(this.languageCode);
+        this.continueSession();
     }
 
     get momentLocale() {
         // TODO: Are lang codes always the same as moment locales?
-        return this.user.language;
+        return this.user.language || DEFAULT_LANGUAGE_CODE;
     }
 
     get languageCode() {
-        return this.user.language;
+        return this.user.language || DEFAULT_LANGUAGE_CODE;
     }
 
     /**
@@ -60,30 +64,10 @@ class GlobalState {
     }
 
     /**
-     * Try to log in.
-     * @param {LoginRequest} request
-     */
-    async login(request) {
-        return this._setUser(await api.session.login(request));
-    }
-
-    async logout() {
-        try {
-            await api.session.logout();
-            this._setUser(Object.assign({}, anon));
-        } catch(e) {
-            // bleh
-            console.warn('logout failed:', e);
-            throw e;
-        }
-
-    }
-
-    /**
      * Check for existing session, assign user, fetch translations before continuing.
      */
     async continueSession() {
-        return this._setUser(await api.session.continue());
+        return this._setUser(await api.currentUser.get());
     }
 
     /**
@@ -93,8 +77,8 @@ class GlobalState {
     async setUserLanguage(languageCode) {
         // FIXME: Update user remote profile if non-anon (= has id)
         // console.debug('setting user language to:', languageCode);
-        this.user.language = languageCode;
-        return this._useLanguage(this.user.language);
+        this.user.language = this._findLanguage(languageCode);
+        return ;
     }
 
     /**
@@ -104,11 +88,15 @@ class GlobalState {
      */
     async _setUser(user) {
         this.user = user;
-        await this._useLanguage(user.language);
+        user.language = await this._findLanguage(user.language);
         return user;
     }
 
-    async _useLanguage(code) {
+    /**
+     * Try to switch the current language.
+     * Returns whatever code matched closely enough (e.g. 'en' may map to 'en-GB').
+     */
+    async _findLanguage(code) {
         const getTranslation = i18n[code];
         if(getTranslation) {
             try {
@@ -119,7 +107,9 @@ class GlobalState {
             }
         } else {
             console.warn('No translation:', code);
+            return DEFAULT_LANGUAGE_CODE;
         }
+        return code;
     }
 }
 

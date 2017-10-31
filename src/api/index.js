@@ -2,7 +2,11 @@ import BaseAPI from './base';
 
 class SessionAPI extends BaseAPI {
     constructor(baseUrl, config) {
-        super(baseUrl + '/user/', config);
+        super(baseUrl + '/current_user/', config);
+    }
+
+    get() {
+        return this.fetch('GET', this.url);
     }
 }
 
