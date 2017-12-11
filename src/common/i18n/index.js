@@ -1,8 +1,14 @@
 import globalState from 'src/state';
 import i18n from 'src/i18n';
 
+
+const TRANSLATION_NAMES = {
+    fi: 'Suomi',
+    en: 'English'
+};
+
 /**
- * Emits a tra
+ * Emits a translated span.
  */
 const Translate = {
     props: {
@@ -36,10 +42,10 @@ const LanguageSwitch = {
         }
     },
     computed: {
-        options: () => Object.keys(i18n),
+        options: () => Object.keys(i18n).map(value => ({ value, label: TRANSLATION_NAMES[value]})),
         current: () => globalState.languageCode,
     },
-    template: '<select class="form-control" :value="current" @change="setLanguage"><option v-for="option in options" :value="option">{{option}}</option></select>',
+    template: '<select class="form-control" :value="current" @change="setLanguage"><option v-for="option in options" :value="option.value">{{option.label}}</option></select>',
 }
 
 // TODO: Can we declare a custom Vue v-prop that localizes element props?
