@@ -1,6 +1,6 @@
 import 'regenerator-runtime/runtime';
 
-import 'moment/locale/en-GB';
+import 'moment/locale/en-gb';
 import 'moment/locale/fi';
 
 import './index.scss';

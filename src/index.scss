@@ -6,6 +6,7 @@ body {
 }
 
 .app-wrap {
+    background: #fff;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -20,9 +21,6 @@ body {
     padding: $spacer;
 }
 
-.app-wrap {
-    background: #fff;
-}
 @mixin bg-brand() {
     background: theme-color();
     color: #fff;
@@ -32,6 +30,10 @@ body {
 }
 .bg-brand {
     @include bg-brand;
+}
+
+.navbar {
+    margin-bottom: 0;
 }
 
 /*

@@ -1,5 +1,13 @@
 import BaseAPI from './base';
-import { IUser } from 'src/api/models';
+import {
+    IUser,
+    IEvent,
+    ICompo,
+    ICompetition,
+    IProgrammeEvent,
+    ICompoEntry,
+    ICompetitionParticipation,
+} from 'src/api/models';
 
 class SessionAPI extends BaseAPI<IUser> {
     constructor(baseUrl, config) {
@@ -11,37 +19,37 @@ class SessionAPI extends BaseAPI<IUser> {
     }
 }
 
-class EventsAPI extends BaseAPI {
+class EventsAPI extends BaseAPI<IEvent> {
     constructor(baseUrl, config) {
         super(baseUrl + '/events/', config);
     }
 }
 
-class ComposAPI extends BaseAPI {
+class ComposAPI extends BaseAPI<ICompo> {
     constructor(baseUrl, config) {
         super(baseUrl + '/compos/', config);
     }
 }
 
-class CompetitionsAPI extends BaseAPI {
+class CompetitionsAPI extends BaseAPI<ICompetition> {
     constructor(baseUrl, config) {
         super(baseUrl + '/competitions/', config);
     }
 }
 
-class ProgrammeAPI extends BaseAPI {
+class ProgrammeAPI extends BaseAPI<IProgrammeEvent> {
     constructor(baseUrl, config) {
         super(baseUrl + '/programme_events/', config);
     }
 }
 
-class CompoEntriesAPI extends BaseAPI {
+class CompoEntriesAPI extends BaseAPI<ICompoEntry> {
     constructor(baseUrl, config) {
         super(baseUrl + '/compo_entries/', config);
     }
 }
 
-class CompetitionParticipationsAPI extends BaseAPI {
+class CompetitionParticipationsAPI extends BaseAPI<ICompetitionParticipation> {
     constructor(baseUrl, config) {
         super(baseUrl + '/competition_participations/', config);
     }
