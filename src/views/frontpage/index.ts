@@ -1,7 +1,10 @@
+import Vue from 'vue';
+
 import template from './frontpage.html';
 import globalState from 'src/state';
 
-const FrontpageView = {
+
+const FrontpageView = Vue.extend({
     template,
     data: () => ({
         globalState,
@@ -11,7 +14,7 @@ const FrontpageView = {
             return globalState.user;
         }
     }
-};
+});
 
 export default [
     { path: '/', component: FrontpageView },

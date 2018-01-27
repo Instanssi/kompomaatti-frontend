@@ -1,9 +1,12 @@
+import Vue from 'vue';
 import _orderBy from 'lodash/orderBy';
+
 import globalState from 'src/state';
-import template from './events.html';
+
+import template from './events-view.html';
 
 
-const EventsView = {
+export default Vue.extend({
     template,
     data: () => ({
         globalState,
@@ -26,6 +29,4 @@ const EventsView = {
             this.isLoading = false;
         }
     }
-};
-
-export default EventsView;
+});

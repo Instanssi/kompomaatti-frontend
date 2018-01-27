@@ -1,14 +1,17 @@
+import Vue from 'vue';
+
 import globalState from 'src/state';
 import Time from 'src/common/time';
 
-import eventCompos from './event-compos';
-import eventCompetitions from './event-competitions';
-import eventProgramme from './event-programme';
+import eventCompos from '../EventCompos';
+import eventCompetitions from '../EventCompetitions';
+import eventProgramme from '../EventProgramme';
 
 import template from './event-overview.html';
+import { IEvent, PrimaryKey } from 'src/api/models';
 
 
-const EventView = {
+export default Vue.extend({
     template,
     components: {
         ...Time,
@@ -19,13 +22,13 @@ const EventView = {
     data: () => ({
         globalState,
         isLoading: false,
-        event: null,
+        event: null as (IEvent | null),
     }),
     created() {
         this.refresh();
     },
     computed: {
-        eventId() {
+        eventId(): PrimaryKey {
             const { id } = this.$route.params;
             return Number.parseInt(id, 10)
         }
@@ -46,6 +49,4 @@ const EventView = {
             this.isLoading = false;
         }
     }
-};
-
-export default EventView;
+});

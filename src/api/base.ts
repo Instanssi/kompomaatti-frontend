@@ -1,4 +1,5 @@
 import qs from 'qs';
+import { PrimaryKey } from 'src/api/models';
 
 /**
  * Common code for accessing web services.
@@ -12,11 +13,11 @@ export default class BaseAPI <ItemType = any> {
         this.config = config || {};
     }
 
-    list(args): Promise<ItemType[]> {
+    list(args?): Promise<ItemType[]> {
         return this.fetch('GET', this.url, args);
     }
 
-    get(id): Promise<ItemType> {
+    get(id: PrimaryKey): Promise<ItemType> {
         return this.fetch('GET', this.url + id + '/');
     }
 
@@ -46,7 +47,7 @@ export default class BaseAPI <ItemType = any> {
      * @param {object} [query] - Query "payload"
      * @returns {string} - URL, with encoded payload if possible
      */
-    encodeQuery(url, query) {
+    encodeQuery(url, query?) {
         if(!query) {
             return url;
         }

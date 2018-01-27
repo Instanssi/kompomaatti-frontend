@@ -12,7 +12,7 @@ const PRODUCTION_BUILD = NODE_ENV === 'production';
 const namePattern = name => PRODUCTION_BUILD ? name : name.replace(/\.\[(?:chunk)?hash\]/, '');
 
 const config = {
-    entry: 'src/index.js',
+    entry: 'src/index.ts',
     output: {
         path: path.resolve(__dirname, 'build'),
         filename: namePattern('res/[name].[chunkhash].js')

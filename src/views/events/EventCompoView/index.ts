@@ -1,43 +1,41 @@
+import Vue from 'vue';
+
+import { ICompo } from 'src/api/models';
 import globalState from 'src/state';
+
+import CompoEntries from '../CompoEntries';
 import Time from 'src/common/time';
 
-import eventCompos from './event-compos';
-import eventCompetitions from './event-competitions';
-import eventProgramme from './event-programme';
-
-import template from './event.html';
+import template from './event-compo-view.html';
 
 
-const EventView = {
+export default Vue.extend({
     template,
     components: {
+        CompoEntries,
         ...Time,
-        eventCompos,
-        eventCompetitions,
-        eventProgramme
     },
     data: () => ({
         globalState,
         isLoading: false,
-        event: null,
+        compo: null as (ICompo | null),
     }),
     created() {
         this.refresh();
     },
     computed: {
-        eventId() {
-            const { id } = this.$route.params;
-            return Number.parseInt(id, 10)
+        eventId(): number {
+            return Number.parseInt(this.$route.params.cid, 10);
         }
     },
     methods: {
         async refresh() {
             const { api } = this.globalState;
-            const id = Number.parseInt(this.$route.params.id, 10);
+            const id = Number.parseInt(this.$route.params.cid, 10);
 
             this.isLoading = true;
             try {
-                this.event = await api.events.get(id);
+                this.compo = await api.compos.get(id);
             } catch(error) {
                 // TODO: Spec how to handle errors nicely.
                 this.isLoading = false;
@@ -46,6 +44,4 @@ const EventView = {
             this.isLoading = false;
         }
     }
-};
-
-export default EventView;
+});

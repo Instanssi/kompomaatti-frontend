@@ -1,15 +1,20 @@
+import Vue from 'vue';
 import _orderBy from 'lodash/orderBy';
-import template from './event-programme.html';
+
+import { IProgrammeEvent } from 'src/api/models';
 import globalState from 'src/state';
 
-export default {
+import template from './event-programme.html';
+
+
+export default Vue.extend({
     template,
     props: {
         eventId: Number,
     },
     data: () => ({
         globalState,
-        programmeEvents: [],
+        programmeEvents: [] as IProgrammeEvent[],
     }),
     created() {
         this.refresh();
@@ -22,4 +27,4 @@ export default {
             this.programmeEvents = _orderBy(items, item => item.start);
         }
     }
-};
+});

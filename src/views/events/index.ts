@@ -1,8 +1,9 @@
-import EventView from './event';
-import EventsView from './events';
-import EventOverview from './event-overview';
-import EventCompoView from './event-compo';
+import EventView from './EventView';
+import EventsView from './EventsView';
+import EventOverview from './EventOverview';
+import EventCompoView from './EventCompoView';
 
+// Routes for the event views.
 export default [
     {
         path: '/events/:id',

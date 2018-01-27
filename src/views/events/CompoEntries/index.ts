@@ -1,25 +1,29 @@
+import Vue from 'vue';
 import _orderBy from 'lodash/orderBy';
+
+import { ICompoEntry } from 'src/api/models';
 import globalState from 'src/state';
+
 import template from './compo-entries.html';
 
 
-export default {
+export default Vue.extend({
     template,
     props: {
         compoId: Number,
     },
     data: () => ({
         globalState,
-        entries: [],
+        entries: null as (ICompoEntry[] | null),
     }),
     created() {
         this.refresh();
     },
     computed: {
-        allEntriesSorted() {
+        allEntriesSorted(): ICompoEntry[] {
             return _orderBy(this.entries, entry => entry.rank);
         },
-        qualifiedEntriesSorted() {
+        qualifiedEntriesSorted(): ICompoEntry[] {
             return this.allEntriesSorted.filter(entry => !entry.disqualified);
         }
     },
@@ -32,4 +36,4 @@ export default {
             return this.$route.path + '/entries/' + entry.id;
         }
     }
-};
+});

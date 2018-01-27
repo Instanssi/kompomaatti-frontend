@@ -16,7 +16,7 @@ import listComponents from 'src/common/list';
 
 console.info('Starting app with routes:', routes);
 
-window.BUILD_ID = process.env.BUILD_ID;
+(window as any).BUILD_ID = process.env.BUILD_ID;
 
 const router = new VueRouter({ routes });
 Vue.use(VueRouter);
@@ -33,8 +33,7 @@ Object.keys(listComponents).forEach(key => {
     Vue.component(key, listComponents[key]);
 });
 
-/* eslint-disable no-unused-vars */
-const app = new Vue({
+new Vue({
     el: '#app',
     router,
     components: {
