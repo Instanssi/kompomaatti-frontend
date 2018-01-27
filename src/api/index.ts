@@ -1,6 +1,7 @@
 import BaseAPI from './base';
+import { IUser } from 'src/api/models';
 
-class SessionAPI extends BaseAPI {
+class SessionAPI extends BaseAPI<IUser> {
     constructor(baseUrl, config) {
         super(baseUrl + '/current_user/', config);
     }
@@ -55,7 +56,16 @@ class SongsAPI extends BaseAPI {
  * Abstracts backend endpoints.
  */
 export default class InstanssiREST {
-    constructor(baseUrl, config) {
+    currentUser: SessionAPI;
+    events: EventsAPI;
+    compos: ComposAPI;
+    competitions: CompetitionsAPI;
+    programme: ProgrammeAPI;
+    compoEntries: CompoEntriesAPI;
+    competitionParticipations: CompetitionParticipationsAPI;
+    songs: SongsAPI;
+
+    constructor(baseUrl: string, config = {}) {
         this.currentUser = new SessionAPI(baseUrl, config);
         this.events = new EventsAPI(baseUrl, config);
         this.compos = new ComposAPI(baseUrl, config);

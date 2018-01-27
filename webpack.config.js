@@ -19,6 +19,7 @@ const config = {
     },
     resolve: {
         modules: [ './', 'node_modules' ],
+        extensions: ['.ts', '.js'],
         alias: {
             'vue$': PRODUCTION_BUILD ? 'vue/dist/vue.min.js' : 'vue/dist/vue.esm.js',
         },
@@ -30,20 +31,30 @@ const config = {
                 exclude: /node_modules/,
                 loader: 'babel-loader'
             },
+            // All files with a '.ts' or '.tsx' extension will be handled by 'awesome-typescript-loader'.
             {
-                test: /\.s?css$/,
-                loader: ExtractTextPlugin.extract({
-                    fallback: 'style-loader',
-                    use: [
-                        {
-                            loader: 'css-loader',
-                            options: {
-                                minimize: PRODUCTION_BUILD
-                            }
-                        },
-                        { loader: 'sass-loader' },
-                    ]
-                })
+                test: /\.tsx?$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: 'awesome-typescript-loader',
+                    options: {
+                        // This works around some issues with import semantics.
+                        useBabel: true,
+                    }
+                }
+            },
+            // Pass SCSS through the usual loader chain (last is applied first).
+            {
+                test: /\.scss$/,
+                use: getStyleLoaders([
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            minimize: PRODUCTION_BUILD
+                        }
+                    },
+                    { loader: 'sass-loader' },
+                ])
             },
             {
                 test: /\.html$/,
@@ -59,53 +70,54 @@ const config = {
         ]
     },
     plugins: [
+        // Generate a templated index.html file for the project, automatically including
+        // any entry bundles emitted by Webpack as <script/> tags.
         new HtmlWebpackPlugin({
             template: 'src/index.template.ejs',
         }),
         new ExtractTextPlugin(namePattern('res/[name].[hash].css')),
+        // DefinePlugin can replace content in the loaded JS modules with new text.
+        // Note that in production builds, JS minification will remove any code that is put
+        // behind compile-time false condition expressions (e.g. comparisons with NODE_ENV).
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify(NODE_ENV),
             'process.env.BUILD_ID': JSON.stringify(getBuildId()),
         }),
+        // Ignore moment locales by default.
+        // Without this, importing 'moment' imports _every_ locale file too.
         new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     ]
 };
+
+/**
+ * Build the final chain of CSS loaders from a list like ['css-loader', 'sass-loader'].
+ *
+ * In production builds, we build the CSS into a separate bundle to load them more
+ * efficiently. Disabled in development environments because of terminal spam.
+ */
+function getStyleLoaders(cssLoaders) {
+    if(PRODUCTION_BUILD) {
+        return ExtractTextPlugin.extract({
+            fallback: 'style-loader',
+            use: cssLoaders,
+        });
+    }
+    return ['style-loader'].concat(cssLoaders);
+}
 
 if(PRODUCTION_BUILD) {
     config.plugins.push(
         new webpack.optimize.UglifyJsPlugin(),
         new webpack.optimize.ModuleConcatenationPlugin(),
+        new ExtractTextPlugin('styles.[chunkhash].css'),
     );
 
     if(process.env.BUNDLE_ANALYZER) {
+        // Print out a visualization of what's making the bundle so big.
         const BAP = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
         config.plugins.push(new BAP({
             analyzerMode: 'static',
-            // Host that will be used in `server` mode to start HTTP server.
-            // analyzerHost: '127.0.0.1',
-            // Port that will be used in `server` mode to start HTTP server.
-            // analyzerPort: 8888,
-            // Path to bundle report file that will be generated in `static` mode.
-            // Relative to bundles output directory.
-            reportFilename: 'report.html',
-            // Module sizes to show in report by default.
-            // Should be one of `stat`, `parsed` or `gzip`.
-            // See "Definitions" section for more information.
-            defaultSizes: 'parsed',
-            // Automatically open report in default browser
-            openAnalyzer: true,
-            // If `true`, Webpack Stats JSON file will be generated in bundles output directory
-            generateStatsFile: false,
-            // Name of Webpack Stats JSON file that will be generated if `generateStatsFile` is `true`.
-            // Relative to bundles output directory.
-            statsFilename: 'stats.json',
-            // Options for `stats.toJson()` method.
-            // For example you can exclude sources of your modules from stats file with `source: false` option.
-            // See more options here: https://github.com/webpack/webpack/blob/webpack-1/lib/Stats.js#L21
-            statsOptions: null,
-            // Log level. Can be 'info', 'warn', 'error' or 'silent'.
-            logLevel: 'info'
-          }));
+        }));
     }
 
 } else {

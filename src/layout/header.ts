@@ -1,9 +1,12 @@
+import Vue from 'vue';
+
 import i18nComponents from 'src/common/i18n';
 import template from './header.html';
 import globalState from 'src/state';
 import userMenu from './user-menu';
 
-export default {
+
+export default Vue.extend({
     template,
     data: () => ({
         globalState,
@@ -13,4 +16,4 @@ export default {
         ...i18nComponents,
         userMenu,
     }
-};
+});

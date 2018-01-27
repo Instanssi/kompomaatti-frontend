@@ -1,0 +1,30 @@
+{
+    "compilerOptions": {
+        "lib": [
+            "dom",
+            "es6",
+            "es2015"
+        ],
+        "baseUrl": ".",
+        "jsx": "preserve",
+        "module": "esnext",
+        "moduleResolution": "node",
+        "target": "es5",
+        "experimentalDecorators": true,
+        "allowSyntheticDefaultImports": true,
+        "noImplicitThis": true,
+        "strictNullChecks": true,
+        "noUnusedLocals": true,
+        "sourceMap": true
+    },
+    "typeAcquisition": {
+        "enable": true
+    },
+    "include": [
+        "./src/**/*"
+    ],
+    "exclude": [
+        "**/*.test.ts",
+        "**/*.test.tsx"
+    ]
+}

@@ -4,12 +4,14 @@ import InstanssiREST from '../api';
 import i18n from '../i18n';
 
 import config from 'src/config';
+import { IUser } from 'src/api/models';
+
 
 const { DEFAULT_LOCALE } = config;
 const api = new InstanssiREST(config.API_URL);
 
 if(process.env.NODE_ENV === 'development') {
-    window._api = api;
+    (window as any)._api = api;
 }
 
 
@@ -33,24 +35,16 @@ if(process.env.NODE_ENV === 'development') {
  * @prop {string} username - User name
  * @prop {string} password - Password
 */
-
-const anon = {
-    language: DEFAULT_LOCALE,
-};
-
 class GlobalState {
-    // This should be replaced with the content of src/i18n/(en|fi).json as needed.
-    translation = {
-    };
-    // Anon user by default.
-    // Because we don't and can't assign all possible fields here,
-    // do not mutate this object; just replace it completely if the user changes.
-    // Anything that wants to observe this change should inject whole globalState.
-    user = Object.assign({}, anon);
+    /** Current user, if known. */
+    user: IUser | null = null;
+    /** Current language. */
+    language = 'en';
+    /** Current translation object. */
+    translation: any = { };
 
     currentTime = new Date().valueOf();
 
-    /** @type {InstanssiREST} */
     api = api;
 
     isLoading = true;
@@ -60,17 +54,17 @@ class GlobalState {
         setInterval(() => {
             this.currentTime = new Date().valueOf();
         }, 500);
-        this._findLanguage(this.languageCode);
+        this.findLanguage(this.languageCode);
         this.continueSession();
     }
 
     get momentLocale() {
         // TODO: Are lang codes always the same as moment locales?
-        return this.user.language || DEFAULT_LOCALE;
+        return this.language || DEFAULT_LOCALE;
     }
 
     get languageCode() {
-        return this.user.language || DEFAULT_LOCALE;
+        return this.language || DEFAULT_LOCALE;
     }
 
     /**
@@ -93,7 +87,7 @@ class GlobalState {
      * @returns {Promise.<object>} - User profile after session check
      */
     async continueSession() {
-        return this._setUser(await api.currentUser.get());
+        return this.setUser(await api.currentUser.get());
     }
 
     /**
@@ -103,7 +97,7 @@ class GlobalState {
     async setUserLanguage(languageCode) {
         // FIXME: Update user remote profile if non-anon (= has id)
         // console.debug('setting user language to:', languageCode);
-        this.user.language = this._findLanguage(languageCode);
+        this.language = await this.findLanguage(languageCode);
         return ;
     }
 
@@ -112,17 +106,17 @@ class GlobalState {
      * @param {Object} user - User profile.
      * @returns {Promise.<Object>} - Same user profile, after loading language files.
      */
-    async _setUser(user) {
+    private async setUser(user: IUser) {
+        console.info('setUser:', user);
         this.user = user;
-        user.language = await this._findLanguage(user.language);
         return user;
     }
 
     /**
      * Try to find a matching language and switch to it.
-     * Returns whatever matched closely enough (e.g. 'en' may map to 'en-GB').
+     * Returns whatever lang key matched closely enough (e.g. 'en' may map to 'en-GB').
      */
-    async _findLanguage(code) {
+    private async findLanguage(code): Promise<string> {
         const getTranslation = i18n[code];
         if(getTranslation) {
             try {

@@ -3,29 +3,32 @@ import qs from 'qs';
 /**
  * Common code for accessing web services.
  */
-export default class BaseAPI {
+export default class BaseAPI <ItemType = any> {
+    url: string;
+    config: any;
+
     constructor(baseUrl, config) {
         this.url = baseUrl;
         this.config = config || {};
     }
 
-    list(args) {
+    list(args): Promise<ItemType[]> {
         return this.fetch('GET', this.url, args);
     }
 
-    get(id) {
+    get(id): Promise<ItemType> {
         return this.fetch('GET', this.url + id + '/');
     }
 
     /**
      * Make a HTTP request.
-     * @param {string} method - HTTP method to use, if applicable
-     * @param {string} url - URL to send the request to
-     * @param {object} [query]
-     * @param {object} [payload]
-     * @returns {Promise.<object>} - Response
+     * @param method HTTP method to use, if applicable
+     * @param url URL to send the request to
+     * @param query Optional query params
+     * @param payload Optional payload
+     * @returns esponse
      */
-    fetch(method, url, query, payload) {
+    fetch<T = any>(method: string, url: string, query?, payload?): Promise<T> {
         const _fetch = this.config.fetch || fetch;
 
         return _fetch(this.encodeQuery(url, query), {

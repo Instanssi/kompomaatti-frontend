@@ -1,4 +1,7 @@
-const FormGroup = {
+import Vue from 'vue';
+
+
+const FormGroup = Vue.extend({
     props: ['name'],
     computed: {
         /** Get id for form label and element. */
@@ -10,10 +13,10 @@ const FormGroup = {
         <slot name="label" :for="id" />
         <slot name="control" :for="id" />
     </div>`
-}
+});
 
 const formComponents = {
     'i-form-group': FormGroup,
-}
+};
 
 export default formComponents;
