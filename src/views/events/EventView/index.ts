@@ -4,10 +4,6 @@ import { IEvent, PrimaryKey } from 'src/api/models';
 import globalState from 'src/state';
 import Time from 'src/common/time';
 
-import eventCompos from '../EventCompos';
-import eventCompetitions from '../EventCompetitions';
-import eventProgramme from '../EventProgramme';
-
 import template from './event.html';
 
 
@@ -15,9 +11,6 @@ export default Vue.extend({
     template,
     components: {
         ...Time,
-        eventCompos,
-        eventCompetitions,
-        eventProgramme
     },
     data: () => ({
         globalState,

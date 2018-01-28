@@ -1,0 +1,7 @@
+<div class="event-compo">
+    <div class="compo-title" v-if="compo">
+        <h2>{{ compo.name }}</h2>
+        <p><i-time :value="compo.compo_start" /></p>
+    </div>
+    <router-view />
+</div>

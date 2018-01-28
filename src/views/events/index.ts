@@ -1,7 +1,8 @@
+import EventsListView from './EventsListView';
 import EventView from './EventView';
-import EventsView from './EventsView';
 import EventOverview from './EventOverview';
-import EventCompoView from './EventCompoView';
+
+import eventCompoRoutes from './EventCompoView';
 
 // Routes for the event views.
 export default [
@@ -13,14 +14,11 @@ export default [
                 path: '',
                 component: EventOverview
             },
-            {
-                path: 'compos/:cid',
-                component: EventCompoView,
-            }
+            ...eventCompoRoutes,
         ]
     },
     {
         path: '/events',
-        component: EventsView
+        component: EventsListView
     },
 ];

@@ -57,14 +57,17 @@ export interface ICompo {
     compo_start: ISODateTime;
     voting_start: ISODateTime;
     voting_end: ISODateTime;
-    entry_sizelimit: number;
-    source_sizelimit: number;
+    max_source_size: number,
+    max_entry_size: number,
+    max_image_size: number,
     source_format_list: string[];
     entry_format_list: string[];
     image_format_list: string[];
     show_voting_results: boolean;
     entry_view_type: number;
     is_votable: boolean;
+    is_imagefile_allowed: true;
+    is_imagefile_required: true;
 }
 
 export interface ICompoEntry {

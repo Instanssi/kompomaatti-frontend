@@ -21,6 +21,13 @@
         "description": "Description",
         "entries": "Entries"
     },
+    "entry": {
+        "description": "Entry description",
+        "files": "Files",
+        "entryfile": "Entry file",
+        "sourcefile": "Source file",
+        "image": "Image"
+    },
     "dashboard": {
         "welcome": "Welcome to Kompomaatti, the official compo management system of Instanssi.org!",
         "notLoggedIn": "You are not logged in. To vote or participate in events, log in at the main Instanssi site first.",

@@ -3,7 +3,7 @@ import _orderBy from 'lodash/orderBy';
 
 import globalState from 'src/state';
 
-import template from './events-view.html';
+import template from './events-list-view.html';
 
 
 export default Vue.extend({

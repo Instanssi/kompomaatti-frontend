@@ -1,12 +1,12 @@
 import BaseAPI from './base';
 import {
-    IUser,
-    IEvent,
-    ICompo,
     ICompetition,
-    IProgrammeEvent,
-    ICompoEntry,
     ICompetitionParticipation,
+    ICompo,
+    ICompoEntry,
+    IEvent,
+    IProgrammeEvent,
+    IUser,
 } from 'src/api/models';
 
 class SessionAPI extends BaseAPI<IUser> {
@@ -14,7 +14,7 @@ class SessionAPI extends BaseAPI<IUser> {
         super(baseUrl + '/current_user/', config);
     }
 
-    get() {
+    get(): Promise<IUser> {
         return this.fetch('GET', this.url);
     }
 }

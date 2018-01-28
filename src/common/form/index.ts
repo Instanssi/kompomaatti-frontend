@@ -2,10 +2,12 @@ import Vue from 'vue';
 
 
 const FormGroup = Vue.extend({
-    props: ['name'],
+    props: {
+        name: String,
+    },
     computed: {
         /** Get id for form label and element. */
-        id() {
+        id(): string {
             return this.name;
         }
     },

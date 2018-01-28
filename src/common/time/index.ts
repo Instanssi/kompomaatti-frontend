@@ -1,5 +1,8 @@
+import Vue from 'vue';
+
 import moment from 'moment';
 import globalState from 'src/state';
+
 
 /**
  * Takes a ISO 8601 or JS Unix milliseconds timestamp as 'value'
@@ -7,7 +10,7 @@ import globalState from 'src/state';
  * - 'format': Moment.js format string. Defaults to 'LLL'.
  * - 'locale': Moment locale id. Defaults to global locale or 'en'.
  */
-const Time = {
+const Time = Vue.extend({
     props: {
         value: {
             type: [Number, Date, String],
@@ -22,7 +25,7 @@ const Time = {
         globalState,
     }),
     computed: {
-        formatted() {
+        formatted(): string {
             if(!this.value) {
                 return this.placeholder || '-';
             }
@@ -30,8 +33,8 @@ const Time = {
                 .locale(this.locale || this.globalState.momentLocale || 'en')
                 .format(this.format || 'LLL');
         }
-    }
-};
+    },
+});
 
 export default {
     'i-time': Time,

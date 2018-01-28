@@ -1,0 +1,35 @@
+<div class="compo-entry">
+    <div class="entry-info" v-if="entry">
+        <div class="entry-title">
+            <h3>{{ entry.name }}</h3>
+            <p>{{ entry.creator }}</p>
+        </div>
+        <div class="entry-image" v-if="entry.imagefile_medium_url">
+            <h4>{{ 'entry.image' | translate }}</h4>
+            <a target="_blank" :href="entry.imagefile_original_url">
+                <img :src="entry.imagefile_medium_url" />
+            </a>
+        </div>
+        <div class="entry-disqualified" v-if="entry.disqualified">
+            <h4>{{ 'entry.disqualified' | translate }}</h4>
+            <p>{{ entry.disqualified_reason }}</p>
+        </div>
+        <div class="entry-description">
+            <h4>{{ 'entry.description' | translate }}</h4>
+            <p class="text-pre-wrap">{{ entry.description }}</p>
+        </div>
+        <div class="entry-files">
+            <h4>{{ 'entry.files' | translate }}</h4>
+            <p v-if="entry.entryfile_url">
+                <a target="_blank" :href="entry.entryfile_url">
+                    {{ 'entry.entryfile' | translate }}
+                </a>
+            </p>
+            <p v-if="entry.sourcefile_url">
+                <a target="_blank" :href="entry.sourcefile_url">
+                    {{ 'entry.sourcefile' | translate }}
+                </a>
+            </p>
+        </div>
+    </div>
+</div>

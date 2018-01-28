@@ -21,6 +21,10 @@ body {
     padding: $spacer;
 }
 
+.text-pre-wrap {
+    white-space: pre-wrap;
+}
+
 @mixin bg-brand() {
     background: theme-color();
     color: #fff;

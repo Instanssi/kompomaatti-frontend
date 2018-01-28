@@ -19,7 +19,7 @@ const config = {
     },
     resolve: {
         modules: [ './', 'node_modules' ],
-        extensions: ['.ts', '.js'],
+        extensions: ['.ts', '.tsx', '.js', '.jsx'],
         alias: {
             'vue$': PRODUCTION_BUILD ? 'vue/dist/vue.min.js' : 'vue/dist/vue.esm.js',
         },
@@ -27,11 +27,10 @@ const config = {
     module: {
         rules: [
             {
-                test: /\.js$/,
+                test: /\.jsx?$/,
                 exclude: /node_modules/,
                 loader: 'babel-loader'
             },
-            // All files with a '.ts' or '.tsx' extension will be handled by 'awesome-typescript-loader'.
             {
                 test: /\.tsx?$/,
                 exclude: /node_modules/,
@@ -43,9 +42,9 @@ const config = {
                     }
                 }
             },
-            // Pass SCSS through the usual loader chain (last is applied first).
             {
                 test: /\.scss$/,
+                // Pass SCSS through the usual loader chain (last is applied first).
                 use: getStyleLoaders([
                     {
                         loader: 'css-loader',

@@ -33,17 +33,24 @@
         "entries": "Teokset",
         "description": "Kuvaus"
     },
+    "entry": {
+        "description": "Teoksen kuvaus",
+        "files": "Tiedostot",
+        "entryfile": "Teos tiedostona",
+        "sourcefile": "Lähdetiedosto",
+        "image": "Image"
+    },
     "dashboard": {
         "welcome": "Tervetuloa Kompomaattiin, Instanssin viralliseen kompojärjestelmään!",
         "notLoggedIn": "Et ole kirjautunut sisään. Jos haluat äänestää tai osallistua, kirjaudu pääsivuston puolella.",
         "events": {
             "title": "Tapahtumat",
-            "empty": "Ei tapahtumia menossa.",
+            "empty": "Ei tapahtumia käynnissä.",
             "viewAll": "Selaa tapahtumia"
         },
         "programme": {
             "title": "Ohjelma",
-            "empty": "Ei mitään käynnissä tällä hetkellä.",
+            "empty": "Ei ohjelmaa tällä hetkellä.",
             "viewAll": "Selaa ohjelmaa"
         },
         "compos": {
