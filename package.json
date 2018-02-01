@@ -23,6 +23,7 @@
         "vue-router": "~3.0.1"
     },
     "devDependencies": {
+        "@types/lodash": "~4.14.100",
         "awesome-typescript-loader": "~3.4.1",
         "babel-core": "~6.26.0",
         "babel-eslint": "~8.2.1",

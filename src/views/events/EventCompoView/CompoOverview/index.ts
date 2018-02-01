@@ -26,7 +26,7 @@ export default Vue.extend({
     computed: {
         eventId(): number {
             return Number.parseInt(this.$route.params.cid, 10);
-        }
+        },
     },
     methods: {
         async refresh() {

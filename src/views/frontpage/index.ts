@@ -12,10 +12,17 @@ const FrontpageView = Vue.extend({
     computed: {
         currentUser() {
             return globalState.user;
+        },
+        viewTitle() {
+            return 'dashboard.viewTitle';
         }
     }
 });
 
 export default [
-    { path: '/', component: FrontpageView },
+    {
+        path: '/',
+        component: FrontpageView,
+        name: 'frontpageView',
+    },
 ];

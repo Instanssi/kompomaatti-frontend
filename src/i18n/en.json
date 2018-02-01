@@ -1,66 +1,67 @@
 {
-    "session": {
-        "loginTitle": "Log in",
-        "login": "Log in",
-        "logout": "Log out"
-    },
-    "nav": {
-        "login": "Log in",
-        "compos": "Compos",
-        "events": "Events"
-    },
-    "user": {
-        "username": "User name",
-        "password": "Password"
-    },
-    "list": {
-        "noResults": "Nothing found.",
-        "pagination": "Displaying {{ first }}-{{ last }} out of {{ total }}."
-    },
     "compo": {
         "description": "Description",
         "entries": "Entries"
     },
-    "entry": {
-        "description": "Entry description",
-        "files": "Files",
-        "entryfile": "Entry file",
-        "sourcefile": "Source file",
-        "image": "Image"
-    },
     "dashboard": {
-        "welcome": "Welcome to Kompomaatti, the official compo management system of Instanssi.org!",
-        "notLoggedIn": "You are not logged in. To vote or participate in events, log in at the main Instanssi site first.",
-        "events": {
-            "title": "Events",
-            "empty": "No ongoing events.",
-            "viewAll": "View all events"
-        },
-        "programme": {
-            "title": "Programme",
-            "empty": "Nothing going on at the moment.",
-            "viewAll": "View full programme"
+        "competitions": {
+            "empty": "No competitions available.",
+            "title": "Competitions"
         },
         "compos": {
-            "title": "Compos",
             "empty": "No compos going on right now.",
+            "title": "Compos",
             "viewMy": "View my entries"
         },
-        "competitions": {
-            "title": "Competitions",
-            "empty": "No competitions available."
-        }
+        "events": {
+            "empty": "No ongoing events.",
+            "title": "Events",
+            "viewAll": "View all events"
+        },
+        "notLoggedIn": "You are not logged in. To vote or participate in events, log in at the main Instanssi site first.",
+        "programme": {
+            "empty": "Nothing going on at the moment.",
+            "title": "Programme",
+            "viewAll": "View full programme"
+        },
+        "viewTitle": "Front page",
+        "welcome": "Welcome to Kompomaatti, the official compo management system of Instanssi.org!"
+    },
+    "entry": {
+        "description": "Entry description",
+        "entryfile": "Entry file",
+        "files": "Files",
+        "image": "Image",
+        "sourcefile": "Source file"
+    },
+    "event": {
+        "competitions": "Competitions",
+        "compos": "Compos",
+        "programme": "Programme"
     },
     "events": {
         "title": "Events"
     },
-    "event": {
-        "compos": "Compos",
-        "competitions": "Competitions",
-        "programme": "Programme"
-    },
     "footer": {
         "copyright": "(c) 2017-2018",
         "toTop": "Back to top"
+    },
+    "list": {
+        "noResults": "Nothing found.",
+        "pagination": "Displaying ${first}-${last} out of ${total}."
+    },
+    "nav": {
+        "compos": "Compos",
+        "events": "Events",
+        "login": "Log in"
+    },
+    "session": {
+        "login": "Log in",
+        "loginTitle": "Log in",
+        "logout": "Log out"
+    },
+    "user": {
+        "password": "Password",
+        "username": "User name"
     }
 }

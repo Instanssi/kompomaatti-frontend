@@ -24,7 +24,11 @@ export default Vue.extend({
         eventId(): PrimaryKey {
             const { id } = this.$route.params;
             return Number.parseInt(id, 10);
-        }
+        },
+        viewTitle(): string {
+            const { event } = this;
+            return event && event.name || '?';
+        },
     },
     methods: {
         async refresh() {

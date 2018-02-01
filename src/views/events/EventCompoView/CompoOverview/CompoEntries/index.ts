@@ -33,7 +33,7 @@ export default Vue.extend({
             this.entries = await api.compoEntries.list({ compo: this.compoId });
         },
         getEntryPath(entry) {
-            return this.$route.path + '/entries/' + entry.id;
+            return this.$route.path + 'entries/' + entry.id + '/';
         }
     }
 });

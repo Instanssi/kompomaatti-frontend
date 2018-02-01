@@ -2,7 +2,7 @@
     <h1>{{ 'events.title' | translate }}</h1>
     <ul>
         <li v-for="event in events">
-            <router-link :to="'/events/' + event.id">{{ event.name }}</router-link>
+            <router-link :to="'/events/' + event.id + '/'">{{ event.name }}</router-link>
         </li>
     </ul>
 </div>

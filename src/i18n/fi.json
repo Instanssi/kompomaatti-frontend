@@ -1,25 +1,86 @@
 {
-    "session": {
-        "loginTitle": "Kirjautuminen",
-        "login": "Kirjaudu sisään",
-        "logout": "Kirjaudu ulos"
+    "compo": {
+        "description": "Kuvaus",
+        "entries": "Teokset"
     },
-    "nav": {
-        "login": "Kirjaudu",
-        "compos": "Kompot",
-        "events": "Tapahtumat"
+    "dashboard": {
+        "competitions": {
+            "empty": "Ei aktiivisia kilpailuja.",
+            "title": "Kilpailut"
+        },
+        "compos": {
+            "empty": "Ei aktiivisia kompoja.",
+            "title": "Kompot",
+            "viewMy": "Näytä omat"
+        },
+        "events": {
+            "empty": "Ei tapahtumia käynnissä.",
+            "title": "Tapahtumat",
+            "viewAll": "Selaa tapahtumia"
+        },
+        "notLoggedIn": "Et ole kirjautunut sisään. Jos haluat äänestää tai osallistua, kirjaudu pääsivuston puolella.",
+        "programme": {
+            "empty": "Ei ohjelmaa tällä hetkellä.",
+            "title": "Ohjelma",
+            "viewAll": "Selaa ohjelmaa"
+        },
+        "viewTitle": "Etusivu",
+        "welcome": "Tervetuloa Kompomaattiin, Instanssin viralliseen kompojärjestelmään!"
     },
-    "user": {
-        "username": "Käyttäjätunnus",
-        "password": "Salasana"
+    "data": {
+        "entry": {
+            "compo": {
+                "help": "Kompo johon teos kuuluu.",
+                "title": "Kompo"
+            },
+            "creator": {
+                "help": "Tekijän tai tekijäryhmän nimi.",
+                "title": "Tekijä"
+            },
+            "description": {
+                "help": "Kuvaus käytetyistä tekniikoista, selityksiä tai muuta sanottavaa.",
+                "title": "Kuvaus"
+            },
+            "disqualified": {
+                "help": "Teos hylätty sääntöjen rikkomisen tai teknisten ongelmien takia.",
+                "title": "Diskattu"
+            },
+            "entryfile": {
+                "help": "Teos paketoituna.",
+                "title": "Tiedosto"
+            },
+            "imagefileOriginal": {
+                "help": "Edustava kuva teokselle. Ei pakollinen, mutta suositeltava.",
+                "title": "Kuva"
+            },
+            "name": {
+                "help": "Teoksen nimi.",
+                "title": "Nimi"
+            },
+            "sourcefile": {
+                "help": "Paketti, jossa lähdekoodi tms. materiaali.",
+                "title": "Lähdekoodi"
+            },
+            "user": {
+                "help": "Käyttäjä jolle teos kuuluu.",
+                "title": "Käyttäjä"
+            },
+            "youtubeUrl": {
+                "help": "Linkki teoksen YouTube-videoon.",
+                "title": "YouTube URL"
+            }
+        }
     },
-    "list": {
-        "noResults": "Ei hakutuloksia.",
-        "pagination": "Näytetään ${ first }-${ last }. Yhteensä ${ total }."
+    "entry": {
+        "description": "Teoksen kuvaus",
+        "entryfile": "Teos tiedostona",
+        "files": "Tiedostot",
+        "image": "Image",
+        "sourcefile": "Lähdetiedosto"
     },
     "event": {
-        "compos": "Kompot",
         "competitions": "Kilpailut",
+        "compos": "Kompot",
         "programme": "Ohjelma"
     },
     "events": {
@@ -29,82 +90,22 @@
         "copyright": "(c) 2017-2018",
         "toTop": "Palaa alkuun"
     },
-    "compo": {
-        "entries": "Teokset",
-        "description": "Kuvaus"
+    "list": {
+        "noResults": "Ei hakutuloksia.",
+        "pagination": "Näytetään ${ first }-${ last }. Yhteensä ${ total }."
     },
-    "entry": {
-        "description": "Teoksen kuvaus",
-        "files": "Tiedostot",
-        "entryfile": "Teos tiedostona",
-        "sourcefile": "Lähdetiedosto",
-        "image": "Image"
+    "nav": {
+        "compos": "Kompot",
+        "events": "Tapahtumat",
+        "login": "Kirjaudu"
     },
-    "dashboard": {
-        "welcome": "Tervetuloa Kompomaattiin, Instanssin viralliseen kompojärjestelmään!",
-        "notLoggedIn": "Et ole kirjautunut sisään. Jos haluat äänestää tai osallistua, kirjaudu pääsivuston puolella.",
-        "events": {
-            "title": "Tapahtumat",
-            "empty": "Ei tapahtumia käynnissä.",
-            "viewAll": "Selaa tapahtumia"
-        },
-        "programme": {
-            "title": "Ohjelma",
-            "empty": "Ei ohjelmaa tällä hetkellä.",
-            "viewAll": "Selaa ohjelmaa"
-        },
-        "compos": {
-            "title": "Kompot",
-            "empty": "Ei aktiivisia kompoja.",
-            "viewMy": "Näytä omat"
-        },
-        "competitions": {
-            "title": "Kilpailut",
-            "empty": "Ei aktiivisia kilpailuja."
-        }
+    "session": {
+        "login": "Kirjaudu sisään",
+        "loginTitle": "Kirjautuminen",
+        "logout": "Kirjaudu ulos"
     },
-    "data": {
-        "entry": {
-            "user": {
-                "title": "Käyttäjä",
-                "help": "Käyttäjä jolle teos kuuluu."
-            },
-            "compo": {
-                "title": "Kompo",
-                "help": "Kompo johon teos kuuluu."
-            },
-            "name": {
-                "title": "Nimi",
-                "help": "Teoksen nimi."
-            },
-            "description": {
-                "title": "Kuvaus",
-                "help": "Kuvaus käytetyistä tekniikoista, selityksiä tai muuta sanottavaa."
-            },
-            "creator": {
-                "title": "Tekijä",
-                "help": "Tekijän tai tekijäryhmän nimi."
-            },
-            "entryfile": {
-                "title": "Tiedosto",
-                "help": "Teos paketoituna."
-            },
-            "sourcefile": {
-                "title": "Lähdekoodi",
-                "help": "Paketti, jossa lähdekoodi tms. materiaali."
-            },
-            "imagefileOriginal": {
-                "title": "Kuva",
-                "help": "Edustava kuva teokselle. Ei pakollinen, mutta suositeltava."
-            },
-            "youtubeUrl": {
-                "title": "YouTube URL",
-                "help": "Linkki teoksen YouTube-videoon."
-            },
-            "disqualified": {
-                "title": "Diskattu",
-                "help": "Teos hylätty sääntöjen rikkomisen tai teknisten ongelmien takia."
-            }
-        }
+    "user": {
+        "password": "Salasana",
+        "username": "Käyttäjätunnus"
     }
 }

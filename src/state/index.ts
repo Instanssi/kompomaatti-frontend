@@ -73,7 +73,7 @@ class GlobalState {
      * @param {object} [values] - Optional arguments for translation (spec pending)
      * @returns {string} - Translated text
      */
-    translate(name, values) {
+    translate(name: string, values?: {[key: string]: string}): string {
         const text = _get(this.translation, name, name);
         // TODO: Spec pluralisation, etc.
         if(values) {

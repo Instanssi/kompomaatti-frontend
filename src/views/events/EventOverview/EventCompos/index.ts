@@ -24,7 +24,7 @@ export default Vue.extend({
             this.compos = await api.compos.list({ event: this.eventId });
         },
         getCompoPath(compo) {
-            return this.$route.path + '/compos/' + compo.id;
+            return this.$route.path + 'compos/' + compo.id + '/';
         }
     }
 });

@@ -21,7 +21,11 @@ export default Vue.extend({
         entryId(): number | null {
             const { params } = this.$route;
             return Number.parseInt(params.eid) || null;
-        }
+        },
+        viewTitle(): string {
+            const { entry } = this;
+            return entry && entry.name || '(unnamed entry)';
+        },
     },
     methods: {
         async refresh() {

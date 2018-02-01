@@ -9,16 +9,19 @@ export default [
     {
         path: '/events/:id',
         component: EventView,
+        meta: { routeName: 'eventOverview' },
         children: [
             {
                 path: '',
-                component: EventOverview
+                component: EventOverview,
+                name: 'eventOverview',
             },
             ...eventCompoRoutes,
         ]
     },
     {
         path: '/events',
-        component: EventsListView
+        component: EventsListView,
+        name: 'eventsListView',
     },
 ];

@@ -13,6 +13,11 @@ export default Vue.extend({
         isLoading: false,
         events: [],
     }),
+    computed: {
+        viewTitle(): string {
+            return 'events.title';
+        }
+    },
     created() {
         this.refresh();
     },
