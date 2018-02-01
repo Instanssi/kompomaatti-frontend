@@ -14,8 +14,8 @@ export default Vue.extend({
         events: [],
     }),
     computed: {
-        viewTitle(): string {
-            return 'events.title';
+        viewTitle() {
+            return { key: 'events.title' };
         }
     },
     created() {

@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import { RouteRecord } from 'vue-router/types/router';
-import _get from 'lodash/get';
 
 import globalState from 'src/state';
 import template from './breadcrumbs.html';
@@ -30,18 +29,30 @@ export default Vue.extend({
     },
     methods: {
         updateRoute(matched: RouteRecord[], params): void {
-            console.info('updateRoute', matched.map(m => m.path), params);
+            // console.info('updateRoute', matched.map(m => m.path), params);
             this.lastParams = params;
             this.lastMatch.length = 0;
             this.lastMatch.push(...matched);
         },
         getRouteInfo(route: RouteRecord): IRouteInfo | null {
-            const instance = route.instances.default;
-            const viewTitle = (instance as any).viewTitle as string;
+            const instance = route.instances.default as any;
+            if(!instance) {
+                return null;
+            }
+            const viewTitle = instance.viewTitle;
+
+            const handleTitle = (viewTitle: any | string | undefined) => {
+                if(viewTitle && typeof viewTitle === 'object') {
+                    return globalState.translate(viewTitle.key, viewTitle.values);
+                }
+                return viewTitle;
+            }
+
             return viewTitle ? {
                 // FIXME: This will translate non-translation keys
-                title: viewTitle && globalState.translate(viewTitle) || '',
-                name: route.name || null,
+                // Add a different computed value for translations and titles?
+                title: handleTitle(viewTitle),
+                name: (route.meta && route.meta.routeName) || route.name || null,
                 params: this.lastParams,
             } : null;
         }

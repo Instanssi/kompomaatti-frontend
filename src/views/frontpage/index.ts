@@ -14,7 +14,7 @@ const FrontpageView = Vue.extend({
             return globalState.user;
         },
         viewTitle() {
-            return 'dashboard.viewTitle';
+            return { key: 'dashboard.viewTitle' };
         }
     }
 });
