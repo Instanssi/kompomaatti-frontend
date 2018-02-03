@@ -4,7 +4,7 @@ import { PrimaryKey } from 'src/api/models';
 /**
  * Common code for accessing web services.
  */
-export default class BaseAPI <ItemType = any> {
+export default class BaseAPI<ItemType = any> {
     url: string;
     config: any;
 
@@ -29,15 +29,15 @@ export default class BaseAPI <ItemType = any> {
      * @param payload Optional payload
      * @returns esponse
      */
-    fetch<T = any>(method: string, url: string, query?, payload?): Promise<T> {
-        const _fetch = this.config.fetch || fetch;
+    protected fetch<T = any>(method: string, url: string, query?, payload?): Promise<T> {
+        const fetchImpl = this.config.fetch || fetch;
 
-        return _fetch(this.encodeQuery(url, query), {
+        return fetchImpl(this.encodeQuery(url, query), {
             method,
             body: this.encodePayload(payload),
             credentials: 'include',
-        }).then(res => this.handleResponse(res),
-        ).catch(err => this.handleError(err));
+        }).then((res) => this.handleResponse(res),
+        ).catch((err) => this.handleError(err));
     }
 
     /**
@@ -47,8 +47,8 @@ export default class BaseAPI <ItemType = any> {
      * @param {object} [query] - Query "payload"
      * @returns {string} - URL, with encoded payload if possible
      */
-    encodeQuery(url, query?) {
-        if(!query) {
+    protected encodeQuery(url, query?) {
+        if (!query) {
             return url;
         }
         return `${url}?${qs.stringify(query)}`;
@@ -60,16 +60,16 @@ export default class BaseAPI <ItemType = any> {
      * @param {object} [payload] - Payload to encode
      * @returns {string|undefined} - Encoded payload, if any.
      */
-    encodePayload(payload) {
-        if(payload) {
+    protected encodePayload(payload) {
+        if (payload) {
             return JSON.stringify(
                 payload,
                 (key, val) => {
                     // prefix for implementation details in other logic
-                    if(key[0] !== '_') {
+                    if (key[0] !== '_') {
                         return val;
                     }
-                }
+                },
             );
         }
     }
@@ -79,32 +79,32 @@ export default class BaseAPI <ItemType = any> {
      * on error-like status code, so we do it here.
      * @param {Response} response
      */
-    handleResponse(response) {
+    protected handleResponse(response) {
         const { status } = response;
-        if(status === 0) {
+        if (status === 0) {
             // timeout or other connection problem
             throw {
                 _status: 0,
             };
         }
-        if(status < 200 || status >= 300) {
+        if (status < 200 || status >= 300) {
             // into the error handler you go
             throw response;
         }
-        if(status === 204 || status === 205) {
+        if (status === 204 || status === 205) {
             // This is probably less accident-prone than returning null
             return {
-                _status: status
+                _status: status,
             };
         }
         // there might be some interesting payload, try to decode it
-        return response.json().then(payload => {
+        return response.json().then((payload) => {
             // all payloads should be objects anyway to block eval() fail
-            if(payload && typeof payload === 'object') {
+            if (payload && typeof payload === 'object') {
                 payload._status = status;
             }
             return payload;
-        }, error => {
+        }, (error) => {
             console.warn('Unable to decode payload:', error);
             throw error;
         });
@@ -114,14 +114,14 @@ export default class BaseAPI <ItemType = any> {
      * Handle any error that may have occurred.
      * @param {Response|Error|object} error
      */
-    handleError(error) {
+    protected handleError(errorResponse: Response) {
         // see if we got any kind of payload
-        if(typeof error.json !== 'function') {
-            throw error;
+        if (typeof errorResponse.json !== 'function') {
+            throw errorResponse;
         }
-        return error.json().then(payload => {
+        return errorResponse.json().then((payload) => {
             throw payload;
-        }, error => {
+        }, (error) => {
             console.warn('unable to decode error payload:', error);
             throw error;
         });

@@ -1,3 +1,6 @@
+// Attempts to describe the Instanssi REST API's objects go here.
+
+/** Primary key (aka id) of a database record. */
 export type PrimaryKey = number;
 /** ISO 8601 date (not datetime), e.g. '2011-05-13'. */
 export type ISODate = string;
@@ -13,7 +16,7 @@ export interface IUser {
     first_name: string;
     last_name: string;
     email: string;
-};
+}
 
 export interface IEvent {
     id: PrimaryKey;
@@ -32,7 +35,7 @@ export interface ICompetition {
     end: ISODateTime;
     /** Unit (plural) for scoring */
     score_type: string;
-    score_sort: number,
+    score_sort: number;
     /** Are the results public yet? */
     show_results: boolean;
 }
@@ -57,9 +60,9 @@ export interface ICompo {
     compo_start: ISODateTime;
     voting_start: ISODateTime;
     voting_end: ISODateTime;
-    max_source_size: number,
-    max_entry_size: number,
-    max_image_size: number,
+    max_source_size: number;
+    max_entry_size: number;
+    max_image_size: number;
     source_format_list: string[];
     entry_format_list: string[];
     image_format_list: string[];
@@ -107,7 +110,7 @@ export interface IProgrammeEvent {
     id: PrimaryKey;
     event: URLString;
     start: ISODateTime;
-    end: ISODateTime | null,
+    end: ISODateTime | null;
     description: string;
     title: string;
     presenters: string;
@@ -133,7 +136,7 @@ export interface IMessage {
 }
 
 export interface IIRCMessage {
-    id: PrimaryKey,
+    id: PrimaryKey;
     event: URLString;
     date: ISODateTime;
     nick: string;

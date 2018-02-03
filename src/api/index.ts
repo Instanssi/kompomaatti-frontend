@@ -1,4 +1,4 @@
-import BaseAPI from './base';
+import BaseAPI from './BaseAPI';
 import {
     ICompetition,
     ICompetitionParticipation,
@@ -9,11 +9,18 @@ import {
     IUser,
 } from 'src/api/models';
 
+/**
+ * API for getting the user's current session.
+ * Not really a full REST resource, but whatever.
+ */
 class SessionAPI extends BaseAPI<IUser> {
     constructor(baseUrl, config) {
         super(baseUrl + '/current_user/', config);
     }
 
+    /**
+     * Get the current user.
+     */
     get(): Promise<IUser> {
         return this.fetch('GET', this.url);
     }
