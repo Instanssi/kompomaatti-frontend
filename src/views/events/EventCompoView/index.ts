@@ -2,6 +2,7 @@ import EventCompo from './EventCompo';
 import CompoOverview from './CompoOverview';
 import CompoEntry from './CompoEntry';
 
+
 export default [
     {
         path: 'compos/:cid',

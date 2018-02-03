@@ -1,23 +1,24 @@
 import Vue from 'vue';
+import Component from 'vue-class-component';
 
 import template from './frontpage.html';
 import globalState from 'src/state';
 
 
-const FrontpageView = Vue.extend({
+@Component({
     template,
-    data: () => ({
-        globalState,
-    }),
-    computed: {
-        currentUser() {
-            return globalState.user;
-        },
-        viewTitle() {
-            return { key: 'dashboard.viewTitle' };
-        }
+})
+export class FrontpageView extends Vue {
+    globalState = globalState;
+
+    get currentUser() {
+        return globalState.user;
     }
-});
+
+    get viewTitle() {
+        return { key: 'dashboard.viewTitle' };
+    }
+}
 
 export default [
     {

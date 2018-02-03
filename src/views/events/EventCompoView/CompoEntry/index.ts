@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import Component from 'vue-class-component';
 
 import { ICompoEntry } from 'src/api/models';
 import globalState from 'src/state';
@@ -6,41 +7,43 @@ import globalState from 'src/state';
 import template from './compo-entry.html';
 
 
-export default Vue.extend({
+@Component({
     template,
-    data: () => ({
-        globalState,
-        entry: null as (ICompoEntry | null),
-        isPending: false,
-        lastError: null,
-    }),
+})
+export default class CompoEntry extends Vue {
+    globalState = globalState;
+    entry: ICompoEntry | null = null;
+    isPending = false;
+    lastError: any;
+
     created() {
         this.refresh();
-    },
-    computed: {
-        entryId(): number | null {
-            const { params } = this.$route;
-            return Number.parseInt(params.eid) || null;
-        },
-        viewTitle(): string {
-            const { entry } = this;
-            return entry && entry.name || '(unnamed entry)';
-        },
-    },
-    methods: {
-        async refresh() {
-            const { entryId } = this;
-            if(!entryId) {
-                return Promise.reject(null);
-            }
-            this.isPending = true;
-            try {
-                this.entry = await this.globalState.api.compoEntries.get(entryId);
-                this.isPending = false;
-            } catch(error) {
-                this.isPending = false;
-                this.lastError = error;
-            }
-        }
     }
-});
+
+    get entryId(): number | null {
+        const { params } = this.$route;
+        return Number.parseInt(params.eid) || null;
+    }
+
+    get viewTitle(): string {
+        const { entry } = this;
+        return entry && entry.name || '(unnamed entry)';
+    }
+
+    async refresh() {
+        const { entryId } = this;
+
+        if (!entryId) {
+            throw new Error('entryId not set!')
+        }
+
+        this.isPending = true;
+        try {
+            this.entry = await this.globalState.api.compoEntries.get(entryId);
+            this.lastError = null;
+        } catch(error) {
+            this.lastError = error;
+        }
+        this.isPending = false;
+    }
+}

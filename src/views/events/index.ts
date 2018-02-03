@@ -4,6 +4,7 @@ import EventOverview from './EventOverview';
 
 import eventCompoRoutes from './EventCompoView';
 
+
 // Routes for the event views.
 export default [
     {
