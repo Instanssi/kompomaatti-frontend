@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import _orderBy from 'lodash/orderBy';
 
+import { IEvent } from 'src/api/models';
 import globalState from 'src/state';
 
 import template from './events-list-view.html';
@@ -11,7 +12,7 @@ export default Vue.extend({
     data: () => ({
         globalState,
         isLoading: false,
-        events: [],
+        events: [] as IEvent[],
     }),
     computed: {
         viewTitle() {
