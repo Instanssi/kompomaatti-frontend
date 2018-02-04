@@ -7,11 +7,11 @@ import globalState from 'src/state';
 // import CompoEntries from '../CompoOverview/CompoEntries';
 import Time from 'src/common/time';
 
-import template from './event-compo-view.html';
+// import template from './event-compo-view.html';
 
 
 @Component({
-    template,
+    // template,
     components: {
         // CompoEntries,
         ...Time,
@@ -44,10 +44,23 @@ export default class EventCompo extends Vue {
         try {
             this.compo = await api.compos.get(id);
             this.isPending = false;
-        } catch(error) {
+        } catch (error) {
             this.lastError = error;
             this.isPending = false;
             throw error;
         }
+    }
+
+    render(h) {
+        const { compo } = this;
+        return (
+            <div class="event-compo">
+                {compo && <div class="compo-title">
+                    <h2>{compo.name}</h2>
+                    <p><i-time value={compo.compo_start} /></p>
+                </div>}
+                <router-view />
+            </div>
+        );
     }
 }

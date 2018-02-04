@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const getBuildId = require('./scripts/build-id');
 
+
 const NODE_ENV = process.env.NODE_ENV;
 const PRODUCTION_BUILD = NODE_ENV === 'production';
 
@@ -74,6 +75,8 @@ const config = {
         new HtmlWebpackPlugin({
             template: 'src/index.template.ejs',
         }),
+        // Emit all extracted text (CSS) into a single file.
+        // This lets it get loaded in parallel with the JS load/parse
         new ExtractTextPlugin(namePattern('res/[name].[hash].css')),
         // DefinePlugin can replace content in the loaded JS modules with new text.
         // Note that in production builds, JS minification will remove any code that is put
@@ -117,7 +120,6 @@ if(PRODUCTION_BUILD) {
             analyzerMode: 'static',
         }));
     }
-
 } else {
     config.devtool = 'source-map';
     config.devServer = {
@@ -129,6 +131,7 @@ if(PRODUCTION_BUILD) {
                 target: 'http://localhost:8000',
             }
         },
+        // Emulate actual deployment env
         publicPath: '/kompomaatti/',
     };
 }
