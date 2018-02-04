@@ -5,11 +5,8 @@ import _orderBy from 'lodash/orderBy';
 import { ICompoEntry } from 'src/api/models';
 import globalState from 'src/state';
 
-import template from './compo-entries.html';
-
 
 @Component({
-    template,
     props: {
         compoId: Number,
     },
@@ -46,5 +43,21 @@ export default class CompoEntries extends Vue {
 
     getEntryPath(entry) {
         return this.$route.path + 'entries/' + entry.id + '/';
+    }
+
+    render(h) {
+        const entries = this.allEntriesSorted;
+        return (
+            <ul>
+                {entries && entries.map(entry => (
+                    <li>
+                        {entry.rank ? entry.rank + '. ' : ''}
+                        <router-link to={this.getEntryPath(entry)}>
+                            {entry.name}
+                        </router-link> - {entry.creator}
+                    </li>
+                ))}
+            </ul>
+        );
     }
 }

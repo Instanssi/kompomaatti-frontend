@@ -3,17 +3,10 @@ import Component from 'vue-class-component';
 
 import { IEvent, PrimaryKey } from 'src/api/models';
 import globalState from 'src/state';
-import Time from 'src/common/time';
-
-import template from './event.html';
+import { Time } from 'src/common/time';
 
 
-@Component({
-    template,
-    components: {
-        ...Time,
-    },
-})
+@Component
 export default class EventView extends Vue {
     globalState = globalState;
     isLoading = false;
@@ -47,5 +40,20 @@ export default class EventView extends Vue {
         }
         this.isLoading = false;
         return this.event;
+    }
+
+    render(h) {
+        const { event } = this;
+        return (
+            <div class="event-view">
+                {event && <div class="event-title">
+                    <h1>{ event.name }</h1>
+                    <p>
+                        <Time value={event.date} format="LL" />
+                    </p>
+                </div>}
+                <router-view></router-view>
+            </div>
+        );
     }
 }

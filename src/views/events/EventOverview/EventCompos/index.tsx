@@ -4,16 +4,13 @@ import Component from 'vue-class-component';
 import { ICompo } from 'src/api/models';
 import globalState from 'src/state';
 
-import template from './event-compos.html';
-
 
 @Component({
-    template,
     props: {
         eventId: Number,
     },
 })
-export default class EventCompos extends Vue {
+export default class EventCompos extends Vue<{ eventId: number }> {
     globalState = globalState;
     compos: ICompo[] = [];
     lastError: any;
@@ -27,7 +24,7 @@ export default class EventCompos extends Vue {
         const { api } = this.globalState;
         this.isPending = true;
         try {
-            this.compos = await api.compos.list({ event: this.$props.eventId });
+            this.compos = await api.compos.list({ event: this.eventId });
             this.lastError = null;
         } catch (error) {
             this.lastError = error;
@@ -37,5 +34,20 @@ export default class EventCompos extends Vue {
 
     getCompoPath(compo) {
         return this.$route.path + 'compos/' + compo.id + '/';
+    }
+
+    render(h) {
+        const { compos } = this;
+        return (
+            <ul>
+                {compos.map(compo => (
+                    <li>
+                        <router-link to={this.getCompoPath(compo)}>
+                            {compo.name}
+                        </router-link>
+                    </li>
+                ))}
+            </ul>
+        );
     }
 }

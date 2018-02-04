@@ -5,12 +5,10 @@ import _orderBy from 'lodash/orderBy';
 import { IEvent } from 'src/api/models';
 import globalState from 'src/state';
 
-import template from './events-list-view.html';
 
+const { translate } = globalState;
 
-@Component({
-    template,
-})
+@Component
 export default class EventsListView extends Vue {
     globalState = globalState;
     isPending = false;
@@ -36,5 +34,23 @@ export default class EventsListView extends Vue {
             this.lastError = error;
         }
         this.isPending = false;
+    }
+
+    render(h) {
+        const { events } = this;
+        return (
+            <div>
+                <h1>{translate('events.title')}</h1>
+                <ul>
+                    {events.map(event => (
+                        <li>
+                            <router-link to={'/events/' + event.id + '/'}>
+                                {event.name}
+                            </router-link>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        );
     }
 }

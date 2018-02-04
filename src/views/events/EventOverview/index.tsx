@@ -2,25 +2,17 @@ import Vue from 'vue';
 import Component from 'vue-class-component';
 
 import globalState from 'src/state';
-import Time from 'src/common/time';
 
 import EventCompos from './EventCompos';
 import EventCompetitions from './EventCompetitions';
 import EventProgramme from './EventProgramme';
 
-import template from './event-overview.html';
 import { IEvent, PrimaryKey } from 'src/api/models';
 
 
-@Component({
-    template,
-    components: {
-        ...Time,
-        EventCompos,
-        EventCompetitions,
-        EventProgramme,
-    },
-})
+const { translate } = globalState;
+
+@Component
 export default class EventOverview extends Vue {
     globalState = globalState;
     isPending = false;
@@ -48,5 +40,21 @@ export default class EventOverview extends Vue {
             this.lastError = error;
         }
         this.isPending = false;
+    }
+
+    render(h) {
+        const { eventId } = this;
+        return (
+            <div class="event-overview">
+                <h2>{translate('event.compos')}</h2>
+                <EventCompos eventId={eventId} />
+
+                <h2>{translate('event.competitions')}</h2>
+                <EventCompetitions eventId={eventId} />
+
+                <h2>{translate('event.programme')}</h2>
+                <EventProgramme eventId={eventId} />
+            </div>
+        );
     }
 }

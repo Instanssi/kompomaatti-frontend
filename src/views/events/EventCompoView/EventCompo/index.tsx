@@ -4,19 +4,10 @@ import Component from 'vue-class-component';
 import { ICompo } from 'src/api/models';
 import globalState from 'src/state';
 
-// import CompoEntries from '../CompoOverview/CompoEntries';
-import Time from 'src/common/time';
-
-// import template from './event-compo-view.html';
+import { Time } from 'src/common/time';
 
 
-@Component({
-    // template,
-    components: {
-        // CompoEntries,
-        ...Time,
-    },
-})
+@Component
 export default class EventCompo extends Vue {
     globalState = globalState;
     isPending = false;
@@ -57,7 +48,7 @@ export default class EventCompo extends Vue {
             <div class="event-compo">
                 {compo && <div class="compo-title">
                     <h2>{compo.name}</h2>
-                    <p><i-time value={compo.compo_start} /></p>
+                    <p><Time value={compo.compo_start} /></p>
                 </div>}
                 <router-view />
             </div>

@@ -36,6 +36,8 @@ const Time = Vue.extend({
     },
 });
 
+export { Time };
+
 export default {
     'i-time': Time,
 };

@@ -2,6 +2,7 @@ import _get from 'lodash/get';
 import _template from 'lodash/template';
 import InstanssiREST from '../api';
 import i18n from '../i18n';
+import bind from 'lodash-decorators/bind';
 
 import config from 'src/config';
 import { IUser } from 'src/api/models';
@@ -73,6 +74,7 @@ class GlobalState {
      * @param {object} [values] - Optional arguments for translation (spec pending)
      * @returns {string} - Translated text
      */
+    @bind()
     translate(name: string, values?: {[key: string]: string}): string {
         const text = _get(this.translation, name, name);
         // TODO: Spec pluralisation, etc.

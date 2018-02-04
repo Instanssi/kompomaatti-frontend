@@ -5,18 +5,12 @@ import { ICompo, PrimaryKey } from 'src/api/models';
 import globalState from 'src/state';
 
 import CompoEntries from './CompoEntries';
-import Time from 'src/common/time';
-
-import template from './compo-overview.html';
 
 
-@Component({
-    template,
-    components: {
-        CompoEntries,
-        ...Time,
-    },
-})
+// FIXME: Come up with a shorter name for this for convenience? "L" ?
+const { translate } = globalState;
+
+@Component
 export default class CompoOverview extends Vue {
     globalState = globalState;
     compo: ICompo | null = null;
@@ -39,9 +33,28 @@ export default class CompoOverview extends Vue {
         try {
             this.compo = await api.compos.get(eventId);
             this.lastError = null;
-        } catch(error) {
+        } catch (error) {
             this.lastError = error;
         }
         this.isPending = false;
+    }
+
+    render(h) {
+        const { compo } = this;
+        if (!compo) {
+            return null;
+        }
+        return (
+            <div class="event-compo-overview">
+                <div class="compo-description">
+                    <h3>{translate('compo.description')}</h3>
+                    <div domPropsInnerHTML={compo.description} />
+                </div>
+                <div class="compo-entries">
+                    <h3>{translate('compo.entries')}</h3>
+                    <CompoEntries compoId={compo.id} />
+                </div>
+            </div>
+        );
     }
 }
