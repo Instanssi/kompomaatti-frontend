@@ -14,7 +14,6 @@ import i18nComponents from 'src/common/i18n';
 import layoutComponents from 'src/layout';
 import listComponents from 'src/common/list';
 
-console.info('Starting app with routes:', routes);
 
 (window as any).BUILD_ID = process.env.BUILD_ID;
 
@@ -25,7 +24,7 @@ Vue.use(VueRouter);
 Vue.component('i-tl', i18nComponents['i-tl']);
 
 // Same for the translation filter.
-Vue.filter('translate', function(key, values) {
+Vue.filter('translate', (key, values) => {
     return globalState.translate(key, values);
 });
 
@@ -33,7 +32,7 @@ Object.keys(listComponents).forEach(key => {
     Vue.component(key, listComponents[key]);
 });
 
-new Vue({
+(window as any)._app = new Vue({
     el: '#app',
     router,
     components: {
