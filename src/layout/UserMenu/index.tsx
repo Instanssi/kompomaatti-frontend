@@ -1,10 +1,12 @@
 import Vue from 'vue';
+import Component from 'vue-class-component';
 
 import globalState from 'src/state';
 
 
 const { translate } = globalState;
 
+@Component
 export default class UserMenu extends Vue {
     globalState = globalState;
 

@@ -6,11 +6,14 @@ import 'moment/locale/fi';
 import './index.scss';
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import template from './index.html';
 
 import routes from './views';
 import globalState from 'src/state';
-import layoutComponents from 'src/layout';
+import {
+    Header,
+    Footer,
+    Breadcrumbs,
+} from 'src/layout';
 import listComponents from 'src/common/list';
 
 
@@ -30,11 +33,23 @@ Object.keys(listComponents).forEach(key => {
 (window as any)._app = new Vue({
     el: '#app',
     router,
-    components: {
-        ...layoutComponents,
-    },
     data: {
+        // Can we just provide this?
+        // https://medium.com/@znck/provide-inject-in-vue-2-2-b6473a7f7816
         globalState,
     },
-    template,
+    render(h) {
+        return (
+            <div class="container">
+                <div id="top" class="app-wrap">
+                    <Header />
+                    <main class="p-3">
+                        <Breadcrumbs />
+                        <router-view />
+                    </main>
+                    <Footer />
+                </div>
+            </div>
+        );
+    },
 });

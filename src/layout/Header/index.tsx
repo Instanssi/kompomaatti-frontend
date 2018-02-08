@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import Component from 'vue-class-component';
 
 import globalState from 'src/state';
 
@@ -8,6 +9,7 @@ import LanguageSwitch from 'src/common/i18n/LanguageSwitch';
 
 const { translate } = globalState;
 
+@Component
 export default class Header extends Vue {
     render(h) {
         return (
@@ -24,9 +26,6 @@ export default class Header extends Vue {
                     <ul class="nav navbar-nav">
                         <router-link tag="li" to="/events/">
                             <a href="#">{translate('nav.events')}</a>
-                        </router-link>
-                        <router-link tag="li" to="/compos/">
-                            <a href="#">{translate('nav.compos')}</a>
                         </router-link>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">

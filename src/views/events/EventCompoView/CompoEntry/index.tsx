@@ -32,7 +32,7 @@ export default class CompoEntry extends Vue {
         const { entryId } = this;
 
         if (!entryId) {
-            throw new Error('entryId not set!')
+            throw new Error('entryId not set!');
         }
 
         this.isPending = true;

@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import Component from 'vue-class-component';
 import { RouteRecord } from 'vue-router/types/router';
 
 import globalState from 'src/state';
@@ -10,6 +11,7 @@ interface IRouteInfo {
     params: any;
 }
 
+@Component
 export default class Breadcrumbs extends Vue {
     lastMatch = [] as any[];
     lastParams = {} as any;
@@ -46,7 +48,7 @@ export default class Breadcrumbs extends Vue {
                 return globalState.translate(title.key, title.values);
             }
             return title;
-        }
+        };
 
         return viewTitle ? {
             // FIXME: This will translate non-translation keys

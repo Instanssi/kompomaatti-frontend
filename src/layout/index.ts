@@ -1,9 +1,3 @@
-import Header from './header';
-import Footer from './footer';
-import Breadcrumbs from './Breadcrumbs';
-
-export default {
-    'k-header': Header,
-    'k-footer': Footer,
-    'k-crumbs': Breadcrumbs,
-};
+export { default as Header } from './header';
+export { default as Footer } from './footer';
+export { default as Breadcrumbs } from './Breadcrumbs';
