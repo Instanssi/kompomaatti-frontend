@@ -18,12 +18,12 @@ export default class CompoEntry extends Vue {
         this.refresh();
     }
 
-    get entryId(): number | null {
+    get entryId() {
         const { params } = this.$route;
         return Number.parseInt(params.eid) || null;
     }
 
-    get viewTitle(): string {
+    get viewTitle() {
         const { entry } = this;
         return entry && entry.name || '(unnamed entry)';
     }

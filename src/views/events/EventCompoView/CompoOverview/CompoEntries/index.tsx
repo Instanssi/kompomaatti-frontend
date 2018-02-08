@@ -11,7 +11,7 @@ import globalState from 'src/state';
         compoId: Number,
     },
 })
-export default class CompoEntries extends Vue {
+export default class CompoEntries extends Vue<{ compoId: number }> {
     globalState = globalState;
     isPending = false;
     lastError: any;
@@ -33,7 +33,7 @@ export default class CompoEntries extends Vue {
         const { api } = this.globalState;
         this.isPending = true;
         try {
-            this.entries = await api.compoEntries.list({ compo: this.$props.compoId });
+            this.entries = await api.compoEntries.list({ compo: this.compoId });
             this.lastError = null;
         } catch (error) {
             this.lastError = error;

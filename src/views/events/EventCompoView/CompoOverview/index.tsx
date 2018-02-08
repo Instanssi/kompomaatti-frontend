@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
 
-import { ICompo, PrimaryKey } from 'src/api/models';
+import { ICompo } from 'src/api/models';
 import globalState from 'src/state';
 
 import CompoEntries from './CompoEntries';
@@ -21,7 +21,7 @@ export default class CompoOverview extends Vue {
         this.refresh();
     }
 
-    get eventId(): PrimaryKey {
+    get eventId() {
         return Number.parseInt(this.$route.params.cid, 10);
     }
 

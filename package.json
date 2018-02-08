@@ -14,6 +14,7 @@
     "dependencies": {
         "bootstrap-sass": "~3.3.7",
         "font-awesome": "~4.7.0",
+        "jest": "~22.1.4",
         "lodash": "~4.17.5",
         "lodash-decorators": "~4.5.0",
         "moment": "~2.20.1",
@@ -24,12 +25,15 @@
         "vue-router": "~3.0.1"
     },
     "devDependencies": {
+        "@types/jest": "~22.1.1",
         "@types/lodash": "~4.14.100",
+        "@vue/test-utils": "~1.0.0-beta.11",
         "awesome-typescript-loader": "~3.4.1",
         "babel-core": "~6.26.0",
         "babel-eslint": "~8.2.1",
         "babel-loader": "~7.1.2",
         "babel-helper-vue-jsx-merge-props": "~2.0.3",
+        "babel-plugin-dynamic-import-node": "~1.2.0",
         "babel-plugin-syntax-dynamic-import": "~6.18.0",
         "babel-plugin-syntax-jsx": "~6.18.0",
         "babel-plugin-transform-class-properties": "~6.24.1",
@@ -49,7 +53,9 @@
         "sass-loader": "~6.0.6",
         "style-loader": "~0.20.1",
         "tslint": "~5.9.1",
+        "ts-jest": "~22.0.3",
         "typescript": "~2.6.2",
+        "vue-template-compiler": "~2.5.13",
         "webpack": "~3.10.0",
         "webpack-bundle-analyzer": "~2.9.2",
         "webpack-dev-server": "~2.11.1"

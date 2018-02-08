@@ -11,5 +11,15 @@
         "transform-object-rest-spread",
         "transform-class-properties",
         "syntax-dynamic-import"
-    ]
+    ],
+    "env": {
+        "test": {
+            "plugins": [
+                "transform-vue-jsx",
+                "transform-object-rest-spread",
+                "transform-class-properties",
+                "dynamic-import-node"
+            ]
+        }
+    }
 }

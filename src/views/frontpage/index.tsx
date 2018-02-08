@@ -20,7 +20,7 @@ export class FrontpageView extends Vue {
 
     render(h) {
         return (
-            <div>
+            <div class="frontpage-view">
                 <h1>Kompomaatti</h1>
                 <p>
                     {translate('dashboard.welcome')}

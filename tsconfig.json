@@ -6,8 +6,7 @@
         "jsx": "preserve",
         "lib": [
             "dom",
-            "es6",
-            "es2015"
+            "es6"
         ],
         "module": "esnext",
         "moduleResolution": "node",

@@ -32,6 +32,10 @@ export default class BaseAPI<ItemType = any> {
      * @returns esponse
      */
     protected fetch<T = any>(method: string, url: string, query?, payload?): Promise<T> {
+        if (process.env.NODE_ENV === 'test') {
+            throw new Error('Unmocked request: ' + method + ' ' + url);
+        }
+
         const fetchImpl = this.config.fetch || fetch;
 
         return fetchImpl(this.encodeQuery(url, query), {
