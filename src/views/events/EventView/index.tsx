@@ -52,7 +52,7 @@ export default class EventView extends Vue {
                         <Time value={event.date} format="LL" />
                     </p>
                 </div>}
-                <router-view></router-view>
+                <router-view />
             </div>
         );
     }

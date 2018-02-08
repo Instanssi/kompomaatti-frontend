@@ -30,7 +30,7 @@ export default class EventsListView extends Vue {
             const events = await api.events.list();
             this.events = _orderBy(events, event => event.date, 'desc');
             this.lastError = null;
-        } catch(error) {
+        } catch (error) {
             this.lastError = error;
         }
         this.isPending = false;
@@ -39,7 +39,7 @@ export default class EventsListView extends Vue {
     render(h) {
         const { events } = this;
         return (
-            <div>
+            <div class="events-list-view">
                 <h1>{translate('events.title')}</h1>
                 <ul>
                     {events.map(event => (

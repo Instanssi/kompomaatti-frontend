@@ -3,6 +3,7 @@
     "defaultSeverity": "warning",
     "rules": {
         "arrow-parens": false,
+        "indent": [true, "spaces", 4],
         "jsx-boolean-value": false,
         "jsx-no-multiline-js": false,
         "max-classes-per-file": false,

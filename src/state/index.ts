@@ -11,7 +11,7 @@ import { IUser } from 'src/api/models';
 const { DEFAULT_LOCALE } = config;
 const api = new InstanssiREST(config.API_URL);
 
-if(process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === 'development') {
     (window as any)._api = api;
 }
 
@@ -22,7 +22,7 @@ if(process.env.NODE_ENV === 'development') {
 
 
 
-//FIXME: Save language in localstorage for now
+// FIXME: Save language in localstorage for now
 
 
 
@@ -32,10 +32,8 @@ if(process.env.NODE_ENV === 'development') {
 
 
 /**
- * @typedef {object} LoginRequest
- * @prop {string} username - User name
- * @prop {string} password - Password
-*/
+ * Application-wide state.
+ */
 class GlobalState {
     /** Current user, if known. */
     user: IUser | null = null;
@@ -69,16 +67,16 @@ class GlobalState {
     }
 
     /**
-     * This should be the only place where we access the translations.
-     * @param {string} name - Translation name, e.g. 'user.firstName'
-     * @param {object} [values] - Optional arguments for translation (spec pending)
-     * @returns {string} - Translated text
+     * The one and only way to get translated text.
+     * @param name Translation name, e.g. 'user.firstName'
+     * @param values Optional arguments for translation (spec pending)
+     * @returns Translated text string
      */
     @bind()
     translate(name: string, values?: {[key: string]: string}): string {
         const text = _get(this.translation, name, name);
         // TODO: Spec pluralisation, etc.
-        if(values) {
+        if (values) {
             return _template(text)(values);
         }
         return text;
@@ -86,7 +84,7 @@ class GlobalState {
 
     /**
      * Check for existing session, assign user, fetch translations before continuing.
-     * @returns {Promise.<object>} - User profile after session check
+     * @returns User profile after session check
      */
     async continueSession() {
         return this.setUser(await api.currentUser.get());
@@ -94,18 +92,18 @@ class GlobalState {
 
     /**
      * Update the current user's language. May take a moment if the user is not anon.
-     * @param {string} languageCode
+     * @param languageCode
      */
-    async setUserLanguage(languageCode) {
+    async setUserLanguage(languageCode: string) {
         // FIXME: Update user remote profile if non-anon (= has id)
         // console.debug('setting user language to:', languageCode);
         this.language = await this.findLanguage(languageCode);
-        return ;
+        return;
     }
 
     /**
-     * Assign a new session user and fetch appropriate language files.
-     * @param {Object} user - User profile.
+     * Assign a new session user.
+     * @param user User profile.
      * @returns {Promise.<Object>} - Same user profile, after loading language files.
      */
     private async setUser(user: IUser) {
@@ -118,13 +116,13 @@ class GlobalState {
      * Try to find a matching language and switch to it.
      * Returns whatever lang key matched closely enough (e.g. 'en' may map to 'en-GB').
      */
-    private async findLanguage(code): Promise<string> {
+    private async findLanguage(code: string): Promise<string> {
         const getTranslation = i18n[code];
-        if(getTranslation) {
+        if (getTranslation) {
             try {
                 this.translation = await getTranslation();
                 // console.debug('set translation to:', this.translation);
-            } catch(e) {
+            } catch (e) {
                 console.warn('Unable to load translation:', e);
             }
         } else {

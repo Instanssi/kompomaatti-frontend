@@ -3,6 +3,9 @@ module.exports = {
         "^.+\\.tsx?$": "ts-jest"
     },
     testRegex: "(/__tests__/.*|(\\.|/)(test))\\.(jsx?|tsx?)$",
+    // Automatically reset mocks between tests. Avoids some boilerplate in test suites.
+    resetMocks: true,
+    // Importing options
     moduleDirectories: [".", "node_modules"],
     moduleFileExtensions: [
         "ts",

@@ -7,6 +7,9 @@ import globalState from 'src/state';
 import { Time } from 'src/common/time';
 
 
+/**
+ * Displays details of a single compo within an event.
+ */
 @Component
 export default class EventCompo extends Vue {
     globalState = globalState;

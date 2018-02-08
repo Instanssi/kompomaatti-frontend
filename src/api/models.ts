@@ -69,8 +69,8 @@ export interface ICompo {
     show_voting_results: boolean;
     entry_view_type: number;
     is_votable: boolean;
-    is_imagefile_allowed: true;
-    is_imagefile_required: true;
+    is_imagefile_allowed: boolean;
+    is_imagefile_required: boolean;
 }
 
 export interface ICompoEntry {
