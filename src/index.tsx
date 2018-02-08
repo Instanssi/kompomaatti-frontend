@@ -17,6 +17,7 @@ import {
 import listComponents from 'src/common/list';
 
 
+// Provide Webpack build id in the window env
 (window as any).BUILD_ID = process.env.BUILD_ID;
 
 const router = new VueRouter({ routes });
@@ -34,7 +35,7 @@ Object.keys(listComponents).forEach(key => {
     el: '#app',
     router,
     data: {
-        // Can we just provide this?
+        // Can we just "provide" this?
         // https://medium.com/@znck/provide-inject-in-vue-2-2-b6473a7f7816
         globalState,
     },
