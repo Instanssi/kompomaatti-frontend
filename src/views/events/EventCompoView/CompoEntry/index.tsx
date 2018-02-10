@@ -10,7 +10,6 @@ const { translate } = globalState;
 
 @Component
 export default class CompoEntry extends Vue {
-    globalState = globalState;
     entry: ICompoEntry | null = null;
     isPending = false;
     lastError: any;
@@ -38,7 +37,7 @@ export default class CompoEntry extends Vue {
 
         this.isPending = true;
         try {
-            this.entry = await this.globalState.api.compoEntries.get(entryId);
+            this.entry = await globalState.api.compoEntries.get(entryId);
             this.lastError = null;
         } catch (error) {
             this.lastError = error;

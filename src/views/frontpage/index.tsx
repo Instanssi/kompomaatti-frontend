@@ -8,8 +8,6 @@ const { translate } = globalState;
 
 @Component
 export class FrontpageView extends Vue {
-    globalState = globalState;
-
     get currentUser() {
         return globalState.user;
     }

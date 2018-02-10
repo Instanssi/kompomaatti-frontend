@@ -10,7 +10,6 @@ const { translate } = globalState;
 
 @Component
 export default class EventsListView extends Vue {
-    globalState = globalState;
     isPending = false;
     lastError: any;
     events: IEvent[] = [];
@@ -24,7 +23,7 @@ export default class EventsListView extends Vue {
     }
 
     async refresh() {
-        const { api } = this.globalState;
+        const { api } = globalState;
         this.isPending = true;
         try {
             const events = await api.events.list();

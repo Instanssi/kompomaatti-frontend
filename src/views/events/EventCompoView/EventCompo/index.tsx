@@ -12,7 +12,6 @@ import { Time } from 'src/common/time';
  */
 @Component
 export default class EventCompo extends Vue {
-    globalState = globalState;
     isPending = false;
     lastError: any;
     compo: ICompo | null = null;
@@ -31,7 +30,7 @@ export default class EventCompo extends Vue {
     }
 
     async refresh() {
-        const { api } = this.globalState;
+        const { api } = globalState;
         const id = Number.parseInt(this.$route.params.cid, 10);
 
         this.isPending = true;

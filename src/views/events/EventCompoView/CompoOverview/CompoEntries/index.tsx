@@ -12,7 +12,6 @@ import globalState from 'src/state';
     },
 })
 export default class CompoEntries extends Vue<{ compoId: number }> {
-    globalState = globalState;
     isPending = false;
     lastError: any;
     entries: ICompoEntry[] | null = null;
@@ -30,7 +29,7 @@ export default class CompoEntries extends Vue<{ compoId: number }> {
     }
 
     async refresh() {
-        const { api } = this.globalState;
+        const { api } = globalState;
         this.isPending = true;
         try {
             this.entries = await api.compoEntries.list({ compo: this.compoId });

@@ -12,7 +12,6 @@ const { translate } = globalState;
 
 @Component
 export default class CompoOverview extends Vue {
-    globalState = globalState;
     compo: ICompo | null = null;
     isPending = false;
     lastError: any;
@@ -26,7 +25,7 @@ export default class CompoOverview extends Vue {
     }
 
     async refresh() {
-        const { api } = this.globalState;
+        const { api } = globalState;
         const { eventId } = this;
 
         this.isPending = true;

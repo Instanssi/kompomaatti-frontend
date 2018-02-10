@@ -8,8 +8,6 @@ const { translate } = globalState;
 
 @Component
 export default class UserMenu extends Vue {
-    globalState = globalState;
-
     get user() {
         return globalState.user;
     }

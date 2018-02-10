@@ -143,6 +143,4 @@ class GlobalState extends Vue {
     }
 }
 
-(window as any)._globalState = new GlobalState();
-
 export default new GlobalState();

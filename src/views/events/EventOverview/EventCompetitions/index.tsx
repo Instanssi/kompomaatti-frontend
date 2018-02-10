@@ -12,7 +12,6 @@ import globalState from 'src/state';
     },
 })
 export default class EventCompetitions extends Vue<{ eventId: number }> {
-    globalState = globalState;
     competitions: ICompetition[] = [];
     lastError: any;
     isPending = false;
@@ -22,7 +21,7 @@ export default class EventCompetitions extends Vue<{ eventId: number }> {
     }
 
     async refresh() {
-        const { api } = this.globalState;
+        const { api } = globalState;
         this.isPending = true;
         try {
             this.competitions = await api.competitions.list({

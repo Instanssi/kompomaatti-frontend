@@ -14,7 +14,6 @@ const { translate } = globalState;
 
 @Component
 export default class EventOverview extends Vue {
-    globalState = globalState;
     isPending = false;
     lastError: any;
     event: IEvent | null = null;
@@ -29,7 +28,7 @@ export default class EventOverview extends Vue {
     }
 
     async refresh() {
-        const { api } = this.globalState;
+        const { api } = globalState;
         const id = Number.parseInt(this.$route.params.id, 10);
 
         this.isPending = true;

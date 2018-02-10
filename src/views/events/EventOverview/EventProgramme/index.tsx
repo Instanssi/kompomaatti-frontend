@@ -13,7 +13,6 @@ import globalState from 'src/state';
     },
 })
 export default class EventProgramme extends Vue<{ eventId: number }> {
-    globalState = globalState;
     isPending = false;
     programmeEvents = [] as IProgrammeEvent[];
     lastError: any;
@@ -23,7 +22,7 @@ export default class EventProgramme extends Vue<{ eventId: number }> {
     }
 
     async refresh() {
-        const { api } = this.globalState;
+        const { api } = globalState;
         this.isPending = true;
         try {
             const items = await api.programme.list({ event: this.eventId });

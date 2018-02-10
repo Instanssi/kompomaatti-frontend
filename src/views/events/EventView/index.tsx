@@ -8,7 +8,6 @@ import { Time } from 'src/common/time';
 
 @Component
 export default class EventView extends Vue {
-    globalState = globalState;
     isLoading = false;
     event: IEvent | null = null;
 
@@ -27,7 +26,7 @@ export default class EventView extends Vue {
     }
 
     async refresh() {
-        const { api } = this.globalState;
+        const { api } = globalState;
         const id = Number.parseInt(this.$route.params.id, 10);
 
         this.isLoading = true;
