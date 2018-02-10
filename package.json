@@ -54,7 +54,7 @@
         "style-loader": "~0.20.1",
         "tslint": "~5.9.1",
         "ts-jest": "~22.0.3",
-        "typescript": "~2.6.2",
+        "typescript": "~2.7.1",
         "vue-template-compiler": "~2.5.13",
         "webpack": "~3.10.0",
         "webpack-bundle-analyzer": "~2.9.2",

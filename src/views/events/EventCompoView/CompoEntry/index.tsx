@@ -7,6 +7,7 @@ import globalState from 'src/state';
 
 const { translate } = globalState;
 
+
 @Component
 export default class CompoEntry extends Vue {
     globalState = globalState;

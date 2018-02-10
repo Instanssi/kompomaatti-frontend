@@ -1,4 +1,5 @@
 export default {
-    en: () => import('./en.json'),
-    fi: () => import('./fi.json'),
+    'en-US': () => import('./en-US.json'),
+    'fi-FI': () => import('./fi-FI.json'),
 };
+

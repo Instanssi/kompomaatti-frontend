@@ -14,7 +14,6 @@ import {
     Footer,
     Breadcrumbs,
 } from 'src/layout';
-import listComponents from 'src/common/list';
 
 
 // Provide Webpack build id in the window env
@@ -27,9 +26,6 @@ Vue.filter('translate', (key, values) => {
     return globalState.translate(key, values);
 });
 
-Object.keys(listComponents).forEach(key => {
-    Vue.component(key, listComponents[key]);
-});
 
 (window as any)._app = new Vue({
     el: '#app',

@@ -4,7 +4,7 @@ import Component from 'vue-class-component';
 import globalState from 'src/state';
 
 import UserMenu from '../UserMenu';
-import LanguageSwitch from 'src/common/i18n/LanguageSwitch';
+import LanguageSwitch from '../LanguageSwitch';
 
 
 const { translate } = globalState;

@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Component from 'vue-class-component';
 import _orderBy from 'lodash/orderBy';
 
+import { NoResults } from 'src/common';
 import { IProgrammeEvent } from 'src/api/models';
 import globalState from 'src/state';
 
@@ -43,7 +44,7 @@ export default class EventProgramme extends Vue<{ eventId: number }> {
                     <li>{event.title}</li>
                 ))}
                 {!programmeEvents.length && (
-                    <i-no-results />
+                    <NoResults />
                 )}
             </ul>
         );

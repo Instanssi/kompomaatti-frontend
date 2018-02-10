@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
 
+import { NoResults } from 'src/common';
 import { ICompetition } from 'src/api/models';
 import globalState from 'src/state';
 
@@ -41,7 +42,7 @@ export default class EventCompetitions extends Vue<{ eventId: number }> {
                 {competitions.map(competition => (
                     <li>{ competition.name }</li>
                 ))}
-                {!competitions.length && <i-no-results />}
+                {!competitions.length && <NoResults />}
             </ul>
         );
     }

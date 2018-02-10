@@ -38,7 +38,7 @@ class GlobalState {
     /** Current user, if known. */
     user: IUser | null = null;
     /** Current language. */
-    language = 'en';
+    language = 'en-US';
     /** Current translation object. */
     translation: any = { };
 
@@ -59,11 +59,11 @@ class GlobalState {
 
     get momentLocale() {
         // TODO: Are lang codes always the same as moment locales?
-        return this.language || DEFAULT_LOCALE;
+        return this.language;
     }
 
     get languageCode() {
-        return this.language || DEFAULT_LOCALE;
+        return this.language;
     }
 
     /**
