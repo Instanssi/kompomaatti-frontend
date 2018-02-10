@@ -63,6 +63,11 @@ export default class CompoOverview extends Vue {
         }
         return (
             <div class="event-compo-overview">
+                <div class="pull-right">
+                    <div>(my entries)</div>
+                    <div>TODO: Add/edit/vote timeframe</div>
+                    <div>Action buttons (VOTE, EDIT, ADD)</div>
+                </div>
                 <div class="compo-description">
                     <h3>{translate('compo.description')}</h3>
                     <div domPropsInnerHTML={compo.description} />
