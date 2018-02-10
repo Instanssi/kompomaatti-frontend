@@ -107,5 +107,10 @@
     "user": {
         "password": "Salasana",
         "username": "Käyttäjätunnus"
+    },
+    "userProfile": {
+        "title": "Käyttäjäprofiili",
+        "myCompetitions": "Omat kilpailut",
+        "myEntries": "Omat kompoentryt"
     }
 }

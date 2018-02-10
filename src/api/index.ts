@@ -22,6 +22,8 @@ export default class InstanssiREST {
     compoEntries: CompoEntriesAPI;
     competitionParticipations: CompetitionParticipationsAPI;
     songs: SongsAPI;
+    userCompoEntries: UserCompoEntriesAPI;
+    userCompetitionParticipations: UserCompetitionParticipationsAPI;
 
     constructor(baseUrl: string, config = {}) {
         this.currentUser = new SessionAPI(baseUrl, config);
@@ -31,6 +33,8 @@ export default class InstanssiREST {
         this.programme = new ProgrammeAPI(baseUrl, config);
         this.compoEntries = new CompoEntriesAPI(baseUrl, config);
         this.competitionParticipations = new CompetitionParticipationsAPI(baseUrl, config);
+        this.userCompoEntries = new UserCompoEntriesAPI(baseUrl, config);
+        this.userCompetitionParticipations = new UserCompetitionParticipationsAPI(baseUrl, config);
         this.songs = new SongsAPI(baseUrl, config);
     }
 }
@@ -83,9 +87,31 @@ class CompoEntriesAPI extends BaseAPI<ICompoEntry> {
     }
 }
 
+/**
+ * API for managing the user's own compo entries.
+ *
+ * Requires an authenticated user.
+ */
+class UserCompoEntriesAPI extends BaseAPI<ICompoEntry> {
+    constructor(baseUrl, config) {
+        super(baseUrl + '/user_entries/', config);
+    }
+}
+
 class CompetitionParticipationsAPI extends BaseAPI<ICompetitionParticipation> {
     constructor(baseUrl, config) {
         super(baseUrl + '/competition_participations/', config);
+    }
+}
+
+/**
+ * API for managing the user's own competition participations.
+ *
+ * Requires an authenticated user.
+ */
+class UserCompetitionParticipationsAPI extends BaseAPI<ICompetitionParticipation> {
+    constructor(baseUrl, config) {
+        super(baseUrl + '/user_participations/', config);
     }
 }
 

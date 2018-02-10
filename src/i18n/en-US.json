@@ -63,5 +63,10 @@
     "user": {
         "password": "Password",
         "username": "User name"
+    },
+    "userProfile": {
+        "title": "User profile",
+        "myCompetitions": "My competitions",
+        "myEntries": "My entries"
     }
 }
