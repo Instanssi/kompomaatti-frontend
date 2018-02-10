@@ -3,7 +3,7 @@ import Component from 'vue-class-component';
 
 import { IEvent, PrimaryKey } from 'src/api/models';
 import globalState from 'src/state';
-import { Time } from 'src/common/time';
+import { FormatTime } from 'src/common';
 
 
 @Component
@@ -48,7 +48,7 @@ export default class EventView extends Vue {
                 {event && <div class="event-title">
                     <h1>{ event.name }</h1>
                     <p>
-                        <Time value={event.date} format="LL" />
+                        <FormatTime value={event.date} format="LL" />
                     </p>
                 </div>}
                 <router-view />

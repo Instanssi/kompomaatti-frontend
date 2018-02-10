@@ -4,7 +4,7 @@ import Component from 'vue-class-component';
 import { ICompo } from 'src/api/models';
 import globalState from 'src/state';
 
-import { Time } from 'src/common/time';
+import { FormatTime } from 'src/common';
 
 
 /**
@@ -50,7 +50,7 @@ export default class EventCompo extends Vue {
             <div class="event-compo">
                 {compo && <div class="compo-title">
                     <h2>{compo.name}</h2>
-                    <p><Time value={compo.compo_start} /></p>
+                    <p><FormatTime value={compo.compo_start} /></p>
                 </div>}
                 <router-view />
             </div>
