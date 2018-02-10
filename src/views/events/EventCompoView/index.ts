@@ -12,13 +12,13 @@ export default [
             {
                 path: '',
                 component: CompoOverview,
-                name: 'compoOverview'
+                name: 'compoOverview',
             },
             {
                 path: 'entries/:eid',
                 component: CompoEntry,
-                name: 'compoEntry'
+                name: 'compoEntry',
             },
-        ]
+        ],
     },
 ];
