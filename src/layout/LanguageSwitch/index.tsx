@@ -12,8 +12,6 @@ const TRANSLATION_NAMES = {
 
 @Component
 export default class LanguageSwitch extends Vue {
-    globalState = globalState;
-
     setLanguage(event) {
         globalState.setUserLanguage(event.target.value);
     }
