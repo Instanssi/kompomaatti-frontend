@@ -4,7 +4,7 @@ const mockEvent: IEvent = {
     id: 1,
     name: 'Intanssi 20017',
     date: '2018-02-08T20:31:43.000Z',
-    mainurl: 'http://instanssi.org/20017',
+    mainurl: 'http://intanssi.org/20017',
 };
 
 export { mockEvent };
@@ -15,11 +15,11 @@ const mockCompoEntry: ICompoEntry = {
     name: 'Stochastic Mock Coverage Tracer',
     description: '',
     creator: 'anon',
-    entryfile_url: 'http://instanssi.org/files/123.zip',
-    sourcefile_url: 'http://instanssi.org/files/123.src.zip',
-    imagefile_original_url: 'http://instanssi.org/files/123.img.jpg',
-    imagefile_thumbnail_url: 'http://instanssi.org/files/123.thumb.jpg',
-    imagefile_medium_url: 'http://instanssi.org/files/123.med.jpg',
+    entryfile_url: 'http://intanssi.org/files/123.zip',
+    sourcefile_url: 'http://intanssi.org/files/123.src.zip',
+    imagefile_original_url: 'http://intanssi.org/files/123.img.jpg',
+    imagefile_thumbnail_url: 'http://intanssi.org/files/123.thumb.jpg',
+    imagefile_medium_url: 'http://intanssi.org/files/123.med.jpg',
     youtube_url: 'http://youtube.com/foofoo',
     disqualified: false,
     disqualified_reason: '',

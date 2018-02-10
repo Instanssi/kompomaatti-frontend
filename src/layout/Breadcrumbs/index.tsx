@@ -1,20 +1,22 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
-import { RouteRecord } from 'vue-router/types/router';
+// import { RouteRecord } from 'vue-router/types/router';
 
-import globalState from 'src/state';
+// import globalState from 'src/state';
 
 
-interface IRouteInfo {
+/*interface IRouteInfo {
     title: string;
     name: string | null;
     params: any;
-}
+}*/
 
 @Component
 export default class Breadcrumbs extends Vue {
     lastMatch = [] as any[];
     lastParams = {} as any;
+
+    /*
 
     protected disposeRouterHook: any = null;
 
@@ -65,9 +67,11 @@ export default class Breadcrumbs extends Vue {
             // silly ts, this removes the nulls (items with no route title)
             .filter(r => r) as any as IRouteInfo[];
     }
-
+    */
     render(h) {
-        const { routeItems } = this;
+        return null;
+        /*
+        // const { routeItems } = this;
         return (
             <ol class="breadcrumb">
                 {routeItems.map(item => (
@@ -76,6 +80,6 @@ export default class Breadcrumbs extends Vue {
                     </li>
                 ))}
             </ol>
-        );
+        );*/
     }
 }

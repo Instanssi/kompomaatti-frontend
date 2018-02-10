@@ -22,7 +22,7 @@ const config = {
         modules: [ './', 'node_modules' ],
         extensions: ['.ts', '.tsx', '.js', '.jsx'],
         alias: {
-            'vue$': PRODUCTION_BUILD ? 'vue/dist/vue.min.js' : 'vue/dist/vue.esm.js',
+            'vue$': 'vue/dist/vue.runtime.esm.js',
         },
     },
     module: {

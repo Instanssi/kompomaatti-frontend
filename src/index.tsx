@@ -17,9 +17,6 @@ import {
     // Breadcrumbs,
 } from 'src/layout';
 
-import Router from 'vue-router';
-Router;
-
 // Provide Webpack build id in the window env
 (window as any).BUILD_ID = process.env.BUILD_ID;
 

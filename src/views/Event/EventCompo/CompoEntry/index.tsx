@@ -1,5 +1,4 @@
-import Vue from 'vue';
-import Component from 'vue-class-component';
+import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
 
 import { ICompoEntry } from 'src/api/models';
 import globalState from 'src/state';
@@ -10,6 +9,9 @@ const { translate } = globalState;
 
 @Component
 export default class CompoEntry extends Vue {
+    @Prop()
+    entryId: string;
+
     entry: ICompoEntry | null = null;
     isPending = false;
     lastError: any;
@@ -18,9 +20,13 @@ export default class CompoEntry extends Vue {
         this.refresh();
     }
 
-    get entryId() {
-        const { params } = this.$route;
-        return Number.parseInt(params.eid) || null;
+    @Watch('entryId')
+    onEntryIdChange() {
+        this.refresh();
+    }
+
+    get entryIdParsed() {
+        return Number.parseInt(this.entryId);
     }
 
     get viewTitle() {
@@ -29,15 +35,15 @@ export default class CompoEntry extends Vue {
     }
 
     async refresh() {
-        const { entryId } = this;
+        const id = this.entryIdParsed;
 
-        if (!entryId) {
-            throw new Error('entryId not set!');
+        if (!id) {
+            return;
         }
 
         this.isPending = true;
         try {
-            this.entry = await globalState.api.compoEntries.get(entryId);
+            this.entry = await globalState.api.compoEntries.get(id);
             this.lastError = null;
         } catch (error) {
             this.lastError = error;

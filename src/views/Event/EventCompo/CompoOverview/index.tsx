@@ -1,21 +1,19 @@
-import Vue from 'vue';
-import Component from 'vue-class-component';
+import { Vue, Component, Prop } from 'vue-property-decorator';
 
 import globalState from 'src/state';
 
 import CompoEntries from './CompoEntries';
+import { ICompo, IEvent } from 'src/api/models';
 
 
 // FIXME: Come up with a shorter name for this for convenience? "L" ?
 const { translate } = globalState;
 
-@Component({
-    props: {
-        event: Object,
-        compo: Object,
-    },
-})
+@Component
 export default class CompoOverview extends Vue {
+    @Prop() compo: ICompo;
+    @Prop() event: IEvent;
+
     render(h) {
         const { compo } = this.$props;
         if (!compo) {
