@@ -1,8 +1,11 @@
+import Vue from 'vue';
+import Component from 'vue-class-component';
 import _get from 'lodash/get';
 import _template from 'lodash/template';
+import bind from 'lodash-decorators/bind';
+
 import InstanssiREST from '../api';
 import i18n from '../i18n';
-import bind from 'lodash-decorators/bind';
 
 import config from 'src/config';
 import { IUser } from 'src/api/models';
@@ -29,16 +32,22 @@ if (process.env.NODE_ENV === 'development') {
 
 
 
-
-
 /**
  * Application-wide state.
+ *
+ * Declared as a Vue component to get some global observable state without extra hassle.
+ *
+ * VueX could do the job here, but it's pretty obviously stuck in the pre-ES6
+ * days and doesn't play nice with TypeScript either.
  */
-class GlobalState {
+@Component
+class GlobalState extends Vue {
     /** Current user, if known. */
     user: IUser | null = null;
+
     /** Current language. */
     language = 'en-US';
+
     /** Current translation object. */
     translation: any = { };
 
@@ -49,6 +58,7 @@ class GlobalState {
     isLoading = true;
 
     constructor() {
+        super();
         // FIXME: Try to persist the state and bring it back on reload?
         setInterval(() => {
             this.currentTime = new Date().valueOf();
@@ -132,5 +142,7 @@ class GlobalState {
         return code;
     }
 }
+
+(window as any)._globalState = new GlobalState();
 
 export default new GlobalState();
