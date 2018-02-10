@@ -1,22 +1,24 @@
-import Vue from 'vue';
-import Component from 'vue-class-component';
+import { Vue, Component, Prop } from 'vue-property-decorator';
+import { MatchFirst, Route } from 'vue-component-router';
 
-import { ICompo } from 'src/api/models';
+import { ICompo, IEvent } from 'src/api/models';
+import { FormatTime } from 'src/common';
 import globalState from 'src/state';
 
-import { FormatTime } from 'src/common';
+import CompoOverview from './CompoOverview';
 
 
 /**
  * Displays details of a single compo within an event.
  */
-@Component({
-    props: {
-        event: Object,
-        compoId: Number,
-    },
-})
+@Component
 export default class EventCompo extends Vue {
+    @Prop()
+    compoId: string;
+
+    @Prop()
+    event: IEvent;
+
     isPending = false;
     lastError: any;
     compo: ICompo | null = null;
@@ -50,14 +52,18 @@ export default class EventCompo extends Vue {
     }
 
     render(h) {
-        const { compo } = this;
+        const { compo, event } = this;
         return (
             <div class="event-compo">
                 {compo && <div class="compo-title">
                     <h2>{compo.name}</h2>
                     <p><FormatTime value={compo.compo_start} /></p>
                 </div>}
-                <router-view />
+                <MatchFirst>
+                    <Route>
+                        <CompoOverview event={event} compo={compo } />
+                    </Route>
+                </MatchFirst>
             </div>
         );
     }

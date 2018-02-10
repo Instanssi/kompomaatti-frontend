@@ -29,7 +29,7 @@ export default class CompoOverview extends Vue {
                 </div>
                 <div class="compo-entries">
                     <h3>{translate('compo.entries')}</h3>
-                    <CompoEntries compoId={compo.id} />
+                    <CompoEntries compo={compo} />
                 </div>
             </div>
         );

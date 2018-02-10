@@ -18,7 +18,6 @@ export default class EventView extends Vue {
     event: IEvent | null = null;
 
     created() {
-        console.info(EventView.name, this);
         this.refresh();
     }
 
@@ -59,11 +58,11 @@ export default class EventView extends Vue {
                     </p>
                 </div>}
                 <MatchFirst>
-                    <Route exact path="">
-                        <EventOverview />
+                    <Route path="/kompomaatti/events/:eventId/compos/:compoId">
+                        <EventCompo event={event} />
                     </Route>
-                    <Route exact path="compos/:compoId">
-                        <EventCompo event={this.event} />
+                    <Route>
+                        <EventOverview event={event} />
                     </Route>
                 </MatchFirst>
             </div>

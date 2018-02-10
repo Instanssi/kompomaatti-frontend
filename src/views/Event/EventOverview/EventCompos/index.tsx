@@ -1,16 +1,15 @@
-import Vue from 'vue';
-import Component from 'vue-class-component';
+import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
+import { RouterLink } from 'vue-component-router';
 
-import { ICompo } from 'src/api/models';
+import { ICompo, IEvent } from 'src/api/models';
 import globalState from 'src/state';
 
 
-@Component({
-    props: {
-        eventId: Number,
-    },
-})
-export default class EventCompos extends Vue<{ eventId: number }> {
+@Component
+export default class EventCompos extends Vue {
+    @Prop()
+    event: IEvent;
+
     compos: ICompo[] = [];
     lastError: any;
     isPending = false;
@@ -19,11 +18,27 @@ export default class EventCompos extends Vue<{ eventId: number }> {
         this.refresh();
     }
 
+    @Watch('event')
+    onEventIdChange(id) {
+        this.refresh();
+    }
+
+    get eventId() {
+        const { event } = this;
+        return event && event.id;
+    }
+
     async refresh() {
+        const { eventId } = this;
+        if (!eventId) {
+            return;
+        }
+
         const { api } = globalState;
         this.isPending = true;
+
         try {
-            this.compos = await api.compos.list({ event: this.eventId });
+            this.compos = await api.compos.list({ event: eventId });
             this.lastError = null;
         } catch (error) {
             this.lastError = error;
@@ -32,7 +47,7 @@ export default class EventCompos extends Vue<{ eventId: number }> {
     }
 
     getCompoPath(compo) {
-        return this.$route.path + 'compos/' + compo.id + '/';
+        return `compos/${compo.id}`;
     }
 
     render(h) {
@@ -41,9 +56,9 @@ export default class EventCompos extends Vue<{ eventId: number }> {
             <ul>
                 {compos.map(compo => (
                     <li>
-                        <router-link to={this.getCompoPath(compo)}>
+                        <RouterLink to={this.getCompoPath(compo)}>
                             {compo.name}
-                        </router-link>
+                        </RouterLink>
                     </li>
                 ))}
             </ul>

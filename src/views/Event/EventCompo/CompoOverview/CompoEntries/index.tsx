@@ -1,23 +1,33 @@
-import Vue from 'vue';
-import Component from 'vue-class-component';
+import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
+import { RouterLink } from 'vue-component-router';
+
 import _orderBy from 'lodash/orderBy';
 
-import { ICompoEntry } from 'src/api/models';
+import { ICompoEntry, ICompo } from 'src/api/models';
 import globalState from 'src/state';
 
 
-@Component({
-    props: {
-        compoId: Number,
-    },
-})
-export default class CompoEntries extends Vue<{ compoId: number }> {
+@Component
+export default class CompoEntries extends Vue {
+    @Prop()
+    compo: ICompo;
+
     isPending = false;
     lastError: any;
     entries: ICompoEntry[] | null = null;
 
     created() {
         this.refresh();
+    }
+
+    @Watch('compo')
+    onCompoChange() {
+        this.refresh();
+    }
+
+    get compoId() {
+        const { compo } = this;
+        return compo && compo.id;
     }
 
     get allEntriesSorted() {
@@ -29,6 +39,12 @@ export default class CompoEntries extends Vue<{ compoId: number }> {
     }
 
     async refresh() {
+        const { compoId } = this;
+
+        if (!compoId) {
+            return;
+        }
+
         const { api } = globalState;
         this.isPending = true;
         try {
@@ -41,7 +57,7 @@ export default class CompoEntries extends Vue<{ compoId: number }> {
     }
 
     getEntryPath(entry) {
-        return this.$route.path + 'entries/' + entry.id + '/';
+        return `entries/${entry.id}`;
     }
 
     render(h) {
@@ -51,9 +67,9 @@ export default class CompoEntries extends Vue<{ compoId: number }> {
                 {entries && entries.map(entry => (
                     <li>
                         {entry.rank ? entry.rank + '. ' : ''}
-                        <router-link to={this.getEntryPath(entry)}>
+                        <RouterLink to={this.getEntryPath(entry)}>
                             {entry.name}
-                        </router-link> - {entry.creator}
+                        </RouterLink> - {entry.creator}
                     </li>
                 ))}
             </ul>
