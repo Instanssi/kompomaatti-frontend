@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
+import { RouterLink } from 'vue-component-router';
 
 import globalState from 'src/state';
 
@@ -18,15 +19,15 @@ export default class Header extends Vue {
                     <button type="button" class="navbar-toggle collapsed">
                         (open)
                     </button>
-                    <router-link to="/" class="navbar-brand">
+                    <RouterLink to="/kompomaatti" class="navbar-brand">
                         Kompomaatti 2.0
-                    </router-link>
+                    </RouterLink>
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
-                        <router-link tag="li" to="/events/">
+                        <RouterLink tag="li" to="/kompomaatti/events">
                             <a href="#">{translate('nav.events')}</a>
-                        </router-link>
+                        </RouterLink>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <UserMenu />

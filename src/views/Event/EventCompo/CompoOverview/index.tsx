@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
 
-import { ICompo } from 'src/api/models';
 import globalState from 'src/state';
 
 import CompoEntries from './CompoEntries';
@@ -10,36 +9,15 @@ import CompoEntries from './CompoEntries';
 // FIXME: Come up with a shorter name for this for convenience? "L" ?
 const { translate } = globalState;
 
-@Component
+@Component({
+    props: {
+        event: Object,
+        compo: Object,
+    },
+})
 export default class CompoOverview extends Vue {
-    compo: ICompo | null = null;
-    isPending = false;
-    lastError: any;
-
-    created() {
-        this.refresh();
-    }
-
-    get eventId() {
-        return Number.parseInt(this.$route.params.cid, 10);
-    }
-
-    async refresh() {
-        const { api } = globalState;
-        const { eventId } = this;
-
-        this.isPending = true;
-        try {
-            this.compo = await api.compos.get(eventId);
-            this.lastError = null;
-        } catch (error) {
-            this.lastError = error;
-        }
-        this.isPending = false;
-    }
-
     render(h) {
-        const { compo } = this;
+        const { compo } = this.$props;
         if (!compo) {
             return null;
         }

@@ -127,9 +127,28 @@ if(PRODUCTION_BUILD) {
         host: '0.0.0.0',
         // proxy the local Instanssi server to get around CORS issues
         proxy: {
-            '/': {
+            '!/kompomaatti/**': {
                 target: 'http://localhost:8000',
             }
+        },
+        historyApiFallback: {
+            rewrites: [
+                {
+                    from: /^\/kompomaatti/,
+                    to: function(context) {
+                        // Great. The history fallback doesn't seem to handle public paths.
+                        // Handle resource paths manually then.
+                        const { pathname } = context.parsedUrl;
+                        const resIndex = pathname.indexOf('/res/');
+                        if(resIndex < 0) {
+                            return '/kompomaatti/index.html';
+                        } else {
+                            const path = '/kompomaatti' + pathname.slice(resIndex);
+                            return path;
+                        }
+                    },
+                },
+            ]
         },
         // Emulate actual deployment env
         publicPath: '/kompomaatti/',

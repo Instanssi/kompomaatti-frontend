@@ -7,7 +7,7 @@ import globalState from 'src/state';
 const { translate } = globalState;
 
 @Component
-export class FrontpageView extends Vue {
+export default class FrontPageView extends Vue {
     get currentUser() {
         return globalState.user;
     }
@@ -89,11 +89,3 @@ export class FrontpageView extends Vue {
         );
     }
 }
-
-export default [
-    {
-        path: '/',
-        component: FrontpageView,
-        name: 'frontpageView',
-    },
-];

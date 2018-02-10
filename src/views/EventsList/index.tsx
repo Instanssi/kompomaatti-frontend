@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
+import { RouterLink } from 'vue-component-router';
 import _orderBy from 'lodash/orderBy';
 
 import { IEvent } from 'src/api/models';
@@ -43,9 +44,9 @@ export default class EventsListView extends Vue {
                 <ul>
                     {events.map(event => (
                         <li>
-                            <router-link to={'/events/' + event.id + '/'}>
-                                {event.name}
-                            </router-link>
+                            <RouterLink to={'/kompomaatti/events/' + event.id + '/'}>
+                                <span>{event.name}</span>
+                            </RouterLink>
                         </li>
                     ))}
                 </ul>

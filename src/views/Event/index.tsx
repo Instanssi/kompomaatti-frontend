@@ -1,22 +1,29 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
+import { MatchFirst, Route } from 'vue-component-router';
 
 import { IEvent, PrimaryKey } from 'src/api/models';
 import globalState from 'src/state';
 import { FormatTime } from 'src/common';
 
+import EventOverview from './EventOverview';
+import EventCompo from './EventCompo';
 
-@Component
+
+@Component({
+    props: ['eventId']
+})
 export default class EventView extends Vue {
     isLoading = false;
     event: IEvent | null = null;
 
     created() {
+        console.info(EventView.name, this);
         this.refresh();
     }
 
-    get eventId(): PrimaryKey {
-        const { id } = this.$route.params;
+    get eventIdParsed(): PrimaryKey {
+        const id = this.$props.eventId;
         return Number.parseInt(id, 10);
     }
 
@@ -27,11 +34,11 @@ export default class EventView extends Vue {
 
     async refresh() {
         const { api } = globalState;
-        const id = Number.parseInt(this.$route.params.id, 10);
+        const { eventIdParsed } = this;
 
         this.isLoading = true;
         try {
-            this.event = await api.events.get(id);
+            this.event = await api.events.get(eventIdParsed);
         } catch (error) {
             // TODO: Spec how to handle errors nicely.
             this.isLoading = false;
@@ -51,7 +58,14 @@ export default class EventView extends Vue {
                         <FormatTime value={event.date} format="LL" />
                     </p>
                 </div>}
-                <router-view />
+                <MatchFirst>
+                    <Route exact path="">
+                        <EventOverview />
+                    </Route>
+                    <Route exact path="compos/:compoId">
+                        <EventCompo event={this.event} />
+                    </Route>
+                </MatchFirst>
             </div>
         );
     }

@@ -22,6 +22,7 @@
         "regenerator-runtime": "~0.11.1",
         "vue": "~2.5.13",
         "vue-class-component": "~6.1.2",
+        "vue-component-router": "~0.1.5",
         "vue-router": "~3.0.1"
     },
     "devDependencies": {
