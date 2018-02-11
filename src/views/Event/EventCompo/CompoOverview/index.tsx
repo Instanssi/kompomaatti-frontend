@@ -67,16 +67,15 @@ export default class CompoOverview extends Vue {
                     <div>(my entries)</div>
                     <div>TODO: Add/edit/vote timeframe</div>
                     <div>Action buttons (VOTE, EDIT, ADD)</div>
+                    <div class="compo-timeframe">
+                        <div>Can add entry: { this.canAddEntry ? 'yes' : 'no' }</div>
+                        <div>Can edit entry: { this.canEditEntry ? 'yes' : 'no' }</div>
+                        <div>Votable: { this.canVoteEntry ? 'yes' : 'no' }</div>
+                    </div>
                 </div>
                 <div class="compo-description">
                     <h3>{translate('compo.description')}</h3>
                     <div domPropsInnerHTML={compo.description} />
-                </div>
-                <div class="compo-timeframe">
-                    <div>Can add entry: { this.canAddEntry ? 'yes' : 'no' }</div>
-                    <div>Can edit entry: { this.canEditEntry ? 'yes' : 'no' }</div>
-                    <div>Votable: { this.canVoteEntry ? 'yes' : 'no' }</div>
-                    <div>{JSON.stringify(compo)}</div>
                 </div>
                 <div class="compo-entries">
                     <h3>{translate('compo.entries')}</h3>
