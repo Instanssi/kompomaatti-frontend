@@ -18,34 +18,24 @@ if (process.env.NODE_ENV === 'development') {
     (window as any)._api = api;
 }
 
-
-
-
-
-
-
-
-// FIXME: Save language in localstorage for now
-
-
-
-
-
-
 /**
  * Application-wide state.
  *
  * Declared as a Vue component to get some global observable state without extra hassle.
  *
  * VueX could do the job here, but it's pretty obviously stuck in the pre-ES6
- * days and doesn't play nice with TypeScript either.
+ * days and doesn't play nice with classes + TypeScript.
+ * Binding MobX to Vue seems a bit redundant, too.
  */
 @Component
 class GlobalState extends Vue {
     /** Current user, if known. */
     user: IUser | null = null;
 
-    /** Current language. */
+    /**
+     * Current language.
+     * @todo Save language in local storage for now.
+     */
     language = 'en-US';
 
     /** Current translation object. */
