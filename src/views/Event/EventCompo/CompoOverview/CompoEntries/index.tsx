@@ -3,7 +3,7 @@ import { RouterLink } from 'vue-component-router';
 
 import _orderBy from 'lodash/orderBy';
 
-import { ICompoEntry, ICompo } from 'src/api/models';
+import { ICompoEntry, ICompo } from 'src/api/interfaces';
 import globalState from 'src/state';
 
 

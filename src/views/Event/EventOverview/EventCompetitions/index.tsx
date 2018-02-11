@@ -1,7 +1,7 @@
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
 
 import { NoResults } from 'src/common';
-import { ICompetition, IEvent } from 'src/api/models';
+import { ICompetition, IEvent } from 'src/api/interfaces';
 import globalState from 'src/state';
 
 

@@ -1,4 +1,4 @@
-import { IEvent, ICompoEntry, ICompo } from 'src/api/models';
+import { IEvent, ICompoEntry, ICompo } from 'src/api/interfaces';
 
 const mockEvent: IEvent = {
     id: 1,

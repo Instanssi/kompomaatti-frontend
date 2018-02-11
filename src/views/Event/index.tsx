@@ -1,8 +1,7 @@
-import Vue from 'vue';
-import Component from 'vue-class-component';
+import { Vue, Component, Prop } from 'vue-property-decorator';
 import { MatchFirst, Route } from 'vue-component-router';
 
-import { IEvent, PrimaryKey } from 'src/api/models';
+import { IEvent, PrimaryKey } from 'src/api/interfaces';
 import globalState from 'src/state';
 import { FormatTime } from 'src/common';
 
@@ -10,10 +9,11 @@ import EventOverview from './EventOverview';
 import EventCompo from './EventCompo';
 
 
-@Component({
-    props: ['eventId']
-})
+@Component
 export default class EventView extends Vue {
+    @Prop()
+    eventId: string;
+
     isLoading = false;
     event: IEvent | null = null;
 

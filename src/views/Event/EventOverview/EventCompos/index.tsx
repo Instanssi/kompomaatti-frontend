@@ -1,7 +1,7 @@
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
 import { RouterLink } from 'vue-component-router';
 
-import { ICompo, IEvent } from 'src/api/models';
+import { ICompo, IEvent } from 'src/api/interfaces';
 import globalState from 'src/state';
 
 

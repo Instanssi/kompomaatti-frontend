@@ -4,7 +4,7 @@ import moment from 'moment';
 import globalState from 'src/state';
 
 import CompoEntries from './CompoEntries';
-import { ICompo, IEvent } from 'src/api/models';
+import { ICompo, IEvent } from 'src/api/interfaces';
 
 
 // FIXME: Come up with a shorter name for this for convenience? "L" ?

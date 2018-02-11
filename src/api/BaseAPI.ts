@@ -1,6 +1,6 @@
 import qs from 'qs';
 
-import { PrimaryKey } from 'src/api/models';
+import { PrimaryKey } from 'src/api/interfaces';
 
 
 /**

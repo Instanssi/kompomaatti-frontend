@@ -5,7 +5,7 @@ import globalState from 'src/state';
 import EventCompos from './EventCompos';
 import EventCompetitions from './EventCompetitions';
 import EventProgramme from './EventProgramme';
-import { IEvent } from '../../../api/models';
+import { IEvent } from 'src/api/interfaces';
 
 
 const { translate } = globalState;

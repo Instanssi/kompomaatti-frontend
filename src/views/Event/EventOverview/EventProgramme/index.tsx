@@ -2,7 +2,7 @@ import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
 import _orderBy from 'lodash/orderBy';
 
 import { NoResults } from 'src/common';
-import { IProgrammeEvent, IEvent } from 'src/api/models';
+import { IProgrammeEvent, IEvent } from 'src/api/interfaces';
 import globalState from 'src/state';
 
 

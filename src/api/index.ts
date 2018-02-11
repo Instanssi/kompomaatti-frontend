@@ -7,7 +7,7 @@ import {
     IEvent,
     IProgrammeEvent,
     IUser,
-} from 'src/api/models';
+} from 'src/api/interfaces';
 
 
 /**

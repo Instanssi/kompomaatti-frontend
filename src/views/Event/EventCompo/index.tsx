@@ -1,7 +1,7 @@
 import { Vue, Component, Prop } from 'vue-property-decorator';
 import { MatchFirst, Route } from 'vue-component-router';
 
-import { ICompo, IEvent } from 'src/api/models';
+import { ICompo, IEvent } from 'src/api/interfaces';
 import { FormatTime } from 'src/common';
 import globalState from 'src/state';
 
