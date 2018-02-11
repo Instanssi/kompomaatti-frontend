@@ -64,8 +64,12 @@ const config = {
                 }
             },
             {
-                test: /\.(png|jpg|jpeg|svg|ttf|otf|woff|woff2)$/,
+                test: /\.(png|jpg|jpeg|svg|ttf|otf|woff|woff2|eot)$/,
                 loader: 'file-loader',
+                options: {
+                    publicPath: '/kompomaatti/',
+                    outputPath: 'res/'
+                }
             }
         ]
     },
