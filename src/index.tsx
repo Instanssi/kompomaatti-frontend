@@ -17,11 +17,14 @@ import {
     // Breadcrumbs,
 } from 'src/layout';
 
+import store from './store';
+
 // Provide Webpack build id in the window env
 (window as any).BUILD_ID = process.env.BUILD_ID;
 
 (window as any)._app = new Vue({
     el: '#app',
+    store,
     render(h) {
         return (
             <HistoryRouter>
