@@ -10,6 +10,8 @@ import globalState from 'src/state';
 import CompoOverview from './CompoOverview';
 import CompoEntry from './CompoEntry';
 import CompoActions from './CompoActions';
+import CompoEntryForm from './CompoEntryForm';
+import CompoVote from './CompoVote';
 
 
 export interface IEventCompoProps {
@@ -75,6 +77,12 @@ export default class EventCompo extends React.Component<IEventCompoProps> {
                     <p><FormatTime value={compo.compo_start} /></p>
                 </div>}
                 <Switch>
+                    <Route exact path={match.url + '/entries/add'}>
+                        <CompoEntryForm compo={compo} />
+                    </Route>
+                    <Route exact path={match.url + '/vote'}>
+                        <CompoVote compo={compo} />
+                    </Route>
                     <Route path={match.url + '/entries/:entryId'}>
                         <CompoEntry compo={compo} />
                     </Route>

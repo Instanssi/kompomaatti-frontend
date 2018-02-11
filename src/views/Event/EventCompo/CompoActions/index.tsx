@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import moment from 'moment';
 
 import { ICompo } from 'src/api/interfaces';
@@ -13,8 +13,9 @@ import UserCompoEntries from './UserCompoEntries';
  * Shows a summary of a compo's status and some actions the user can perform on it
  * like voting, adding/editing entries, etc.
  */
+@(withRouter as any)
 @observer
-export default class CompoActions extends React.Component<{ compo: ICompo }> {
+export default class CompoActions extends React.Component<{ compo: ICompo, match?: any }> {
 
     now = new Date();
 
@@ -61,7 +62,7 @@ export default class CompoActions extends React.Component<{ compo: ICompo }> {
     }
 
     render() {
-        const { compo } = this.props;
+        const { compo, match } = this.props;
         const { canAddEntry, canEditEntry, canVoteEntry } = this;
 
         return (
@@ -89,12 +90,16 @@ export default class CompoActions extends React.Component<{ compo: ICompo }> {
                     </div>
                 </div>
                 <div className="panel-footer">
-                    { canAddEntry && <Link to="" className="btn btn-default">
-                        Add entry
-                    </Link> }
-                    { canVoteEntry && <Link to="" className="btn btn-default">
-                        Vote
-                    </Link> }
+                    { canAddEntry && (
+                        <Link to={match.url + '/entries/add'} className="btn btn-default">
+                            Add entry
+                        </Link>
+                    )}
+                    { canVoteEntry && (
+                        <Link to={match.url + '/vote'} className="btn btn-default">
+                            Vote
+                        </Link>
+                    )}
                 </div>
             </div>
         );

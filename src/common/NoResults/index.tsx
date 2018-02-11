@@ -11,7 +11,7 @@ export default class NoResults extends React.Component<any> {
     render() {
         return (
             <span>
-                <span className="fa fa-exclamation-triangle" />
+                <span className="fa fa-fw fa-info-circle" />
                 {' '}
                 {translate('list.noResults')}
             </span>
