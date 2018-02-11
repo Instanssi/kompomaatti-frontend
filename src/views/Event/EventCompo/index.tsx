@@ -9,6 +9,7 @@ import globalState from 'src/state';
 
 import CompoOverview from './CompoOverview';
 import CompoEntry from './CompoEntry';
+import CompoActions from './CompoActions';
 
 
 export interface IEventCompoProps {
@@ -66,6 +67,9 @@ export default class EventCompo extends React.Component<IEventCompoProps> {
 
         return (
             <div className="event-compo">
+                { compo && <div className="pull-sm-right">
+                    <CompoActions compo={compo} />
+                </div> }
                 {compo && <div className="compo-title">
                     <h2>{compo.name}</h2>
                     <p><FormatTime value={compo.compo_start} /></p>

@@ -18,7 +18,11 @@ body {
 }
 
 .p-3 {
-    padding: $spacer;
+    padding: $spacer !important;
+}
+
+.m-0 {
+    margin: 0 !important;
 }
 
 .text-pre-wrap {
@@ -38,6 +42,19 @@ body {
 
 .navbar {
     margin-bottom: 0;
+}
+
+
+@media screen and (min-width: $screen-sm-min) {
+    .pull-sm-right {
+        float: right !important;
+    }
+}
+
+@media screen and (min-width: $screen-md-min) {
+    .pull-md-right {
+        float: right !important;
+    }
 }
 
 /*

@@ -1,7 +1,8 @@
 {
     "compo": {
         "description": "Kuvaus",
-        "entries": "Teokset"
+        "entries": "Teokset",
+        "status": "Tila"
     },
     "dashboard": {
         "competitions": {

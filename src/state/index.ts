@@ -1,6 +1,7 @@
 import _get from 'lodash/get';
 import _template from 'lodash/template';
 import bind from 'lodash-decorators/bind';
+import { action } from 'mobx';
 import { observable } from 'mobx';
 
 import InstanssiREST from '../api';
@@ -103,8 +104,8 @@ class GlobalState {
      * @param user User profile.
      * @returns {Promise.<Object>} - Same user profile, after loading language files.
      */
+    @action
     private async setUser(user: IUser) {
-        console.info('setUser:', user);
         this.user = user;
         return user;
     }

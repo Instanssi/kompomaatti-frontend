@@ -1,7 +1,8 @@
 {
     "compo": {
         "description": "Description",
-        "entries": "Entries"
+        "entries": "Entries",
+        "status": "Status"
     },
     "dashboard": {
         "competitions": {
@@ -65,8 +66,8 @@
         "username": "User name"
     },
     "userProfile": {
-        "title": "User profile",
         "myCompetitions": "My competitions",
-        "myEntries": "My entries"
+        "myEntries": "My entries",
+        "title": "User profile"
     }
 }

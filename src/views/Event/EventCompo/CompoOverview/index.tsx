@@ -5,7 +5,6 @@ import { computed } from 'mobx';
 import globalState from 'src/state';
 
 import CompoEntries from './CompoEntries';
-import CompoActions from './CompoActions';
 import { ICompo } from 'src/api/interfaces';
 
 
@@ -31,9 +30,6 @@ export default class CompoOverview extends React.Component<ICompoOverviewProps> 
 
         return (
             <div className="event-compo-overview">
-                <div className="pull-right">
-                    <CompoActions compo={compo} />
-                </div>
                 <div className="compo-description">
                     <h3>{translate('compo.description')}</h3>
                     <div dangerouslySetInnerHTML={this.descriptionHTML} />
