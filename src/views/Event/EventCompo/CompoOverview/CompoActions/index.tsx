@@ -1,9 +1,10 @@
-import { Vue, Component, Prop } from 'vue-property-decorator';
+import React from 'react';
+import { observer } from 'mobx-react';
 import moment from 'moment';
 
 import globalState from 'src/state';
 
-import { ICompo, IEvent } from 'src/api/interfaces';
+import { ICompo } from 'src/api/interfaces';
 
 
 // FIXME: Come up with a shorter name for this for convenience? "L" ?
@@ -13,16 +14,14 @@ const { translate } = globalState;
  * Shows a summary of a compo's status and some actions the user can perform on it
  * like voting, adding/editing entries, etc.
  */
-@Component
-export default class CompoActions extends Vue {
-    @Prop() compo: ICompo;
-    @Prop() event: IEvent;
+@observer
+export default class CompoActions extends React.Component<{ compo: ICompo }> {
 
     now = new Date();
 
-    _interval: number;
+    _interval: any;
 
-    mounted() {
+    componentWillMount() {
         this._interval = setInterval(() => {
             this.now = new Date();
         }, 1000);
@@ -36,12 +35,12 @@ export default class CompoActions extends Vue {
 
     /** Check if the compo is votable at all. */
     get isVotingEnabled() {
-        const { compo } = this;
+        const { compo } = this.props;
         return compo && compo.is_votable;
     }
 
     get canAddEntry() {
-        const { compo } = this;
+        const { compo } = this.props;
         if (!compo) {
             return;
         }
@@ -50,7 +49,7 @@ export default class CompoActions extends Vue {
     }
 
     get canEditEntry() {
-        const { compo } = this;
+        const { compo } = this.props;
         if (!compo) {
             return;
         }
@@ -59,7 +58,7 @@ export default class CompoActions extends Vue {
     }
 
     get canVoteEntry() {
-        const { compo } = this;
+        const { compo } = this.props;
         if (!compo) {
             return;
         }
@@ -71,14 +70,14 @@ export default class CompoActions extends Vue {
         return now.isSameOrAfter(voting_start) && now.isBefore(voting_end);
     }
 
-    render(h) {
+    render() {
         return (
-            <div class="compo-actions">
+            <div className="compo-actions">
                 <h3>{translate('common.status')}</h3>
                 <div>(my entries)</div>
                 <div>TODO: Add/edit/vote timeframe</div>
                 <div>Action buttons (VOTE, EDIT, ADD)</div>
-                <div class="compo-timeframe">
+                <div className="compo-timeframe">
                     <div>Can add entry: {this.canAddEntry ? 'yes' : 'no'}</div>
                     <div>Can edit entry: {this.canEditEntry ? 'yes' : 'no'}</div>
                     <div>Votable: {this.canVoteEntry ? 'yes' : 'no'}</div>

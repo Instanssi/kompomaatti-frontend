@@ -4,24 +4,22 @@
 // Import all the individual view components and export a vue-router configuration.
 // Routing to a loader function is perfectly fine in Vue 2.
 
-import Vue from 'vue';
-import Component from 'vue-class-component';
-import { MatchFirst, Route } from 'vue-component-router';
+import React from 'react';
+import { Switch, Route } from 'react-router-dom';
 
 import FrontPage from './Frontpage';
 import EventsList from './EventsList';
 import Event from './Event';
 
 
-@Component
-export default class Views extends Vue {
-    render(h) {
+export default class Views extends React.Component<any> {
+    render() {
         return (
-            <MatchFirst>
-                <Route path="/kompomaatti/events/:eventId"><Event /></Route>
-                <Route path="/kompomaatti/events"><EventsList /></Route>
-                <Route path="/kompomaatti"><FrontPage /></Route>
-            </MatchFirst>
+            <Switch>
+                <Route exact path="/events"><EventsList /></Route>
+                <Route path="/events/:eventId"><Event /></Route>
+                <Route><FrontPage /></Route>
+            </Switch>
         );
     }
 }

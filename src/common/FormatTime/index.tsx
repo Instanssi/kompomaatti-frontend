@@ -1,5 +1,6 @@
-import Vue from 'vue';
-import Component from 'vue-class-component';
+import React from 'react';
+import { observer } from 'mobx-react';
+import { computed } from 'mobx';
 
 import moment from 'moment';
 import globalState from 'src/state';
@@ -18,12 +19,11 @@ export interface IFormatTimeProps {
  * - 'format': Moment.js format string. Defaults to 'LLL'.
  * - 'locale': Moment locale id. Defaults to global locale or 'en'.
  */
-@Component({
-    props: ['value', 'format', 'locale', 'placeholder'],
-})
-export default class FormatTime extends Vue<IFormatTimeProps> {
+@observer
+export default class FormatTime extends React.Component<IFormatTimeProps> {
+    @computed
     get formatted() {
-        const { value, placeholder, locale, format } = this;
+        const { value, placeholder, locale, format } = this.props;
         if (!value) {
             return placeholder || '-';
         }
@@ -32,8 +32,7 @@ export default class FormatTime extends Vue<IFormatTimeProps> {
             .format(format || 'LLL');
     }
 
-    render(h) {
-        const { formatted } = this;
-        return <span>{formatted}</span>;
+    render() {
+        return this.formatted;
     }
 }

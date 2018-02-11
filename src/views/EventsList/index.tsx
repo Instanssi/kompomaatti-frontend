@@ -1,6 +1,7 @@
-import Vue from 'vue';
-import Component from 'vue-class-component';
-import { RouterLink } from 'vue-component-router';
+import React from 'react';
+import { observer } from 'mobx-react';
+import { observable } from 'mobx';
+import { Link } from 'react-router-dom';
 import _orderBy from 'lodash/orderBy';
 
 import { IEvent } from 'src/api/interfaces';
@@ -9,13 +10,13 @@ import globalState from 'src/state';
 
 const { translate } = globalState;
 
-@Component
-export default class EventsListView extends Vue {
-    isPending = false;
-    lastError: any;
-    events: IEvent[] = [];
+@observer
+export default class EventsList extends React.Component<any> {
+    @observable.ref events: IEvent[] = [];
+    @observable.ref lastError: any;
+    @observable.ref isPending = false;
 
-    created() {
+    componentWillMount() {
         this.refresh();
     }
 
@@ -36,17 +37,17 @@ export default class EventsListView extends Vue {
         this.isPending = false;
     }
 
-    render(h) {
+    render() {
         const { events } = this;
         return (
-            <div class="events-list-view">
+            <div className="events-list-view">
                 <h1>{translate('events.title')}</h1>
                 <ul>
                     {events.map(event => (
-                        <li>
-                            <RouterLink to={'/kompomaatti/events/' + event.id + '/'}>
+                        <li key={event.id}>
+                            <Link to={'/events/' + event.id + ''}>
                                 <span>{event.name}</span>
-                            </RouterLink>
+                            </Link>
                         </li>
                     ))}
                 </ul>

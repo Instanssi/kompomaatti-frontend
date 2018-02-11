@@ -1,4 +1,4 @@
-import { shallow, Wrapper } from '@vue/test-utils';
+import { shallow, ShallowWrapper } from 'enzyme';
 
 import { mockCompoEntry } from 'src/tests/mocks';
 import globalState from 'src/state';
@@ -6,7 +6,7 @@ import CompoEntry from './';
 
 
 describe(CompoEntry.name, () => {
-    let wrapper: Wrapper<CompoEntry>;
+    let wrapper: ShallowWrapper;
 
     beforeEach(() => {
         jest.spyOn(globalState.api.compoEntries, 'get')

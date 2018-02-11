@@ -1,32 +1,39 @@
-import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
-import { RouterLink } from 'vue-component-router';
-
+import React from 'react';
+import { observer } from 'mobx-react';
+import { observable } from 'mobx';
+import { autorun } from 'mobx';
+import { Link, withRouter } from 'react-router-dom';
 import _orderBy from 'lodash/orderBy';
 
 import { ICompoEntry, ICompo } from 'src/api/interfaces';
 import globalState from 'src/state';
 
 
-@Component
-export default class CompoEntries extends Vue {
-    @Prop()
-    compo: ICompo;
+@(withRouter as any)
+@observer
+export default class CompoEntries extends React.Component<{ compo: ICompo, match?: any }> {
+    @observable.ref isPending = false;
+    @observable.ref lastError: any;
+    @observable.ref entries: ICompoEntry[] | null = null;
 
-    isPending = false;
-    lastError: any;
-    entries: ICompoEntry[] | null = null;
+    disposers = [] as any[];
 
-    created() {
-        this.refresh();
+    componentWillMount() {
+        this.disposers.push(autorun(() => {
+            this.refresh();
+        }));
     }
 
-    @Watch('compo')
+    componentWillUnmount() {
+        this.disposers.forEach(d => d());
+    }
+
     onCompoChange() {
         this.refresh();
     }
 
     get compoId() {
-        const { compo } = this;
+        const { compo } = this.props;
         return compo && compo.id;
     }
 
@@ -57,19 +64,20 @@ export default class CompoEntries extends Vue {
     }
 
     getEntryPath(entry) {
-        return `entries/${entry.id}`;
+        const { match } = this.props;
+        return match.url + `/entries/${entry.id}`;
     }
 
-    render(h) {
+    render() {
         const entries = this.allEntriesSorted;
         return (
             <ul>
                 {entries && entries.map(entry => (
-                    <li>
+                    <li key={entry.id}>
                         {entry.rank ? entry.rank + '. ' : ''}
-                        <RouterLink to={this.getEntryPath(entry)}>
+                        <Link to={this.getEntryPath(entry)}>
                             {entry.name}
-                        </RouterLink> - {entry.creator}
+                        </Link> - {entry.creator}
                     </li>
                 ))}
             </ul>

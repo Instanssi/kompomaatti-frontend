@@ -1,5 +1,5 @@
-import Vue from 'vue';
-import Component from 'vue-class-component';
+import React from 'react';
+import { observer } from 'mobx-react';
 
 import globalState from 'src/state';
 import i18n from 'src/i18n';
@@ -10,8 +10,8 @@ const TRANSLATION_NAMES = {
     'fi-FI': 'Suomi',
 };
 
-@Component
-export default class LanguageSwitch extends Vue {
+@observer
+export default class LanguageSwitch extends React.Component<any> {
     setLanguage(event) {
         globalState.setUserLanguage(event.target.value);
     }
@@ -26,16 +26,18 @@ export default class LanguageSwitch extends Vue {
         return globalState.languageCode;
     }
 
-    render(h) {
+    render() {
         const { current, options } = this;
         return (
             <select
-                class="form-control"
+                className="form-control"
                 value={current}
                 onChange={this.setLanguage}
             >
                 {options.map(option => (
-                    <option value={option.value}>{option.label}</option>
+                    <option key={option.value} value={option.value}>
+                        {option.label}
+                    </option>
                 ))}
             </select>
         );

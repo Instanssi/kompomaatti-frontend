@@ -1,29 +1,48 @@
-import Vue from 'vue';
+import React from 'react';
+import { observer } from 'mobx-react';
+import { action } from 'mobx';
 
 
 export interface IFormGroupProps {
     name: string;
-    // TODO: What's the Vue JSX type?
-    label?: any;
-    control: any;
+    value: any;
+    onChange: (name: string, value: any) => void;
+    label?: JSX.Element | string;
+    children?: JSX.Element;
 }
 
 /**
  * Markup for a form group.
  */
-export default class FormGroup extends Vue<IFormGroupProps> {
+@observer
+export default class FormGroup extends React.Component<IFormGroupProps> {
     /** Get id for the form label and control. */
     get id() {
-        return this.name;
+        return this.props.name;
     }
 
-    render(h) {
+    @action.bound
+    onChange(eventOrValue) {
+        const { target } = eventOrValue;
+        if (target) {
+            // how about checkboxes? they have "checked" instead of "value" because DOM
+            // - do they belong in form groups anyway?
+            return target.value;
+        }
+        return eventOrValue;
+    }
+
+    render() {
+        const { label, children, value } = this.props;
         const { id } = this;
         return (
-            <div class="form-group">
-                {this.label && <this.label name="label" for={id} />}
-                <this.control name="control" for={id} />
-                {/* TODO: Form feedback */}
+            <div className="form-group">
+                {label && (
+                    <label className="control-label" htmlFor={id}>
+                        { label }
+                    </label>
+                )}
+                { children || <input id={id} value={value} onChange={this.onChange} /> }
             </div>
         );
     }

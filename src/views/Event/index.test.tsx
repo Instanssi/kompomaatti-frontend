@@ -1,4 +1,4 @@
-import { shallow, Wrapper } from '@vue/test-utils';
+import { shallow, ShallowWrapper } from 'enzyme';
 
 import globalState from 'src/state';
 import { mockEvent } from 'src/tests/mocks';
@@ -7,7 +7,7 @@ import EventView from './';
 
 
 describe(EventView.name, () => {
-    let wrapper: Wrapper<EventView>;
+    let wrapper: ShallowWrapper;
 
     beforeEach(() => {
         jest.spyOn(globalState.api.events, 'get')

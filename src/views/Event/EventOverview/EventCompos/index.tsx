@@ -1,44 +1,41 @@
-import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
-import { RouterLink } from 'vue-component-router';
+import React from 'react';
+import { observer } from 'mobx-react';
+import { action, observable } from 'mobx';
+import { Link, match, withRouter } from 'react-router-dom';
 
 import { ICompo, IEvent } from 'src/api/interfaces';
 import globalState from 'src/state';
 
 
-@Component
-export default class EventCompos extends Vue {
-    @Prop()
+export interface IEventComposProps {
     event: IEvent;
+    match?: match<any>;
+}
 
-    compos: ICompo[] = [];
-    lastError: any;
-    isPending = false;
+@(withRouter as any)
+@observer
+export default class EventCompos extends React.Component<IEventComposProps> {
+    @observable.ref compos: ICompo[] = [];
+    @observable.ref lastError: any;
+    @observable isPending = false;
 
-    created() {
+    componentWillMount() {
         this.refresh();
     }
 
-    @Watch('event')
     onEventIdChange(id) {
         this.refresh();
     }
 
-    get eventId() {
-        const { event } = this;
-        return event && event.id;
-    }
-
+    @action
     async refresh() {
-        const { eventId } = this;
-        if (!eventId) {
-            return;
-        }
+        const { event } = this.props;
 
         const { api } = globalState;
         this.isPending = true;
 
         try {
-            this.compos = await api.compos.list({ event: eventId });
+            this.compos = await api.compos.list({ event: event.id });
             this.lastError = null;
         } catch (error) {
             this.lastError = error;
@@ -47,18 +44,20 @@ export default class EventCompos extends Vue {
     }
 
     getCompoPath(compo) {
-        return `compos/${compo.id}`;
+        // tslint:disable-next-line no-shadowed-variable
+        const match = this.props.match!;
+        return match.url + `/compos/${compo.id}`;
     }
 
-    render(h) {
+    render() {
         const { compos } = this;
         return (
             <ul>
                 {compos.map(compo => (
-                    <li>
-                        <RouterLink to={this.getCompoPath(compo)}>
+                    <li key={compo.id}>
+                        <Link to={this.getCompoPath(compo)}>
                             {compo.name}
-                        </RouterLink>
+                        </Link>
                     </li>
                 ))}
             </ul>

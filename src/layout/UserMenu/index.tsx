@@ -1,18 +1,18 @@
-import Vue from 'vue';
-import Component from 'vue-class-component';
+import React from 'react';
+import { observer } from 'mobx-react';
 
 import globalState from 'src/state';
 
 
 const { translate } = globalState;
 
-@Component
-export default class UserMenu extends Vue {
+@observer
+export default class UserMenu extends React.Component<any> {
     get user() {
         return globalState.user;
     }
 
-    render(h) {
+    render() {
         const { user } = this;
         return (
             <li>

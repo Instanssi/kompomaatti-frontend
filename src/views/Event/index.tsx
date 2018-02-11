@@ -1,5 +1,7 @@
-import { Vue, Component, Prop } from 'vue-property-decorator';
-import { MatchFirst, Route } from 'vue-component-router';
+import React from 'react';
+import { observer } from 'mobx-react';
+import { observable } from 'mobx';
+import { Switch, Route, withRouter } from 'react-router';
 
 import { IEvent, PrimaryKey } from 'src/api/interfaces';
 import globalState from 'src/state';
@@ -9,21 +11,24 @@ import EventOverview from './EventOverview';
 import EventCompo from './EventCompo';
 
 
-@Component
-export default class EventView extends Vue {
-    @Prop()
-    eventId: string;
+export interface IEventViewProps {
+    eventId?: string;
+    match?: any;
+}
 
-    isLoading = false;
-    event: IEvent | null = null;
+@(withRouter as any)
+@observer
+export default class EventView extends React.Component<IEventViewProps> {
+    @observable isLoading = false;
+    @observable.ref event: IEvent | null = null;
 
-    created() {
+    componentWillMount() {
         this.refresh();
     }
 
     get eventIdParsed(): PrimaryKey {
-        const id = this.$props.eventId;
-        return Number.parseInt(id, 10);
+        const id = this.props.match!.params.eventId;
+        return Number.parseInt(id!, 10);
     }
 
     get viewTitle() {
@@ -47,24 +52,30 @@ export default class EventView extends Vue {
         return this.event;
     }
 
-    render(h) {
+    render() {
         const { event } = this;
+        const { match } = this.props;
+
+        if(!event) {
+            return null;
+        }
+
         return (
-            <div class="event-view">
-                {event && <div class="event-title">
+            <div className="event-view">
+                {event && <div className="event-title">
                     <h1>{ event.name }</h1>
                     <p>
                         <FormatTime value={event.date} format="LL" />
                     </p>
                 </div>}
-                <MatchFirst>
-                    <Route path="/kompomaatti/events/:eventId/compos/:compoId">
+                <Switch>
+                    <Route path={match.url + '/compos/:compoId'}>
                         <EventCompo event={event} />
                     </Route>
                     <Route>
-                        <EventOverview event={event} />
+                        { event && <EventOverview event={event} /> }
                     </Route>
-                </MatchFirst>
+                </Switch>
             </div>
         );
     }

@@ -1,11 +1,11 @@
-import { shallow, Wrapper } from '@vue/test-utils';
+import { shallow, ShallowWrapper } from 'enzyme';
 
 import globalState from 'src/state';
 import EventsListView from './';
 
 
 describe(EventsListView.name, () => {
-    let wrapper: Wrapper<EventsListView>;
+    let wrapper: ShallowWrapper;
 
     beforeEach(() => {
         // FIXME: Return an actual event object.

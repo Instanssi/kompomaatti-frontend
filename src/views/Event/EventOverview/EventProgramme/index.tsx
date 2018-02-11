@@ -1,4 +1,6 @@
-import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
+import React from 'react';
+import { observer } from 'mobx-react';
+import { observable } from 'mobx';
 import _orderBy from 'lodash/orderBy';
 
 import { NoResults } from 'src/common';
@@ -6,26 +8,22 @@ import { IProgrammeEvent, IEvent } from 'src/api/interfaces';
 import globalState from 'src/state';
 
 
-@Component
-export default class EventProgramme extends Vue {
-    @Prop()
+export interface IEventProgrammeProps {
     event: IEvent;
+}
 
-    isPending = false;
-    programmeEvents = [] as IProgrammeEvent[];
-    lastError: any;
+@observer
+export default class EventProgramme extends React.Component<IEventProgrammeProps> {
+    @observable isPending = false;
+    @observable lastError: any;
+    @observable.ref programmeEvents = [] as IProgrammeEvent[];
 
-    created() {
-        this.refresh();
-    }
-
-    @Watch('event')
-    onEventChange() {
+    componentWillMount() {
         this.refresh();
     }
 
     async refresh() {
-        const { event } = this;
+        const { event } = this.props;
         const id = event && event.id;
         if (!id) {
             return;
@@ -44,12 +42,12 @@ export default class EventProgramme extends Vue {
         this.isPending = false;
     }
 
-    render(h) {
+    render() {
         const { programmeEvents } = this;
         return (
             <ul>
                 {programmeEvents.map(event => (
-                    <li>{event.title}</li>
+                    <li key={event.id}>{event.title}</li>
                 ))}
                 {!programmeEvents.length && (
                     <NoResults />

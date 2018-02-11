@@ -1,5 +1,5 @@
-import Vue from 'vue';
-import Component from 'vue-class-component';
+import React from 'react';
+import { observer } from 'mobx-react';
 // import { RouteRecord } from 'vue-router/types/router';
 
 // import globalState from 'src/state';
@@ -11,8 +11,8 @@ import Component from 'vue-class-component';
     params: any;
 }*/
 
-@Component
-export default class Breadcrumbs extends Vue {
+@observer
+export default class Breadcrumbs extends React.Component<any> {
     lastMatch = [] as any[];
     lastParams = {} as any;
 
@@ -68,12 +68,12 @@ export default class Breadcrumbs extends Vue {
             .filter(r => r) as any as IRouteInfo[];
     }
     */
-    render(h) {
+    render() {
         return null;
         /*
         // const { routeItems } = this;
         return (
-            <ol class="breadcrumb">
+            <ol className="breadcrumb">
                 {routeItems.map(item => (
                     <li>
                         <router-link to={item}>{item.title}</router-link>

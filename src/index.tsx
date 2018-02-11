@@ -5,9 +5,10 @@ import 'moment/locale/fi';
 
 import './index.scss';
 
-import Vue from 'vue';
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-import { HistoryRouter } from 'vue-component-router';
+import { BrowserRouter } from 'react-router-dom';
 
 // import globalState from 'src/state';
 import Views from './views';
@@ -17,28 +18,27 @@ import {
     // Breadcrumbs,
 } from 'src/layout';
 
-import store from './store';
-
 // Provide Webpack build id in the window env
 (window as any).BUILD_ID = process.env.BUILD_ID;
 
-(window as any)._app = new Vue({
-    el: '#app',
-    store,
-    render(h) {
+
+export default class App extends React.Component {
+    render() {
         return (
-            <HistoryRouter>
-                <div class="container">
-                    <div id="top" class="app-wrap">
+            <BrowserRouter basename="/kompomaatti">
+                <div className="container">
+                    <div id="top" className="app-wrap">
                         <Header />
-                        <main class="p-3">
+                        <main className="p-3">
                             {/*<Breadcrumbs />*/}
                             <Views />
                         </main>
                         <Footer />
                     </div>
                 </div>
-            </HistoryRouter>
+            </BrowserRouter>
         );
-    },
-});
+    }
+}
+
+ReactDOM.render(<App />, document.getElementById('app'));

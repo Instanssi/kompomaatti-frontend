@@ -1,4 +1,5 @@
-import { Vue, Component, Prop } from 'vue-property-decorator';
+import React from 'react';
+import { observer } from 'mobx-react';
 
 import globalState from 'src/state';
 
@@ -10,16 +11,17 @@ import { IEvent } from 'src/api/interfaces';
 
 const { translate } = globalState;
 
-@Component
-export default class EventOverview extends Vue {
-    @Prop()
+export interface IEventOverviewProps {
     event: IEvent;
+}
 
-    render(h) {
-        const { event } = this.$props;
+@observer
+export default class EventOverview extends React.Component<IEventOverviewProps> {
+    render() {
+        const { event } = this.props;
 
         return (
-            <div class="event-overview">
+            <div className="event-overview">
                 <h2>{translate('event.compos')}</h2>
                 <EventCompos event={event} />
 

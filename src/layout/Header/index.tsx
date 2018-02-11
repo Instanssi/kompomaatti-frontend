@@ -1,39 +1,41 @@
-import Vue from 'vue';
-import Component from 'vue-class-component';
-import { RouterLink } from 'vue-component-router';
+import React from 'react';
+import { observer } from 'mobx-react';
+import { Link, withRouter } from 'react-router-dom';
 
 import globalState from 'src/state';
 
 import UserMenu from '../UserMenu';
 import LanguageSwitch from '../LanguageSwitch';
+import NavLink from './NavLink';
 
 
 const { translate } = globalState;
 
-@Component
-export default class Header extends Vue {
-    render(h) {
+@(withRouter as any)
+@observer
+export default class Header extends React.Component {
+    render() {
         return (
-            <nav class="navbar navbar-inverse">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed">
+            <nav className="navbar navbar-inverse">
+                <div className="navbar-header">
+                    <button type="button" className="navbar-toggle collapsed">
                         (open)
                     </button>
-                    <RouterLink to="/kompomaatti" class="navbar-brand">
+                    <Link to="/" className="navbar-brand">
                         Kompomaatti 2.0
-                    </RouterLink>
+                    </Link>
                 </div>
-                <div class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav">
-                        <RouterLink tag="li" to="/kompomaatti/events">
-                            <a href="#">{translate('nav.events')}</a>
-                        </RouterLink>
+                <div className="collapse navbar-collapse">
+                    <ul className="nav navbar-nav">
+                        <NavLink to="/events">
+                            {translate('nav.events')}
+                        </NavLink>
                     </ul>
-                    <ul class="nav navbar-nav navbar-right">
+                    <ul className="nav navbar-nav navbar-right">
                         <UserMenu />
                     </ul>
-                    <div class="navbar-form navbar-right">
-                        <div class="form-group">
+                    <div className="navbar-form navbar-right">
+                        <div className="form-group">
                             <LanguageSwitch />
                         </div>
                     </div>

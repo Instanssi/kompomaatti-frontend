@@ -1,8 +1,7 @@
-import Vue from 'vue';
-import Component from 'vue-class-component';
 import _get from 'lodash/get';
 import _template from 'lodash/template';
 import bind from 'lodash-decorators/bind';
+import { observable } from 'mobx';
 
 import InstanssiREST from '../api';
 import i18n from '../i18n';
@@ -27,28 +26,26 @@ if (process.env.NODE_ENV === 'development') {
  * days and doesn't play nice with classes + TypeScript.
  * Binding MobX to Vue seems a bit redundant, too.
  */
-@Component
-class GlobalState extends Vue {
+class GlobalState {
     /** Current user, if known. */
-    user: IUser | null = null;
+    @observable.ref user: IUser | null = null;
 
     /**
      * Current language.
      * @todo Save language in local storage for now.
      */
-    language = 'en-US';
+    @observable language = 'en-US';
 
     /** Current translation object. */
-    translation: any = { };
+    @observable.ref translation: any = { };
 
-    currentTime = new Date().valueOf();
+    @observable currentTime = new Date().valueOf();
 
     api = api;
 
-    isLoading = true;
+    @observable.ref isLoading = true;
 
     constructor() {
-        super();
         // FIXME: Try to persist the state and bring it back on reload?
         setInterval(() => {
             this.currentTime = new Date().valueOf();

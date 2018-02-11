@@ -1,37 +1,44 @@
-import { Vue, Component, Prop } from 'vue-property-decorator';
+import React from 'react';
+import { observer } from 'mobx-react';
+import { computed } from 'mobx';
 
 import globalState from 'src/state';
 
 import CompoEntries from './CompoEntries';
 import CompoActions from './CompoActions';
-import { ICompo, IEvent } from 'src/api/interfaces';
+import { ICompo } from 'src/api/interfaces';
 
 
 // FIXME: Come up with a shorter name for this for convenience? "L" ?
 const { translate } = globalState;
 
-@Component
-export default class CompoOverview extends Vue {
-    @Prop() compo: ICompo;
-    @Prop() event: IEvent;
+export interface ICompoOverviewProps {
+    compo: ICompo;
+}
 
-    render(h) {
-        const { compo } = this;
+@observer
+export default class CompoOverview extends React.Component<ICompoOverviewProps> {
 
-        if (!compo) {
-            return null;
-        }
+    @computed
+    get descriptionHTML() {
+        return {
+            __html: this.props.compo.description,
+        };
+    }
+
+    render() {
+        const { compo } = this.props;
 
         return (
-            <div class="event-compo-overview">
-                <div class="pull-right">
+            <div className="event-compo-overview">
+                <div className="pull-right">
                     <CompoActions compo={compo} />
                 </div>
-                <div class="compo-description">
+                <div className="compo-description">
                     <h3>{translate('compo.description')}</h3>
-                    <div domPropsInnerHTML={compo.description} />
+                    <div dangerouslySetInnerHTML={this.descriptionHTML} />
                 </div>
-                <div class="compo-entries">
+                <div className="compo-entries">
                     <h3>{translate('compo.entries')}</h3>
                     <CompoEntries compo={compo} />
                 </div>

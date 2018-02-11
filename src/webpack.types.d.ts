@@ -10,9 +10,9 @@ declare module '*.html' {
 }
 
 // This is provided by the Webpack defineplugin.
-declare const process: {
+/*declare const process: {
     env: {
         NODE_ENV: string,
         BUILD_ID: string,
     },
-};
+};*/
