@@ -114,7 +114,7 @@ function getStyleLoaders(cssLoaders) {
 if(PRODUCTION_BUILD) {
     config.plugins.push(
         new webpack.optimize.UglifyJsPlugin(),
-        new webpack.optimize.ModuleConcatenationPlugin(),
+        new webpack.optimize.ModuleConcatenationPlugin()
     );
 
     if(process.env.BUNDLE_ANALYZER) {

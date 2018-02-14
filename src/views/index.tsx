@@ -7,7 +7,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
-import FrontPage from './Frontpage';
+import FrontPage from './FrontPage';
 import EventsList from './EventsList';
 import Event from './Event';
 
