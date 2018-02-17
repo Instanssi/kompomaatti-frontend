@@ -9,6 +9,8 @@ import i18n from '../i18n';
 import config from 'src/config';
 import { IUser } from 'src/api/interfaces';
 
+// import { RemoteStore } from 'src/stores';
+
 
 const api = new InstanssiREST(config.API_URL);
 

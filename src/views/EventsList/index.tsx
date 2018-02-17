@@ -1,56 +1,44 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { observable } from 'mobx';
 import { Link } from 'react-router-dom';
 import _orderBy from 'lodash/orderBy';
 
-import { IEvent } from 'src/api/interfaces';
+import { L, LoadingWrapper } from 'src/common';
 import globalState from 'src/state';
+import { RemoteStore } from 'src/stores';
 
-
-const { translate } = globalState;
 
 @observer
 export default class EventsList extends React.Component<any> {
-    @observable.ref events: IEvent[] = [];
-    @observable.ref lastError: any;
-    @observable.ref isPending = false;
+    list = new RemoteStore(this.fetch);
 
     componentWillMount() {
-        this.refresh();
+        this.list.refresh();
     }
 
-    get viewTitle() {
-        return { key: 'events.title' };
-    }
-
-    async refresh() {
+    fetch() {
         const { api } = globalState;
-        this.isPending = true;
-        try {
-            const events = await api.events.list();
-            this.events = _orderBy(events, event => event.date, 'desc');
-            this.lastError = null;
-        } catch (error) {
-            this.lastError = error;
-        }
-        this.isPending = false;
+        return api.events.list().then((events) => {
+            return _orderBy(events, event => event.date, 'desc');
+        });
     }
 
     render() {
-        const { events } = this;
+        const events = this.list.value;
         return (
             <div className="events-list-view">
-                <h1>{translate('events.title')}</h1>
-                <ul>
-                    {events.map(event => (
-                        <li key={event.id}>
-                            <Link to={'/events/' + event.id + ''}>
-                                <span>{event.name}</span>
-                            </Link>
-                        </li>
-                    ))}
-                </ul>
+                <h1><L text="events.title" />}</h1>
+                <LoadingWrapper store={this.list}>
+                    <ul>
+                        {events && events.map(event => (
+                            <li key={event.id}>
+                                <Link to={'/events/' + event.id + ''}>
+                                    <span>{event.name}</span>
+                                </Link>
+                            </li>
+                        ))}
+                    </ul>
+                </LoadingWrapper>
             </div>
         );
     }
