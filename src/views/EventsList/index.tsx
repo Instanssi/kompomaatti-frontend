@@ -27,7 +27,7 @@ export default class EventsList extends React.Component<any> {
         const events = this.list.value;
         return (
             <div className="events-list-view">
-                <h1><L text="events.title" />}</h1>
+                <h1><L text="events.title" /></h1>
                 <LoadingWrapper store={this.list}>
                     <ul>
                         {events && events.map(event => (

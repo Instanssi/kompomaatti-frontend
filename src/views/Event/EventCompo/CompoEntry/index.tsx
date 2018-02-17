@@ -1,26 +1,31 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { autorun, observable } from 'mobx';
-
-import { ICompoEntry, ICompo } from 'src/api/interfaces';
-import globalState from 'src/state';
+import { autorun } from 'mobx';
 import { withRouter } from 'react-router';
 
+import globalState from 'src/state';
+import { ICompo } from 'src/api/interfaces';
+import { RemoteStore } from 'src/stores';
+import { L, LoadingWrapper } from 'src/common';
 
-const { translate } = globalState;
 
 @(withRouter as any)
 @observer
-export default class CompoEntry extends React.Component<{ compo: ICompo, match?: any }> {
-    @observable.ref entry: ICompoEntry | null = null;
-    @observable.ref isPending = false;
-    @observable.ref lastError: any;
+export default class CompoEntry extends React.Component<{
+    compo: ICompo;
+    match?: any;
+}> {
+    entry = new RemoteStore(() => {
+        return globalState.api.compoEntries.get(this.entryId);
+    });
 
-    disposers = [
-        autorun(() => {
-            this.refresh();
-        }),
-    ];
+    disposers = [] as any[];
+
+    componentWillMount() {
+        this.disposers = [
+            autorun(() => this.entry.refresh()),
+        ];
+    }
 
     componentWillUnmount() {
         this.disposers.forEach(d => d());
@@ -30,29 +35,11 @@ export default class CompoEntry extends React.Component<{ compo: ICompo, match?:
         return this.props.match.params.entryId;
     }
 
-    get viewTitle() {
-        const { entry } = this;
-        return entry && entry.name || '(unnamed entry)';
-    }
-
-    async refresh() {
-        const { entryId } = this;
-
-        this.isPending = true;
-        try {
-            this.entry = await globalState.api.compoEntries.get(entryId);
-            this.lastError = null;
-        } catch (error) {
-            this.lastError = error;
-        }
-        this.isPending = false;
-    }
-
     render() {
-        const { entry } = this;
+        const entry = this.entry.value;
 
         return (
-            <div className="compo-entry">
+            <LoadingWrapper className="compo-entry" store={this.entry}>
                 {entry && <div className="entry-info">
                     <div className="entry-title">
                         <h3>{entry.name}</h3>
@@ -60,35 +47,35 @@ export default class CompoEntry extends React.Component<{ compo: ICompo, match?:
                     </div>
                     {entry.imagefile_medium_url && (
                         <div className="entry-image">
-                            <h4>{translate('entry.image')}</h4>
+                            <h4><L text="entry.image" />}</h4>
                             <a target="_blank" href={entry.imagefile_original_url || ''}>
                                 <img src={entry.imagefile_medium_url} />
                             </a>
                         </div>
                     )}
                     {entry.disqualified && <div className="entry-disqualified">
-                        <h4>{translate('entry.disqualified')}</h4>
+                        <h4><L text="entry.disqualified" />}</h4>
                         <p>{entry.disqualified_reason}</p>
                     </div>}
                     <div className="entry-description">
-                        <h4>{translate('entry.description')}</h4>
+                        <h4><L text="entry.description" />}</h4>
                         <p className="text-pre-wrap">{ entry.description }</p>
                     </div>
                     <div className="entry-files">
-                        <h4>{translate('entry.files')}</h4>
+                        <h4><L text="entry.files" />}</h4>
                         { entry.entryfile_url && <p>
                             <a target="_blank" href={entry.entryfile_url}>
-                                {translate('entry.entryfile')}
+                                <L text="entry.entryfile" />}
                             </a>
                         </p>}
                         { entry.sourcefile_url && <p>
                             <a target="_blank" href={entry.sourcefile_url}>
-                                {translate('entry.sourcefile')}
+                                <L text="entry.sourcefile" />}
                             </a>
                         </p>}
                     </div>
                 </div>}
-            </div>
+            </LoadingWrapper>
         );
     }
 }

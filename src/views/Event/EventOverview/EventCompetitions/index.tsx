@@ -1,45 +1,54 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { action, observable } from 'mobx';
+import { autorun, computed } from 'mobx';
+import _orderBy from 'lodash/orderBy';
 
-import { NoResults } from 'src/common';
-import { ICompetition, IEvent } from 'src/api/interfaces';
+import { NoResults, LoadingWrapper } from 'src/common';
+import { IEvent } from 'src/api/interfaces';
+import { RemoteStore } from 'src/stores';
 import globalState from 'src/state';
 
 
 @observer
-export default class EventCompetitions extends React.Component<{ event: IEvent }> {
-    @observable.ref competitions: ICompetition[] = [];
-    @observable.ref lastError: any;
-    @observable.ref isPending = false;
+export default class EventCompetitions extends React.Component<{
+    event: IEvent;
+}> {
+    competitions = new RemoteStore(() => {
+        return globalState.api.competitions.list({ event: this.props.event.id });
+    });
+
+    disposers = [] as any[];
 
     componentWillMount() {
-        this.refresh();
+        this.disposers = [
+            autorun(() => this.competitions.refresh()),
+        ];
     }
 
-    @action
-    async refresh() {
-        const { event } = this.props;
-        const { api } = globalState;
-        this.isPending = true;
-        try {
-            this.competitions = await api.competitions.list({ event: event.id });
-            this.lastError = null;
-        } catch (error) {
-            this.lastError = error;
-        }
-        this.isPending = false;
+    componentWillUnmount() {
+        this.disposers.forEach(d => d());
+    }
+
+    @computed
+    get sortedCompetitions() {
+        const { value } = this.competitions;
+        return value && _orderBy(value, competition => competition.start);
     }
 
     render() {
-        const { competitions } = this;
+        const competitions = this.sortedCompetitions;
+
         return (
-            <ul>
-                {competitions.map(competition => (
-                    <li key={competition.name}>{competition.name}</li>
-                ))}
-                {!competitions.length && <NoResults />}
-            </ul>
+            <LoadingWrapper store={this.competitions}>
+                {competitions && (
+                    <ul>
+                        {competitions.map(competition => (
+                            <li key={competition.name}>{competition.name}</li>
+                        ))}
+                        {!competitions.length && <NoResults />}
+                    </ul>
+                )}
+            </LoadingWrapper>
         );
     }
 }

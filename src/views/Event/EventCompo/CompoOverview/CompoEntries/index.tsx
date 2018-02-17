@@ -1,35 +1,34 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { observable } from 'mobx';
 import { autorun } from 'mobx';
 import { Link, withRouter } from 'react-router-dom';
 import _orderBy from 'lodash/orderBy';
 
-import { ICompoEntry, ICompo } from 'src/api/interfaces';
+import { ICompo } from 'src/api/interfaces';
 import globalState from 'src/state';
+import { RemoteStore } from 'src/stores';
+import { LoadingWrapper } from 'src/common';
 
 
 @(withRouter as any)
 @observer
-export default class CompoEntries extends React.Component<{ compo: ICompo, match?: any }> {
-    @observable.ref isPending = false;
-    @observable.ref lastError: any;
-    @observable.ref entries: ICompoEntry[] | null = null;
+export default class CompoEntries extends React.Component<{
+    compo: ICompo; match?: any;
+}> {
+    entries = new RemoteStore(() => {
+        return globalState.api.compoEntries.list({ compo: this.compoId });
+    });
 
     disposers = [] as any[];
 
     componentWillMount() {
         this.disposers.push(autorun(() => {
-            this.refresh();
+            this.entries.refresh();
         }));
     }
 
     componentWillUnmount() {
         this.disposers.forEach(d => d());
-    }
-
-    onCompoChange() {
-        this.refresh();
     }
 
     get compoId() {
@@ -38,29 +37,11 @@ export default class CompoEntries extends React.Component<{ compo: ICompo, match
     }
 
     get allEntriesSorted() {
-        return _orderBy(this.entries || [], entry => entry.rank);
+        return _orderBy(this.entries.value || [], entry => entry.rank);
     }
 
     get qualifiedEntriesSorted() {
         return this.allEntriesSorted.filter(entry => !entry.disqualified);
-    }
-
-    async refresh() {
-        const { compoId } = this;
-
-        if (!compoId) {
-            return;
-        }
-
-        const { api } = globalState;
-        this.isPending = true;
-        try {
-            this.entries = await api.compoEntries.list({ compo: this.compoId });
-            this.lastError = null;
-        } catch (error) {
-            this.lastError = error;
-        }
-        this.isPending = false;
     }
 
     getEntryPath(entry) {
@@ -71,16 +52,18 @@ export default class CompoEntries extends React.Component<{ compo: ICompo, match
     render() {
         const entries = this.allEntriesSorted;
         return (
-            <ul>
-                {entries && entries.map(entry => (
-                    <li key={entry.id}>
-                        {entry.rank ? entry.rank + '. ' : ''}
-                        <Link to={this.getEntryPath(entry)}>
-                            {entry.name}
-                        </Link> - {entry.creator}
-                    </li>
-                ))}
-            </ul>
+            <LoadingWrapper store={this.entries}>
+                {entries && <ul>
+                    {entries.map(entry => (
+                        <li key={entry.id}>
+                            {entry.rank ? entry.rank + '. ' : ''}
+                            <Link to={this.getEntryPath(entry)}>
+                                {entry.name}
+                            </Link> - {entry.creator}
+                        </li>
+                    ))}
+                </ul>}
+            </LoadingWrapper>
         );
     }
 }

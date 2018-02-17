@@ -1,11 +1,12 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { observable } from 'mobx';
+import { autorun, computed } from 'mobx';
 import _orderBy from 'lodash/orderBy';
 
-import { NoResults } from 'src/common';
-import { IProgrammeEvent, IEvent } from 'src/api/interfaces';
+import { NoResults, LoadingWrapper } from 'src/common';
+import { IEvent } from 'src/api/interfaces';
 import globalState from 'src/state';
+import { RemoteStore } from 'src/stores';
 
 
 export interface IEventProgrammeProps {
@@ -14,45 +15,42 @@ export interface IEventProgrammeProps {
 
 @observer
 export default class EventProgramme extends React.Component<IEventProgrammeProps> {
-    @observable isPending = false;
-    @observable lastError: any;
-    @observable.ref programmeEvents = [] as IProgrammeEvent[];
+    progEvents = new RemoteStore(() => {
+        return globalState.api.programme.list({ event: this.props.event.id });
+    });
+
+    disposers = [] as any[];
 
     componentWillMount() {
-        this.refresh();
+        this.disposers = [
+            autorun(() => this.progEvents.refresh()),
+        ];
     }
 
-    async refresh() {
-        const { event } = this.props;
-        const id = event && event.id;
-        if (!id) {
-            return;
-        }
-        const { api } = globalState;
+    componentWillUnmount() {
+        this.disposers.forEach(d => d());
+    }
 
-        this.isPending = true;
-        try {
-            const items = await api.programme.list({ event: id });
-            this.programmeEvents = _orderBy(items, item => item.start);
-            this.lastError = null;
-        } catch (error) {
-            this.lastError = error;
-            throw error;
-        }
-        this.isPending = false;
+    @computed
+    get sortedEvents() {
+        const { value } = this.progEvents;
+        return value && _orderBy(value, event => event.start);
     }
 
     render() {
-        const { programmeEvents } = this;
+        const events = this.sortedEvents;
+
         return (
-            <ul>
-                {programmeEvents.map(event => (
-                    <li key={event.id}>{event.title}</li>
-                ))}
-                {!programmeEvents.length && (
-                    <NoResults />
-                )}
-            </ul>
+            <LoadingWrapper store={this.progEvents}>
+                {events && (<ul>
+                    {events.map(event => (
+                        <li key={event.id}>{event.title}</li>
+                    ))}
+                    {!events.length && (
+                        <NoResults />
+                    )}
+                </ul>)}
+            </LoadingWrapper>
         );
     }
 }
