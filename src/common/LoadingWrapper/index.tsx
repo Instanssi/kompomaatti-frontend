@@ -3,6 +3,8 @@ import { observer } from 'mobx-react';
 import classNames from 'classnames';
 import { IRemote } from 'src/stores';
 
+import './loading-wrapper.scss';
+
 
 @observer
 export default class LoadingWrapper extends React.Component<{

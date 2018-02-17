@@ -1,0 +1,6 @@
+.loading-wrapper {
+    transition: opacity .5s;
+    &.is-pending {
+        opacity: .5;
+    }
+}
