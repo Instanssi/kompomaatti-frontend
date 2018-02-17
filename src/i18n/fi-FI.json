@@ -1,4 +1,9 @@
 {
+    "common": {
+        "loading": "Ladataan...",
+        "loadingError": "Ongelma sisällön lataamisessa.",
+        "loadingRetry": "Yritä uudestaan?"
+    },
     "compo": {
         "description": "Kuvaus",
         "entries": "Teokset",

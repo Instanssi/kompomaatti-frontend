@@ -9,12 +9,10 @@ import globalState from 'src/state';
 import { RemoteStore } from 'src/stores';
 
 
-export interface IEventProgrammeProps {
-    event: IEvent;
-}
-
 @observer
-export default class EventProgramme extends React.Component<IEventProgrammeProps> {
+export default class EventProgramme extends React.Component<{
+    event: IEvent;
+}> {
     progEvents = new RemoteStore(() => {
         return globalState.api.programme.list({ event: this.props.event.id });
     });

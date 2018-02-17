@@ -7,7 +7,7 @@ import _orderBy from 'lodash/orderBy';
 import { ICompo } from 'src/api/interfaces';
 import globalState from 'src/state';
 import { RemoteStore } from 'src/stores';
-import { LoadingWrapper } from 'src/common';
+import { LoadingWrapper, NoResults } from 'src/common';
 
 
 @(withRouter as any)
@@ -53,7 +53,7 @@ export default class CompoEntries extends React.Component<{
         const entries = this.allEntriesSorted;
         return (
             <LoadingWrapper store={this.entries}>
-                {entries && <ul>
+                {(entries && entries.length > 0) ? <ul>
                     {entries.map(entry => (
                         <li key={entry.id}>
                             {entry.rank ? entry.rank + '. ' : ''}
@@ -62,7 +62,7 @@ export default class CompoEntries extends React.Component<{
                             </Link> - {entry.creator}
                         </li>
                     ))}
-                </ul>}
+                </ul> : <NoResults />}
             </LoadingWrapper>
         );
     }
