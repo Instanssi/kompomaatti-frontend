@@ -1,7 +1,6 @@
 import _get from 'lodash/get';
 import _template from 'lodash/template';
-import bind from 'lodash-decorators/bind';
-import { action } from 'mobx';
+import { runInAction } from 'mobx';
 import { observable } from 'mobx';
 
 import InstanssiREST from '../api';
@@ -11,52 +10,38 @@ import config from 'src/config';
 import { IUser } from 'src/api/interfaces';
 
 
-const { DEFAULT_LOCALE } = config;
 const api = new InstanssiREST(config.API_URL);
-
-if (process.env.NODE_ENV === 'development') {
-    (window as any)._api = api;
-}
 
 /**
  * Application-wide state.
- *
- * Declared as a Vue component to get some global observable state without extra hassle.
- *
- * VueX could do the job here, but it's pretty obviously stuck in the pre-ES6
- * days and doesn't play nice with classes + TypeScript.
- * Binding MobX to Vue seems a bit redundant, too.
  */
 class GlobalState {
-    /** Current user, if known. */
+    /** Current user, if known. Don't even try to mutate. */
     @observable.ref user: IUser | null = null;
-
     /**
-     * Current language.
+     * Current language code (ISO 639 style).
      * @todo Save language in local storage for now.
      */
-    @observable language = 'en-US';
-
-    /** Current translation object. */
+    @observable.ref language = config.DEFAULT_LOCALE;
+    /** Current translation object. Translating text looks for keys in this. */
     @observable.ref translation: any = { };
+    /** The one source of the current time-of-day in case something cares. */
+    @observable.ref time = new Date().valueOf();
 
-    @observable currentTime = new Date().valueOf();
-
+    /** The site API made available here for convenience. */
     api = api;
-
-    @observable.ref isLoading = true;
 
     constructor() {
         // FIXME: Try to persist the state and bring it back on reload?
         setInterval(() => {
-            this.currentTime = new Date().valueOf();
-        }, 500);
-        this.findLanguage(this.languageCode);
+            this.time = new Date().valueOf();
+        }, 1000);
+        this.setLanguage(this.languageCode);
         this.continueSession();
     }
 
     get momentLocale() {
-        // TODO: Are lang codes always the same as moment locales?
+        // TODO: Are language codes always the same as moment locales?
         return this.language;
     }
 
@@ -70,9 +55,8 @@ class GlobalState {
      * @param values Optional arguments for translation (spec pending)
      * @returns Translated text string
      */
-    @bind()
-    translate(name: string, values?: {[key: string]: string}): string {
-        const text = _get(this.translation, name, name);
+    translate = (name: string, values?: {[key: string]: string}) => {
+        const text = _get(this.translation, name, name) as string;
         // TODO: Spec pluralisation, etc.
         if (values) {
             return _template(text)(values);
@@ -88,47 +72,46 @@ class GlobalState {
         return this.setUser(await api.currentUser.get());
     }
 
+
     /**
-     * Update the current user's language. May take a moment if the user is not anon.
-     * @param languageCode
+     * Change the UI language. May require fetching a new translation file.
+     * @param languageCode Language code like 'fi-FI'.
+     * @returns Promise that resolves when the language switch finishes.
      */
-    async setUserLanguage(languageCode: string) {
-        // FIXME: Update user remote profile if non-anon (= has id)
-        // console.debug('setting user language to:', languageCode);
-        this.language = await this.findLanguage(languageCode);
-        return;
+    setLanguage(code: string) {
+        const lang = i18n[code];
+
+        if (!lang) {
+            throw new Error('No translation found: ' + code);
+        }
+
+        return lang.fetch().then(
+            (translation) => runInAction(() => {
+                this.language = code;
+                this.translation = translation;
+            }),
+            (error) => {
+                console.warn('Unable to load translation:', code, error);
+                throw error;
+            },
+        );
     }
 
     /**
      * Assign a new session user.
      * @param user User profile.
-     * @returns {Promise.<Object>} - Same user profile, after loading language files.
      */
-    @action
     private async setUser(user: IUser) {
         this.user = user;
+        // TODO: If the user profiles ever get language info, call setLanguage here.
         return user;
-    }
-
-    /**
-     * Try to find a matching language and switch to it.
-     * Returns whatever lang key matched closely enough (e.g. 'en' may map to 'en-GB').
-     */
-    private async findLanguage(code: string): Promise<string> {
-        const getTranslation = i18n[code];
-        if (getTranslation) {
-            try {
-                this.translation = await getTranslation();
-                // console.debug('set translation to:', this.translation);
-            } catch (e) {
-                console.warn('Unable to load translation:', e);
-            }
-        } else {
-            console.warn('No translation:', code);
-            return DEFAULT_LOCALE;
-        }
-        return code;
     }
 }
 
-export default new GlobalState();
+const globalState = new GlobalState();
+export default globalState;
+
+if (process.env.NODE_ENV === 'development') {
+    // sneaky devmode trick
+    (window as any)._globalState = globalState;
+}
