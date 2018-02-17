@@ -7,7 +7,7 @@ import _orderBy from 'lodash/orderBy';
 import { IEvent } from 'src/api/interfaces';
 import globalState from 'src/state';
 import { RemoteStore } from 'src/stores';
-import { LoadingWrapper } from 'src/common';
+import { LoadingWrapper, NoResults } from 'src/common';
 
 
 export interface IEventComposProps {
@@ -46,7 +46,7 @@ export default class EventCompos extends React.Component<IEventComposProps> {
 
         return (
             <LoadingWrapper store={this.compos}>
-                {compos && <ul>
+                {(compos && compos.length > 0) ? <ul>
                     {compos.map(compo => (
                         <li key={compo.id}>
                             <Link to={url + `/compos/${compo.id}`}>
@@ -54,7 +54,7 @@ export default class EventCompos extends React.Component<IEventComposProps> {
                             </Link>
                         </li>
                     ))}
-                </ul>}
+                </ul> : <NoResults />}
             </LoadingWrapper>
         );
     }

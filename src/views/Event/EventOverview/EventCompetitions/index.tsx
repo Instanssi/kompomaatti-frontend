@@ -40,14 +40,13 @@ export default class EventCompetitions extends React.Component<{
 
         return (
             <LoadingWrapper store={this.competitions}>
-                {competitions && (
+                {(competitions && competitions.length > 0) ? (
                     <ul>
                         {competitions.map(competition => (
                             <li key={competition.name}>{competition.name}</li>
                         ))}
-                        {!competitions.length && <NoResults />}
                     </ul>
-                )}
+                ) : <NoResults />}
             </LoadingWrapper>
         );
     }

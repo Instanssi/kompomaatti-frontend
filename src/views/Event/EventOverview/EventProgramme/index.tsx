@@ -40,14 +40,11 @@ export default class EventProgramme extends React.Component<{
 
         return (
             <LoadingWrapper store={this.progEvents}>
-                {events && (<ul>
+                {(events && events.length > 0) ? <ul>
                     {events.map(event => (
                         <li key={event.id}>{event.title}</li>
                     ))}
-                    {!events.length && (
-                        <NoResults />
-                    )}
-                </ul>)}
+                </ul> : <NoResults />}
             </LoadingWrapper>
         );
     }

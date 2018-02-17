@@ -10,11 +10,11 @@ const { translate } = globalState;
 export default class NoResults extends React.Component<any> {
     render() {
         return (
-            <span>
+            <div>
                 <span className="fa fa-fw fa-info-circle" />
                 {' '}
                 {translate('list.noResults')}
-            </span>
+            </div>
         );
     }
 }
