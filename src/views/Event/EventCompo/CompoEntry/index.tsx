@@ -48,30 +48,30 @@ export default class CompoEntry extends React.Component<{
                     </div>
                     {entry.imagefile_medium_url && (
                         <div className="entry-image">
-                            <h4><L text="entry.image" />}</h4>
+                            <h4><L text="entry.image" /></h4>
                             <a target="_blank" href={entry.imagefile_original_url || ''}>
                                 <img src={entry.imagefile_medium_url} />
                             </a>
                         </div>
                     )}
                     {entry.disqualified && <div className="entry-disqualified">
-                        <h4><L text="entry.disqualified" />}</h4>
+                        <h4><L text="entry.disqualified" /></h4>
                         <p>{entry.disqualified_reason}</p>
                     </div>}
                     <div className="entry-description">
-                        <h4><L text="entry.description" />}</h4>
+                        <h4><L text="entry.description" /></h4>
                         <p className="text-pre-wrap">{ entry.description }</p>
                     </div>
                     <div className="entry-files">
-                        <h4><L text="entry.files" />}</h4>
+                        <h4><L text="entry.files" /></h4>
                         { entry.entryfile_url && <p>
                             <a target="_blank" href={entry.entryfile_url}>
-                                <L text="entry.entryfile" />}
+                                <L text="entry.entryfile" />
                             </a>
                         </p>}
                         { entry.sourcefile_url && <p>
                             <a target="_blank" href={entry.sourcefile_url}>
-                                <L text="entry.sourcefile" />}
+                                <L text="entry.sourcefile" />
                             </a>
                         </p>}
                     </div>

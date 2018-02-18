@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import { autorun, computed } from 'mobx';
 import _orderBy from 'lodash/orderBy';
 
-import { NoResults, LoadingWrapper } from 'src/common';
+import { NoResults, LoadingWrapper, FormatTime } from 'src/common';
 import { IEvent } from 'src/api/interfaces';
 import globalState from 'src/state';
 import { RemoteStore } from 'src/stores';
@@ -42,7 +42,15 @@ export default class EventProgramme extends React.Component<{
             <LoadingWrapper store={this.progEvents}>
                 {(events && events.length > 0) ? <ul>
                     {events.map(event => (
-                        <li key={event.id}>{event.title}</li>
+                        <li key={event.id} className="programme-item">
+                            <span className="item-time">
+                                <FormatTime value={event.start} format="ddd LT" />
+                            </span>
+                            {' '}
+                            <span className="item-title">
+                                {event.title}
+                            </span>
+                        </li>
                     ))}
                 </ul> : <NoResults />}
             </LoadingWrapper>

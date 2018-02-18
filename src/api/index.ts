@@ -169,10 +169,18 @@ class UserVoteCodesAPI extends BaseAPI<IVoteCode> {
     constructor(baseUrl, config) {
         super(baseUrl + '/user_vote_codes/', config);
     }
+
+    create(request) {
+        return this.request('POST', this.url, null, request);
+    }
 }
 
 class UserVoteCodeRequestsAPI extends BaseAPI<IVoteCodeRequest> {
     constructor(baseUrl, config) {
         super(baseUrl + '/user_vote_code_requests/', config);
+    }
+
+    create(request) {
+        return this.request('POST', this.url, null, request);
     }
 }

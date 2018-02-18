@@ -10,8 +10,6 @@ import InstanssiREST from '../api';
 import { IUser } from 'src/api/interfaces';
 import { RemoteStore } from 'src/stores';
 
-// import { RemoteStore } from 'src/stores';
-
 
 const api = new InstanssiREST(config.API_URL);
 
@@ -34,10 +32,24 @@ class GlobalState {
     /** Several things could use a list of party events, so it's available here. */
     events = new RemoteStore(async () => {
         const events = await api.events.list();
+
+
+
+
+
+        // TODO: Map these into larger objects with helper methods
+        // - Everything about this app has something to do with events, after all.
+        // - Can we use MobX atoms to watch the watchers?
+        // - When an event object's details are touched, fetch them.
+
+
+
+
+
+
         // If something needs these in a different order, just compute a new list there.
         return _orderBy(events, event => event.date, 'desc');
     });
-
 
     /** The site API made available here for convenience. */
     api = api;

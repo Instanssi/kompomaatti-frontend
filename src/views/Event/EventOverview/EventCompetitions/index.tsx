@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import { autorun, computed } from 'mobx';
 import _orderBy from 'lodash/orderBy';
 
-import { NoResults, LoadingWrapper } from 'src/common';
+import { NoResults, LoadingWrapper, FormatTime } from 'src/common';
 import { IEvent } from 'src/api/interfaces';
 import { RemoteStore } from 'src/stores';
 import globalState from 'src/state';
@@ -41,9 +41,17 @@ export default class EventCompetitions extends React.Component<{
         return (
             <LoadingWrapper store={this.competitions}>
                 {(competitions && competitions.length > 0) ? (
-                    <ul>
+                    <ul className="event-competitions">
                         {competitions.map(competition => (
-                            <li key={competition.name}>{competition.name}</li>
+                            <li key={competition.name} className="competitions-item">
+                                <span className="item-time">
+                                    <FormatTime value={competition.start} format="ddd LT" />
+                                </span>
+                                {' '}
+                                <span className="item-title">
+                                    {competition.name}
+                                </span>
+                            </li>
                         ))}
                     </ul>
                 ) : <NoResults />}

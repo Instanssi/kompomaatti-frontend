@@ -7,7 +7,7 @@ import _orderBy from 'lodash/orderBy';
 import { IEvent } from 'src/api/interfaces';
 import globalState from 'src/state';
 import { RemoteStore } from 'src/stores';
-import { LoadingWrapper, NoResults } from 'src/common';
+import { LoadingWrapper, NoResults, FormatTime } from 'src/common';
 
 
 export interface IEventComposProps {
@@ -46,12 +46,18 @@ export default class EventCompos extends React.Component<IEventComposProps> {
 
         return (
             <LoadingWrapper store={this.compos}>
-                {(compos && compos.length > 0) ? <ul>
+                {(compos && compos.length > 0) ? <ul className="event-compos">
                     {compos.map(compo => (
-                        <li key={compo.id}>
-                            <Link to={url + `/compos/${compo.id}`}>
-                                {compo.name}
-                            </Link>
+                        <li key={compo.id} className="compos-item">
+                            <span className="item-time">
+                                <FormatTime value={compo.compo_start} format="ddd LT" />
+                            </span>
+                            {' '}
+                            <span className="item-title">
+                                <Link to={url + `/compos/${compo.id}`}>
+                                    {compo.name}
+                                </Link>
+                            </span>
                         </li>
                     ))}
                 </ul> : <NoResults />}
