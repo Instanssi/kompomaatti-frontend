@@ -2,9 +2,9 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { action } from 'mobx';
 
-import { FormGroup } from 'src/common';
+import { Form, FormGroup, L } from 'src/common';
 import { ICompo } from 'src/api/interfaces';
-import FormState from 'src/state/form';
+import { FormStore } from 'src/stores';
 
 
 interface ICompoEntryFormProps {
@@ -14,20 +14,31 @@ interface ICompoEntryFormProps {
 @observer
 export default class CompoEntryForm extends React.Component<ICompoEntryFormProps> {
     // TODO: What does this do?
-    form: FormState;
+    form = new FormStore({
+
+    });
 
     @action.bound
-    handleSubmit(event) {
-        event.preventDefault();
+    handleSubmit(form) {
     }
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
+            <Form form={this.form} onSubmit={this.handleSubmit}>
                 <h2>Add entry</h2>
-                <FormGroup form={this.form} name="title" />
-            </form>
-        )
+                <FormGroup
+                    label={<L text="data.entry.name.title" />}
+                    help={<L text="data.entry.name.help" />}
+                    name="title"
+                />
+                <FormGroup
+                    label={<L text="data.entry.description.title" />}
+                    help={<L text="data.entry.description.help" />}
+                    name="description"
+                    input="textarea"
+                />
+            </Form>
+        );
     }
 }
 

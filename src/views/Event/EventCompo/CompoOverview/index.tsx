@@ -6,6 +6,7 @@ import globalState from 'src/state';
 
 import CompoEntries from './CompoEntries';
 import { ICompo } from 'src/api/interfaces';
+import CompoActions from '../CompoActions';
 
 
 // FIXME: Come up with a shorter name for this for convenience? "L" ?
@@ -30,6 +31,9 @@ export default class CompoOverview extends React.Component<ICompoOverviewProps> 
 
         return (
             <div className="event-compo-overview">
+                <div className="pull-sm-right">
+                    <CompoActions compo={compo} />
+                </div>
                 <div className="compo-description">
                     <h3>{translate('compo.description')}</h3>
                     <div dangerouslySetInnerHTML={this.descriptionHTML} />

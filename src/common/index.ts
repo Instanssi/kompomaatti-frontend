@@ -1,3 +1,4 @@
+export { default as Form } from './Form';
 export { default as FormGroup } from './FormGroup';
 export { default as FormatDuration } from './FormatDuration';
 export { default as FormatTime } from './FormatTime';

@@ -8,7 +8,6 @@ import globalState from 'src/state';
 
 import CompoOverview from './CompoOverview';
 import CompoEntry from './CompoEntry';
-import CompoActions from './CompoActions';
 import CompoEntryForm from './CompoEntryForm';
 import CompoVote from './CompoVote';
 import { RemoteStore } from 'src/stores';
@@ -41,9 +40,6 @@ export default class EventCompo extends React.Component<{
         return (
             <LoadingWrapper className="event-compo" store={this.compo}>
                 {compo && <>
-                    <div className="pull-sm-right">
-                        <CompoActions compo={compo} />
-                    </div>
                     <div className="compo-title">
                         <h2>{compo.name}</h2>
                         <p><FormatTime value={compo.compo_start} /></p>
@@ -52,11 +48,11 @@ export default class EventCompo extends React.Component<{
                         <Route exact path={url + '/entries/add'}>
                             <CompoEntryForm compo={compo} />
                         </Route>
-                        <Route exact path={url + '/vote'}>
-                            <CompoVote compo={compo} />
-                        </Route>
                         <Route path={url + '/entries/:entryId'}>
                             <CompoEntry compo={compo} />
+                        </Route>
+                        <Route exact path={url + '/vote'}>
+                            <CompoVote compo={compo} />
                         </Route>
                         <Route>
                             <CompoOverview compo={compo} />
