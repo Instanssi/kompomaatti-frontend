@@ -1,4 +1,5 @@
 import BaseAPI from './BaseAPI';
+import Cookies from 'cookies-js';
 import {
     ICompetition,
     ICompetitionParticipation,
@@ -53,7 +54,7 @@ class SessionAPI extends BaseAPI<IUser> {
      * Rejects if there is no user.
      */
     get(): Promise<IUser> {
-        return this.fetch('GET', this.url);
+        return this.request('GET', this.url);
     }
 }
 
@@ -95,6 +96,43 @@ class CompoEntriesAPI extends BaseAPI<ICompoEntry> {
 class UserCompoEntriesAPI extends BaseAPI<ICompoEntry> {
     constructor(baseUrl, config) {
         super(baseUrl + '/user_entries/', config);
+    }
+
+    /**
+     * Create a new compo entry.
+     *
+     * Entries must have an entry file, and possibly an image file.
+     * Source files are not required.
+     */
+    create(request) {
+        const { sourcefile, imagefile_original, ...rest } = request;
+        const fetchImpl = (this.config.fetch as typeof fetch) || fetch;
+
+        const formData = new FormData();
+
+        // This better be up to date, no way to update it right now.
+        formData.append('csrfmiddlewaretoken', Cookies.get('csrftoken'));
+
+        // Append basic inputs into the form data.
+        Object.keys(rest).forEach(key => {
+            formData.append(key, rest[key]);
+        });
+
+        // The BE doesn't like receiving a null value for these, so leave them out
+        // unless they're actually set.
+        if (sourcefile) {
+            formData.append('sourcefile', sourcefile);
+        }
+        if (imagefile_original) {
+            formData.append('imagefile_original', imagefile_original);
+        }
+
+        return fetchImpl(this.url, {
+            method: 'POST',
+            body: formData,
+            credentials: 'include',
+        }).then((response) => this.handleResponse(response))
+        .catch((error) => this.handleError(error));
     }
 }
 

@@ -10,28 +10,50 @@ import FormFeedback from '../FormFeedback';
 
 export interface IFormGroupProps<T> {
     name: string;
-    onChange?: (name: string, value: any) => void;
     label?: JSX.Element | string;
     help?: JSX.Element | string;
 
     /**
-     * Set to use a custom input component.
+     * Set to use a custom input component. A text input is rendered by default.
      *
      * The class is used with props that would work with a plain <input />.
      */
     input?: React.ComponentClass<any> | string;
-    /** Set to completely override the input field implementation. */
+
+    // Tempted to just make this interface extend basic HTML input attributes,
+    // but most of that junk is useless and potentially confusing.
+    type?: string;
+    autocomplete?: string;
+
+    /**
+     * Set to completely override the input field implementation.
+     */
     children?: JSX.Element;
 
-    form?: FormStore<T>;
+    /** Actually passed via MobX provider + inject (context). */
+    formStore?: FormStore<T>;
 }
 
 /**
  * Markup for a form group.
  */
-@inject('form')
+@inject('formStore')
 @observer
 export default class FormGroup<T> extends React.Component<IFormGroupProps<T>> {
+
+    componentWillMount() {
+        // sanity checks
+        const { name, formStore } = this.props;
+
+        if (!formStore) {
+            throw new Error('No formStore provided!');
+        }
+
+        if (formStore.value[name] === undefined) {
+            throw new Error('Form has no initial value for: ' + name);
+        }
+    }
+
     /** Get id for the form label and control. */
     get id() {
         return this.props.name;
@@ -39,13 +61,20 @@ export default class FormGroup<T> extends React.Component<IFormGroupProps<T>> {
 
     @action.bound
     onChange(eventOrValue) {
+        const { name, type } = this.props;
+        const form = this.props.formStore!;
         const { target } = eventOrValue;
+
         if (target) {
             // how about checkboxes? they have "checked" instead of "value" because DOM is silly
             // - do they belong in form groups anyway?
-            return target.value;
+            if (type === 'file') {
+                return form.onChange(name, target.files && target.files[0]);
+            } else {
+                return form.onChange(name, target.value);
+            }
         }
-        return eventOrValue;
+        return form.onChange(name, eventOrValue);
     }
 
     @computed
@@ -58,13 +87,13 @@ export default class FormGroup<T> extends React.Component<IFormGroupProps<T>> {
 
     @computed
     get value() {
-        const { form, name } = this.props;
-        return _get(form!.value, name);
+        const { formStore, name } = this.props;
+        return _get(formStore!.value, name);
     }
 
     render() {
         const { id, className, props, value, onChange } = this;
-        const { form, name, label, children, help, input } = props;
+        const { name, label, help, input, children, formStore, type, ...rest } = props;
 
         return (
             <div className={className}>
@@ -79,16 +108,19 @@ export default class FormGroup<T> extends React.Component<IFormGroupProps<T>> {
                     // the appropriate form field. This could handle like 50% of cases.
                     React.createElement(input || 'input', {
                         id,
-                        value,
+                        // HTML forms, please don't suck this hard
+                        value: type !== 'file' ? value : (value && value.filename),
+                        type,
                         onChange,
                         className: 'form-control',
+                        ...rest,
                     })
                 )}
                 {help && (
                     // Render help text using Bootstrap 3 markup.
                     <p className="help-block">{help}</p>
                 )}
-                <FormFeedback form={form!} name={name} />
+                <FormFeedback form={formStore!} name={name} />
             </div>
         );
     }

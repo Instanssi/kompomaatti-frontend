@@ -14,6 +14,7 @@
     "dependencies": {
         "bootstrap-sass": "~3.3.7",
         "classnames": "~2.2.5",
+        "cookies-js": "~1.2.3",
         "font-awesome": "~4.7.0",
         "lodash": "~4.17.5",
         "lodash-decorators": "~4.5.0",
@@ -28,6 +29,7 @@
         "regenerator-runtime": "~0.11.1"
     },
     "devDependencies": {
+        "@types/classnames": "~2.2.3",
         "@types/jest": "~22.1.1",
         "@types/lodash": "~4.14.100",
         "@types/react": "~16.0.36",

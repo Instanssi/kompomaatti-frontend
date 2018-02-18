@@ -132,7 +132,7 @@ if(PRODUCTION_BUILD) {
         // proxy the local Instanssi server to get around CORS issues
         proxy: {
             '!/kompomaatti/**': {
-                target: 'http://localhost:8000',
+                target: process.env.INSTANSSI_URL || 'http://localhost:8000',
             }
         },
         historyApiFallback: {

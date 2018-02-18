@@ -16,11 +16,11 @@ export default class BaseAPI<ItemType = any> {
     }
 
     list(args?): Promise<ItemType[]> {
-        return this.fetch('GET', this.url, args);
+        return this.request('GET', this.url, args);
     }
 
     get(id: PrimaryKey): Promise<ItemType> {
-        return this.fetch('GET', this.url + id + '/');
+        return this.request('GET', this.url + id + '/');
     }
 
     /**
@@ -31,7 +31,7 @@ export default class BaseAPI<ItemType = any> {
      * @param payload Optional payload
      * @returns Async response
      */
-    protected fetch<T = any>(method: string, url: string, query?, payload?): Promise<T> {
+    protected request<T = any>(method: string, url: string, query?, payload?): Promise<T> {
         if (process.env.NODE_ENV === 'test') {
             throw new Error('Unmocked request: ' + method + ' ' + url);
         }

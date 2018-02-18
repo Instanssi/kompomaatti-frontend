@@ -2,7 +2,8 @@
     "common": {
         "loading": "Ladataan...",
         "loadingError": "Ongelma sisällön lataamisessa.",
-        "loadingRetry": "Yritä uudestaan?"
+        "loadingRetry": "Yritä uudestaan?",
+        "submit": "Lähetä"
     },
     "compo": {
         "description": "Kuvaus",
@@ -78,6 +79,8 @@
         }
     },
     "entry": {
+        "add": "Lisää teos",
+        "edit": "Muokkaa teosta",
         "description": "Teoksen kuvaus",
         "entryfile": "Teos tiedostona",
         "files": "Tiedostot",

@@ -2,7 +2,8 @@
     "common": {
         "loading": "Loading...",
         "loadingError": "There was a problem loading this content.",
-        "loadingRetry": "Try again?"
+        "loadingRetry": "Try again?",
+        "submit": "Submit"
     },
     "compo": {
         "description": "Description",
@@ -34,6 +35,8 @@
         "welcome": "Welcome to Kompomaatti, the official compo management system of Instanssi.org!"
     },
     "entry": {
+        "add": "Add entry",
+        "edit": "Edit entry",
         "description": "Entry description",
         "entryfile": "Entry file",
         "files": "Files",
