@@ -17,6 +17,10 @@ body {
     }
 }
 
+.container {
+    padding: 0;
+}
+
 .p-3 {
     padding: $spacer !important;
 }
