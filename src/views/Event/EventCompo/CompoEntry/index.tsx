@@ -32,7 +32,8 @@ export default class CompoEntry extends React.Component<{
     }
 
     get entryId() {
-        return this.props.match.params.entryId;
+        const { params } = this.props.match;
+        return Number.parseInt(params.entryId, 10);
     }
 
     render() {

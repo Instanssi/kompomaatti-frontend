@@ -1,28 +1,32 @@
+import React from 'react';
 import { shallow, ShallowWrapper } from 'enzyme';
+// import createRouterContext from 'react-router-test-context';
 
-import { mockCompoEntry } from 'src/tests/mocks';
+import { mockCompoEntry, mockCompo } from 'src/tests/mocks';
 import globalState from 'src/state';
 import CompoEntry from './';
 
 
 describe(CompoEntry.name, () => {
     let wrapper: ShallowWrapper;
+    let mockProps;
 
     beforeEach(() => {
         jest.spyOn(globalState.api.compoEntries, 'get')
             .mockReturnValue(Promise.resolve(mockCompoEntry));
 
-        const $route = {
-            params: { eid: mockCompoEntry.id },
+        mockProps = {
+            compo: mockCompo,
+            match: {
+                params: {
+                    entryId: '' + mockCompoEntry.id,
+                },
+            },
         };
 
-        // https://vue-test-utils.vuejs.org/en/api/options.html#mocks
-        wrapper = shallow(CompoEntry, {
-            mocks: {
-                $route,
-            },
-        });
+        const _CompoEntry = (CompoEntry as any).WrappedComponent;
 
+        wrapper = shallow(<_CompoEntry {...mockProps} />);
     });
 
     it('renders', () => {

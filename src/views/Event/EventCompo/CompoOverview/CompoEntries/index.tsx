@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { autorun } from 'mobx';
+import { autorun, computed } from 'mobx';
 import { Link, withRouter } from 'react-router-dom';
 import _orderBy from 'lodash/orderBy';
 
@@ -36,10 +36,12 @@ export default class CompoEntries extends React.Component<{
         return compo && compo.id;
     }
 
+    @computed
     get allEntriesSorted() {
         return _orderBy(this.entries.value || [], entry => entry.rank);
     }
 
+    @computed
     get qualifiedEntriesSorted() {
         return this.allEntriesSorted.filter(entry => !entry.disqualified);
     }

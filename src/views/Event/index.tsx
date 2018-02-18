@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { action } from 'mobx';
-import { Switch, Route, withRouter } from 'react-router';
+import { Switch, Route, withRouter, RouteComponentProps } from 'react-router';
 
 import globalState from 'src/state';
 import { FormatTime, LoadingWrapper } from 'src/common';
@@ -11,14 +11,8 @@ import EventCompo from './EventCompo';
 import { RemoteStore } from 'src/stores';
 
 
-export interface IEventViewProps {
-    eventId?: string;
-    match?: any;
-}
-
-@(withRouter as any)
 @observer
-export default class EventView extends React.Component<IEventViewProps> {
+export class EventView extends React.Component<RouteComponentProps<{ eventId: string }>> {
     event = new RemoteStore(this.fetch);
 
     componentWillMount() {
@@ -64,3 +58,5 @@ export default class EventView extends React.Component<IEventViewProps> {
         );
     }
 }
+
+export default withRouter(EventView);

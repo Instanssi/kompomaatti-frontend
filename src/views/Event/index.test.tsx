@@ -1,3 +1,4 @@
+import React from 'react';
 import { shallow, ShallowWrapper } from 'enzyme';
 
 import globalState from 'src/state';
@@ -8,20 +9,24 @@ import EventView from './';
 
 describe(EventView.name, () => {
     let wrapper: ShallowWrapper;
+    let instance;
+    let mockProps;
 
     beforeEach(() => {
         jest.spyOn(globalState.api.events, 'get')
             .mockReturnValue(Promise.resolve(mockEvent));
 
-        const $route = {
-            params: { id: mockEvent.id },
-        };
-        // https://vue-test-utils.vuejs.org/en/api/options.html#mocks
-        wrapper = shallow(EventView, {
-            mocks: {
-                $route,
+        mockProps = {
+            match: {
+                params: {
+                    eventId: '' + mockEvent.id,
+                },
             },
-        });
+        };
+        const _EventView = (EventView as any).WrappedComponent;
+
+        wrapper = shallow(<_EventView {...mockProps} />);
+        instance = wrapper.instance();
     });
 
     it('renders', () => {
@@ -29,6 +34,7 @@ describe(EventView.name, () => {
     });
 
     it('calls the API to fetch event information', () => {
+        instance.event.refresh();
         expect(globalState.api.events.get).toHaveBeenCalledWith(mockEvent.id);
     });
 });
