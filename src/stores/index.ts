@@ -1,3 +1,4 @@
+// Common MobX store code.
 
 export {
     IRemote,

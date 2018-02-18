@@ -14,13 +14,11 @@ export default class FormStore<T extends {}> {
         if (this.value[name] === undefined) {
             throw new Error('Attempted to add new value to a form?');
         }
-        console.info('onChange', name, value);
         this.value[name] = value;
     }
 
     @action
     setError(error) {
-        console.info('setError:', error);
         this.error = error;
     }
 

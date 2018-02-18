@@ -2,39 +2,50 @@ import React from 'react';
 import { observer } from 'mobx-react';
 
 import globalState from 'src/state';
+import { L } from 'src/common';
 
-
-const { translate } = globalState;
 
 @observer
 export default class FrontPageView extends React.Component<any> {
+    componentWillMount() {
+        globalState.events.refresh();
+    }
+
+    get currentEvent() {
+        return globalState.currentEvent;
+    }
+
     get currentUser() {
         return globalState.user;
     }
 
-    get viewTitle() {
-        return { key: 'dashboard.viewTitle' };
-    }
-
     render() {
+        const currentEvent = globalState.currentEvent;
+
         return (
             <div className="frontpage-view">
                 <h1>Kompomaatti</h1>
                 <p>
-                    {translate('dashboard.welcome')}
+                    <L text="dashboard.welcome" />
                 </p>
                 <div className="row">
                     <div className="col-sm-6">
                         <div className="highlight-box">
                             <h3 className="box-header">
-                                {translate('dashboard.events.title')}
+                                <L text="dashboard.events.title" />
                             </h3>
                             <div className="box-body">
-                                <p>{translate('dashboard.events.empty')}</p>
+                                <p>
+                                    {currentEvent ? (
+                                        currentEvent.name
+                                    ) : (
+                                        <L text="dashboard.events.empty" />
+                                    )}
+                                </p>
                             </div>
                             <div className="box-footer">
                                 {/*
-                                    <button>{translate('dashboard.events.action')}</button> -->
+                                    <button><L text="dashboard.events.action')}</butto" />-->
                                 */}
                             </div>
                         </div>
@@ -42,14 +53,14 @@ export default class FrontPageView extends React.Component<any> {
                     <div className="col-sm-6">
                         <div className="highlight-box">
                             <h3 className="box-header">
-                                {translate('dashboard.programme.title')}
+                                <L text="dashboard.programme.title" />
                             </h3>
                             <div className="box-body">
-                                <p>{translate('dashboard.programme.empty')}</p>
+                                <p><L text="dashboard.programme.empty" /></p>
                             </div>
                             <div className="box-footer">
                                 {/*<button>
-                                    {translate('dashboard.programme.action')}
+                                    <L text="dashboard.programme.action" />
                                 </button>*/}
                             </div>
                         </div>
@@ -57,14 +68,14 @@ export default class FrontPageView extends React.Component<any> {
                     <div className="col-sm-6">
                         <div className="highlight-box">
                             <h3 className="box-header">
-                                {translate('dashboard.compos.title')}
+                                <L text="dashboard.compos.title" />
                             </h3>
                             <div className="box-body">
-                                <p>{translate('dashboard.compos.empty')}</p>
+                                <p><L text="dashboard.compos.empty" /></p>
                             </div>
                             <div className="box-footer">
                                 {/*<button>
-                                    {translate('dashboard.compos.action')}
+                                    <L text="dashboard.compos.action" />
                                 </button>*/}
                             </div>
                         </div>
@@ -72,14 +83,14 @@ export default class FrontPageView extends React.Component<any> {
                     <div className="col-sm-6">
                         <div className="highlight-box">
                             <h3 className="box-header">
-                                {translate('dashboard.competitions.title')}
+                                <L text="dashboard.competitions.title" />
                             </h3>
                             <div className="box-body">
-                                <p>{translate('dashboard.competitions.empty')}</p>
+                                <p><L text="dashboard.competitions.empty" /></p>
                             </div>
                             <div className="box-footer">
                                 {/*<button>
-                                {translate('dashboard.competitions.action')}
+                                <L text="dashboard.competitions.action" />
                                 </button>*/}
                             </div>
                         </div>

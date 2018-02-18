@@ -11,7 +11,7 @@ export { mockEvent };
 
 const mockCompoEntry: ICompoEntry = {
     id: 123,
-    compo: 'http://intanssi.org/api/compos/44',
+    compo: 44,
     name: 'Stochastic Mock Coverage Tracer',
     description: '',
     creator: 'anon',
@@ -31,7 +31,7 @@ export { mockCompoEntry };
 
 const mockCompo: ICompo = {
     id: 420,
-    event: 'http://intanssi.org/api/events/10',
+    event: 10,
     name: 'Testing compo',
     description: 'Compo for testing',
     adding_end: '2018-02-06T00:00:00.000Z',

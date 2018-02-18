@@ -1,3 +1,4 @@
+import React from 'react';
 import { shallow, ShallowWrapper } from 'enzyme';
 
 import globalState from 'src/state';
@@ -10,7 +11,7 @@ describe(EventsListView.name, () => {
     beforeEach(() => {
         // FIXME: Return an actual event object.
         jest.spyOn(globalState.api.events, 'list').mockReturnValue(Promise.resolve([]));
-        wrapper = shallow(EventsListView);
+        wrapper = shallow(<EventsListView />);
     });
 
     it('renders', () => {

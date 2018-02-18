@@ -1,6 +1,5 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { action } from 'mobx';
 import { Switch, Route, withRouter, RouteComponentProps } from 'react-router';
 
 import globalState from 'src/state';
@@ -12,22 +11,20 @@ import { RemoteStore } from 'src/stores';
 
 
 @observer
-export class EventView extends React.Component<RouteComponentProps<{ eventId: string }>> {
-    event = new RemoteStore(this.fetch);
+export class EventView extends React.Component<RouteComponentProps<{
+    eventId: string;
+}>> {
+    event = new RemoteStore(() => {
+        return globalState.api.events.get(this.eventIdParsed);
+    });
 
     componentWillMount() {
         this.event.refresh();
     }
 
     get eventIdParsed() {
-        const id = this.props.match!.params.eventId;
+        const id = this.props.match.params.eventId;
         return Number.parseInt(id!, 10);
-    }
-
-    @action.bound
-    fetch() {
-        const { eventIdParsed } = this;
-        return globalState.api.events.get(eventIdParsed);
     }
 
     render() {

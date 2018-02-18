@@ -1,13 +1,14 @@
 import _get from 'lodash/get';
 import _template from 'lodash/template';
-import { runInAction } from 'mobx';
+import _orderBy from 'lodash/orderBy';
+import { runInAction, computed } from 'mobx';
 import { observable } from 'mobx';
 
-import InstanssiREST from '../api';
-import i18n from '../i18n';
-
 import config from 'src/config';
+import i18n from '../i18n';
+import InstanssiREST from '../api';
 import { IUser } from 'src/api/interfaces';
+import { RemoteStore } from 'src/stores';
 
 // import { RemoteStore } from 'src/stores';
 
@@ -30,6 +31,14 @@ class GlobalState {
     /** The one source of the current time-of-day in case something cares. */
     @observable.ref time = new Date().valueOf();
 
+    /** Several things could use a list of party events, so it's available here. */
+    events = new RemoteStore(async () => {
+        const events = await api.events.list();
+        // If something needs these in a different order, just compute a new list there.
+        return _orderBy(events, event => event.date, 'desc');
+    });
+
+
     /** The site API made available here for convenience. */
     api = api;
 
@@ -40,6 +49,19 @@ class GlobalState {
         }, 1000);
         this.setLanguage(this.languageCode);
         this.continueSession();
+    }
+
+    /**
+     * Find the most relevant event, for the dashboard and other things.
+     */
+    @computed
+    get currentEvent() {
+        const events = this.events.value;
+        if (!events) {
+            return null;
+        }
+        // The events are in descending order by date, so this should be the most recent.
+        return events[0];
     }
 
     get momentLocale() {

@@ -121,5 +121,9 @@
         "title": "Käyttäjäprofiili",
         "myCompetitions": "Omat kilpailut",
         "myEntries": "Omat kompoentryt"
+    },
+    "voteCode": {
+        "title": "Äänestyskoodi",
+        "help": "Kilpailuihin ja äänestyksiin osallistumiseen tarvitset äänestyskoodin. Jos ostit lipun Instanssi Kaupasta, lippukoodi kelpaa äänestyskoodiksi."
     }
 }

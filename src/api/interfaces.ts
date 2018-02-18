@@ -2,6 +2,8 @@
 
 /** Primary key (aka id) of a database record. */
 export type PrimaryKey = number;
+/** Some other record's primary key. */
+export type ReferenceKey = number;
 /** ISO 8601 date (not datetime), e.g. '2011-05-13'. */
 export type ISODate = string;
 /** ISO 8601 datetime with timezone part, e.g. '2013-03-03T15:10:00+02:00'. */
@@ -27,7 +29,7 @@ export interface IEvent {
 
 export interface ICompetition {
     id: PrimaryKey;
-    event: URLString;
+    event: ReferenceKey;
     name: string;
     description: string;
     participation_end: ISODateTime;
@@ -42,7 +44,7 @@ export interface ICompetition {
 
 export interface ICompetitionParticipation {
     id: PrimaryKey;
-    competition: URLString;
+    competition: ReferenceKey;
     participant_name: string;
     score: number | null;
     rank: number | null;
@@ -52,7 +54,7 @@ export interface ICompetitionParticipation {
 
 export interface ICompo {
     id: PrimaryKey;
-    event: URLString;
+    event: ReferenceKey;
     name: string;
     description: string;
     adding_end: ISODateTime;
@@ -75,7 +77,7 @@ export interface ICompo {
 
 export interface ICompoEntry {
     id: PrimaryKey;
-    compo: URLString;
+    compo: ReferenceKey;
     name: string;
     description: string;
     creator: string;
@@ -93,7 +95,7 @@ export interface ICompoEntry {
 
 export interface IUserCompoEntry {
     id: PrimaryKey;
-    compo: number;
+    compo: ReferenceKey;
     name: string;
     description: string;
     creator: string;
@@ -108,7 +110,7 @@ export interface IUserCompoEntry {
 
 export interface IProgrammeEvent {
     id: PrimaryKey;
-    event: URLString;
+    event: ReferenceKey;
     start: ISODateTime;
     end: ISODateTime | null;
     description: string;
@@ -120,7 +122,7 @@ export interface IProgrammeEvent {
 
 export interface ISponsor {
     id: PrimaryKey;
-    event: URLString;
+    event: ReferenceKey;
     name: string;
     logo_url: URLString | null;
     logo_scaled_url: URLString | null;
@@ -129,7 +131,7 @@ export interface ISponsor {
 /** Messages to show on the big screen or whatever. */
 export interface IMessage {
     id: PrimaryKey;
-    event: URLString;
+    event: ReferenceKey;
     show_start: ISODateTime;
     show_end: ISODateTime;
     text: string;
@@ -137,7 +139,7 @@ export interface IMessage {
 
 export interface IIRCMessage {
     id: PrimaryKey;
-    event: URLString;
+    event: ReferenceKey;
     date: ISODateTime;
     nick: string;
     message: string;
@@ -150,7 +152,7 @@ export interface IStoreItemVariant {
 
 export interface IStoreItem {
     id: PrimaryKey;
-    event: URLString;
+    event: ReferenceKey;
     name: string;
     description: string;
     price: FixedPointNumber;
@@ -166,4 +168,17 @@ export interface IStoreItem {
     discount_factor: number;
     num_available: number;
     variants: IStoreItemVariant[];
+}
+
+export interface IVoteCodeRequest {
+    id: PrimaryKey;
+    event: ReferenceKey;
+    text: string;
+}
+
+export interface IVoteCode {
+    id: PrimaryKey;
+    event: ReferenceKey;
+    time: ISODateTime;
+    tickey_key: string;
 }

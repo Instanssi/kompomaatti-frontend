@@ -8,6 +8,8 @@ import {
     IEvent,
     IProgrammeEvent,
     IUser,
+    IVoteCodeRequest,
+    IVoteCode,
 } from 'src/api/interfaces';
 
 
@@ -25,6 +27,8 @@ export default class InstanssiREST {
     songs: SongsAPI;
     userCompoEntries: UserCompoEntriesAPI;
     userCompetitionParticipations: UserCompetitionParticipationsAPI;
+    voteCodes: UserVoteCodesAPI;
+    voteCodeRequests: UserVoteCodeRequestsAPI;
 
     constructor(baseUrl: string, config = {}) {
         this.currentUser = new SessionAPI(baseUrl, config);
@@ -37,6 +41,8 @@ export default class InstanssiREST {
         this.userCompoEntries = new UserCompoEntriesAPI(baseUrl, config);
         this.userCompetitionParticipations = new UserCompetitionParticipationsAPI(baseUrl, config);
         this.songs = new SongsAPI(baseUrl, config);
+        this.voteCodes = new UserVoteCodesAPI(baseUrl, config);
+        this.voteCodeRequests = new UserVoteCodeRequestsAPI(baseUrl, config);
     }
 }
 
@@ -156,5 +162,17 @@ class UserCompetitionParticipationsAPI extends BaseAPI<ICompetitionParticipation
 class SongsAPI extends BaseAPI {
     constructor(baseUrl, config) {
         super(baseUrl + '/songs/', config);
+    }
+}
+
+class UserVoteCodesAPI extends BaseAPI<IVoteCode> {
+    constructor(baseUrl, config) {
+        super(baseUrl + '/user_vote_codes/', config);
+    }
+}
+
+class UserVoteCodeRequestsAPI extends BaseAPI<IVoteCodeRequest> {
+    constructor(baseUrl, config) {
+        super(baseUrl + '/user_vote_code_requests/', config);
     }
 }

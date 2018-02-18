@@ -121,5 +121,9 @@
         "myCompetitions": "My competitions",
         "myEntries": "My entries",
         "title": "User profile"
+    },
+    "voteCode": {
+        "title": "Vote code",
+        "help": "A vote code is required to participate in compos and voting. If you bought a ticket from the Instanssi Store, the ticket code can be used as a vote code."
     }
 }
