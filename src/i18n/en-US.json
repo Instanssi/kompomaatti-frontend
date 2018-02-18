@@ -34,6 +34,50 @@
         "viewTitle": "Front page",
         "welcome": "Welcome to Kompomaatti, the official compo management system of Instanssi.org!"
     },
+    "data": {
+        "entry": {
+            "compo": {
+                "help": "Compo the entry is for.",
+                "title": "Compo"
+            },
+            "creator": {
+                "help": "Name to use for the author or group of authors.",
+                "title": "Author"
+            },
+            "description": {
+                "help": "Description of the entry, techniques used, excuses, etc.",
+                "title": "Description"
+            },
+            "disqualified": {
+                "help": "Entry disqualified for rule violation or technical issues.",
+                "title": "Disqualified"
+            },
+            "entryfile": {
+                "help": "Entry file (e.g. zip archive).",
+                "title": "Entry"
+            },
+            "imagefile_original": {
+                "help": "Image to use for the entry. Not required, but recommended.",
+                "title": "Image"
+            },
+            "name": {
+                "help": "Name for the entry.",
+                "title": "Name"
+            },
+            "sourcefile": {
+                "help": "File containing source code or other material.",
+                "title": "Source file"
+            },
+            "user": {
+                "help": "User the entry belongs to.",
+                "title": "User"
+            },
+            "youtubeUrl": {
+                "help": "Link to a YouTube video of the entry.",
+                "title": "YouTube URL"
+            }
+        }
+    },
     "entry": {
         "add": "Add entry",
         "edit": "Edit entry",

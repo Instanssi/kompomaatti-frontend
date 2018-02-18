@@ -56,7 +56,7 @@
                 "help": "Teos paketoituna.",
                 "title": "Tiedosto"
             },
-            "imagefileOriginal": {
+            "imagefile_original": {
                 "help": "Edustava kuva teokselle. Ei pakollinen, mutta suositeltava.",
                 "title": "Kuva"
             },

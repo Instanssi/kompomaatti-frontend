@@ -64,6 +64,18 @@ export default class CompoEntryForm extends React.Component<ICompoEntryFormProps
                     name="entryfile"
                     type="file"
                 />
+                <FormGroup
+                    label={<L text="data.entry.sourcefile.title" />}
+                    help={<L text="data.entry.sourcefile.help" />}
+                    name="sourcefile"
+                    type="file"
+                />
+                <FormGroup
+                    label={<L text="data.entry.imagefile_original.title" />}
+                    help={<L text="data.entry.imagefile_original.help" />}
+                    name="imagefile_original"
+                    type="file"
+                />
                 <div>
                     <button className="btn btn-primary">
                         <L text="common.submit" />
