@@ -37,7 +37,7 @@ export default class FrontPageView extends React.Component<any> {
                             <div className="box-body">
                                 <p>
                                     {currentEvent ? (
-                                        currentEvent.name
+                                        currentEvent.value.name
                                     ) : (
                                         <L text="dashboard.events.empty" />
                                     )}

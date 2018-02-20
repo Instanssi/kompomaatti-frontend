@@ -1,12 +1,12 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { autorun, computed } from 'mobx';
+import { computed, reaction } from 'mobx';
 import { Link, match, withRouter } from 'react-router-dom';
 import _orderBy from 'lodash/orderBy';
 
 import { IEvent } from 'src/api/interfaces';
 import globalState from 'src/state';
-import { RemoteStore } from 'src/stores';
+import { AtomStore } from 'src/stores';
 import { LoadingWrapper, NoResults, FormatTime } from 'src/common';
 
 
@@ -18,7 +18,7 @@ export interface IEventComposProps {
 @(withRouter as any)
 @observer
 export default class EventCompos extends React.Component<IEventComposProps> {
-    compos = new RemoteStore(() => {
+    compos = new AtomStore(() => {
         return globalState.api.compos.list({ event: this.props.event.id });
     });
 
@@ -26,7 +26,7 @@ export default class EventCompos extends React.Component<IEventComposProps> {
 
     componentWillMount() {
         this.disposers = [
-            autorun(() => this.compos.refresh()),
+            reaction(() => this.props.event.id, () => this.compos.refresh()),
         ];
     }
 

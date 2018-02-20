@@ -4,5 +4,6 @@ export {
     IRemote,
 } from './interfaces';
 
-export { default as RemoteStore } from './RemoteStore';
+export { default as AtomStore } from './AtomStore';
 export { default as FormStore } from './FormStore';
+export { default as RemoteStore } from './RemoteStore';

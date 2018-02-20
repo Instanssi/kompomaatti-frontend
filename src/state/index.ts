@@ -9,6 +9,7 @@ import i18n from '../i18n';
 import InstanssiREST from '../api';
 import { IUser } from 'src/api/interfaces';
 import { RemoteStore } from 'src/stores';
+import Event from './Event';
 
 
 const api = new InstanssiREST(config.API_URL);
@@ -33,7 +34,9 @@ class GlobalState {
     events = new RemoteStore(async () => {
         const events = await api.events.list();
 
+        const sorted = _orderBy(events, event => event.date, 'desc');
 
+        return sorted.map(eventObject => new Event(this.api, eventObject));
 
 
 
@@ -48,7 +51,7 @@ class GlobalState {
 
 
         // If something needs these in a different order, just compute a new list there.
-        return _orderBy(events, event => event.date, 'desc');
+        // return _orderBy(events, event => event.date, 'desc');
     });
 
     /** The site API made available here for convenience. */
