@@ -7,7 +7,7 @@ export interface IRemote<T, E = any> {
     error: E | null;
     /** Is this being sync'd right now? */
     isPending: boolean;
-    /** Time this was last refreshed. */
+    /** Time this was last (successfully) refreshed. */
     lastRefresh: Date | null;
     /** Try again. */
     refresh(): Promise<T>;

@@ -8,8 +8,8 @@ import config from 'src/config';
 import i18n from '../i18n';
 import InstanssiREST from '../api';
 import { IUser } from 'src/api/interfaces';
-import { RemoteStore } from 'src/stores';
-import Event from './Event';
+import { LazyStore } from 'src/stores';
+import EventHelper from './EventHelper';
 
 
 const api = new InstanssiREST(config.API_URL);
@@ -31,27 +31,10 @@ class GlobalState {
     @observable.ref time = new Date().valueOf();
 
     /** Several things could use a list of party events, so it's available here. */
-    events = new RemoteStore(async () => {
+    events = new LazyStore(async () => {
         const events = await api.events.list();
-
         const sorted = _orderBy(events, event => event.date, 'desc');
-
-        return sorted.map(eventObject => new Event(this.api, eventObject));
-
-
-
-        // TODO: Map these into larger objects with helper methods
-        // - Everything about this app has something to do with events, after all.
-        // - Can we use MobX atoms to watch the watchers?
-        // - When an event object's details are touched, fetch them.
-
-
-
-
-
-
-        // If something needs these in a different order, just compute a new list there.
-        // return _orderBy(events, event => event.date, 'desc');
+        return sorted.map(eventObject => new EventHelper(this.api, eventObject));
     });
 
     /** The site API made available here for convenience. */

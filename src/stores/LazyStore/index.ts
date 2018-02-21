@@ -8,7 +8,7 @@ import { IRemote } from 'src/stores';
  *
  * Can be used to declare some remote data without actually fetching it immediately.
  */
-export default class AtomStore<T, E = any> implements IRemote<T, E> {
+export default class LazyStore<T, E = any> implements IRemote<T, E> {
     protected _value: T | null;
     protected _error: E | null;
     protected _isPending = false;
@@ -68,6 +68,7 @@ export default class AtomStore<T, E = any> implements IRemote<T, E> {
             }),
         );
     }
+
     protected onObserved() {
         const { _lastRefresh, _isPending } = this;
         // We _could_ just write this check into the getters for this simple case,

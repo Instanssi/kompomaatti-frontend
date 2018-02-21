@@ -4,6 +4,11 @@ import { observer } from 'mobx-react';
 import globalState from 'src/state';
 import { L } from 'src/common';
 
+import FrontCurrentEvent from './FrontCurrentEvent';
+import FrontProgramme from './FrontProgramme';
+import FrontCompos from './FrontCompos';
+import FrontCompetitions from './FrontCompetitions';
+
 
 @observer
 export default class FrontPageView extends React.Component<any> {
@@ -20,7 +25,7 @@ export default class FrontPageView extends React.Component<any> {
     }
 
     render() {
-        const currentEvent = globalState.currentEvent;
+        const { currentEvent } = globalState;
 
         return (
             <div className="frontpage-view">
@@ -30,70 +35,16 @@ export default class FrontPageView extends React.Component<any> {
                 </p>
                 <div className="row">
                     <div className="col-sm-6">
-                        <div className="highlight-box">
-                            <h3 className="box-header">
-                                <L text="dashboard.events.title" />
-                            </h3>
-                            <div className="box-body">
-                                <p>
-                                    {currentEvent ? (
-                                        currentEvent.value.name
-                                    ) : (
-                                        <L text="dashboard.events.empty" />
-                                    )}
-                                </p>
-                            </div>
-                            <div className="box-footer">
-                                {/*
-                                    <button><L text="dashboard.events.action')}</butto" />-->
-                                */}
-                            </div>
-                        </div>
+                        <FrontCurrentEvent event={currentEvent} />
                     </div>
                     <div className="col-sm-6">
-                        <div className="highlight-box">
-                            <h3 className="box-header">
-                                <L text="dashboard.programme.title" />
-                            </h3>
-                            <div className="box-body">
-                                <p><L text="dashboard.programme.empty" /></p>
-                            </div>
-                            <div className="box-footer">
-                                {/*<button>
-                                    <L text="dashboard.programme.action" />
-                                </button>*/}
-                            </div>
-                        </div>
+                        <FrontProgramme event={currentEvent} />
                     </div>
                     <div className="col-sm-6">
-                        <div className="highlight-box">
-                            <h3 className="box-header">
-                                <L text="dashboard.compos.title" />
-                            </h3>
-                            <div className="box-body">
-                                <p><L text="dashboard.compos.empty" /></p>
-                            </div>
-                            <div className="box-footer">
-                                {/*<button>
-                                    <L text="dashboard.compos.action" />
-                                </button>*/}
-                            </div>
-                        </div>
+                        <FrontCompos event={currentEvent} />
                     </div>
                     <div className="col-sm-6">
-                        <div className="highlight-box">
-                            <h3 className="box-header">
-                                <L text="dashboard.competitions.title" />
-                            </h3>
-                            <div className="box-body">
-                                <p><L text="dashboard.competitions.empty" /></p>
-                            </div>
-                            <div className="box-footer">
-                                {/*<button>
-                                <L text="dashboard.competitions.action" />
-                                </button>*/}
-                            </div>
-                        </div>
+                        <FrontCompetitions event={currentEvent} />
                     </div>
                 </div>
             </div>

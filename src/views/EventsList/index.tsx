@@ -24,18 +24,18 @@ export default class EventsList extends React.Component<any> {
                 <h1><L text="events.title" /></h1>
                 <LoadingWrapper store={this.events}>
                     <ul className="events">
-                        {events && events.map(event => (
-                            <li key={event.eventId} className="events-item">
+                        {events && events.map(({ event }) => (
+                            <li key={event.id} className="events-item">
                                 <span className="item-name">
-                                    <Link to={'/events/' + event.eventId + ''}>
-                                        <span>{event.value.name}</span>
+                                    <Link to={'/events/' + event.id + ''}>
+                                        <span>{event.name}</span>
                                     </Link>
                                 </span>
                                 {' '}
                                 &ndash;
                                 {' '}
                                 <span className="item-time">
-                                    <FormatTime value={event.value.date} format="l" />
+                                    <FormatTime value={event.date} format="l" />
                                 </span>
                             </li>
                         ))}

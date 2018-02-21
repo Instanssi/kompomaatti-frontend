@@ -6,7 +6,7 @@ import _orderBy from 'lodash/orderBy';
 
 import { IEvent } from 'src/api/interfaces';
 import globalState from 'src/state';
-import { AtomStore } from 'src/stores';
+import { LazyStore } from 'src/stores';
 import { LoadingWrapper, NoResults, FormatTime } from 'src/common';
 
 
@@ -18,7 +18,7 @@ export interface IEventComposProps {
 @(withRouter as any)
 @observer
 export default class EventCompos extends React.Component<IEventComposProps> {
-    compos = new AtomStore(() => {
+    compos = new LazyStore(() => {
         return globalState.api.compos.list({ event: this.props.event.id });
     });
 
