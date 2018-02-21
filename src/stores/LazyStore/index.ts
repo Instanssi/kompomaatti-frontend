@@ -4,7 +4,7 @@ import { IRemote } from 'src/stores';
 
 
 /**
- * Like a RemoteStore, but only fetches its vaue once something looks at it.
+ * Like a RemoteStore, but only fetches its value once something looks at it.
  *
  * Can be used to declare some remote data without actually fetching it immediately.
  */
@@ -72,12 +72,12 @@ export default class LazyStore<T, E = any> implements IRemote<T, E> {
     protected onObserved() {
         const { _lastRefresh, _isPending } = this;
         // We _could_ just write this check into the getters for this simple case,
-        // but being able to count observers is nice for debugging.
-        if (!_isPending && !_lastRefresh) {
-            console.info('AtomStore starting refresh due to observation.');
+        // but being able to observe the  observers is nice for debugging.
+        if (!_isPending && _lastRefresh === null) {
+            // console.info('Starting refresh due to observation.', this);
             this.refresh();
         } else {
-            console.info('AtomStore already refreshing.');
+            // console.info('Already refreshing.');
         }
     }
 

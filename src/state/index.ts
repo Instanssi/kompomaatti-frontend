@@ -27,8 +27,10 @@ class GlobalState {
     @observable.ref language = config.DEFAULT_LOCALE;
     /** Current translation object. Translating text looks for keys in this. */
     @observable.ref translation: any = { };
-    /** The one source of the current time-of-day in case something cares. */
-    @observable.ref time = new Date().valueOf();
+    /** Current time in milliseconds, updating once per second. */
+    @observable.ref timeSec = new Date().valueOf();
+    /** Current time in milliseconds, updating once per minute. */
+    @observable.ref timeMin = new Date().valueOf();
 
     /** Several things could use a list of party events, so it's available here. */
     events = new LazyStore(async () => {
@@ -43,8 +45,11 @@ class GlobalState {
     constructor() {
         // FIXME: Try to persist the state and bring it back on reload?
         setInterval(() => {
-            this.time = new Date().valueOf();
+            this.timeSec = new Date().valueOf();
         }, 1000);
+        setInterval(() => {
+            this.timeMin = new Date().valueOf();
+        }, 60000);
         this.setLanguage(this.languageCode);
         this.continueSession();
     }

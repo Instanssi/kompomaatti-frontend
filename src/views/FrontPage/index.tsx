@@ -4,7 +4,7 @@ import { observer } from 'mobx-react';
 import globalState from 'src/state';
 import { L } from 'src/common';
 
-import FrontCurrentEvent from './FrontCurrentEvent';
+import FrontEvent from './FrontEvent';
 import FrontProgramme from './FrontProgramme';
 import FrontCompos from './FrontCompos';
 import FrontCompetitions from './FrontCompetitions';
@@ -13,7 +13,7 @@ import FrontCompetitions from './FrontCompetitions';
 @observer
 export default class FrontPageView extends React.Component<any> {
     componentWillMount() {
-        globalState.events.refresh();
+        // globalState.events.refresh();
     }
 
     get currentEvent() {
@@ -35,7 +35,7 @@ export default class FrontPageView extends React.Component<any> {
                 </p>
                 <div className="row">
                     <div className="col-sm-6">
-                        <FrontCurrentEvent event={currentEvent} />
+                        <FrontEvent event={currentEvent} />
                     </div>
                     <div className="col-sm-6">
                         <FrontProgramme event={currentEvent} />

@@ -12,10 +12,6 @@ export default class EventsList extends React.Component<any> {
         return globalState.events;
     }
 
-    componentWillMount() {
-        this.events.refresh();
-    }
-
     render() {
         const events = this.events.value;
 
