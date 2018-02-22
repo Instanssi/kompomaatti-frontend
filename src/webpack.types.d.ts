@@ -9,6 +9,11 @@ declare module '*.html' {
     export default value;
 }
 
+declare module '*.scss' {
+    const value: { [key: string]: string };
+    export = value;
+}
+
 // This is provided by the Webpack defineplugin.
 /*declare const process: {
     env: {

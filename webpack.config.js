@@ -16,7 +16,8 @@ const config = {
     entry: 'src/index.tsx',
     output: {
         path: path.resolve(__dirname, 'build'),
-        filename: namePattern('res/[name].[chunkhash].js')
+        filename: namePattern('res/[name].[chunkhash].js'),
+        publicPath: '/kompomaatti/',
     },
     resolve: {
         modules: [ './', 'node_modules' ],

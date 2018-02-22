@@ -9,6 +9,10 @@ import FrontProgramme from './FrontProgramme';
 import FrontCompos from './FrontCompos';
 import FrontCompetitions from './FrontCompetitions';
 
+import frontpageClass from './frontpage.scss';
+
+console.info('frontpage classname:', Object.keys(frontpageClass));
+
 
 @observer
 export default class FrontPageView extends React.Component<any> {
@@ -27,25 +31,18 @@ export default class FrontPageView extends React.Component<any> {
     render() {
         const { currentEvent } = globalState;
 
+
         return (
             <div className="frontpage-view">
                 <h1>Kompomaatti</h1>
                 <p>
                     <L text="dashboard.welcome" />
                 </p>
-                <div className="row">
-                    <div className="col-sm-6">
-                        <FrontEvent event={currentEvent} />
-                    </div>
-                    <div className="col-sm-6">
-                        <FrontProgramme event={currentEvent} />
-                    </div>
-                    <div className="col-sm-6">
-                        <FrontCompos event={currentEvent} />
-                    </div>
-                    <div className="col-sm-6">
-                        <FrontCompetitions event={currentEvent} />
-                    </div>
+                <div className="frontpage-boxes">
+                    <FrontEvent event={currentEvent} />
+                    <FrontProgramme event={currentEvent} />
+                    <FrontCompos event={currentEvent} />
+                    <FrontCompetitions event={currentEvent} />
                 </div>
             </div>
         );
