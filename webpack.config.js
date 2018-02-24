@@ -22,9 +22,6 @@ const config = {
     resolve: {
         modules: [ './', 'node_modules' ],
         extensions: ['.ts', '.tsx', '.js', '.jsx'],
-        alias: {
-            'vue$': 'vue/dist/vue.runtime.esm.js',
-        },
     },
     module: {
         rules: [

@@ -1,5 +1,5 @@
 {
-    "extends": ["tslint:recommended"],
+    "extends": ["tslint:recommended", "tslint-react"],
     "defaultSeverity": "warning",
     "rules": {
         "arrow-parens": false,

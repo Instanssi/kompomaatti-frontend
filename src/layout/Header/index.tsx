@@ -1,34 +1,51 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { Link, withRouter } from 'react-router-dom';
+import { observable, action } from 'mobx';
+import { Link } from 'react-router-dom';
+import classNames from 'classnames';
 
-import globalState from 'src/state';
-
+import { L } from 'src/common';
 import UserMenu from '../UserMenu';
 import LanguageSwitch from '../LanguageSwitch';
 import NavLink from './NavLink';
 
 
-const { translate } = globalState;
-
-@(withRouter as any)
 @observer
 export default class Header extends React.Component {
+    @observable isOpen = false;
+
+    @action.bound
+    toggleOpen() {
+        this.isOpen = !this.isOpen;
+    }
+
     render() {
         return (
             <nav className="navbar navbar-inverse">
                 <div className="navbar-header">
-                    <button type="button" className="navbar-toggle collapsed">
-                        (open)
+                    <button
+                        type="button"
+                        onClick={this.toggleOpen}
+                        className={classNames(
+                            'navbar-toggle',
+                            { collapsed: !this.isOpen },
+                        )}
+                    >
+                        <span className="fa fa-bars" />
                     </button>
                     <Link to="/" className="navbar-brand">
-                        Kompomaatti 2.0
+                        Kompomaatti
                     </Link>
                 </div>
-                <div className="collapse navbar-collapse">
+                <div
+                    className={classNames(
+                        'collapse navbar-collapse',
+                        { in: this.isOpen },
+                    )}
+                >
                     <ul className="nav navbar-nav">
-                        <NavLink to="/events">
-                            {translate('nav.events')}
+                        <NavLink to="/events" exact>
+                            <L text="nav.events" />
                         </NavLink>
                     </ul>
                     <ul className="nav navbar-nav navbar-right">

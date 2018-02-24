@@ -37,6 +37,11 @@ hr {
     }
 }
 
+.navbar-toggle {
+    color: $brand-primary;
+    padding: $spacer/2 $spacer;
+}
+
 .container {
     padding: 0;
 }
