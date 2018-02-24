@@ -42,7 +42,7 @@ export class EventView extends React.Component<RouteComponentProps<{
                         </div>
                         <Switch>
                             <Route path={match.url + '/compos/:compoId'}>
-                                <EventCompo event={eventInfo.event} />
+                                <EventCompo eventInfo={eventInfo} />
                             </Route>
                             <Route>
                                 <EventOverview eventInfo={eventInfo} />

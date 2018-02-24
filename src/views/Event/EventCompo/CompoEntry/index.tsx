@@ -10,10 +10,9 @@ import { L, LoadingWrapper } from 'src/common';
 
 
 @observer
-export class CompoEntry extends React.Component<
-    RouteComponentProps<{ entryId: string }> & {
+export class CompoEntry extends React.Component<{
     compo: ICompo;
-}> {
+} & RouteComponentProps<{ entryId: string }>> {
     entry = new RemoteStore(() => {
         return globalState.api.compoEntries.get(this.entryId);
     });
