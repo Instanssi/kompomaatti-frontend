@@ -130,6 +130,7 @@
         "missing": "No vote code",
         "noVoteCode": "To participate in the event through Kompomaatti, your account needs a vote code for the event. If you bought a ticket online, you can use the ticket's code for this.",
         "title": "Vote code",
+        "hasCodeForEvent": "You have a valid vote code for this event.",
         "useTicketCode": "Enter ticket code",
         "noTicketCode": "I don't have a ticket code"
     }

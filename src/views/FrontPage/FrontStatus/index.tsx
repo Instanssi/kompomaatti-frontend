@@ -90,7 +90,8 @@ export default class FrontStatus extends React.Component<{
     renderVoteOk() {
         return (
             <div className="alert alert-info">
-                <L text="dashboard.voteOk" />
+                <span className="fa fa-check"/>&ensp;
+                <L text="voteCode.hasCodeForEvent" />
             </div>
         );
     }
