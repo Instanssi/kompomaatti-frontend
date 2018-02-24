@@ -6,7 +6,7 @@ import _orderBy from 'lodash/orderBy';
 import { Link } from 'react-router-dom';
 
 import { L, FormatTime, NoResults } from 'src/common';
-import EventHelper from 'src/state/EventHelper';
+import EventInfo from 'src/state/EventInfo';
 import globalState from 'src/state';
 import { ICompetition } from 'src/api/interfaces';
 
@@ -18,7 +18,7 @@ export function getCompetitionURL(eventId, competition: ICompetition) {
 
 @observer
 export default class FrontCompetitions extends React.Component<{
-    event: EventHelper;
+    event: EventInfo;
 }> {
     @computed
     get list() {

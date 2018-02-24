@@ -9,7 +9,7 @@ import i18n from '../i18n';
 import InstanssiREST from '../api';
 import { IUser } from 'src/api/interfaces';
 import { LazyStore } from 'src/stores';
-import EventHelper from './EventHelper';
+import EventInfo from './EventInfo';
 
 
 const api = new InstanssiREST(config.API_URL);
@@ -36,7 +36,7 @@ class GlobalState {
     events = new LazyStore(async () => {
         const events = await api.events.list();
         const sorted = _orderBy(events, event => event.date, 'desc');
-        return sorted.map(eventObject => new EventHelper(this.api, eventObject));
+        return sorted.map(eventObject => new EventInfo(this.api, eventObject));
     });
 
     /** The site API made available here for convenience. */

@@ -2,30 +2,30 @@ import React from 'react';
 import { observer } from 'mobx-react';
 
 import { L } from 'src/common';
-import { IEvent } from 'src/api/interfaces';
 
 import EventCompos from './EventCompos';
 import EventCompetitions from './EventCompetitions';
 import EventProgramme from './EventProgramme';
+import EventInfo from '../../../state/EventInfo';
 
 
 @observer
 export default class EventOverview extends React.Component<{
-    event: IEvent;
+    eventInfo: EventInfo;
 }> {
     render() {
-        const { event } = this.props;
+        const { eventInfo } = this.props;
 
         return (
             <div className="event-overview">
                 <h2><L text="event.compos" /></h2>
-                <EventCompos event={event} />
+                <EventCompos eventInfo={eventInfo} />
 
                 <h2><L text="event.competitions" /></h2>
-                <EventCompetitions event={event} />
+                <EventCompetitions eventInfo={eventInfo} />
 
                 <h2><L text="event.programme" /></h2>
-                <EventProgramme event={event} />
+                <EventProgramme eventInfo={eventInfo} />
             </div>
         );
     }

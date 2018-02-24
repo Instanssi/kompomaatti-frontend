@@ -1,32 +1,18 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { autorun, computed } from 'mobx';
+import { computed } from 'mobx';
 import _orderBy from 'lodash/orderBy';
 
 import { NoResults, LoadingWrapper, FormatTime } from 'src/common';
-import { IEvent } from 'src/api/interfaces';
-import globalState from 'src/state';
-import { RemoteStore } from 'src/stores';
+import EventInfo from 'src/state/EventInfo';
 
 
 @observer
 export default class EventProgramme extends React.Component<{
-    event: IEvent;
+    eventInfo: EventInfo;
 }> {
-    progEvents = new RemoteStore(() => {
-        return globalState.api.programme.list({ event: this.props.event.id });
-    });
-
-    disposers = [] as any[];
-
-    componentWillMount() {
-        this.disposers = [
-            autorun(() => this.progEvents.refresh()),
-        ];
-    }
-
-    componentWillUnmount() {
-        this.disposers.forEach(d => d());
+    get progEvents() {
+        return this.props.eventInfo.programme;
     }
 
     @computed

@@ -10,7 +10,7 @@ import { LazyStore } from 'src/stores';
  *
  * Most ORMs are not particularly asynchronous, though.
  */
-export default class EventHelper {
+export default class EventInfo {
     @observable.ref event: IEvent;
 
     compos = new LazyStore(() => this.api.compos.list(this.query));

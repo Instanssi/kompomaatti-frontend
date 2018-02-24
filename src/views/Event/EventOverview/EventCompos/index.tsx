@@ -1,37 +1,19 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { computed, reaction } from 'mobx';
-import { Link, match, withRouter } from 'react-router-dom';
+import { computed } from 'mobx';
+import { Link } from 'react-router-dom';
 import _orderBy from 'lodash/orderBy';
 
-import { IEvent } from 'src/api/interfaces';
-import globalState from 'src/state';
-import { LazyStore } from 'src/stores';
 import { LoadingWrapper, NoResults, FormatTime } from 'src/common';
+import EventInfo from 'src/state/EventInfo';
 
 
-export interface IEventComposProps {
-    event: IEvent;
-    match?: match<any>;
-}
-
-@(withRouter as any)
 @observer
-export default class EventCompos extends React.Component<IEventComposProps> {
-    compos = new LazyStore(() => {
-        return globalState.api.compos.list({ event: this.props.event.id });
-    });
-
-    disposers = [] as any[];
-
-    componentWillMount() {
-        this.disposers = [
-            reaction(() => this.props.event.id, () => this.compos.refresh()),
-        ];
-    }
-
-    componentWillUnmount() {
-        this.disposers.forEach(d => d());
+export default class EventCompos extends React.Component<{
+    eventInfo: EventInfo;
+}> {
+    get compos() {
+        return this.props.eventInfo.compos;
     }
 
     @computed
@@ -41,8 +23,8 @@ export default class EventCompos extends React.Component<IEventComposProps> {
     }
 
     render() {
+        const { event } = this.props.eventInfo;
         const compos = this.sortedCompos;
-        const { url } = this.props.match!;
 
         return (
             <LoadingWrapper store={this.compos}>
@@ -54,7 +36,7 @@ export default class EventCompos extends React.Component<IEventComposProps> {
                             </span>
                             {' '}
                             <span className="item-title">
-                                <Link to={url + `/compos/${compo.id}`}>
+                                <Link to={`/events/${event.id}/compos/${compo.id}`}>
                                     {compo.name}
                                 </Link>
                             </span>

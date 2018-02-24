@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { autorun } from 'mobx';
-import { withRouter } from 'react-router';
+import { withRouter, RouteComponentProps } from 'react-router';
 
 import globalState from 'src/state';
 import { ICompo } from 'src/api/interfaces';
@@ -9,11 +9,10 @@ import { RemoteStore } from 'src/stores';
 import { L, LoadingWrapper } from 'src/common';
 
 
-@(withRouter as any)
 @observer
-export default class CompoEntry extends React.Component<{
+export class CompoEntry extends React.Component<
+    RouteComponentProps<{ entryId: string }> & {
     compo: ICompo;
-    match?: any;
 }> {
     entry = new RemoteStore(() => {
         return globalState.api.compoEntries.get(this.entryId);
@@ -80,3 +79,5 @@ export default class CompoEntry extends React.Component<{
         );
     }
 }
+
+export default withRouter(CompoEntry);

@@ -2,12 +2,12 @@ import React from 'react';
 import { observer } from 'mobx-react';
 
 import { L } from 'src/common';
-import EventHelper from 'src/state/EventHelper';
+import EventInfo from 'src/state/EventInfo';
 
 
 @observer
 export default class FrontCurrentEvent extends React.Component<{
-    event: EventHelper;
+    event: EventInfo;
 }> {
     render() {
         const { event } = this.props;
