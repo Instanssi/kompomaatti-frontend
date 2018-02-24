@@ -1,14 +1,15 @@
 {
     "common": {
+        "description": "Kuvaus",
         "loading": "Ladataan...",
         "loadingError": "Ongelma sisällön lataamisessa.",
         "loadingRetry": "Yritä uudestaan?",
         "submit": "Lähetä"
     },
     "compo": {
-        "description": "Kuvaus",
         "entries": "Teokset",
-        "status": "Tila"
+        "status": "Tila",
+        "vote": "Äänestä"
     },
     "dashboard": {
         "competitions": {
@@ -80,8 +81,8 @@
     },
     "entry": {
         "add": "Lisää teos",
-        "edit": "Muokkaa teosta",
         "description": "Teoksen kuvaus",
+        "edit": "Muokkaa teosta",
         "entryfile": "Teos tiedostona",
         "files": "Tiedostot",
         "image": "Image",
@@ -105,8 +106,11 @@
     },
     "nav": {
         "compos": "Kompot",
-        "events": "Tapahtumat",
+        "events": "Kaikki tapahtumat",
         "login": "Kirjaudu"
+    },
+    "programmeEvent": {
+        "presenters": "Esiintyjät"
     },
     "session": {
         "login": "Kirjaudu sisään",
@@ -118,12 +122,12 @@
         "username": "Käyttäjätunnus"
     },
     "userProfile": {
-        "title": "Käyttäjäprofiili",
         "myCompetitions": "Omat kilpailut",
-        "myEntries": "Omat kompoentryt"
+        "myEntries": "Omat kompoentryt",
+        "title": "Käyttäjäprofiili"
     },
     "voteCode": {
-        "title": "Äänestyskoodi",
-        "help": "Kilpailuihin ja äänestyksiin osallistumiseen tarvitset äänestyskoodin. Jos ostit lipun Instanssi Kaupasta, lippukoodi kelpaa äänestyskoodiksi."
+        "help": "Kilpailuihin ja äänestyksiin osallistumiseen tarvitset äänestyskoodin. Jos ostit lipun Instanssi Kaupasta, lippukoodi kelpaa äänestyskoodiksi.",
+        "title": "Äänestyskoodi"
     }
 }

@@ -92,12 +92,12 @@ export default class CompoActions extends React.Component<{ compo: ICompo, match
                 <div className="panel-footer">
                     { canAddEntry && (
                         <Link to={match.url + '/entries/add'} className="btn btn-default">
-                            Add entry
+                            <L text="entry.add" />
                         </Link>
                     )}
                     { canVoteEntry && (
                         <Link to={match.url + '/vote'} className="btn btn-default">
-                            Vote
+                            <L text="compo.vote" />
                         </Link>
                     )}
                 </div>

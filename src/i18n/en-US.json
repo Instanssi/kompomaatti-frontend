@@ -1,14 +1,15 @@
 {
     "common": {
+        "description": "Description",
         "loading": "Loading...",
         "loadingError": "There was a problem loading this content.",
         "loadingRetry": "Try again?",
         "submit": "Submit"
     },
     "compo": {
-        "description": "Description",
         "entries": "Entries",
-        "status": "Status"
+        "status": "Status",
+        "vote": "Vote"
     },
     "dashboard": {
         "competitions": {
@@ -80,8 +81,8 @@
     },
     "entry": {
         "add": "Add entry",
-        "edit": "Edit entry",
         "description": "Entry description",
+        "edit": "Edit entry",
         "entryfile": "Entry file",
         "files": "Files",
         "image": "Image",
@@ -105,8 +106,11 @@
     },
     "nav": {
         "compos": "Compos",
-        "events": "Events",
+        "events": "All events",
         "login": "Log in"
+    },
+    "programmeEvent": {
+        "presenters": "Presenters"
     },
     "session": {
         "login": "Log in",
@@ -123,7 +127,7 @@
         "title": "User profile"
     },
     "voteCode": {
-        "title": "Vote code",
-        "help": "A vote code is required to participate in compos and voting. If you bought a ticket from the Instanssi Store, the ticket code can be used as a vote code."
+        "help": "A vote code is required to participate in compos and voting. If you bought a ticket from the Instanssi Store, the ticket code can be used as a vote code.",
+        "title": "Vote code"
     }
 }

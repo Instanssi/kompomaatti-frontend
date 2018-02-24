@@ -140,6 +140,10 @@ class UserCompoEntriesAPI extends BaseAPI<ICompoEntry> {
         }).then((response) => this.handleResponse(response))
         .catch((error) => this.handleError(error));
     }
+
+    update(request) {
+        throw new Error('Unimplemented!');
+    }
 }
 
 class CompetitionParticipationsAPI extends BaseAPI<ICompetitionParticipation> {

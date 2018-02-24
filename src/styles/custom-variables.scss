@@ -1,10 +1,24 @@
 // _no_ rules here! variables and mixins only.
 
+$brand-primary: #00a8ff;
+$brand-primary-text-color: #fff; // text color to use with above color as bg
+
 $body-color: #111;
 $text-muted: #444;
+$body-bg: #444;
+$app-bg: #fff;
+$app-border: darken($body-bg, 20%);
 
-$body-bg: #f4f4f4;
-$brand-primary: #00a8ff;
+/*
+
+// Dark theme (didn't work, the "rich text" has hardcoded bg colors)
+
+$body-color: #eee;
+$text-muted: #aaa;
+$body-bg: #222;
+$app-bg: #333;
+$app-border: darken($body-bg, 20%);
+*/
 
 $spacer: 12px;
 
@@ -58,6 +72,8 @@ $link-hover-decoration: underline;
 $table-cell-padding: $spacer;
 
 // bootstrap 3 compatibility
+
+$text-color: $body-color;
 
 // Just override every 15px-ish value with $spacer for consistency
 $grid-gutter-width: ($spacer * 2);

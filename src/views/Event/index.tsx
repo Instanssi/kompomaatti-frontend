@@ -8,6 +8,7 @@ import { FormatTime, LoadingWrapper } from 'src/common';
 
 import EventOverview from './EventOverview';
 import EventCompo from './EventCompo';
+import EventProgrammeEvent from './EventProgrammeEvent';
 
 
 @observer
@@ -43,6 +44,9 @@ export class EventView extends React.Component<RouteComponentProps<{
                         <Switch>
                             <Route path={match.url + '/compos/:compoId'}>
                                 <EventCompo eventInfo={eventInfo} />
+                            </Route>
+                            <Route path={match.url + '/programme/:progId'}>
+                                <EventProgrammeEvent eventInfo={eventInfo} />
                             </Route>
                             <Route>
                                 <EventOverview eventInfo={eventInfo} />

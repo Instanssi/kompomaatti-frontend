@@ -5,14 +5,30 @@ body {
     overflow-y: scroll;
 }
 
+h1 {
+    font-size: 4rem;
+}
+
+h2 {
+    font-size: 3rem;
+}
+
+h3 {
+    font-size: 2.2rem;
+}
+
+h4 {
+    font-size: 1.8rem;
+}
+
+
 .app-wrap {
-    background: #fff;
+    background: $app-bg;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     margin: 0 auto;
-    // @include shadow-box;
-    >main {
+    > main {
         flex: 1;
     }
 }
@@ -33,21 +49,14 @@ body {
     white-space: pre-wrap;
 }
 
-@mixin bg-brand() {
-    background: theme-color();
-    color: #fff;
-    a {
-        color: #fff;
-    }
-}
-.bg-brand {
-    @include bg-brand;
-}
-
 .navbar {
     margin-bottom: 0;
 }
 
+.flex-row-even {
+    display: flex;
+    justify-content: space-between;
+}
 
 @media screen and (min-width: $screen-sm-min) {
     .pull-sm-right {
@@ -61,92 +70,12 @@ body {
     }
 }
 
-/*
-@mixin shadow-box() {
-    box-shadow: rgba(#000, .25) 0 0 20px;
-}
+footer {
+    background: $brand-primary;
+    color: $brand-primary-text-color;
 
+    a, a:hover, a:focus {
+        color: $brand-primary-text-color;
 
-@mixin bg-brand-interactive() {
-    @include bg-brand();
-    &:hover, &:active {
-        background: darken(theme-color(), 5%);
-    }
-    &:focus {
-        box-shadow: theme-color() 0 0 8px;
     }
 }
-
-@mixin bg-secondary() {
-    background: theme-color('secondary');
-}
-
-.flex-row {
-    display: flex;
-    align-items: stretch;
-    margin-left: -($spacer / 2);
-    margin-right: -($spacer / 2);
-}
-
-.flex {
-    display: flex;
-}
-
-.flex-wrap {
-    flex-wrap: wrap;
-}
-
-.flex-center {
-    justify-content: center;
-}
-
-.flex-space-between {
-    justify-content: space-between;
-}
-
-button {
-    @include bg-brand-interactive;
-    font-family: inherit;
-    cursor: pointer;
-    padding: $spacer;
-    font-size: inherit;
-    line-height: 1;
-    border: 0;
-}
-
-
-nav h1 {
-    font-size: inherit;
-    margin: 0;
-}
-
-nav, footer {
-    a {
-        color: #fff;
-        &:hover,
-        &:focus,
-        &:active {
-            color: #fff;
-        }
-    }
-}
-
-.highlight-box {
-    @include shadow-box;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    margin-bottom: $spacer;
-    .box-header {
-        @include bg-secondary;
-        font-size: inherit;
-        margin: 0;
-    }
-    .box-body {
-        flex: 1;
-    }
-    > * {
-        padding: $spacer;
-    }
-}
-*/

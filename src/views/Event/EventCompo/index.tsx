@@ -1,6 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { Switch, Route, withRouter, RouteComponentProps } from 'react-router';
+import { computed } from 'mobx';
 
 import { FormatTime, LoadingWrapper } from 'src/common';
 
@@ -9,7 +10,6 @@ import CompoEntry from './CompoEntry';
 import CompoEntryForm from './CompoEntryForm';
 import CompoVote from './CompoVote';
 import EventInfo from 'src/state/EventInfo';
-import { computed } from 'mobx';
 
 
 /**
