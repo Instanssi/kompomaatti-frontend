@@ -29,22 +29,22 @@ export default class LazyStore<T, E = any> implements IRemote<T, E> {
     constructor(protected fetch: () => Promise<T>) { }
 
     get value() {
-        this.atom.reportObserved();
+        this.handleAccess();
         return this._value;
     }
 
     get error() {
-        this.atom.reportObserved();
+        this.handleAccess();
         return this._error;
     }
 
     get isPending() {
-        this.atom.reportObserved();
+        this.handleAccess();
         return this._isPending;
     }
 
     get lastRefresh() {
-        this.atom.reportObserved();
+        this.handleAccess();
         return this._lastRefresh;
     }
 
@@ -67,6 +67,15 @@ export default class LazyStore<T, E = any> implements IRemote<T, E> {
                 throw error;
             }),
         );
+    }
+
+    protected handleAccess() {
+        if (this.atom.reportObserved()) {
+            return;
+        } else {
+            // Called from outside an observer/reaction; cycle anyway just this once.
+            this.onObserved();
+        }
     }
 
     protected onObserved() {
