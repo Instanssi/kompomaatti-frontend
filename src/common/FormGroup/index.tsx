@@ -23,6 +23,7 @@ export interface IFormGroupProps<T> {
     // Tempted to just make this interface extend basic HTML input attributes,
     // but most of that junk is useless and potentially confusing.
     type?: string;
+    readOnly?: boolean;
 
     /**
      * Set to completely override the input field implementation.
@@ -91,7 +92,7 @@ export default class FormGroup<T> extends React.Component<IFormGroupProps<T> & a
 
     render() {
         const { id, className, props, value, onChange } = this;
-        const { name, label, help, input, children, formStore, type, ...rest } = props;
+        const { name, label, help, input, children, formStore, type, readOnly, ...rest } = props;
 
         return (
             <div className={className}>
@@ -111,6 +112,7 @@ export default class FormGroup<T> extends React.Component<IFormGroupProps<T> & a
                         type,
                         onChange,
                         className: 'form-control',
+                        readOnly: readOnly || formStore!.isPending,
                         ...rest,
                     })
                 )}
