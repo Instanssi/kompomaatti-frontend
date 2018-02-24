@@ -53,19 +53,20 @@ export default class FrontCompetitions extends React.Component<{
                     <L text="dashboard.competitions.title" />
                 </h3>
                 <div className="box-body">
-                    {(list && list.length > 0) ? list.map(competition => (
-                        <li key={competition.id} className="competitions-item">
-                            <span className="item-time">
-                                <FormatTime value={competition.start} format="ddd LT" />
-                            </span>
-                            {' '}
-                            <span className="item-title">
-                                <Link to={getCompetitionURL(eventId, competition)}>
-                                    {competition.name}
-                                </Link>
-                            </span>
-                        </li>
-                    )) : <NoResults />}
+                    {(list && list.length > 0) ? (<ul>
+                        {list.map(competition => (
+                            <li key={competition.id} className="competitions-item">
+                                <span className="item-time">
+                                    <FormatTime value={competition.start} format="ddd LT" />
+                                </span>
+                                {' '}
+                                <span className="item-title">
+                                    <Link to={getCompetitionURL(eventId, competition)}>
+                                        {competition.name}
+                                    </Link>
+                                </span>
+                            </li>
+                        ))}</ul>) : <NoResults />}
                 </div>
                 <div className="box-footer">
                     {/*

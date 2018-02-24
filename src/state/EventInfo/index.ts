@@ -1,7 +1,11 @@
 import { observable, computed } from 'mobx';
 
 import InstanssiREST from 'src/api';
-import { IEvent } from 'src/api/interfaces';
+import {
+    IEvent,
+    IProgrammeEvent,
+    ICompo,
+} from 'src/api/interfaces';
 import { LazyStore } from 'src/stores';
 
 
@@ -54,5 +58,13 @@ export default class EventInfo {
             // How to warn the user about this? Just let some form handle it?
             throw e;
         }
+    }
+
+    getCompoURL(compo: ICompo) {
+        return `/events/${this.eventId}/compos/${compo.id}`;
+    }
+
+    getProgrammeEventURL(progEvent: IProgrammeEvent) {
+        return `/events/${this.eventId}/programme/${progEvent.id}`;
     }
 }

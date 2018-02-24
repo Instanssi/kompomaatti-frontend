@@ -45,7 +45,6 @@ export default class FrontCompos extends React.Component<{
     render() {
         const { event } = this.props;
         const { list } = this;
-        const eventId = event && event.eventId;
 
         return (
             <div className="highlight-box">
@@ -53,19 +52,20 @@ export default class FrontCompos extends React.Component<{
                     <L text="dashboard.compos.title" />
                 </h3>
                 <div className="box-body">
-                    {(list && list.length > 0) ? list.map(compo => (
-                        <li key={compo.id} className="compos-item">
-                            <span className="item-time">
-                                <FormatTime value={compo.compo_start} format="ddd LT" />
-                            </span>
-                            {' '}
-                            <span className="item-title">
-                                <Link to={getCompoURL(eventId, compo)}>
-                                    {compo.name}
-                                </Link>
-                            </span>
-                        </li>
-                    )) : <NoResults />}
+                    {(list && list.length > 0) ? (<ul>
+                        {list.map(compo => (
+                            <li key={compo.id} className="compos-item">
+                                <span className="item-time">
+                                    <FormatTime value={compo.compo_start} format="ddd LT" />
+                                </span>
+                                {' '}
+                                <span className="item-title">
+                                    <Link to={event.getCompoURL(compo)}>
+                                        {compo.name}
+                                    </Link>
+                                </span>
+                            </li>
+                        ))}</ul>) : <NoResults />}
                 </div>
                 <div className="box-footer">
                     {/*

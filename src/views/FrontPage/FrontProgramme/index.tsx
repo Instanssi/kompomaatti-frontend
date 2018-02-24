@@ -8,16 +8,7 @@ import { Link } from 'react-router-dom';
 import { L, FormatTime, NoResults } from 'src/common';
 import EventInfo from 'src/state/EventInfo';
 import globalState from 'src/state';
-import { ICompo, IProgrammeEvent } from 'src/api/interfaces';
 
-
-export function getCompoURL(eventId, compo: ICompo) {
-    return `/events/${eventId}/compos/${compo.id}`;
-}
-
-export function getProgrammeURL(eventId, progEvent: IProgrammeEvent) {
-    return `/events/${eventId}/programme/${progEvent.id}`;
-}
 
 @observer
 export default class FrontProgramme extends React.Component<{
@@ -50,7 +41,6 @@ export default class FrontProgramme extends React.Component<{
     render() {
         const { event } = this.props;
         const { list } = this;
-        const eventId = event && event.eventId;
 
         return (
             <div className="highlight-box">
@@ -58,19 +48,21 @@ export default class FrontProgramme extends React.Component<{
                     <L text="dashboard.programme.title" />
                 </h3>
                 <div className="box-body">
-                    {(list && list.length > 0) ? list.map(progEvent => (
-                        <li key={progEvent.id} className="programme-item">
-                            <span className="item-time">
-                                <FormatTime value={progEvent.start} format="ddd LT" />
-                            </span>
-                            {' '}
-                            <span className="item-title">
-                                <Link to={getProgrammeURL(eventId, progEvent)}>
-                                    {progEvent.title}
-                                </Link>
-                            </span>
-                        </li>
-                    )) : <NoResults />}
+                    {(list && list.length > 0) ? (<ul>
+                        {list.map(progEvent => (
+                            <li key={progEvent.id} className="programme-item">
+                                <span className="item-time">
+                                    <FormatTime value={progEvent.start} format="ddd LT" />
+                                </span>
+                                {' '}
+                                <span className="item-title">
+                                    <Link to={event.getProgrammeEventURL(progEvent)}>
+                                        {progEvent.title}
+                                    </Link>
+                                </span>
+                            </li>
+                        ))}
+                    </ul>) : <NoResults />}
                 </div>
                 <div className="box-footer">
                     {/*
