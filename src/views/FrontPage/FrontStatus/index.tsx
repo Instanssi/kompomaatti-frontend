@@ -31,6 +31,9 @@ export default class FrontStatus extends React.Component<{
 
         let content;
 
+        // FIXME: If the "current" event has clearly ended, inform the user
+        // about that before checking login or vote codes.
+
         if (!hasLogin) {
             content = this.renderNoLogin();
         } else if (!hasVoteCode) {
@@ -51,6 +54,12 @@ export default class FrontStatus extends React.Component<{
             <div className="alert alert-info">
                 <span className="fa fa-info-circle" />&ensp;
                 <L text="dashboard.notLoggedIn" />
+                <hr />
+                <div>
+                    <a href="/users/login" className="btn btn-primary">
+                        <L text="session.login" />
+                    </a>
+                </div>
             </div>
         );
     }

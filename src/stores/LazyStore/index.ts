@@ -83,6 +83,6 @@ export default class LazyStore<T, E = any> implements IRemote<T, E> {
 
     protected onUnobserved() {
         // TODO: Use something smarter than promises so we can cancel fetches?
-        console.info('AtomStore unobserved.');
+        // console.info('AtomStore unobserved.');
     }
 }
