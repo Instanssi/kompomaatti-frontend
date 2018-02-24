@@ -16,16 +16,14 @@ export default class FormFeedback<T = any> extends React.Component<{
     /** Form state to read from. */
     form: FormStore<T>;
 }> {
-
     @computed
     get errors() {
         const { name, form } = this.props;
-        const { error } = form;
-        if (!error) {
+        if (!form.error) {
             return null;
         }
         // Any error is expected to be a map of field names to arrays of problems.
-        return error[name!] as (string[] | null);
+        return form.error[name!] as (string[] | null);
     }
 
     render() {

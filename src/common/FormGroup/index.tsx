@@ -77,22 +77,29 @@ export default class FormGroup<T> extends React.Component<IFormGroupProps<T> & a
     }
 
     @computed
-    get className() {
-        return classNames(
-            'form-group',
-            // FIXME: Pick up has-error/has-warning/has-success from form state
-        );
-    }
-
-    @computed
     get value() {
         const { formStore, name } = this.props;
         return _get(formStore!.value, name);
     }
 
+    @computed
+    get errors() {
+        const { name, formStore } = this.props;
+        if (!formStore.error) {
+            return null;
+        }
+        // Any error is expected to be a map of field names to arrays of problems.
+        return formStore.error[name!] as (string[] | null);
+    }
+
     render() {
-        const { id, className, props, value, onChange } = this;
+        const { id, props, value, onChange } = this;
         const { name, label, help, input, children, formStore, type, readOnly, ...rest } = props;
+
+        const className = classNames(
+            'form-group',
+            { 'has-error': !!this.errors },
+        );
 
         return (
             <div className={className}>
