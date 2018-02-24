@@ -19,7 +19,7 @@ export default class TicketCodeForm extends React.Component<{
         return globalState.api.voteCodes.create({
             ...formStore.toJS(),
             event: this.props.event.eventId,
-        })
+        });
     });
 
     @action.bound

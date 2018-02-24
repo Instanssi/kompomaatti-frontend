@@ -6,7 +6,7 @@ import globalState from 'src/state';
 import EventInfo from 'src/state/EventInfo';
 import { L } from 'src/common';
 
-import TicketCodeForm from './TicketCodeForm'
+import TicketCodeForm from './TicketCodeForm';
 
 
 @observer

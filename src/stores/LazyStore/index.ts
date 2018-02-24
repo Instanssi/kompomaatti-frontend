@@ -13,6 +13,7 @@ export default class LazyStore<T, E = any> implements IRemote<T, E> {
     protected _error: E | null;
     protected _isPending = false;
     protected _lastRefresh: Date | null = null;
+    protected _observed = 0;
 
     /**
      * Tracks observation.
@@ -78,20 +79,22 @@ export default class LazyStore<T, E = any> implements IRemote<T, E> {
         }
     }
 
-    protected onObserved() {
+    protected maybeRefresh() {
         const { _lastRefresh, _isPending } = this;
-        // We _could_ just write this check into the getters for this simple case,
-        // but being able to observe the  observers is nice for debugging.
         if (!_isPending && _lastRefresh === null) {
             // console.info('Starting refresh due to observation.', this);
             this.refresh();
-        } else {
-            // console.info('Already refreshing.');
         }
+    }
+
+    protected onObserved() {
+        this._observed++;
+        this.maybeRefresh();
     }
 
     protected onUnobserved() {
         // TODO: Use something smarter than promises so we can cancel fetches?
         // console.info('AtomStore unobserved.');
+        this._observed--;
     }
 }
