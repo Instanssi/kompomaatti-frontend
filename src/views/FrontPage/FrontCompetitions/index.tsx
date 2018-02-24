@@ -18,7 +18,7 @@ export function getCompetitionURL(eventId, competition: ICompetition) {
 
 @observer
 export default class FrontCompetitions extends React.Component<{
-    event: EventHelper | null;
+    event: EventHelper;
 }> {
     @computed
     get list() {

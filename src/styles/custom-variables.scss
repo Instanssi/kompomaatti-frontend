@@ -44,34 +44,6 @@ $font-family-sans-serif:
 // Bootstrap 4 reboot compatibility
 $grid-columns: 12;
 
-/*
-@mixin hover {
-    &:hover {
-        @content;
-    }
-}
-@mixin hover-focus {
-    &:focus,
-    &:hover {
-        @content;
-    }
-}
-@mixin plain-hover-focus {
-    &,
-    &:focus,
-    &:hover {
-        @content;
-    }
-}
-
-@mixin hover-focus-active {
-    &:focus,
-    &:active,
-    &:hover {
-        @content;
-    }
-}*/
-
 $font-family-base: $font-family-sans-serif;
 $font-size-base: 16px;
 $font-weight-base: 400;

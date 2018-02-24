@@ -8,32 +8,30 @@ import { ICompo } from 'src/api/interfaces';
 import { FormStore } from 'src/stores';
 
 
-interface ICompoEntryFormProps {
-    compo: ICompo;
-}
-
 @observer
-export default class CompoEntryForm extends React.Component<ICompoEntryFormProps> {
+export default class CompoEntryForm extends React.Component<{
+    compo: ICompo;
+}> {
     form = new FormStore({
         name: '',
+        creator: '',
         description: '',
         entryfile: null as File | null,
         imagefile_original: null as File | null,
         sourcefile: null as File | null,
+    }, (formStore) => {
+        return globalState.api.userCompoEntries.create({
+            ...formStore.toJS(),
+            compo: this.props.compo.id,
+        });
     });
 
     @action.bound
-    handleSubmit(form) {
-        // Should this be a feature of the form itself?
-        // Then we could prevent the dreaded double submit by just
-        // making the form refuse to submit if it's already pending.
-        globalState.api.userCompoEntries.create({
-            ...this.form.toJS(),
-            compo: this.props.compo.id,
-            creator: globalState.user!.id,
-        }).then(
+    handleSubmit(event) {
+        this.form.submit().then(
             (success) => runInAction(() => {
                 console.info('success:', success);
+                // FIXME: Get back to the compo page and make sure it refreshes.
             }),
             (error) => runInAction(() => {
                 console.error(error);
@@ -57,6 +55,12 @@ export default class CompoEntryForm extends React.Component<ICompoEntryFormProps
                     help={<L text="data.entry.description.help" />}
                     name="description"
                     input="textarea"
+                    lines={5}
+                />
+                <FormGroup
+                    label={<L text="data.entry.creator.title" />}
+                    help={<L text="data.entry.creator.help" />}
+                    name="creator"
                 />
                 <FormGroup
                     label={<L text="data.entry.entryfile.title" />}
@@ -77,7 +81,7 @@ export default class CompoEntryForm extends React.Component<ICompoEntryFormProps
                     type="file"
                 />
                 <div>
-                    <button className="btn btn-primary">
+                    <button className="btn btn-primary" disabled={this.form.isPending}>
                         <L text="common.submit" />
                     </button>
                 </div>

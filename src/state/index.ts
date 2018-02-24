@@ -55,7 +55,7 @@ class GlobalState {
     }
 
     /**
-     * Find the most relevant event, for the dashboard and other things.
+     * Most relevant-looking event of the current events list.
      */
     @computed
     get currentEvent() {
@@ -63,7 +63,7 @@ class GlobalState {
         if (!events) {
             return null;
         }
-        // The events are in descending order by date, so this should be the most recent.
+        // The events are in descending order by date.
         return events[0];
     }
 

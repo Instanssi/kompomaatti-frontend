@@ -5,14 +5,18 @@
  */
 
 // Core variables and mixins
+
+// This includes our variables, then the Bootstrap 3 variables.
+// BS3 vars will use ours as their defaults, allowing customization.
 @import "./variables";
 @import "~bootstrap-sass/assets/stylesheets/bootstrap/mixins";
 
 // Reset and dependencies
 @import "~bootstrap-sass/assets/stylesheets/bootstrap/normalize";
 @import "~bootstrap-sass/assets/stylesheets/bootstrap/print";
-// @import "~bootstrap-sass/assets/stylesheets/bootstrap/glyphicons";
 
+// Let's just use font-awesome.
+// @import "~bootstrap-sass/assets/stylesheets/bootstrap/glyphicons";
 $fa-font-path: "~font-awesome/fonts";
 @import "~font-awesome/scss/font-awesome.scss";
 
@@ -37,10 +41,11 @@ $fa-font-path: "~font-awesome/fonts";
 @import "~bootstrap-sass/assets/stylesheets/bootstrap/pager";
 @import "~bootstrap-sass/assets/stylesheets/bootstrap/labels";
 @import "~bootstrap-sass/assets/stylesheets/bootstrap/badges";
+// this thing is so cliche
 // @import "~bootstrap-sass/assets/stylesheets/bootstrap/jumbotron";
 @import "~bootstrap-sass/assets/stylesheets/bootstrap/thumbnails";
 @import "~bootstrap-sass/assets/stylesheets/bootstrap/alerts";
-// @import "~bootstrap-sass/assets/stylesheets/bootstrap/progress-bars";
+@import "~bootstrap-sass/assets/stylesheets/bootstrap/progress-bars";
 // @import "~bootstrap-sass/assets/stylesheets/bootstrap/media";
 @import "~bootstrap-sass/assets/stylesheets/bootstrap/list-group";
 @import "~bootstrap-sass/assets/stylesheets/bootstrap/panels";

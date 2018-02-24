@@ -21,7 +21,7 @@ export function getProgrammeURL(eventId, progEvent: IProgrammeEvent) {
 
 @observer
 export default class FrontProgramme extends React.Component<{
-    event: EventHelper | null;
+    event: EventHelper;
 }> {
     @computed
     get list() {

@@ -23,7 +23,6 @@ export interface IFormGroupProps<T> {
     // Tempted to just make this interface extend basic HTML input attributes,
     // but most of that junk is useless and potentially confusing.
     type?: string;
-    autocomplete?: string;
 
     /**
      * Set to completely override the input field implementation.
@@ -39,8 +38,7 @@ export interface IFormGroupProps<T> {
  */
 @inject('formStore')
 @observer
-export default class FormGroup<T> extends React.Component<IFormGroupProps<T>> {
-
+export default class FormGroup<T> extends React.Component<IFormGroupProps<T> & any> {
     componentWillMount() {
         // sanity checks
         const { name, formStore } = this.props;

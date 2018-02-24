@@ -18,7 +18,7 @@ export function getCompoURL(eventId, compo: ICompo) {
 
 @observer
 export default class FrontCompos extends React.Component<{
-    event: EventHelper | null;
+    event: EventHelper;
 }> {
     @computed
     get list() {

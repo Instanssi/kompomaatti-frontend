@@ -7,7 +7,7 @@ import EventHelper from 'src/state/EventHelper';
 
 @observer
 export default class FrontCurrentEvent extends React.Component<{
-    event: EventHelper | null;
+    event: EventHelper;
 }> {
     render() {
         const { event } = this.props;
