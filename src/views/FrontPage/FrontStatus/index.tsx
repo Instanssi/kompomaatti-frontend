@@ -6,6 +6,8 @@ import globalState from 'src/state';
 import EventInfo from 'src/state/EventInfo';
 import { L } from 'src/common';
 
+import TicketCodeForm from './TicketCodeForm'
+
 
 @observer
 export default class FrontStatus extends React.Component<{
@@ -80,6 +82,7 @@ export default class FrontStatus extends React.Component<{
                         <L text="voteCode.noTicketCode" />
                     </button>
                 </div>
+                <TicketCodeForm event={this.props.event} />
             </div>
         );
     }

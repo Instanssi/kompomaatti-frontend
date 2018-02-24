@@ -1,4 +1,5 @@
 import qs from 'qs';
+import Cookies from 'cookies-js';
 
 import { PrimaryKey } from 'src/api/interfaces';
 
@@ -42,6 +43,12 @@ export default class BaseAPI<ItemType = any> {
             method,
             body: this.encodePayload(payload),
             credentials: 'include',
+            headers: {
+                // Sending this in a request with no payload isn't strictly wrong.
+                'content-type': 'application/json',
+                // This better be up to date, no way to update it right now.
+                'X-CSRFToken': Cookies.get('csrftoken'),
+            },
         }).then((res) => this.handleResponse(res),
         ).catch((err) => this.handleError(err));
     }
@@ -61,7 +68,7 @@ export default class BaseAPI<ItemType = any> {
     }
 
     /**
-     * Encode payload object for the result body.
+     * Encode payload object for the request body.
      * Leaves out any keys starting with an underscore ('_').
      * @param [payload] Payload to encode
      * @returns Encoded payload, if any.
