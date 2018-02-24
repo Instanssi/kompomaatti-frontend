@@ -23,7 +23,7 @@
         },
         "events": {
             "empty": "No ongoing events.",
-            "title": "Events",
+            "title": "Current event",
             "viewAll": "View all events"
         },
         "notLoggedIn": "You are not logged in. To vote or participate in events, log in at the main Instanssi site first.",
@@ -127,7 +127,10 @@
         "title": "User profile"
     },
     "voteCode": {
-        "help": "A vote code is required to participate in compos and voting. If you bought a ticket from the Instanssi Store, the ticket code can be used as a vote code.",
-        "title": "Vote code"
+        "missing": "No vote code",
+        "noVoteCode": "To participate in the event through Kompomaatti, your account needs a vote code for the event. If you bought a ticket online, you can use the ticket's code for this.",
+        "title": "Vote code",
+        "useTicketCode": "Enter ticket code",
+        "noTicketCode": "I don't have a ticket code"
     }
 }

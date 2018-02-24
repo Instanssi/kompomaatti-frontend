@@ -23,7 +23,7 @@
         },
         "events": {
             "empty": "Ei tapahtumia käynnissä.",
-            "title": "Tapahtumat",
+            "title": "Menossa",
             "viewAll": "Selaa tapahtumia"
         },
         "notLoggedIn": "Et ole kirjautunut sisään. Jos haluat äänestää tai osallistua, kirjaudu pääsivuston puolella.",
@@ -127,7 +127,10 @@
         "title": "Käyttäjäprofiili"
     },
     "voteCode": {
-        "help": "Kilpailuihin ja äänestyksiin osallistumiseen tarvitset äänestyskoodin. Jos ostit lipun Instanssi Kaupasta, lippukoodi kelpaa äänestyskoodiksi.",
-        "title": "Äänestyskoodi"
+        "missing": "Ei äänestyskoodia",
+        "help": "Jos haluat osallistua tapahtumaan Kompomaatissa, tilillesi on liitettävä äänestyskoodi. Jos ostit lipun verkkokaupasta, voit käyttää lippukoodiasi äänestyskoodina.",
+        "title": "Äänestyskoodi",
+        "useTicketCode": "Syötä lippukoodi",
+        "noTicketCode": "Minulla ei ole lippukoodia"
     }
 }

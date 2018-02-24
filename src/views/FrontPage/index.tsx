@@ -10,9 +10,7 @@ import FrontProgramme from './FrontProgramme';
 import FrontCompos from './FrontCompos';
 import FrontCompetitions from './FrontCompetitions';
 
-import frontpageClass from './frontpage.scss';
-
-console.info('frontpage classname:', Object.keys(frontpageClass));
+import './frontpage.scss';
 
 
 @observer
