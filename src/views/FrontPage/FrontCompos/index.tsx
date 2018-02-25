@@ -28,13 +28,15 @@ export default class FrontCompos extends React.Component<{
             return null;
         }
         const sorted = _orderBy(compos, compo => compo.compo_start);
-        const now = moment(globalState.timeMin);
+
+        // Only show compos that are somehow interesting.
+        // Subtract 15 minutes from "now" to show events that just passed.
+        const now = moment(globalState.timeMin).subtract(15, 'minutes');
 
         const isRelevant = (compo: ICompo) => {
-            // Only show compos that are somehow interesting.
-            // TODO: Show events that have just started?
-            // - Subtract 15 minutes from "now"?
-            return moment(compo.compo_start).isAfter(now);
+            const hasStarted = moment(compo.compo_start).isBefore(now);
+            const hasVotingEnded = moment(compo.voting_end).isBefore(now);
+            return !hasStarted || !hasVotingEnded;
         };
 
         return sorted

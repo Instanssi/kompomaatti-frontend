@@ -23,7 +23,7 @@
         },
         "events": {
             "empty": "Ei tapahtumia käynnissä.",
-            "title": "Menossa",
+            "title": "Tapahtuma",
             "viewAll": "Selaa tapahtumia"
         },
         "notLoggedIn": "Et ole kirjautunut sisään. Jos haluat äänestää tai osallistua, kirjaudu pääsivuston puolella.",

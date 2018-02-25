@@ -22,7 +22,7 @@ export default class FrontProgramme extends React.Component<{
             return null;
         }
         const sorted = _orderBy(progEvents, progEvent => progEvent.start);
-        const now = moment(globalState.timeMin);
+        const now = moment(globalState.timeMin).subtract(15, 'minutes');
 
         const isRelevant = progEvent => {
             // Only show programme events that are somehow interesting.

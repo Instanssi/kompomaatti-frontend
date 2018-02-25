@@ -23,7 +23,7 @@
         },
         "events": {
             "empty": "No ongoing events.",
-            "title": "Current event",
+            "title": "Event",
             "viewAll": "View all events"
         },
         "notLoggedIn": "You are not logged in. To vote or participate in events, log in at the main Instanssi site first.",

@@ -70,7 +70,10 @@ export default class FrontStatus extends React.Component<{
         // FIXME: Render a form to enter a vote code or a request.
         return (
             <div className="alert alert-info">
-                <h4><span className="fa fa-info-circle" />&ensp; <L text="voteCode.missing" /></h4>
+                <h4>
+                    <span className="fa fa-info-circle" />&ensp;
+                    <L text="voteCode.missing" />
+                </h4>
                 <p><L text="voteCode.help" /></p>
                 <hr />
                 <div>

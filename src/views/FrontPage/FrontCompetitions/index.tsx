@@ -28,12 +28,9 @@ export default class FrontCompetitions extends React.Component<{
             return null;
         }
         const sorted = _orderBy(competitions, compo => compo.start);
-        const now = moment(globalState.timeMin);
+        const now = moment(globalState.timeMin).subtract(15, 'minutes');
 
         const isRelevant = (competition: ICompetition) => {
-            // Only show competitions that are somehow interesting.
-            // TODO: Show events that have just started?
-            // - Subtract 15 minutes from "now"?
             return moment(competition.start).isAfter(now);
         };
 
