@@ -1,6 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { computed } from 'mobx';
+import { Link } from 'react-router-dom';
 import _orderBy from 'lodash/orderBy';
 
 import { NoResults, LoadingWrapper, FormatTime } from 'src/common';
@@ -22,6 +23,7 @@ export default class EventProgramme extends React.Component<{
     }
 
     render() {
+        const { eventInfo } = this.props;
         const events = this.sortedEvents;
 
         return (
@@ -33,9 +35,12 @@ export default class EventProgramme extends React.Component<{
                                 <FormatTime value={event.start} format="ddd LT" />
                             </span>
                             {' '}
-                            <span className="item-title">
+                            <Link
+                                className="item-title"
+                                to={eventInfo.getProgrammeEventURL(event)}
+                            >
                                 {event.title}
-                            </span>
+                            </Link>
                         </li>
                     ))}
                 </ul> : <NoResults />}

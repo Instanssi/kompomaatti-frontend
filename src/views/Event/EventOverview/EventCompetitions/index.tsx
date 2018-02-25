@@ -1,6 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { computed } from 'mobx';
+import { Link } from 'react-router-dom';
 import _orderBy from 'lodash/orderBy';
 
 import { NoResults, LoadingWrapper, FormatTime } from 'src/common';
@@ -22,6 +23,7 @@ export default class EventCompetitions extends React.Component<{
     }
 
     render() {
+        const { eventInfo } = this.props;
         const competitions = this.sortedCompetitions;
 
         return (
@@ -34,9 +36,12 @@ export default class EventCompetitions extends React.Component<{
                                     <FormatTime value={competition.start} format="ddd LT" />
                                 </span>
                                 {' '}
-                                <span className="item-title">
+                                <Link
+                                    className="item-title"
+                                    to={eventInfo.getCompetitionURL(competition)}
+                                >
                                     {competition.name}
-                                </span>
+                                </Link>
                             </li>
                         ))}
                     </ul>

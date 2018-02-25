@@ -5,14 +5,13 @@ import {
     IEvent,
     IProgrammeEvent,
     ICompo,
+    ICompetition,
 } from 'src/api/interfaces';
 import { LazyStore } from 'src/stores';
 
 
 /**
- * Tries to model a party event as an ORM-ish object with helper methods and stuff.
- *
- * Most ORMs are not particularly asynchronous, though.
+ * Collects data related to a specific event under one object for easy access and caching.
  */
 export default class EventInfo {
     @observable.ref event: IEvent;
@@ -28,6 +27,7 @@ export default class EventInfo {
         return this.event.id;
     }
 
+    /** Get query parameters for fetching stuff related to this event. */
     protected get query() {
         return { event: this.eventId };
     }
@@ -46,25 +46,15 @@ export default class EventInfo {
         return (value && value.length > 0);
     }
 
-    /**
-     * Try to claim a ticket vote code for the event.
-     * @param ticketCode
-     */
-    async addVoteCode(ticketCode: string) {
-        try {
-            await this.api.voteCodes.create(ticketCode);
-            this.myVoteCodes.refresh();
-        } catch (e) {
-            // How to warn the user about this? Just let some form handle it?
-            throw e;
-        }
-    }
-
     getCompoURL(compo: ICompo) {
         return `/events/${this.eventId}/compos/${compo.id}`;
     }
 
     getProgrammeEventURL(progEvent: IProgrammeEvent) {
         return `/events/${this.eventId}/programme/${progEvent.id}`;
+    }
+
+    getCompetitionURL(competition: ICompetition) {
+        return `/events/${this.eventId}/competitions/${competition.id}`;
     }
 }

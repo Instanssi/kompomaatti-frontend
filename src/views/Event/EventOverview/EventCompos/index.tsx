@@ -23,7 +23,7 @@ export default class EventCompos extends React.Component<{
     }
 
     render() {
-        const { event } = this.props.eventInfo;
+        const { eventInfo } = this.props;
         const compos = this.sortedCompos;
 
         return (
@@ -36,7 +36,7 @@ export default class EventCompos extends React.Component<{
                             </span>
                             {' '}
                             <span className="item-title">
-                                <Link to={`/events/${event.id}/compos/${compo.id}`}>
+                                <Link to={eventInfo.getCompoURL(compo)}>
                                     {compo.name}
                                 </Link>
                             </span>
