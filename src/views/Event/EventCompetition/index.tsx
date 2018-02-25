@@ -43,7 +43,7 @@ export class EventCompetition extends React.Component<{
                 store={this.props.eventInfo.competitions}
             >
                 {competition && <>
-                    <div className="progevent-title">
+                    <div className="competition-title">
                         <h2>{competition.name}</h2>
                         <p>
                             <FormatTime value={competition.start} format="LLL" />
@@ -56,9 +56,11 @@ export class EventCompetition extends React.Component<{
                             <FormatTime value={competition.participation_end} format="LT" />
                         </p>
                     </div>
+                    <h3><L text="common.participation" /></h3>
+                    {/*<CompetitionStatus />*/}
                     <h3><L text="common.description" /></h3>
                     <p
-                        className="progevent-description"
+                        className="competition-description"
                         dangerouslySetInnerHTML={this.descriptionHTML}
                     />
                 </>}
