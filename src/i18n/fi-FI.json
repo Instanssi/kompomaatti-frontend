@@ -9,7 +9,11 @@
     "competition": {
         "start": "Kilpailu alkaa",
         "end": "Kilpailu päättyy",
-        "participationEnd": "Ilmoittautuminen päättyy"
+        "stillOpen": "Ilmoittautuminen on vielä auki.",
+        "signedUp": "Olet ilmoittautunut kilpailuun nimellä ${participant_name}.",
+        "participate": "Osallistu kilpailuun",
+        "participationEnd": "Ilmoittautuminen päättyy",
+        "participationClosed": "Ilmoittautuminen on päättynyt."
     },
     "compo": {
         "entries": "Teokset",

@@ -6,10 +6,11 @@ import { withRouter, RouteComponentProps } from 'react-router';
 import { FormatTime, LoadingWrapper, L } from 'src/common';
 
 import EventInfo from 'src/state/EventInfo';
+import CompetitionStatus from './CompetitionStatus';
 
 
 /**
- * Displays details of a single programme event within a party event.
+ * Displays details of a single competition within a party event.
  */
 @observer
 export class EventCompetition extends React.Component<{
@@ -56,8 +57,10 @@ export class EventCompetition extends React.Component<{
                             <FormatTime value={competition.participation_end} format="LT" />
                         </p>
                     </div>
-                    <h3><L text="common.participation" /></h3>
-                    {/*<CompetitionStatus />*/}
+                    <CompetitionStatus
+                        eventInfo={this.props.eventInfo}
+                        competition={competition}
+                    />
                     <h3><L text="common.description" /></h3>
                     <p
                         className="competition-description"
