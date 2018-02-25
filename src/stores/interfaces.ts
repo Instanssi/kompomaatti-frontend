@@ -9,6 +9,6 @@ export interface IRemote<T, E = any> {
     isPending: boolean;
     /** Time this was last (successfully) refreshed. */
     lastRefresh: Date | null;
-    /** Try again. */
+    /** (Re)-fetch the value. Sets value and clears error on success. */
     refresh(): Promise<T>;
 }

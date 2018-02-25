@@ -7,7 +7,6 @@ import { observable } from 'mobx';
 import config from 'src/config';
 import i18n from '../i18n';
 import InstanssiREST from '../api';
-import { IUser } from 'src/api/interfaces';
 import { LazyStore } from 'src/stores';
 import EventInfo from './EventInfo';
 
@@ -18,8 +17,12 @@ const api = new InstanssiREST(config.API_URL);
  * Application-wide state.
  */
 class GlobalState {
+    userStore = new LazyStore(() => api.currentUser.get());
+
     /** Current user, if known. Don't even try to mutate. */
-    @observable.ref user: IUser | null = null;
+    get user() {
+        return this.userStore.value;
+    }
     /**
      * Current language code (ISO 639 style).
      * @todo Save language in local storage for now.
@@ -96,9 +99,8 @@ class GlobalState {
      * @returns User profile after session check
      */
     async continueSession() {
-        return this.setUser(await api.currentUser.get());
+        return this.userStore.refresh();
     }
-
 
     /**
      * Change the UI language. May require fetching a new translation file.
@@ -122,16 +124,6 @@ class GlobalState {
                 throw error;
             },
         );
-    }
-
-    /**
-     * Assign a new session user.
-     * @param user User profile.
-     */
-    private async setUser(user: IUser) {
-        this.user = user;
-        // TODO: If the user profiles ever get language info, call setLanguage here.
-        return user;
     }
 }
 

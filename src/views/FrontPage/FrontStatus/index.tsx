@@ -14,31 +14,40 @@ export default class FrontStatus extends React.Component<{
     event: EventInfo;
 }> {
     @computed
-    get hasLogin() {
-        return !!globalState.user;
+    get notLoggedIn() {
+        return !globalState.user;
     }
 
     @computed
-    get hasVoteCode() {
+    get noVoteCode() {
         const { currentEvent } = globalState;
         if (!currentEvent) {
             return null;
         }
         const { value } = currentEvent.myVoteCodes;
-        return !!(value && value.length);
+        return !(value && value.length);
     }
 
     render() {
-        const { hasLogin, hasVoteCode } = this;
+        const { notLoggedIn, noVoteCode } = this;
+        const { event } = this.props;
 
-        let content;
+        if (globalState.userStore.isPending) {
+            // Don't render anything if the user is unknown at this time.
+            return null;
+        }
+        if (event.myVoteCodes.isPending) {
+            // Don't render anything if the vote code status is unknown.
+            return null;
+        }
 
         // FIXME: If the "current" event has clearly ended, inform the user
         // about that before checking login or vote codes.
+        let content;
 
-        if (!hasLogin) {
+        if (notLoggedIn) {
             content = this.renderNoLogin();
-        } else if (!hasVoteCode) {
+        } else if (noVoteCode) {
             content = this.renderNoVoteCode();
         } else {
             content = this.renderVoteOk();
