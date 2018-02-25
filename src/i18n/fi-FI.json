@@ -6,6 +6,11 @@
         "loadingRetry": "Yritä uudestaan?",
         "submit": "Lähetä"
     },
+    "competition": {
+        "start": "Kilpailu alkaa",
+        "end": "Kilpailu päättyy",
+        "participationEnd": "Ilmoittautuminen päättyy"
+    },
     "compo": {
         "entries": "Teokset",
         "status": "Tila",

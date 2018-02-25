@@ -9,6 +9,7 @@ import { FormatTime, LoadingWrapper } from 'src/common';
 import EventOverview from './EventOverview';
 import EventCompo from './EventCompo';
 import EventProgrammeEvent from './EventProgrammeEvent';
+import EventCompetition from './EventCompetition';
 
 
 @observer
@@ -47,6 +48,9 @@ export class EventView extends React.Component<RouteComponentProps<{
                             </Route>
                             <Route path={match.url + '/programme/:progId'}>
                                 <EventProgrammeEvent eventInfo={eventInfo} />
+                            </Route>
+                            <Route path={match.url + '/competitions/:cmpId'}>
+                                <EventCompetition eventInfo={eventInfo} />
                             </Route>
                             <Route>
                                 <EventOverview eventInfo={eventInfo} />

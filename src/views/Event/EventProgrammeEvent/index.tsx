@@ -18,8 +18,8 @@ export class EventProgrammeEvent extends React.Component<{
     @computed
     get progEvent() {
         const { idParsed } = this;
-        const progEvent = this.props.eventInfo.programme.value;
-        return progEvent && progEvent.find(compo => compo.id === idParsed);
+        const progEvents = this.props.eventInfo.programme.value;
+        return progEvents && progEvents.find(pe => pe.id === idParsed);
     }
 
     get idParsed() {

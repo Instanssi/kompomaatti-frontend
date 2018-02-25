@@ -6,6 +6,11 @@
         "loadingRetry": "Try again?",
         "submit": "Submit"
     },
+    "competition": {
+        "start": "Competition start",
+        "end": "Competition end",
+        "participationEnd": "Signing up ends at"
+    },
     "compo": {
         "entries": "Entries",
         "status": "Status",
