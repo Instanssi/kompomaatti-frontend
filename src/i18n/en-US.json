@@ -1,7 +1,20 @@
 {
-    "compo": {
+    "common": {
         "description": "Description",
-        "entries": "Entries"
+        "loading": "Loading...",
+        "loadingError": "There was a problem loading this content.",
+        "loadingRetry": "Try again?",
+        "submit": "Submit"
+    },
+    "competition": {
+        "start": "Competition start",
+        "end": "Competition end",
+        "participationEnd": "Signing up ends at"
+    },
+    "compo": {
+        "entries": "Entries",
+        "status": "Status",
+        "vote": "Vote"
     },
     "dashboard": {
         "competitions": {
@@ -15,7 +28,7 @@
         },
         "events": {
             "empty": "No ongoing events.",
-            "title": "Events",
+            "title": "Event",
             "viewAll": "View all events"
         },
         "notLoggedIn": "You are not logged in. To vote or participate in events, log in at the main Instanssi site first.",
@@ -27,8 +40,54 @@
         "viewTitle": "Front page",
         "welcome": "Welcome to Kompomaatti, the official compo management system of Instanssi.org!"
     },
+    "data": {
+        "entry": {
+            "compo": {
+                "help": "Compo the entry is for.",
+                "title": "Compo"
+            },
+            "creator": {
+                "help": "Name to use for the author or group of authors.",
+                "title": "Author"
+            },
+            "description": {
+                "help": "Description of the entry, techniques used, excuses, etc.",
+                "title": "Description"
+            },
+            "disqualified": {
+                "help": "Entry disqualified for rule violation or technical issues.",
+                "title": "Disqualified"
+            },
+            "entryfile": {
+                "help": "Entry file (e.g. zip archive).",
+                "title": "Entry"
+            },
+            "imagefile_original": {
+                "help": "Image to use for the entry. Not required, but recommended.",
+                "title": "Image"
+            },
+            "name": {
+                "help": "Name for the entry.",
+                "title": "Name"
+            },
+            "sourcefile": {
+                "help": "File containing source code or other material.",
+                "title": "Source file"
+            },
+            "user": {
+                "help": "User the entry belongs to.",
+                "title": "User"
+            },
+            "youtubeUrl": {
+                "help": "Link to a YouTube video of the entry.",
+                "title": "YouTube URL"
+            }
+        }
+    },
     "entry": {
+        "add": "Add entry",
         "description": "Entry description",
+        "edit": "Edit entry",
         "entryfile": "Entry file",
         "files": "Files",
         "image": "Image",
@@ -40,7 +99,7 @@
         "programme": "Programme"
     },
     "events": {
-        "title": "Events"
+        "title": "All events"
     },
     "footer": {
         "copyright": "(c) 2017-2018",
@@ -52,8 +111,11 @@
     },
     "nav": {
         "compos": "Compos",
-        "events": "Events",
+        "events": "All events",
         "login": "Log in"
+    },
+    "programmeEvent": {
+        "presenters": "Presenters"
     },
     "session": {
         "login": "Log in",
@@ -63,5 +125,18 @@
     "user": {
         "password": "Password",
         "username": "User name"
+    },
+    "userProfile": {
+        "myCompetitions": "My competitions",
+        "myEntries": "My entries",
+        "title": "User profile"
+    },
+    "voteCode": {
+        "missing": "No vote code",
+        "noVoteCode": "To participate in the event through Kompomaatti, your account needs a vote code for the event. If you bought a ticket online, you can use the ticket's code for this.",
+        "title": "Vote code",
+        "hasCodeForEvent": "You have a valid vote code for this event.",
+        "useTicketCode": "Enter ticket code",
+        "noTicketCode": "I don't have a ticket code"
     }
 }

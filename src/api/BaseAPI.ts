@@ -1,6 +1,7 @@
 import qs from 'qs';
+import Cookies from 'cookies-js';
 
-import { PrimaryKey } from 'src/api/models';
+import { PrimaryKey } from 'src/api/interfaces';
 
 
 /**
@@ -16,11 +17,11 @@ export default class BaseAPI<ItemType = any> {
     }
 
     list(args?): Promise<ItemType[]> {
-        return this.fetch('GET', this.url, args);
+        return this.request('GET', this.url, args);
     }
 
     get(id: PrimaryKey): Promise<ItemType> {
-        return this.fetch('GET', this.url + id + '/');
+        return this.request('GET', this.url + id + '/');
     }
 
     /**
@@ -29,9 +30,9 @@ export default class BaseAPI<ItemType = any> {
      * @param url URL to send the request to
      * @param query Optional query params
      * @param payload Optional payload
-     * @returns esponse
+     * @returns Async response
      */
-    protected fetch<T = any>(method: string, url: string, query?, payload?): Promise<T> {
+    protected request<T = any>(method: string, url: string, query?, payload?): Promise<T> {
         if (process.env.NODE_ENV === 'test') {
             throw new Error('Unmocked request: ' + method + ' ' + url);
         }
@@ -42,6 +43,12 @@ export default class BaseAPI<ItemType = any> {
             method,
             body: this.encodePayload(payload),
             credentials: 'include',
+            headers: {
+                // Sending this in a request with no payload isn't strictly wrong.
+                'content-type': 'application/json',
+                // This better be up to date, no way to update it right now.
+                'X-CSRFToken': Cookies.get('csrftoken'),
+            },
         }).then((res) => this.handleResponse(res),
         ).catch((err) => this.handleError(err));
     }
@@ -49,11 +56,11 @@ export default class BaseAPI<ItemType = any> {
     /**
      * Encode query part into the URL.
      * Note that there's no standard for how to encode non-trivial data.
-     * @param {string} url - URL part
-     * @param {object} [query] - Query "payload"
-     * @returns {string} - URL, with encoded payload if possible
+     * @param url URL part
+     * @param [query] Query "payload"
+     * @returns URL, with encoded payload if possible
      */
-    protected encodeQuery(url, query?) {
+    protected encodeQuery(url: string, query?) {
         if (!query) {
             return url;
         }
@@ -61,10 +68,10 @@ export default class BaseAPI<ItemType = any> {
     }
 
     /**
-     * Encode payload object for the result body.
+     * Encode payload object for the request body.
      * Leaves out any keys starting with an underscore ('_').
-     * @param {object} [payload] - Payload to encode
-     * @returns {string|undefined} - Encoded payload, if any.
+     * @param [payload] Payload to encode
+     * @returns Encoded payload, if any.
      */
     protected encodePayload(payload) {
         if (payload) {
@@ -85,18 +92,11 @@ export default class BaseAPI<ItemType = any> {
      * on error-like status code, so we do it here.
      * @param {Response} response
      */
-    protected handleResponse(response) {
-        const { status } = response;
-        if (status === 0) {
-            // timeout or other connection problem
-            throw {
-                _status: 0,
-            };
-        }
-        if (status < 200 || status >= 300) {
-            // into the error handler you go
+    protected handleResponse(response: Response) {
+        if (!response.ok) {
             throw response;
         }
+        const { status } = response;
         if (status === 204 || status === 205) {
             // This is probably less accident-prone than returning null
             return {
@@ -109,8 +109,11 @@ export default class BaseAPI<ItemType = any> {
             if (payload && typeof payload === 'object') {
                 payload._status = status;
             }
-            return payload;
+            // freeze the object; we don't want to mutate it directly anywhere
+            // (this also speeds up Vue a lot)
+            return Object.freeze(payload);
         }, (error) => {
+            // tslint:disable-next-line no-console
             console.warn('Unable to decode payload:', error);
             throw error;
         });
@@ -118,16 +121,17 @@ export default class BaseAPI<ItemType = any> {
 
     /**
      * Handle any error that may have occurred.
-     * @param {Response|Error|object} error
+     * @param error
      */
-    protected handleError(errorResponse: Response) {
+    protected handleError(errorResponse: Response | any) {
         // see if we got any kind of payload
         if (typeof errorResponse.json !== 'function') {
             throw errorResponse;
         }
         return errorResponse.json().then((payload) => {
-            throw payload;
+            throw Object.freeze(payload);
         }, (error) => {
+            // tslint:disable-next-line no-console
             console.warn('unable to decode error payload:', error);
             throw error;
         });

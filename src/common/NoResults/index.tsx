@@ -1,20 +1,20 @@
-import Vue from 'vue';
-import Component from 'vue-class-component';
+import React from 'react';
+import { observer } from 'mobx-react';
 
 import globalState from 'src/state';
 
 
 const { translate } = globalState;
 
-@Component
-export default class NoResults extends Vue {
-    render(h) {
+@observer
+export default class NoResults extends React.Component<any> {
+    render() {
         return (
-            <span>
-                <span class="fa fa-exclamation-triangle" />
+            <div>
+                <span className="fa fa-fw fa-info-circle" />
                 {' '}
                 {translate('list.noResults')}
-            </span>
+            </div>
         );
     }
 }

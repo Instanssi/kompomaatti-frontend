@@ -1,24 +1,24 @@
-import Vue from 'vue';
-import Component from 'vue-class-component';
+import React from 'react';
+import { observer } from 'mobx-react';
 
-import globalState from 'src/state';
+import { L } from 'src/common';
 
 
-const { translate } = globalState;
-
-@Component
-export default class Footer extends Vue {
+@observer
+export default class Footer extends React.Component<any> {
     scrollUp(event) {
         event.preventDefault();
         window.scroll(0, 0);
     }
 
-    render(h) {
+    render() {
         return (
-            <footer class="bg-brand p-3">
-                <span>{translate('footer.copyright')}</span>
+            <footer className="p-3 flex-row-even">
+                <span><L text="footer.copyright" /></span>
                 {' '}
-                <a href="#" onClick={this.scrollUp}>{translate('footer.toTop')}</a>
+                <a href="#" onClick={this.scrollUp}>
+                    <L text="footer.toTop" />
+                </a>
             </footer>
         );
     }

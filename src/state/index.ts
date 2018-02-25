@@ -1,74 +1,77 @@
-import Vue from 'vue';
-import Component from 'vue-class-component';
 import _get from 'lodash/get';
 import _template from 'lodash/template';
-import bind from 'lodash-decorators/bind';
-
-import InstanssiREST from '../api';
-import i18n from '../i18n';
+import _orderBy from 'lodash/orderBy';
+import { runInAction, computed } from 'mobx';
+import { observable } from 'mobx';
 
 import config from 'src/config';
-import { IUser } from 'src/api/models';
+import i18n from '../i18n';
+import InstanssiREST from '../api';
+import { LazyStore } from 'src/stores';
+import EventInfo from './EventInfo';
 
 
-const { DEFAULT_LOCALE } = config;
 const api = new InstanssiREST(config.API_URL);
-
-if (process.env.NODE_ENV === 'development') {
-    (window as any)._api = api;
-}
-
-
-
-
-
-
-
-
-// FIXME: Save language in localstorage for now
-
-
-
-
-
 
 /**
  * Application-wide state.
- *
- * Declared as a Vue component to get some global observable state without extra hassle.
- *
- * VueX could do the job here, but it's pretty obviously stuck in the pre-ES6
- * days and doesn't play nice with TypeScript either.
  */
-@Component
-class GlobalState extends Vue {
-    /** Current user, if known. */
-    user: IUser | null = null;
+class GlobalState {
+    userStore = new LazyStore(() => api.currentUser.get());
 
-    /** Current language. */
-    language = 'en-US';
+    /** Current user, if known. Don't even try to mutate. */
+    get user() {
+        return this.userStore.value;
+    }
+    /**
+     * Current language code (ISO 639 style).
+     * @todo Save language in local storage for now.
+     */
+    @observable.ref language = config.DEFAULT_LOCALE;
+    /** Current translation object. Translating text looks for keys in this. */
+    @observable.ref translation: any = { };
+    /** Current time in milliseconds, updating once per second. */
+    @observable.ref timeSec = new Date().valueOf();
+    /** Current time in milliseconds, updating once per minute. */
+    @observable.ref timeMin = new Date().valueOf();
 
-    /** Current translation object. */
-    translation: any = { };
+    /** Several things could use a list of party events, so it's available here. */
+    events = new LazyStore(async () => {
+        const events = await api.events.list();
+        const sorted = _orderBy(events, event => event.date, 'desc');
+        return sorted.map(eventObject => new EventInfo(this.api, eventObject));
+    });
 
-    currentTime = new Date().valueOf();
-
+    /** The site API made available here for convenience. */
     api = api;
 
-    isLoading = true;
-
     constructor() {
-        super();
         // FIXME: Try to persist the state and bring it back on reload?
         setInterval(() => {
-            this.currentTime = new Date().valueOf();
-        }, 500);
-        this.findLanguage(this.languageCode);
+            this.timeSec = new Date().valueOf();
+        }, 1000);
+        setInterval(() => {
+            this.timeMin = new Date().valueOf();
+        }, 60000);
+        this.setLanguage(this.languageCode);
         this.continueSession();
     }
 
+    /**
+     * Most relevant-looking event of the current events list.
+     */
+    @computed
+    get currentEvent() {
+        const events = this.events.value;
+        if (!events) {
+            return null;
+        }
+        // The events are in descending order by date.
+        return events[0];
+    }
+
     get momentLocale() {
-        // TODO: Are lang codes always the same as moment locales?
+        // TODO: Are language codes always the same as moment locales?
         return this.language;
     }
 
@@ -82,9 +85,8 @@ class GlobalState extends Vue {
      * @param values Optional arguments for translation (spec pending)
      * @returns Translated text string
      */
-    @bind()
-    translate(name: string, values?: {[key: string]: string}): string {
-        const text = _get(this.translation, name, name);
+    translate = (name: string, values?: {[key: string]: string}) => {
+        const text = _get(this.translation, name, name) as string;
         // TODO: Spec pluralisation, etc.
         if (values) {
             return _template(text)(values);
@@ -97,50 +99,38 @@ class GlobalState extends Vue {
      * @returns User profile after session check
      */
     async continueSession() {
-        return this.setUser(await api.currentUser.get());
+        return this.userStore.refresh();
     }
 
     /**
-     * Update the current user's language. May take a moment if the user is not anon.
-     * @param languageCode
+     * Change the UI language. May require fetching a new translation file.
+     * @param languageCode Language code like 'fi-FI'.
+     * @returns Promise that resolves when the language switch finishes.
      */
-    async setUserLanguage(languageCode: string) {
-        // FIXME: Update user remote profile if non-anon (= has id)
-        // console.debug('setting user language to:', languageCode);
-        this.language = await this.findLanguage(languageCode);
-        return;
-    }
+    setLanguage(code: string) {
+        const lang = i18n[code];
 
-    /**
-     * Assign a new session user.
-     * @param user User profile.
-     * @returns {Promise.<Object>} - Same user profile, after loading language files.
-     */
-    private async setUser(user: IUser) {
-        console.info('setUser:', user);
-        this.user = user;
-        return user;
-    }
-
-    /**
-     * Try to find a matching language and switch to it.
-     * Returns whatever lang key matched closely enough (e.g. 'en' may map to 'en-GB').
-     */
-    private async findLanguage(code: string): Promise<string> {
-        const getTranslation = i18n[code];
-        if (getTranslation) {
-            try {
-                this.translation = await getTranslation();
-                // console.debug('set translation to:', this.translation);
-            } catch (e) {
-                console.warn('Unable to load translation:', e);
-            }
-        } else {
-            console.warn('No translation:', code);
-            return DEFAULT_LOCALE;
+        if (!lang) {
+            throw new Error('No translation found: ' + code);
         }
-        return code;
+
+        return lang.fetch().then(
+            (translation) => runInAction(() => {
+                this.language = code;
+                this.translation = translation;
+            }),
+            (error) => {
+                console.warn('Unable to load translation:', code, error);
+                throw error;
+            },
+        );
     }
 }
 
-export default new GlobalState();
+const globalState = new GlobalState();
+export default globalState;
+
+if (process.env.NODE_ENV === 'development') {
+    // sneaky devmode trick
+    (window as any)._globalState = globalState;
+}

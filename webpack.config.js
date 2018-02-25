@@ -16,14 +16,12 @@ const config = {
     entry: 'src/index.tsx',
     output: {
         path: path.resolve(__dirname, 'build'),
-        filename: namePattern('res/[name].[chunkhash].js')
+        filename: namePattern('res/[name].[chunkhash].js'),
+        publicPath: '/kompomaatti/',
     },
     resolve: {
         modules: [ './', 'node_modules' ],
         extensions: ['.ts', '.tsx', '.js', '.jsx'],
-        alias: {
-            'vue$': PRODUCTION_BUILD ? 'vue/dist/vue.min.js' : 'vue/dist/vue.esm.js',
-        },
     },
     module: {
         rules: [
@@ -64,8 +62,12 @@ const config = {
                 }
             },
             {
-                test: /\.(png|jpg|jpeg|svg|ttf|otf|woff|woff2)$/,
+                test: /\.(png|jpg|jpeg|svg|ttf|otf|woff|woff2|eot)$/,
                 loader: 'file-loader',
+                options: {
+                    publicPath: '/kompomaatti/',
+                    outputPath: 'res/'
+                }
             }
         ]
     },
@@ -110,7 +112,7 @@ function getStyleLoaders(cssLoaders) {
 if(PRODUCTION_BUILD) {
     config.plugins.push(
         new webpack.optimize.UglifyJsPlugin(),
-        new webpack.optimize.ModuleConcatenationPlugin(),
+        new webpack.optimize.ModuleConcatenationPlugin()
     );
 
     if(process.env.BUNDLE_ANALYZER) {
@@ -127,9 +129,28 @@ if(PRODUCTION_BUILD) {
         host: '0.0.0.0',
         // proxy the local Instanssi server to get around CORS issues
         proxy: {
-            '/': {
-                target: 'http://localhost:8000',
+            '!/kompomaatti/**': {
+                target: process.env.INSTANSSI_URL || 'http://localhost:8000',
             }
+        },
+        historyApiFallback: {
+            rewrites: [
+                {
+                    from: /^\/kompomaatti/,
+                    to: function(context) {
+                        // Great. The history fallback doesn't seem to handle public paths.
+                        // Handle resource paths manually then.
+                        const { pathname } = context.parsedUrl;
+                        const resIndex = pathname.indexOf('/res/');
+                        if(resIndex < 0) {
+                            return '/kompomaatti/index.html';
+                        } else {
+                            const path = '/kompomaatti' + pathname.slice(resIndex);
+                            return path;
+                        }
+                    },
+                },
+            ]
         },
         // Emulate actual deployment env
         publicPath: '/kompomaatti/',

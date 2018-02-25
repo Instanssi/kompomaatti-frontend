@@ -1,0 +1,72 @@
+import React from 'react';
+import { observer } from 'mobx-react';
+import { computed } from 'mobx';
+import { withRouter, RouteComponentProps } from 'react-router';
+
+import { FormatTime, LoadingWrapper, L } from 'src/common';
+
+import EventInfo from 'src/state/EventInfo';
+
+
+/**
+ * Displays details of a single programme event within a party event.
+ */
+@observer
+export class EventCompetition extends React.Component<{
+    eventInfo: EventInfo;
+} & RouteComponentProps<{ cmpId: string }>> {
+    @computed
+    get competition() {
+        const { idParsed } = this;
+        const competitions = this.props.eventInfo.competitions.value;
+        return competitions && competitions.find(c => c.id === idParsed);
+    }
+
+    get idParsed() {
+        return Number.parseInt(this.props.match.params.cmpId, 10);
+    }
+
+    @computed
+    get descriptionHTML() {
+        const { competition } = this;
+        return competition ? {
+            __html: competition.description || '-',
+        } : undefined;
+    }
+
+    render() {
+        const { competition } = this;
+
+        return (
+            <LoadingWrapper
+                className="event-competition"
+                store={this.props.eventInfo.competitions}
+            >
+                {competition && <>
+                    <div className="competition-title">
+                        <h2>{competition.name}</h2>
+                        <p>
+                            <FormatTime value={competition.start} format="LLL" />
+                            {' - '}
+                            <FormatTime value={competition.end} format="LT" />
+                        </p>
+                        <p>
+                            <L text="competition.participationEnd" />
+                            {': '}
+                            <FormatTime value={competition.participation_end} format="LT" />
+                        </p>
+                    </div>
+                    <h3><L text="common.participation" /></h3>
+                    {/*<CompetitionStatus />*/}
+                    <h3><L text="common.description" /></h3>
+                    <p
+                        className="competition-description"
+                        dangerouslySetInnerHTML={this.descriptionHTML}
+                    />
+                </>}
+            </LoadingWrapper>
+        );
+    }
+}
+
+export default withRouter(EventCompetition);

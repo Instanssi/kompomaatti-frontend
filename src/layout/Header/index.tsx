@@ -1,38 +1,58 @@
-import Vue from 'vue';
-import Component from 'vue-class-component';
+import React from 'react';
+import { observer } from 'mobx-react';
+import { observable, action } from 'mobx';
+import { Link } from 'react-router-dom';
+import classNames from 'classnames';
 
-import globalState from 'src/state';
-
+import { L } from 'src/common';
 import UserMenu from '../UserMenu';
 import LanguageSwitch from '../LanguageSwitch';
+import NavLink from './NavLink';
 
 
-const { translate } = globalState;
+@observer
+export default class Header extends React.Component {
+    @observable isOpen = false;
 
-@Component
-export default class Header extends Vue {
-    render(h) {
+    @action.bound
+    toggleOpen() {
+        this.isOpen = !this.isOpen;
+    }
+
+    render() {
         return (
-            <nav class="navbar navbar-inverse">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed">
-                        (open)
+            <nav className="navbar navbar-inverse">
+                <div className="navbar-header">
+                    <button
+                        type="button"
+                        onClick={this.toggleOpen}
+                        className={classNames(
+                            'navbar-toggle',
+                            { collapsed: !this.isOpen },
+                        )}
+                    >
+                        <span className="fa fa-bars" />
                     </button>
-                    <router-link to="/" class="navbar-brand">
-                        Kompomaatti 2.0
-                    </router-link>
+                    <Link to="/" className="navbar-brand">
+                        Kompomaatti
+                    </Link>
                 </div>
-                <div class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav">
-                        <router-link tag="li" to="/events/">
-                            <a href="#">{translate('nav.events')}</a>
-                        </router-link>
+                <div
+                    className={classNames(
+                        'collapse navbar-collapse',
+                        { in: this.isOpen },
+                    )}
+                >
+                    <ul className="nav navbar-nav">
+                        <NavLink to="/events" exact>
+                            <L text="nav.events" />
+                        </NavLink>
                     </ul>
-                    <ul class="nav navbar-nav navbar-right">
+                    <ul className="nav navbar-nav navbar-right">
                         <UserMenu />
                     </ul>
-                    <div class="navbar-form navbar-right">
-                        <div class="form-group">
+                    <div className="navbar-form navbar-right">
+                        <div className="form-group">
                             <LanguageSwitch />
                         </div>
                     </div>

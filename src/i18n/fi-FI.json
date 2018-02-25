@@ -1,7 +1,20 @@
 {
-    "compo": {
+    "common": {
         "description": "Kuvaus",
-        "entries": "Teokset"
+        "loading": "Ladataan...",
+        "loadingError": "Ongelma sisällön lataamisessa.",
+        "loadingRetry": "Yritä uudestaan?",
+        "submit": "Lähetä"
+    },
+    "competition": {
+        "start": "Kilpailu alkaa",
+        "end": "Kilpailu päättyy",
+        "participationEnd": "Ilmoittautuminen päättyy"
+    },
+    "compo": {
+        "entries": "Teokset",
+        "status": "Tila",
+        "vote": "Äänestä"
     },
     "dashboard": {
         "competitions": {
@@ -15,7 +28,7 @@
         },
         "events": {
             "empty": "Ei tapahtumia käynnissä.",
-            "title": "Tapahtumat",
+            "title": "Tapahtuma",
             "viewAll": "Selaa tapahtumia"
         },
         "notLoggedIn": "Et ole kirjautunut sisään. Jos haluat äänestää tai osallistua, kirjaudu pääsivuston puolella.",
@@ -49,7 +62,7 @@
                 "help": "Teos paketoituna.",
                 "title": "Tiedosto"
             },
-            "imagefileOriginal": {
+            "imagefile_original": {
                 "help": "Edustava kuva teokselle. Ei pakollinen, mutta suositeltava.",
                 "title": "Kuva"
             },
@@ -72,7 +85,9 @@
         }
     },
     "entry": {
+        "add": "Lisää teos",
         "description": "Teoksen kuvaus",
+        "edit": "Muokkaa teosta",
         "entryfile": "Teos tiedostona",
         "files": "Tiedostot",
         "image": "Image",
@@ -84,7 +99,7 @@
         "programme": "Ohjelma"
     },
     "events": {
-        "title": "Tapahtumat"
+        "title": "Kaikki tapahtumat"
     },
     "footer": {
         "copyright": "(c) 2017-2018",
@@ -96,8 +111,11 @@
     },
     "nav": {
         "compos": "Kompot",
-        "events": "Tapahtumat",
+        "events": "Kaikki tapahtumat",
         "login": "Kirjaudu"
+    },
+    "programmeEvent": {
+        "presenters": "Esiintyjät"
     },
     "session": {
         "login": "Kirjaudu sisään",
@@ -107,5 +125,18 @@
     "user": {
         "password": "Salasana",
         "username": "Käyttäjätunnus"
+    },
+    "userProfile": {
+        "myCompetitions": "Omat kilpailut",
+        "myEntries": "Omat kompoentryt",
+        "title": "Käyttäjäprofiili"
+    },
+    "voteCode": {
+        "missing": "Ei äänestyskoodia",
+        "hasCodeForEvent": "Sinulla on äänestysoikeus tähän tapahtumaan.",
+        "help": "Jos haluat osallistua tapahtumaan Kompomaatissa, tilillesi on liitettävä äänestyskoodi. Jos ostit lipun verkkokaupasta, voit käyttää lippukoodiasi äänestyskoodina.",
+        "title": "Äänestyskoodi",
+        "useTicketCode": "Syötä lippukoodi",
+        "noTicketCode": "Minulla ei ole lippukoodia"
     }
 }

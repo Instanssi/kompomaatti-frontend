@@ -1,25 +1,25 @@
-import { IEvent, ICompoEntry, ICompo } from 'src/api/models';
+import { IEvent, ICompoEntry, ICompo } from 'src/api/interfaces';
 
 const mockEvent: IEvent = {
     id: 1,
     name: 'Intanssi 20017',
     date: '2018-02-08T20:31:43.000Z',
-    mainurl: 'http://instanssi.org/20017',
+    mainurl: 'http://intanssi.org/20017',
 };
 
 export { mockEvent };
 
 const mockCompoEntry: ICompoEntry = {
     id: 123,
-    compo: 'http://intanssi.org/api/compos/44',
+    compo: 44,
     name: 'Stochastic Mock Coverage Tracer',
     description: '',
     creator: 'anon',
-    entryfile_url: 'http://instanssi.org/files/123.zip',
-    sourcefile_url: 'http://instanssi.org/files/123.src.zip',
-    imagefile_original_url: 'http://instanssi.org/files/123.img.jpg',
-    imagefile_thumbnail_url: 'http://instanssi.org/files/123.thumb.jpg',
-    imagefile_medium_url: 'http://instanssi.org/files/123.med.jpg',
+    entryfile_url: 'http://intanssi.org/files/123.zip',
+    sourcefile_url: 'http://intanssi.org/files/123.src.zip',
+    imagefile_original_url: 'http://intanssi.org/files/123.img.jpg',
+    imagefile_thumbnail_url: 'http://intanssi.org/files/123.thumb.jpg',
+    imagefile_medium_url: 'http://intanssi.org/files/123.med.jpg',
     youtube_url: 'http://youtube.com/foofoo',
     disqualified: false,
     disqualified_reason: '',
@@ -31,7 +31,7 @@ export { mockCompoEntry };
 
 const mockCompo: ICompo = {
     id: 420,
-    event: 'http://intanssi.org/api/events/10',
+    event: 10,
     name: 'Testing compo',
     description: 'Compo for testing',
     adding_end: '2018-02-06T00:00:00.000Z',
