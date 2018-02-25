@@ -6,7 +6,7 @@ import moment from 'moment';
 import { ICompetition } from 'src/api/interfaces';
 
 import EventInfo from 'src/state/EventInfo';
-import { LoadingWrapper, L } from 'src/common';
+import { LoadingWrapper, L, NotLoggedIn } from 'src/common';
 import globalState from 'src/state';
 
 
@@ -36,9 +36,17 @@ export default class CompetitionStatus extends React.Component<{
 
         if (!this.isOpenForParticipation) {
             // Nothing to see here, pool's closed, etc.
-            content = (
+            return (
                 <div className="alert alert-info">
                     <L text="competition.participationClosed" />
+                </div>
+            );
+        } else if (!globalState.user) {
+            // Just render this directly instead of bothering the user with
+            // errors about the failure to load user-specific participation data.
+            return (
+                <div className="alert alert-info">
+                    <NotLoggedIn />
                 </div>
             );
         } else if (participations && participations.length) {

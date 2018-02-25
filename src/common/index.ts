@@ -5,3 +5,4 @@ export { default as FormatTime } from './FormatTime';
 export { default as L } from './L';
 export { default as LoadingWrapper } from './LoadingWrapper';
 export { default as NoResults } from './NoResults';
+export { default as NotLoggedIn } from './NotLoggedIn';
