@@ -149,6 +149,7 @@
         "requestTextPlaceholder": "(selitä tilanteesi)",
         "requestPending": "Olet pyytänyt äänestyskoodia",
         "requestPendingHelp": "Jos mitään ei näytä tapahtuvan vähään aikaan, käy tökkimässä infopöydän porukkaa.",
+        "requestRejectedHelp": "Äänestyskoodipyyntösi on hylätty.",
         "noTicketCode": "Minulla ei ole lippukoodia"
     }
 }

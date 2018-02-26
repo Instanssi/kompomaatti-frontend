@@ -58,16 +58,16 @@ export class CompoEntry extends React.Component<{
                     </div>}
                     <div className="entry-description">
                         <h4><L text="entry.description" /></h4>
-                        <p className="text-pre-wrap">{ entry.description }</p>
+                        <p className="text-pre-wrap">{entry.description}</p>
                     </div>
                     <div className="entry-files">
                         <h4><L text="entry.files" /></h4>
-                        { entry.entryfile_url && <p>
+                        {entry.entryfile_url && <p>
                             <a target="_blank" href={entry.entryfile_url}>
                                 <L text="entry.entryfile" />
                             </a>
                         </p>}
-                        { entry.sourcefile_url && <p>
+                        {entry.sourcefile_url && <p>
                             <a target="_blank" href={entry.sourcefile_url}>
                                 <L text="entry.sourcefile" />
                             </a>

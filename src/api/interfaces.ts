@@ -174,6 +174,8 @@ export interface IVoteCodeRequest {
     id: PrimaryKey;
     event: ReferenceKey;
     text: string;
+    /** 0 = pending, 1 = ok, 2 = rejected. */
+    status: number;
 }
 
 export interface IVoteCode {

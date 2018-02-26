@@ -40,7 +40,13 @@ export default class FrontStatus extends React.Component<{
     get noVoteCode() {
         const { event } = this.props;
         const { value } = event.myVoteCodes;
-        return !(value && value.length);
+        const { voteCodeRequests } = this;
+
+        const hasOkRequest = voteCodeRequests && voteCodeRequests.find(vc => {
+            return vc.status === 1;
+        });
+
+        return !(value && value.length) && !hasOkRequest;
     }
 
     @computed
@@ -134,21 +140,31 @@ export default class FrontStatus extends React.Component<{
         const { voteCodeRequests } = this;
         const hasCodeRequest = voteCodeRequests && voteCodeRequests.length > 0;
 
+        const hasRejectedRequest = voteCodeRequests && voteCodeRequests.find(vc => {
+            return vc.status === 2;
+        });
+
         return (
             <div className="alert alert-info">
-                {!hasCodeRequest ? <>
-                    <h4>
-                        <span className="fa fa-info-circle" />&ensp;
+                {!hasCodeRequest
+                    ? <>
+                        <h4>
+                            <span className="fa fa-info-circle" />&ensp;
                         <L text="voteCode.missing" />
-                    </h4>
-                    <p><L text="voteCode.help" /></p>
-                </> : <>
-                    <h4>
-                        <span className="fa fa-info-circle" />&ensp;
+                        </h4>
+                        <p><L text="voteCode.help" /></p>
+                    </>
+                    : <>
+                        <h4>
+                            <span className="fa fa-info-circle" />&ensp;
                         <L text="voteCode.requestPending" />
-                    </h4>
-                    <p><L text="voteCode.requestPendingHelp" /></p>
-                </>}
+                        </h4>
+                        <p>
+                            {!hasRejectedRequest
+                                ? <L text="voteCode.requestPendingHelp" />
+                                : <L text="voteCode.requestRejectedHelp" />}
+                        </p>
+                    </>}
                 <hr />
                 {(noCodeMode === NoCodeWorkflow.Info) && (<div>
                     <button
