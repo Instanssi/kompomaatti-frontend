@@ -5,6 +5,7 @@
         "loadingError": "Ongelma sisällön lataamisessa.",
         "loadingRetry": "Yritä uudestaan?",
         "notLoggedIn": "Et ole kirjautunut sisään.",
+        "results": "Tulokset",
         "submit": "Lähetä"
     },
     "competition": {

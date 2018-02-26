@@ -7,6 +7,7 @@ import { FormatTime, LoadingWrapper, L } from 'src/common';
 
 import EventInfo from 'src/state/EventInfo';
 import CompetitionStatus from './CompetitionStatus';
+import CompetitionResults from './CompetitionResults';
 
 
 /**
@@ -61,6 +62,12 @@ export class EventCompetition extends React.Component<{
                         eventInfo={this.props.eventInfo}
                         competition={competition}
                     />
+                    { competition.show_results && (
+                        <CompetitionResults
+                            eventInfo={this.props.eventInfo}
+                            competition={competition}
+                        />
+                    )}
                     <h3><L text="common.description" /></h3>
                     <p
                         className="competition-description"
