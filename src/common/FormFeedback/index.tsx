@@ -33,8 +33,8 @@ export default class FormFeedback<T = any> extends React.Component<{
         }
         return (
             <div className="alert alert-danger">
-                {errors.map(err => (
-                    <p>{err}</p>
+                {errors.map((err, i) => (
+                    <p key={i}>{err}</p>
                 ))}
             </div>
         );

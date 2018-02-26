@@ -1,5 +1,7 @@
 {
     "common": {
+        "back": "Back",
+        "cancel": "Cancel",
         "description": "Description",
         "loading": "Loading...",
         "loadingError": "There was a problem loading this content.",
@@ -139,9 +141,13 @@
     },
     "voteCode": {
         "missing": "No vote code",
-        "noVoteCode": "To participate in the event through Kompomaatti, your account needs a vote code for the event. If you bought a ticket online, you can use the ticket's code for this.",
+        "help": "To participate in the event through Kompomaatti, your account needs a vote code for the event. If you bought a ticket online, you can use the ticket's code for this.",
         "title": "Vote code",
         "hasCodeForEvent": "You have a valid vote code for this event.",
+        "ticketKeyPlaceholder": "(ticket code)",
+        "requestTextPlaceholder": "(explain your situation here)",
+        "requestPending": "Vote code request pending",
+        "requestPendingHelp": "If nothing happens for a while, try poking the people at the infodesk.",
         "useTicketCode": "Enter ticket code",
         "noTicketCode": "I don't have a ticket code"
     }

@@ -1,5 +1,7 @@
 {
     "common": {
+        "back": "Takaisin",
+        "cancel": "Peruuta",
         "description": "Kuvaus",
         "loading": "Ladataan...",
         "loadingError": "Ongelma sisällön lataamisessa.",
@@ -143,6 +145,10 @@
         "help": "Jos haluat osallistua tapahtumaan Kompomaatissa, tilillesi on liitettävä äänestyskoodi. Jos ostit lipun verkkokaupasta, voit käyttää lippukoodiasi äänestyskoodina.",
         "title": "Äänestyskoodi",
         "useTicketCode": "Syötä lippukoodi",
+        "ticketKeyPlaceholder": "(lippukoodi)",
+        "requestTextPlaceholder": "(selitä tilanteesi)",
+        "requestPending": "Olet pyytänyt äänestyskoodia",
+        "requestPendingHelp": "Jos mitään ei näytä tapahtuvan vähään aikaan, käy tökkimässä infopöydän porukkaa.",
         "noTicketCode": "Minulla ei ole lippukoodia"
     }
 }

@@ -34,6 +34,7 @@ export default class Form<T> extends React.Component<{
                 <form onSubmit={this.handleSubmit}>
                     {props.children}
                     <FormFeedback form={props.form} />
+                    <FormFeedback form={props.form} name="non_field_errors" />
                 </form>
             </Provider>
         );

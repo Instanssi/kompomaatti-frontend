@@ -9,22 +9,22 @@ import { L, Form, FormGroup } from 'src/common';
 
 
 @observer
-export default class TicketCodeForm extends React.Component<{
+export default class RequestCodeForm extends React.Component<{
     event: EventInfo;
     onSubmit?: (response: any) => void;
     onCancel?: () => void;
 }> {
     store = new FormStore({
-        ticket_key: '',
+        text: '',
     }, (formStore) => {
-        return globalState.api.voteCodes.create({
+        return globalState.api.voteCodeRequests.create({
             ...formStore.toJS(),
             event: this.props.event.eventId,
         });
     });
 
     @action.bound
-    handleSubmit() {
+    submit() {
         this.store.submit().then((response) => {
             this.props.event.myVoteCodes.refresh();
             const { onSubmit } = this.props;
@@ -35,7 +35,7 @@ export default class TicketCodeForm extends React.Component<{
     }
 
     @action.bound
-    handleCancel() {
+    cancel() {
         const { onCancel } = this.props;
         if (onCancel) {
             onCancel();
@@ -44,16 +44,17 @@ export default class TicketCodeForm extends React.Component<{
 
     render() {
         return (
-            <Form onSubmit={this.handleSubmit} form={this.store}>
-                <h4><L text="voteCode.useTicketCode" /></h4>
+            <Form onSubmit={this.submit} form={this.store}>
+                <h4><L text="voteCode.noTicketCode" /></h4>
                 <FormGroup
-                    name="ticket_key"
-                    placeholder={globalState.translate('voteCode.ticketKeyPlaceholder')}
+                    input="textarea"
+                    placeholder={globalState.translate('voteCode.requestTextPlaceholder')}
+                    name="text"
                 />
                 <button className="btn btn-primary">
                     <L text="common.submit" />
                 </button>
-                <button type="button" className="btn btn-link" onClick={this.handleCancel}>
+                <button type="button" className="btn btn-link" onClick={this.cancel}>
                     <L text="common.cancel" />
                 </button>
             </Form>

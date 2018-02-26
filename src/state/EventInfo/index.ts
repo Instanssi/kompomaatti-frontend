@@ -22,6 +22,7 @@ export default class EventInfo {
     myEntries = new LazyStore(() => this.api.userCompoEntries.list(this.query));
     myParticipations = new LazyStore(() => this.api.userCompetitionParticipations.list(this.query));
     myVoteCodes = new LazyStore(() => this.api.voteCodes.list(this.query));
+    myCodeRequests = new LazyStore(() => this.api.voteCodeRequests.list(this.query));
 
     get eventId() {
         return this.event.id;

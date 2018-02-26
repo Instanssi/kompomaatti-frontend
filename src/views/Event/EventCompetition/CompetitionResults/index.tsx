@@ -4,7 +4,7 @@ import { computed } from 'mobx';
 import _orderBy from 'lodash/orderBy';
 import classNames from 'classnames';
 
-import { L } from 'src/common';
+import { L, LoadingWrapper } from 'src/common';
 
 import globalState from 'src/state';
 import { ICompetition } from 'src/api/interfaces';
@@ -31,24 +31,29 @@ export default class CompetitionResults extends React.Component<{
     }
 
     render() {
+        const { resultsSorted } = this;
 
         return (
             <div className="competition-results">
                 <h3><L text="common.results" /></h3>
-                {this.resultsSorted && this.resultsSorted.length && (
-                    <ul>
-                        {this.resultsSorted.map(comp => (
-                            <li
-                                className={classNames(
-                                    { disqualified: comp.disqualified },
-                                )}
-                            >
-                                {comp.rank}. {comp.participant_name}
-                                {comp.disqualified_reason ? ` ${comp.disqualified_reason}` : '?'}
-                            </li>
-                        ))}
-                    </ul>
-                )}
+                <LoadingWrapper store={this.results}>
+                    {resultsSorted && resultsSorted.length && (
+                        <ul>
+                            {resultsSorted.map(comp => (
+                                <li
+                                    className={classNames(
+                                        { disqualified: comp.disqualified },
+                                    )}
+                                >
+                                    {comp.rank}. {comp.participant_name}
+                                    {comp.disqualified_reason
+                                        && ` ${comp.disqualified_reason}`}
+                                    }
+                                </li>
+                            ))}
+                        </ul>
+                    )}
+                </LoadingWrapper>
             </div>
         );
     }
