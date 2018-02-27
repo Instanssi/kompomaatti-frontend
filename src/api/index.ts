@@ -141,8 +141,9 @@ class UserCompoEntriesAPI extends BaseAPI<ICompoEntry> {
         .catch((error) => this.handleError(error));
     }
 
-    update(request) {
+    update(request): Promise<any> {
         throw new Error('Unimplemented!');
+        // return Promise.reject(null);
     }
 }
 

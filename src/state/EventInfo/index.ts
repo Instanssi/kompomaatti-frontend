@@ -6,6 +6,7 @@ import {
     IProgrammeEvent,
     ICompo,
     ICompetition,
+    ICompoEntry,
 } from 'src/api/interfaces';
 import { LazyStore } from 'src/stores';
 
@@ -49,6 +50,10 @@ export default class EventInfo {
 
     getCompoURL(compo: ICompo) {
         return `/events/${this.eventId}/compos/${compo.id}`;
+    }
+
+    getCompoEntryURL(compo: ICompo, entry: ICompoEntry) {
+        return this.getCompoURL(compo) + '/entries/' + entry.id;
     }
 
     getProgrammeEventURL(progEvent: IProgrammeEvent) {
