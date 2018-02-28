@@ -48,7 +48,7 @@ export default class CompoStatus extends React.Component<{
                                     </Link>
                                 </li>
                             ))}
-                        </ul>}
+                        </ul>
                     </div>
                 )}
             </div>
