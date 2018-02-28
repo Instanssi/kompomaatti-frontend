@@ -1,7 +1,7 @@
 {
     "name": "kompomaatti-frontend",
     "author": "Tommi Teistelä <totateis@gmail.com>",
-    "version": "0.2",
+    "version": "0.9",
     "license": "MIT",
     "scripts": {
         "build": "cross-env NODE_ENV=production webpack",

@@ -57,6 +57,12 @@
         "welcome": "Welcome to Kompomaatti, the official compo management system of Instanssi.org!"
     },
     "data": {
+        "c22n": {
+            "participant_name": {
+                "help": "Name to sign up as.",
+                "title": "Name"
+            }
+        },
         "entry": {
             "compo": {
                 "help": "Compo the entry is for.",

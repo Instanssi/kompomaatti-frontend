@@ -57,6 +57,12 @@
         "welcome": "Tervetuloa Kompomaattiin, Instanssin viralliseen kompojärjestelmään!"
     },
     "data": {
+        "c22n": {
+            "participant_name": {
+                "help": "Nimi, jolla kilpailuun ilmoittaudutaan.",
+                "title": "Nimi"
+            }
+        },
         "entry": {
             "compo": {
                 "help": "Kompo johon teos kuuluu.",

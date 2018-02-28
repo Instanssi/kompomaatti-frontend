@@ -197,6 +197,10 @@ class UserCompetitionParticipationsAPI extends BaseAPI<ICompetitionParticipation
     constructor(baseUrl, config) {
         super(baseUrl + '/user_participations/', config);
     }
+
+    create(request) {
+        return this.request('POST', this.url, null, request);
+    }
 }
 
 class SongsAPI extends BaseAPI {

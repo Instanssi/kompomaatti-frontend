@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { computed } from 'mobx';
+import { computed, observable, action } from 'mobx';
 import moment from 'moment';
 
 import { ICompetition } from 'src/api/interfaces';
@@ -8,6 +8,7 @@ import { ICompetition } from 'src/api/interfaces';
 import EventInfo from 'src/state/EventInfo';
 import { LoadingWrapper, L, NotLoggedIn } from 'src/common';
 import globalState from 'src/state';
+import CompetitionEnterForm from '../CompetitionEnterForm';
 
 
 /**
@@ -18,6 +19,8 @@ export default class CompetitionStatus extends React.Component<{
     eventInfo: EventInfo;
     competition: ICompetition;
 }> {
+    @observable formOpen = false;
+
     @computed
     get isOpenForParticipation() {
         const { competition } = this.props;
@@ -52,17 +55,16 @@ export default class CompetitionStatus extends React.Component<{
         } else if (participations && participations.length) {
             // Already signed up.
             content = (
-                <div>
-                    <ul>
-                        {participations.map(({ participant_name }) => (
-                            <li>
-                                <L
-                                    text="competition.signedUp"
-                                    values={{ participant_name }}
-                                />
-                            </li>
-                        ))}
-                    </ul>
+                <div className="alert alert-info">
+                    {participations.map(({ participant_name }) => (
+                        <div>
+                            <span className="fa fa-check" />&ensp;
+                            <L
+                                text="competition.signedUp"
+                                values={{ participant_name }}
+                            />
+                        </div>
+                    ))}
                 </div>
             );
         } else if (!isPending) {
@@ -80,16 +82,44 @@ export default class CompetitionStatus extends React.Component<{
         );
     }
 
+    @action.bound
+    handleFormOpen() {
+        this.formOpen = true;
+    }
+
+    @action.bound
+    hideForm() {
+        this.formOpen = false;
+    }
+
     renderSignup() {
+        const { props } = this;
         // FIXME: Show a form on button click. Turn the row below the <hr /> into one?
         return (
             <div className="alert alert-info">
                 <span className="fa fa-info-circle" />&ensp;
                 <L text="competition.stillOpen" />
                 <hr />
-                <button type="button" className="btn btn-primary">
-                    <L text="competition.participate" />
-                </button>
+                {this.formOpen
+                    ? (
+                        <CompetitionEnterForm
+                            eventInfo={props.eventInfo}
+                            competition={props.competition}
+                            onSubmit={this.hideForm}
+                            onCancel={this.hideForm}
+                        />
+                    )
+                    : (
+                        <button
+                            type="button"
+                            className="btn btn-primary"
+                            onClick={this.handleFormOpen}
+                        >
+                            <L text="competition.participate" />
+                        </button>
+                    )
+                }
+
             </div>
         );
     }
