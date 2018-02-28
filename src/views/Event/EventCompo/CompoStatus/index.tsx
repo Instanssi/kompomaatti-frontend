@@ -92,21 +92,26 @@ export default class CompoStatus extends React.Component<{
         const { schedule } = this;
 
         const scheduleField = (title, value) => (
-            <div>
+            <li>
+                <span className="item-time">
+                    <FormatTime format="ddd" value={value} />
+                    {' '}
+                    <FormatTime format="LT" value={value} />
+                </span>
                 <L text={title} />
-                {': '}
-                <b><FormatTime format="ddd LT" value={schedule.addingEnd} /></b>
-            </div>
+            </li>
         );
 
         return (
             <div>
                 <h3><L text="compo.schedule" /></h3>
-                {scheduleField('compo.addingEnd', schedule.addingEnd)}
-                {scheduleField('compo.editingEnd', schedule.editingEnd)}
-                {scheduleField('compo.compoStart', schedule.compoStart)}
-                {scheduleField('compo.votingStart', schedule.votingStart)}
-                {scheduleField('compo.votingEnd', schedule.votingEnd)}
+                <ul className="list-k">
+                    {scheduleField('compo.addingEnd', schedule.addingEnd)}
+                    {scheduleField('compo.editingEnd', schedule.editingEnd)}
+                    {scheduleField('compo.compoStart', schedule.compoStart)}
+                    {scheduleField('compo.votingStart', schedule.votingStart)}
+                    {scheduleField('compo.votingEnd', schedule.votingEnd)}
+                </ul>
             </div>
         );
     }
