@@ -52,8 +52,14 @@ export default class FormFileInput extends React.Component<{
                     <L text="fileInput.keep" />
                     {' '}
                     {typeof currentFileURL === 'string'
-                        ? <a href={currentFileURL} target="_blank">{currentFileURL}</a>
-                        : '(none)'
+                        ? <a href={currentFileURL} target="_blank">
+                            <span className="fa fa-external-link" />&ensp;
+                            {currentFileURL}
+                        </a>
+                        : (<span>
+                            <span className="fa fa-times" />&ensp;
+                            <L text="fileInput.noFile" />
+                        </span>)
                     }
                 </div>
                 <div className="file-input-entry">
@@ -63,6 +69,8 @@ export default class FormFileInput extends React.Component<{
                         onChange={this.handleChange}
                     />
                 </div>
+                {/* Deleting file attachments with PATCH doesn't seem to work.
+                    Maybe the users can live without this.
                 <div className="file-input-delete">
                     <button
                         type="button"
@@ -72,7 +80,7 @@ export default class FormFileInput extends React.Component<{
                         <span className="fa fa-trash" />&ensp;
                         <L text="fileInput.delete" />
                     </button>
-                </div>
+                </div>*/}
             </div>
         );
     }

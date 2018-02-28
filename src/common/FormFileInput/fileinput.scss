@@ -5,13 +5,16 @@
     border: 1px solid #eee;
     display: flex;
     align-items: baseline;
-    .file-input-current {
+
+    .file-input-current > a {
         overflow: hidden;
         text-overflow: ellipsis;
+        white-space: nowrap;
     }
     > * {
         display: flex;
         flex-direction: column;
-        flex: 1;
+        flex: 1 1 50%;
+        width: 50%;
     }
 }

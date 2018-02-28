@@ -112,6 +112,7 @@
     "fileInput": {
         "delete": "Delete",
         "keep": "Keep current file",
+        "noFile": "No file",
         "replace": "Replace"
     },
     "footer": {

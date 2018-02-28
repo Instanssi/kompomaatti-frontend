@@ -112,6 +112,7 @@
     "fileInput": {
         "delete": "Poista",
         "keep": "Pidä nykyinen tiedosto",
+        "noFile": "Ei tiedostoa",
         "replace": "Korvaa"
     },
     "footer": {
