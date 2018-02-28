@@ -1,13 +1,15 @@
 import React from 'react';
 import { observer } from 'mobx-react';
+import moment from 'moment';
 
 import globalState from 'src/state';
 import EventInfo from 'src/state/EventInfo';
 import { LazyStore } from 'src/stores';
-// import { NoResults } from 'src/common';
+
 import { Link } from 'react-router-dom';
 import { ICompo } from 'src/api/interfaces';
 import { computed } from 'mobx';
+import { FormatTime, L } from 'src/common';
 
 
 /**
@@ -31,27 +33,118 @@ export default class CompoStatus extends React.Component<{
         return ownEntries ? ownEntries.filter(entry => entry.compo === compoId) : null;
     }
 
-    render() {
-        const { compo, eventInfo } = this.props;
-        const { entries } = this;
+    @computed
+    get schedule() {
+        const { compo } = this.props;
+        const parse = v => v ? moment(v) : null;
 
+        // Could just map the compo JSON into something with these sooner.
+        return {
+            addingEnd: parse(compo.adding_end),
+            editingEnd: parse(compo.editing_end),
+            compoStart: parse(compo.compo_start),
+            votingStart: parse(compo.voting_start),
+            votingEnd: parse(compo.voting_end),
+        };
+    }
+
+    /** Check if the compo is votable at all. */
+    get isVotingEnabled() {
+        const { compo } = this.props;
+        return compo && compo.is_votable;
+    }
+
+    @computed
+    get canAddEntry() {
+        const { compo } = this.props;
+        const now = moment(globalState.timeMin);
+        return now.isBefore(compo.adding_end);
+    }
+
+    @computed
+    get canEditEntry() {
+        const { compo } = this.props;
+        const now = moment(globalState.timeMin);
+        return now.isBefore(compo.editing_end);
+    }
+
+    @computed
+    get canVoteEntry() {
+        const { compo } = this.props;
+        if (!compo.is_votable) {
+            return;
+        }
+        const now = moment(globalState.timeMin);
+        const { voting_end, voting_start } = compo;
+        return now.isSameOrAfter(voting_start) && now.isBefore(voting_end);
+    }
+
+    render() {
         return (
             <div className="compo-status">
-                {(entries && entries.length > 0) && (
-                    <div className="compo-own-entries">
-                        <h3>My entries</h3>
-                        <ul>
-                            {entries.map(entry => (
-                                <li key={entry.id}>
-                                    <Link to={eventInfo.getCompoEntryEditURL(compo, entry)}>
+                {this.renderSchedule()}
+                {this.renderActions()}
+            </div>
+        );
+    }
+
+    renderSchedule() {
+        const { schedule } = this;
+
+        const scheduleField = (title, value) => (
+            <div>
+                <L text={title} />
+                {': '}
+                <b><FormatTime format="ddd LT" value={schedule.addingEnd} /></b>
+            </div>
+        );
+
+        return (
+            <div>
+                <h3><L text="compo.schedule" /></h3>
+                {scheduleField('compo.addingEnd', schedule.addingEnd)}
+                {scheduleField('compo.editingEnd', schedule.editingEnd)}
+                {scheduleField('compo.compoStart', schedule.compoStart)}
+                {scheduleField('compo.votingStart', schedule.votingStart)}
+                {scheduleField('compo.votingEnd', schedule.votingEnd)}
+            </div>
+        );
+    }
+
+    renderActions() {
+        const { compo, eventInfo } = this.props;
+        const { entries, schedule } = this;
+        const now = globalState.timeMin;
+
+        const canAdd = schedule.addingEnd && schedule.addingEnd.isAfter(now);
+        const canEdit = schedule.editingEnd && schedule.editingEnd.isAfter(now);
+
+        if (entries && entries.length > 0) {
+            return (
+                <div className="compo-my-entries">
+                    <h3><L text="compo.myEntries" /></h3>
+                    <ul>
+                        {entries.map(entry => (
+                            <li key={entry.id}>
+                                {canEdit
+                                    ? <Link to={eventInfo.getCompoEntryEditURL(compo, entry)}>
                                         {entry.name}
                                     </Link>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                )}
-            </div>
-        )
+                                    : entry.name
+                                }
+                            </li>
+                        ))}
+                    </ul>
+                    {
+                        canAdd ? (
+                            <Link to={eventInfo.getCompoEntryAddURL(compo)} >
+                                Add new
+                        </Link>
+                        ) : 'none'}
+                </div>
+            );
+        } else {
+            return '';
+        }
     }
 }

@@ -11,18 +11,25 @@
         "submit": "Lähetä"
     },
     "competition": {
-        "start": "Kilpailu alkaa",
         "end": "Kilpailu päättyy",
-        "stillOpen": "Ilmoittautuminen on vielä auki.",
-        "signedUp": "Olet ilmoittautunut kilpailuun nimellä ${participant_name}.",
         "participate": "Osallistu kilpailuun",
+        "participationClosed": "Ilmoittautuminen on päättynyt.",
         "participationEnd": "Ilmoittautuminen päättyy",
-        "participationClosed": "Ilmoittautuminen on päättynyt."
+        "signedUp": "Olet ilmoittautunut kilpailuun nimellä ${participant_name}.",
+        "start": "Kilpailu alkaa",
+        "stillOpen": "Ilmoittautuminen on vielä auki."
     },
     "compo": {
+        "addingEnd": "Entryjen lisäämisen aikaraja",
+        "compoStart": "Kompo alkaa",
+        "editingEnd": "Entryjen muokkaamisen aikaraja",
         "entries": "Teokset",
+        "myEntries": "Omat teokset",
+        "schedule": "Aikataulu",
         "status": "Tila",
-        "vote": "Äänestä"
+        "vote": "Äänestä",
+        "votingEnd": "Äänestys päättyy",
+        "votingStart": "Äänestys alkaa"
     },
     "dashboard": {
         "competitions": {
@@ -146,16 +153,16 @@
         "title": "Käyttäjäprofiili"
     },
     "voteCode": {
-        "missing": "Ei äänestyskoodia",
         "hasCodeForEvent": "Sinulla on äänestysoikeus tähän tapahtumaan.",
         "help": "Jos haluat osallistua tapahtumaan Kompomaatissa, tilillesi on liitettävä äänestyskoodi. Jos ostit lipun verkkokaupasta, voit käyttää lippukoodiasi äänestyskoodina.",
-        "title": "Äänestyskoodi",
-        "useTicketCode": "Syötä lippukoodi",
-        "ticketKeyPlaceholder": "(lippukoodi)",
-        "requestTextPlaceholder": "(selitä tilanteesi)",
+        "missing": "Ei äänestyskoodia",
+        "noTicketCode": "Minulla ei ole lippukoodia",
         "requestPending": "Olet pyytänyt äänestyskoodia",
         "requestPendingHelp": "Jos mitään ei näytä tapahtuvan vähään aikaan, käy tökkimässä infopöydän porukkaa.",
         "requestRejectedHelp": "Äänestyskoodipyyntösi on hylätty.",
-        "noTicketCode": "Minulla ei ole lippukoodia"
+        "requestTextPlaceholder": "(selitä tilanteesi)",
+        "ticketKeyPlaceholder": "(lippukoodi)",
+        "title": "Äänestyskoodi",
+        "useTicketCode": "Syötä lippukoodi"
     }
 }

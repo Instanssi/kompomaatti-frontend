@@ -8,7 +8,6 @@ import { ICompo } from 'src/api/interfaces';
 import EventInfo from 'src/state/EventInfo';
 
 import CompoEntries from './CompoEntries';
-import CompoActions from '../CompoActions';
 import CompoStatus from '../CompoStatus';
 
 
@@ -31,9 +30,6 @@ export default class CompoOverview extends React.Component<{
         return (
             <div className="event-compo-overview">
                 <CompoStatus eventInfo={eventInfo} compo={compo} />
-                <div className="pull-sm-right">
-                    <CompoActions compo={compo} />
-                </div>
                 <div className="compo-description">
                     <h3><L text="common.description" /></h3>
                     <div dangerouslySetInnerHTML={this.descriptionHTML} />

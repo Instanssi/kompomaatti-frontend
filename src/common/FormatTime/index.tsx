@@ -7,8 +7,7 @@ import globalState from 'src/state';
 
 
 export interface IFormatTimeProps {
-    value: number | Date | string;
-    /** If set, time is displayed relative to a  */
+    value: number | Date | moment.Moment | string | null;
     format?: string;
     locale?: string;
     placeholder?: string | any;

@@ -11,18 +11,25 @@
         "submit": "Submit"
     },
     "competition": {
-        "start": "Competition start",
         "end": "Competition end",
-        "stillOpen": "This competition is still accepting signups.",
-        "signedUp": "You have signed up for this competition as ${participant_name}.",
         "participate": "Sign up",
+        "participationClosed": "Signups are closed.",
         "participationEnd": "Signing up ends at",
-        "participationClosed": "Signups are closed."
+        "signedUp": "You have signed up for this competition as ${participant_name}.",
+        "start": "Competition start",
+        "stillOpen": "This competition is still accepting signups."
     },
     "compo": {
+        "addingEnd": "Deadling for adding entries",
+        "compoStart": "Compo starts",
+        "editingEnd": "Deadling for editing entries",
         "entries": "Entries",
+        "myEntries": "Omat teokset",
+        "schedule": "Schedule",
         "status": "Status",
-        "vote": "Vote"
+        "vote": "Vote",
+        "votingEnd": "Voting ends",
+        "votingStart": "Voting starts"
     },
     "dashboard": {
         "competitions": {
@@ -146,16 +153,16 @@
         "title": "User profile"
     },
     "voteCode": {
-        "missing": "No vote code",
-        "help": "To participate in the event through Kompomaatti, your account needs a vote code for the event. If you bought a ticket online, you can use the ticket's code for this.",
-        "title": "Vote code",
         "hasCodeForEvent": "You have a valid vote code for this event.",
-        "ticketKeyPlaceholder": "(ticket code)",
-        "requestTextPlaceholder": "(explain your situation here)",
+        "help": "To participate in the event through Kompomaatti, your account needs a vote code for the event. If you bought a ticket online, you can use the ticket's code for this.",
+        "missing": "No vote code",
+        "noTicketCode": "I don't have a ticket code",
         "requestPending": "Vote code request pending",
         "requestPendingHelp": "If nothing happens for a while, try poking the people at the infodesk.",
         "requestRejectedHelp": "Your vote code request has been rejected.",
-        "useTicketCode": "Enter ticket code",
-        "noTicketCode": "I don't have a ticket code"
+        "requestTextPlaceholder": "(explain your situation here)",
+        "ticketKeyPlaceholder": "(ticket code)",
+        "title": "Vote code",
+        "useTicketCode": "Enter ticket code"
     }
 }
