@@ -33,8 +33,14 @@ hr {
     flex-direction: column;
     margin: 0 auto;
     > main {
-        flex: 1;
+        // IE11 breaks from "flex: 1;"
+        flex: 1 0 auto;
     }
+}
+
+main {
+    // IE11
+    display: block;
 }
 
 .navbar-toggle {

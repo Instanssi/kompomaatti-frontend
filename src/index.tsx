@@ -1,3 +1,10 @@
+// IE11 compatibility
+import 'core-js/es6/promise';
+import 'core-js/es6/number';
+import 'core-js/es6/array';
+import 'core-js/es6/object';
+import 'whatwg-fetch';
+
 import 'regenerator-runtime/runtime';
 
 import 'moment/locale/en-gb';
