@@ -38,7 +38,7 @@ export default class CompetitionResults extends React.Component<{
                 <h3><L text="common.results" /></h3>
                 <LoadingWrapper store={this.results}>
                     {resultsSorted && resultsSorted.length && (
-                        <ul>
+                        <ul className="list-k">
                             {resultsSorted.map(comp => (
                                 <li
                                     className={classNames(

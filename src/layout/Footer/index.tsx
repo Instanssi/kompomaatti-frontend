@@ -17,7 +17,8 @@ export default class Footer extends React.Component<any> {
                 <span><L text="footer.copyright" /></span>
                 {' '}
                 <a href="#" onClick={this.scrollUp}>
-                    <L text="footer.toTop" />
+                    <span className="fa fa-fw fa-angle-double-up" />
+                    <span className="sr-only"><L text="footer.toTop" /></span>
                 </a>
             </footer>
         );

@@ -53,14 +53,18 @@ export class EventProgrammeEvent extends React.Component<{
                             {progEvent.place}
                         </p> : <p>
                             <FormatTime value={progEvent.start} format="LLL" />
-                            {', '}
-                            {progEvent.place}
+                            {progEvent.place && <>
+                                {', '}
+                                {progEvent.place}
+                            </>}
                         </p>}
                     </div>
-                    <h3><L text="programmeEvent.presenters" /></h3>
-                    <p className="progevent-presenters">
-                        {progEvent.presenters_titles} {progEvent.presenters}
-                    </p>
+                    {progEvent.presenters && (<>
+                        <h3><L text="programmeEvent.presenters" /></h3>
+                        <p className="progevent-presenters">
+                            {progEvent.presenters}, {progEvent.presenters_titles}
+                        </p>
+                    </>)}
                     <h3><L text="common.description" /></h3>
                     <p
                         className="progevent-description"

@@ -38,6 +38,7 @@ const config = {
                     options: {
                         // This works around some issues with import semantics.
                         useBabel: true,
+                        useCache: true,
                     }
                 }
             },

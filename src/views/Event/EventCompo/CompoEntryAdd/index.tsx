@@ -6,10 +6,12 @@ import globalState from 'src/state';
 import { Form, FormGroup, L } from 'src/common';
 import { ICompo } from 'src/api/interfaces';
 import { FormStore } from 'src/stores';
+import EventInfo from 'src/state/EventInfo';
 
 
 @observer
-export default class CompoEntryForm extends React.Component<{
+export default class CompoEntryAdd extends React.Component<{
+    eventInfo: EventInfo;
     compo: ICompo;
 }> {
     form = new FormStore({
@@ -31,6 +33,7 @@ export default class CompoEntryForm extends React.Component<{
         this.form.submit().then(
             (success) => runInAction(() => {
                 console.info('success:', success);
+                this.props.eventInfo.myEntries.refresh();
                 // FIXME: Get back to the compo page and make sure it refreshes.
             }),
             (error) => runInAction(() => {

@@ -49,10 +49,16 @@ export default class FormStore<T extends {}> {
 
     @action
     onChange(name, value) {
-        if (this.value[name] === undefined) {
+        if (!this.value.hasOwnProperty(name)) {
             throw new Error('Attempted to add new value to a form?');
         }
         this.value[name] = value;
+    }
+
+    @action
+    setValue(value) {
+        // TODO: Validate that the field names sort of match?
+        this.value = value;
     }
 
     @action

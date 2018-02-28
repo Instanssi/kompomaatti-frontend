@@ -29,7 +29,7 @@ export default class EventCompetitions extends React.Component<{
         return (
             <LoadingWrapper store={this.competitionsStore}>
                 {(competitions && competitions.length > 0) ? (
-                    <ul className="event-competitions">
+                    <ul className="list-k event-competitions">
                         {competitions.map(competition => (
                             <li key={competition.name} className="competitions-item">
                                 <span className="item-time">

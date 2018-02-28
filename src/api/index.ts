@@ -116,7 +116,7 @@ class UserCompoEntriesAPI extends BaseAPI<ICompoEntry> {
 
         const formData = new FormData();
 
-        // This better be up to date, no way to update it right now.
+        // This had better be up to date, no way to refresh it right now.
         formData.append('csrfmiddlewaretoken', Cookies.get('csrftoken'));
 
         // Append basic inputs into the form data.
@@ -141,8 +141,44 @@ class UserCompoEntriesAPI extends BaseAPI<ICompoEntry> {
         .catch((error) => this.handleError(error));
     }
 
-    update(request) {
-        throw new Error('Unimplemented!');
+    update(id, request): Promise<any> {
+        const { entryfile, sourcefile, imagefile_original, ...rest } = request;
+        const fetchImpl = (this.config.fetch as typeof fetch) || fetch;
+
+        const formData = new FormData();
+
+        // formData.append('csrfmiddlewaretoken', Cookies.get('csrftoken'));
+
+        // Append basic inputs into the form data.
+        Object.keys(rest).forEach(key => {
+            formData.append(key, rest[key]);
+        });
+
+        const handleFile = (name, value) => {
+            // Not passing a file leaves it as-is, which is what "undefined" means here.
+            // Null files are to be deleted.
+            // New files will replace existing ones.
+            // FIXME: The API doesn't seem to accept null/empty file. Check specs.
+            if (typeof value !== 'undefined') {
+                formData.append(name, value === null ? '' : value);
+            }
+        };
+
+        handleFile('entryfile', entryfile);
+        handleFile('sourcefile', sourcefile);
+        handleFile('imagefile_original', imagefile_original);
+
+        // Yes, Django requires the trailing slash.
+        return fetchImpl(`${this.url}${id}/`, {
+            method: 'PATCH',
+            body: formData,
+            credentials: 'include',
+            headers: {
+                // This better be up to date.
+                'X-CSRFToken': Cookies.get('csrftoken'),
+            },
+        }).then((response) => this.handleResponse(response))
+        .catch((error) => this.handleError(error));
     }
 }
 

@@ -22,7 +22,7 @@ export default class CompoVote extends React.Component<ICompoVoteProps> {
                 <h2>Vote</h2>
 
             </form>
-        )
+        );
     }
 }
 

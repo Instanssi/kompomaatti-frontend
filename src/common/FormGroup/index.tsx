@@ -48,8 +48,8 @@ export default class FormGroup<T> extends React.Component<IFormGroupProps<T> & a
             throw new Error('No formStore provided!');
         }
 
-        if (formStore.value[name] === undefined) {
-            throw new Error('Form has no initial value for: ' + name);
+        if (!formStore.value.hasOwnProperty(name)) {
+            throw new Error('Key: ' + name + ' not in form value!');
         }
     }
 
@@ -62,6 +62,9 @@ export default class FormGroup<T> extends React.Component<IFormGroupProps<T> & a
     onChange(eventOrValue) {
         const { name, type } = this.props;
         const form = this.props.formStore!;
+        if (!eventOrValue) {
+            return form.onChange(name, eventOrValue);
+        }
         const { target } = eventOrValue;
 
         if (target) {

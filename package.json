@@ -15,6 +15,7 @@
         "bootstrap-sass": "~3.3.7",
         "classnames": "~2.2.5",
         "cookies-js": "~1.2.3",
+        "core-js": "~2.5.3",
         "font-awesome": "~4.7.0",
         "lodash": "~4.17.5",
         "lodash-decorators": "~4.5.0",
@@ -26,7 +27,8 @@
         "react-dom": "~16.2.0",
         "react-router": "~4.2.0",
         "react-router-dom": "~4.2.2",
-        "regenerator-runtime": "~0.11.1"
+        "regenerator-runtime": "~0.11.1",
+        "whatwg-fetch": "~2.0.3"
     },
     "devDependencies": {
         "@types/classnames": "~2.2.3",

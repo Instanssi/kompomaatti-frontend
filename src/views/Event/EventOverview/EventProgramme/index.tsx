@@ -28,7 +28,7 @@ export default class EventProgramme extends React.Component<{
 
         return (
             <LoadingWrapper store={this.progEvents}>
-                {(events && events.length > 0) ? <ul>
+                {(events && events.length > 0) ? <ul className="list-k">
                     {events.map(event => (
                         <li key={event.id} className="programme-item">
                             <span className="item-time">

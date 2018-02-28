@@ -28,7 +28,7 @@ export default class EventCompos extends React.Component<{
 
         return (
             <LoadingWrapper store={this.compos}>
-                {(compos && compos.length > 0) ? <ul className="event-compos">
+                {(compos && compos.length > 0) ? <ul className="list-k event-compos">
                     {compos.map(compo => (
                         <li key={compo.id} className="compos-item">
                             <span className="item-time">
