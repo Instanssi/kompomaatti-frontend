@@ -29,13 +29,10 @@ export default class CompetitionEnterForm extends React.Component<{
     handleSubmit(event) {
         this.form.submit().then(
             (success) => runInAction(() => {
-                console.info('success:', success);
                 this.props.eventInfo.myParticipations.refresh();
                 this.props.onSubmit(success);
-                // FIXME: Get back to the compo page and make sure it refreshes.
             }),
             (error) => runInAction(() => {
-                console.error(error);
                 this.form.setError(error);
             }),
         );

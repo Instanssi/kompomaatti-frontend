@@ -45,8 +45,6 @@ export default class CompetitionStatus extends React.Component<{
                 </div>
             );
         } else if (!globalState.user) {
-            // Just render this directly instead of bothering the user with
-            // errors about the failure to load user-specific participation data.
             return (
                 <div className="alert alert-info">
                     <NotLoggedIn />
@@ -94,7 +92,7 @@ export default class CompetitionStatus extends React.Component<{
 
     renderSignup() {
         const { props } = this;
-        // FIXME: Show a form on button click. Turn the row below the <hr /> into one?
+
         return (
             <div className="alert alert-info">
                 <span className="fa fa-info-circle" />&ensp;
