@@ -1,6 +1,7 @@
 {
     "common": {
         "back": "Back",
+        "edit": "Edit",
         "cancel": "Cancel",
         "description": "Description",
         "loading": "Loading...",

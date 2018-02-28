@@ -1,6 +1,7 @@
 {
     "common": {
         "back": "Takaisin",
+        "edit": "Muokkaa",
         "cancel": "Peruuta",
         "description": "Kuvaus",
         "loading": "Ladataan...",

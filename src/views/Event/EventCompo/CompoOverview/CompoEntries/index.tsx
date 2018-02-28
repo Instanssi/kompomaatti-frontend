@@ -55,7 +55,7 @@ export default class CompoEntries extends React.Component<{
         const entries = this.allEntriesSorted;
         return (
             <LoadingWrapper store={this.entries}>
-                {(entries && entries.length > 0) ? <ul>
+                {(entries && entries.length > 0) ? <ul className="list-k">
                     {entries.map(entry => (
                         <li key={entry.id}>
                             {entry.rank ? entry.rank + '. ' : ''}

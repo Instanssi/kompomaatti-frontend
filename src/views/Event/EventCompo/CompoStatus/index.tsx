@@ -123,15 +123,19 @@ export default class CompoStatus extends React.Component<{
             return (
                 <div className="compo-my-entries">
                     <h3><L text="compo.myEntries" /></h3>
-                    <ul>
+                    <ul className="list-k">
                         {entries.map(entry => (
                             <li key={entry.id}>
-                                {canEdit
-                                    ? <Link to={eventInfo.getCompoEntryEditURL(compo, entry)}>
-                                        {entry.name}
-                                    </Link>
-                                    : entry.name
-                                }
+                                <div className="flex-fill">
+                                    {entry.name}
+                                </div>
+                                <div className="item-time">
+                                    {canEdit && (
+                                        <Link to={eventInfo.getCompoEntryEditURL(compo, entry)}>
+                                            <L text="common.edit" />
+                                        </Link>
+                                    )}
+                                </div>
                             </li>
                         ))}
                     </ul>

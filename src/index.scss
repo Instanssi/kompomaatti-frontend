@@ -67,6 +67,40 @@ hr {
     justify-content: space-between;
 }
 
+.flex-fill {
+    flex: 1 0 auto;
+}
+
+.list-k {
+    list-style: none;
+    padding: 0;
+
+    li {
+        display: flex;
+        align-items: baseline;
+        justify-content: flex-start;
+
+        padding-left: $spacer;
+        padding-right: $spacer;
+        border-top: 1px solid rgba(0,0,0,.075);
+    }
+    li:first-child {
+        border-top: 0;
+    }
+    li:after {
+        content: '';
+        display: table;
+        clear: both;
+    }
+
+    .item-time {
+        // probably enough for dates like "Sun 12:00 AM"
+        flex: 0 0 7em;
+        text-align: right;
+        padding-right: $spacer;
+    }
+}
+
 @media screen and (min-width: $screen-sm-min) {
     .pull-sm-right {
         float: right !important;
