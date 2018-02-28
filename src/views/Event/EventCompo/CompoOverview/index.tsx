@@ -5,13 +5,17 @@ import { computed } from 'mobx';
 import { L } from 'src/common';
 
 import { ICompo } from 'src/api/interfaces';
+import EventInfo from 'src/state/EventInfo';
+
 import CompoEntries from './CompoEntries';
 import CompoActions from '../CompoActions';
+import CompoStatus from '../CompoStatus';
 
 
 @observer
 export default class CompoOverview extends React.Component<{
     compo: ICompo;
+    eventInfo: EventInfo;
 }> {
 
     @computed
@@ -22,10 +26,11 @@ export default class CompoOverview extends React.Component<{
     }
 
     render() {
-        const { compo } = this.props;
+        const { compo, eventInfo } = this.props;
 
         return (
             <div className="event-compo-overview">
+                <CompoStatus eventInfo={eventInfo} compo={compo} />
                 <div className="pull-sm-right">
                     <CompoActions compo={compo} />
                 </div>

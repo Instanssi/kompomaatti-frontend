@@ -4,7 +4,7 @@ import { observer } from 'mobx-react';
 import globalState from 'src/state';
 import EventInfo from 'src/state/EventInfo';
 import { LazyStore } from 'src/stores';
-import { NoResults } from 'src/common';
+// import { NoResults } from 'src/common';
 import { Link } from 'react-router-dom';
 import { ICompo } from 'src/api/interfaces';
 import { computed } from 'mobx';
@@ -36,16 +36,21 @@ export default class CompoStatus extends React.Component<{
         const { entries } = this;
 
         return (
-            <div className="compo-own-entries">
-                {(entries && entries.length > 0) ? <ul>
-                    {entries.map(entry => (
-                        <li>
-                            <Link to={eventInfo.getCompoEntryURL(compo, entry)}>
-                                {entry.name}
-                            </Link>
-                        </li>
-                    ))}
-                </ul> : <NoResults />}
+            <div className="compo-status">
+                {(entries && entries.length > 0) && (
+                    <div className="compo-own-entries">
+                        <h3>My entries</h3>
+                        <ul>
+                            {entries.map(entry => (
+                                <li key={entry.id}>
+                                    <Link to={eventInfo.getCompoEntryEditURL(compo, entry)}>
+                                        {entry.name}
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>}
+                    </div>
+                )}
             </div>
         )
     }

@@ -56,6 +56,10 @@ export default class EventInfo {
         return this.getCompoURL(compo) + '/entries/' + entry.id;
     }
 
+    getCompoEntryEditURL(compo: ICompo, entry: ICompoEntry) {
+        return this.getCompoURL(compo) + '/entries/edit/' + entry.id;
+    }
+
     getProgrammeEventURL(progEvent: IProgrammeEvent) {
         return `/events/${this.eventId}/programme/${progEvent.id}`;
     }

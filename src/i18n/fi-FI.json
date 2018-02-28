@@ -109,6 +109,11 @@
     "events": {
         "title": "Kaikki tapahtumat"
     },
+    "fileInput": {
+        "delete": "Poista",
+        "keep": "Pidä nykyinen tiedosto",
+        "replace": "Korvaa"
+    },
     "footer": {
         "copyright": "(c) 2018",
         "toTop": "Palaa alkuun"

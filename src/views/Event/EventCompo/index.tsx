@@ -11,7 +11,6 @@ import CompoEntry from './CompoEntry';
 import CompoEntryAdd from './CompoEntryAdd';
 import CompoEntryEdit from './CompoEntryEdit';
 import CompoOverview from './CompoOverview';
-import CompoStatus from './CompoStatus';
 import CompoVote from './CompoVote';
 
 /**
@@ -47,10 +46,6 @@ export class EventCompo extends React.Component<{
                         <h2>{compo.name}</h2>
                         <p><FormatTime value={compo.compo_start} /></p>
                     </div>
-                    <CompoStatus
-                        eventInfo={this.props.eventInfo}
-                        compo={compo}
-                    />
                     <Switch>
                         <Route exact path={url + '/entries/add'}>
                             <CompoEntryAdd
@@ -71,7 +66,10 @@ export class EventCompo extends React.Component<{
                             <CompoVote compo={compo} />
                         </Route>
                         <Route>
-                            <CompoOverview compo={compo} />
+                            <CompoOverview
+                                compo={compo}
+                                eventInfo={eventInfo}
+                            />
                         </Route>
                     </Switch>
                 </>}

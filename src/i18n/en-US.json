@@ -109,6 +109,11 @@
     "events": {
         "title": "All events"
     },
+    "fileInput": {
+        "delete": "Delete",
+        "keep": "Keep current file",
+        "replace": "Replace"
+    },
     "footer": {
         "copyright": "(c) 2018",
         "toTop": "Back to top"

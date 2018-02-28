@@ -1,0 +1,17 @@
+@import 'src/styles/variables';
+
+.form-file-input {
+    padding: $spacer / 2;
+    border: 1px solid #eee;
+    display: flex;
+    align-items: baseline;
+    .file-input-current {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    > * {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+    }
+}
