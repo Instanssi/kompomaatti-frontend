@@ -21,10 +21,11 @@
         "stillOpen": "Ilmoittautuminen on vielä auki."
     },
     "compo": {
-        "addingEnd": "Entryjen lisäämisen aikaraja",
+        "addEntry": "Lisää entry",
+        "addingEnd": "Entryjen lisääminen päättyy",
         "compoStart": "Kompo alkaa",
-        "editingEnd": "Entryjen muokkaamisen aikaraja",
-        "entries": "Teokset",
+        "editingEnd": "Entryjen muokkaaminen päättyy",
+        "entries": "Entryt",
         "myEntries": "Omat teokset",
         "schedule": "Aikataulu",
         "status": "Tila",

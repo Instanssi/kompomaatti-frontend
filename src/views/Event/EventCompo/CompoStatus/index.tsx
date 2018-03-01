@@ -56,16 +56,12 @@ export default class CompoStatus extends React.Component<{
 
     @computed
     get canAddEntry() {
-        const { compo } = this.props;
-        const now = moment(globalState.timeMin);
-        return now.isBefore(compo.adding_end);
+        return moment(globalState.timeMin).isBefore(this.props.compo.adding_end);
     }
 
     @computed
     get canEditEntry() {
-        const { compo } = this.props;
-        const now = moment(globalState.timeMin);
-        return now.isBefore(compo.editing_end);
+        return moment(globalState.timeMin).isBefore(this.props.compo.editing_end);
     }
 
     @computed
@@ -124,36 +120,32 @@ export default class CompoStatus extends React.Component<{
         const canAdd = schedule.addingEnd && schedule.addingEnd.isAfter(now);
         const canEdit = schedule.editingEnd && schedule.editingEnd.isAfter(now);
 
-        if (entries && entries.length > 0) {
-            return (
-                <div className="compo-my-entries">
-                    <h3><L text="compo.myEntries" /></h3>
+        return (
+            <div className="compo-my-entries">
+                <h3><L text="compo.myEntries" /></h3>
+                {(entries && entries.length > 0) && (
                     <ul className="list-k">
-                        {entries.map(entry => (
-                            <li key={entry.id}>
-                                <div className="flex-fill">
-                                    {entry.name}
-                                </div>
-                                <div className="item-time">
-                                    {canEdit && (
-                                        <Link to={eventInfo.getCompoEntryEditURL(compo, entry)}>
-                                            <L text="common.edit" />
-                                        </Link>
-                                    )}
-                                </div>
-                            </li>
-                        ))}
-                    </ul>
-                    {
-                        canAdd ? (
-                            <Link to={eventInfo.getCompoEntryAddURL(compo)} >
-                                Add new
-                        </Link>
-                        ) : 'none'}
-                </div>
-            );
-        } else {
-            return '';
-        }
+                    {entries.map(entry => (
+                        <li key={entry.id}>
+                            <div className="flex-fill">
+                                {entry.name}
+                            </div>
+                            <div className="item-time">
+                                {canEdit && (
+                                    <Link to={eventInfo.getCompoEntryEditURL(compo, entry)}>
+                                        <L text="common.edit" />
+                                    </Link>
+                                )}
+                            </div>
+                        </li>
+                    ))}
+                </ul>)}
+                { canAdd && <div>
+                    <Link to={eventInfo.getCompoEntryAddURL(compo)} className="btn btn-primary">
+                        <L text="compo.addEntry" />
+                    </Link>
+                </div>}
+            </div>
+        );
     }
 }

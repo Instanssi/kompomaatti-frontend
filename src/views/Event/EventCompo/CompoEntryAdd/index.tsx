@@ -1,12 +1,13 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { action, runInAction } from 'mobx';
+import { action, runInAction, observable } from 'mobx';
 
 import globalState from 'src/state';
 import { Form, FormGroup, L } from 'src/common';
 import { ICompo } from 'src/api/interfaces';
 import { FormStore } from 'src/stores';
 import EventInfo from 'src/state/EventInfo';
+import { Redirect } from 'react-router';
 
 
 @observer
@@ -28,23 +29,26 @@ export default class CompoEntryAdd extends React.Component<{
         });
     });
 
+    @observable success = false;
+
     @action.bound
     handleSubmit(event) {
         this.form.submit().then(
             (success) => runInAction(() => {
                 console.info('success:', success);
                 this.props.eventInfo.myEntries.refresh();
-                // FIXME: Get back to the compo page and make sure it refreshes.
-            }),
-            (error) => runInAction(() => {
-                console.error(error);
-                this.form.setError(error);
+                this.success = true;
             }),
         );
     }
 
     render() {
         const { form } = this;
+
+        if (this.success) {
+            return <Redirect to={this.props.eventInfo.getCompoURL(this.props.compo)} />;
+        }
+
         return (
             <Form form={form} onSubmit={this.handleSubmit}>
                 <h2><L text="entry.add" /></h2>

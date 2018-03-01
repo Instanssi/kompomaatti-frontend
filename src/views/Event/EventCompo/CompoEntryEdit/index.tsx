@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { action, runInAction, reaction, computed } from 'mobx';
-import { RouteComponentProps, withRouter } from 'react-router';
+import { action, runInAction, reaction, computed, observable } from 'mobx';
+import { RouteComponentProps, withRouter, Redirect } from 'react-router';
 
 import globalState from 'src/state';
 import { Form, FormGroup, FormFileInput, L } from 'src/common';
@@ -35,6 +35,8 @@ export class CompoEntryEdit extends React.Component<{
             },
         );
     });
+
+    @observable success = false;
 
     disposers: any[] = [];
 
@@ -75,12 +77,8 @@ export class CompoEntryEdit extends React.Component<{
         this.form.submit().then(
             (success) => runInAction(() => {
                 console.info('success:', success);
-                // FIXME: Get back to the compo page and make sure it refreshes.
                 this.props.eventInfo.myEntries.refresh();
-            }),
-            (error) => runInAction(() => {
-                console.error(error);
-                this.form.setError(error);
+                this.success = true;
             }),
         );
     }
@@ -88,6 +86,10 @@ export class CompoEntryEdit extends React.Component<{
     render() {
         const { form } = this;
         const { sourcefile_url, entryfile_url, imagefile_original_url } = this.props.entry;
+
+        if (this.success) {
+            return <Redirect to={this.props.eventInfo.getCompoURL(this.props.compo)} />;
+        }
 
         return (
             <Form form={form} onSubmit={this.handleSubmit}>

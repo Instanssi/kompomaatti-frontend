@@ -21,11 +21,12 @@
         "stillOpen": "This competition is still accepting signups."
     },
     "compo": {
+        "addEntry": "Add entry",
         "addingEnd": "Deadline for adding entries",
         "compoStart": "Compo starts",
         "editingEnd": "Deadline for editing entries",
         "entries": "Entries",
-        "myEntries": "Omat teokset",
+        "myEntries": "My entries",
         "schedule": "Schedule",
         "status": "Status",
         "vote": "Vote",
