@@ -26,7 +26,7 @@ export default class RequestCodeForm extends React.Component<{
     @action.bound
     submit() {
         this.store.submit().then((response) => {
-            this.props.event.myVoteCodes.refresh();
+            this.props.event.myCodeRequests.refresh();
             const { onSubmit } = this.props;
             if (onSubmit) {
                 onSubmit(response);
