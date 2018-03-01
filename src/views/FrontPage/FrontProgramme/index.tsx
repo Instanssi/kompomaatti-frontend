@@ -48,7 +48,7 @@ export default class FrontProgramme extends React.Component<{
                     <L text="dashboard.programme.title" />
                 </h3>
                 <div className="box-body">
-                    {(list && list.length > 0) ? (<ul>
+                    {(list && list.length > 0) ? (<ul className="list-k">
                         {list.map(progEvent => (
                             <li key={progEvent.id} className="programme-item">
                                 <span className="item-time">

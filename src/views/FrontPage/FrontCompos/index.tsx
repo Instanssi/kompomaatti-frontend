@@ -54,7 +54,7 @@ export default class FrontCompos extends React.Component<{
                     <L text="dashboard.compos.title" />
                 </h3>
                 <div className="box-body">
-                    {(list && list.length > 0) ? (<ul>
+                    {(list && list.length > 0) ? (<ul className="list-k">
                         {list.map(compo => (
                             <li key={compo.id} className="compos-item">
                                 <span className="item-time">

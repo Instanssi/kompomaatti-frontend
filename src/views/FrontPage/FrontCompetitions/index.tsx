@@ -50,7 +50,7 @@ export default class FrontCompetitions extends React.Component<{
                     <L text="dashboard.competitions.title" />
                 </h3>
                 <div className="box-body">
-                    {(list && list.length > 0) ? (<ul>
+                    {(list && list.length > 0) ? (<ul className="list-k">
                         {list.map(competition => (
                             <li key={competition.id} className="competitions-item">
                                 <span className="item-time">
