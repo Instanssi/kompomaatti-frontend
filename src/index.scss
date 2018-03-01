@@ -3,6 +3,7 @@
 body {
     // if we don't use Bootstrap modals, this should avoid some bouncing.
     overflow-y: scroll;
+    background: url('./background.jpg') top center no-repeat, black;
 }
 
 h1 {
