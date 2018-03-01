@@ -101,7 +101,8 @@ main {
 
     .item-time {
         // probably enough for dates like "Sun 12:00 AM"
-        flex: 0 0 7em;
+        flex: 0 0 7.25em;
+        white-space: nowrap;
         text-align: right;
         padding-right: $spacer;
     }
