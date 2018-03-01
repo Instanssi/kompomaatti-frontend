@@ -126,7 +126,7 @@
     },
     "fileInput": {
         "delete": "Poista",
-        "keep": "Pidä nykyinen tiedosto",
+        "keep": "Nykyinen tiedosto",
         "noFile": "Ei tiedostoa",
         "replace": "Korvaa"
     },

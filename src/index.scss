@@ -69,6 +69,15 @@ main {
     margin-bottom: 0;
 }
 
+.flex {
+    display: flex;
+}
+
+.flex-baseline {
+    display: flex;
+    align-items: baseline;
+}
+
 .flex-row-even {
     display: flex;
     justify-content: space-between;

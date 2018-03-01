@@ -22,22 +22,50 @@ export default class CompetitionStatus extends React.Component<{
     @observable formOpen = false;
 
     @computed
-    get isOpenForParticipation() {
+    get openForEntry() {
         const { competition } = this.props;
         const now = globalState.timeMin;
         return moment(now).isBefore(competition.participation_end);
     }
 
+    /** User's participations in this competition. */
+    @computed
+    get signups() {
+        const { competition, eventInfo } = this.props;
+        const { myParticipations } = eventInfo;
+        const all = myParticipations.value;
+        if (!all) {
+            return null;
+        }
+        return all.filter(p => p.competition === competition.id);
+    }
+
     render() {
         const { eventInfo } = this.props;
         const { myParticipations } = eventInfo;
-
-        const { isPending } = myParticipations;
-        const participations = myParticipations.value;
+        const { signups } = this;
+        const { isPending } = eventInfo.myParticipations;
 
         let content: JSX.Element | null;
 
-        if (!this.isOpenForParticipation) {
+        if (signups && signups.length) {
+            // Already signed up.
+            content = (
+                <div className="alert alert-info">
+                    {signups.map(({ participant_name, id }) => (
+                        <div key={id} className="flex-baseline">
+                            <div className="flex-fill">
+                                <span className="fa fa-check" />&ensp;
+                                <L
+                                    text="competition.signedUp"
+                                    values={{ participant_name }}
+                                />
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            );
+        } else if (!this.openForEntry) {
             // Nothing to see here, pool's closed, etc.
             return (
                 <div className="alert alert-info">
@@ -48,21 +76,6 @@ export default class CompetitionStatus extends React.Component<{
             return (
                 <div className="alert alert-info">
                     <NotLoggedIn />
-                </div>
-            );
-        } else if (participations && participations.length) {
-            // Already signed up.
-            content = (
-                <div className="alert alert-info">
-                    {participations.map(({ participant_name }) => (
-                        <div>
-                            <span className="fa fa-check" />&ensp;
-                            <L
-                                text="competition.signedUp"
-                                values={{ participant_name }}
-                            />
-                        </div>
-                    ))}
                 </div>
             );
         } else if (!isPending) {
@@ -117,7 +130,6 @@ export default class CompetitionStatus extends React.Component<{
                         </button>
                     )
                 }
-
             </div>
         );
     }
