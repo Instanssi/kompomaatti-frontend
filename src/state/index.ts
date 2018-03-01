@@ -1,7 +1,7 @@
 import _get from 'lodash/get';
 import _template from 'lodash/template';
 import _orderBy from 'lodash/orderBy';
-import { runInAction, computed } from 'mobx';
+import { runInAction, computed, reaction } from 'mobx';
 import { observable } from 'mobx';
 
 import config from 'src/config';
@@ -53,8 +53,43 @@ class GlobalState {
         setInterval(() => {
             this.timeMin = new Date().valueOf();
         }, 60000);
+
+        this.loadPersistentState();
+        // Should be only one global state, so it's ok if we don't have a way to drop this.
+        reaction(
+            () => this.persistentState,
+            (state) => {
+                this.savePersistentState(state);
+            },
+        );
         this.setLanguage(this.languageCode);
         this.continueSession();
+    }
+
+    get persistentState() {
+        return {
+            language: this.language,
+        };
+    }
+
+    savePersistentState(state) {
+        try {
+            localStorage.setItem('kompomaatti', JSON.stringify(state));
+        } catch(error) {
+            console.warn('Failed to save state: ' + error);
+        }
+    }
+
+    loadPersistentState() {
+        try {
+            const stored = localStorage.getItem('kompomaatti');
+            if(stored) {
+                const state = JSON.parse(stored);
+                this.language = state.language || config.DEFAULT_LOCALE;
+            }
+        } catch(error) {
+            console.warn('Failed to load state: ' + error);
+        }
     }
 
     /**
