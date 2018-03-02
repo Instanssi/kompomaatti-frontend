@@ -48,11 +48,6 @@ export class CompoEntryEdit extends React.Component<{
             },
             true,
         ));
-
-        reaction(
-            () => this.form.toJS(),
-            (value) => console.info(value),
-        );
     }
 
     componentWillUnmount() {
@@ -65,6 +60,7 @@ export class CompoEntryEdit extends React.Component<{
             name: entry.name || '',
             creator: entry.creator || '',
             description: entry.description || '',
+            youtube_url: entry.youtube_url || '',
             // The file inputs should show placeholders for any existing values.
             entryfile: undefined,
             imagefile_original: undefined,
@@ -131,6 +127,11 @@ export class CompoEntryEdit extends React.Component<{
                     help={<L text="data.entry.imagefile_original.help" />}
                     input={FormFileInput}
                     currentFileURL={imagefile_original_url}
+                />
+                <FormGroup
+                    label={<L text="data.entry.youtube_url.title" />}
+                    help={<L text="data.entry.youtube_url.help" />}
+                    name="youtube_url"
                 />
                 <div>
                     <button className="btn btn-primary" disabled={this.form.isPending}>
