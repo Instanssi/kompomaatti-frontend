@@ -55,13 +55,14 @@ export default class CompoStatus extends React.Component<{
     }
 
     @computed
-    get canAddEntry() {
-        return moment(globalState.timeMin).isBefore(this.props.compo.adding_end);
-    }
-
-    @computed
-    get canEditEntry() {
-        return moment(globalState.timeMin).isBefore(this.props.compo.editing_end);
+    get canVoteRightNow() {
+        const { schedule } = this;
+        const now = moment(globalState.timeSec);
+        const { votingStart, votingEnd } = schedule;
+        if (votingStart && votingEnd) {
+            return now.isAfter(votingStart) && now.isBefore(votingEnd);
+        }
+        return false;
     }
 
     @computed
@@ -119,9 +120,10 @@ export default class CompoStatus extends React.Component<{
 
         const canAdd = schedule.addingEnd && schedule.addingEnd.isAfter(now);
         const canEdit = schedule.editingEnd && schedule.editingEnd.isAfter(now);
+        const { canVoteRightNow } = this;
 
         return (
-            <div className="compo-my-entries">
+            <div className="compo-status">
                 <h3><L text="compo.myEntries" /></h3>
                 {(entries && entries.length > 0) && (
                     <ul className="list-k">

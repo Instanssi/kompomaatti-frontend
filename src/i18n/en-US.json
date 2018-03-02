@@ -119,6 +119,7 @@
     "event": {
         "competitions": "Competitions",
         "compos": "Compos",
+        "isOver": "This event has ended.",
         "programme": "Programme"
     },
     "events": {

@@ -4,7 +4,7 @@ import { observer } from 'mobx-react';
 import globalState from 'src/state';
 import { L, LoadingWrapper } from 'src/common';
 
-import FrontStatus from './FrontStatus';
+import EventStatus from '../Event/EventStatus';
 import FrontEvent from './FrontEvent';
 import FrontProgramme from './FrontProgramme';
 import FrontCompos from './FrontCompos';
@@ -28,7 +28,7 @@ export default class FrontPageView extends React.Component<any> {
                 <p><L text="dashboard.welcome" /></p>
                 <LoadingWrapper store={globalState.events}>
                     {currentEvent && <>
-                        <FrontStatus event={currentEvent} />
+                        <EventStatus event={currentEvent} />
                         <div className="frontpage-boxes">
                             <FrontEvent event={currentEvent} />
                             <FrontProgramme event={currentEvent} />

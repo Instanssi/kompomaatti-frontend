@@ -7,6 +7,7 @@ import EventCompos from './EventCompos';
 import EventCompetitions from './EventCompetitions';
 import EventProgramme from './EventProgramme';
 import EventInfo from '../../../state/EventInfo';
+import EventStatus from '../EventStatus';
 
 
 @observer
@@ -18,6 +19,8 @@ export default class EventOverview extends React.Component<{
 
         return (
             <div className="event-overview">
+                <EventStatus event={eventInfo} showIfIrrelevant />
+
                 <h2><L text="event.compos" /></h2>
                 <EventCompos eventInfo={eventInfo} />
 
