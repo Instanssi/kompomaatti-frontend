@@ -20,8 +20,8 @@ export class CompoEntryEdit extends React.Component<{
         name: '',
         creator: '',
         description: '',
-        // FIXME: This should allow "undefined" values when the file is to remain unchanged.
-        // To delete the file, set this to null, and pass a new file to replace it.
+        // This should allow "undefined" values when the file is to remain unchanged.
+        // To delete the file, set this to an empty string; pass a new file to replace it.
         entryfile: null as File | null,
         imagefile_original: null as File | null,
         sourcefile: null as File | null,

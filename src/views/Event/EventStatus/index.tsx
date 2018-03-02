@@ -44,7 +44,7 @@ export default class EventStatus extends React.Component<{
         const { event, showIfIrrelevant } = this.props;
         const { noVoteCode, hasEnded } = event;
 
-        if (!(showIfIrrelevant || hasEnded)) {
+        if (hasEnded && !showIfIrrelevant) {
             return null;
         }
 

@@ -120,7 +120,7 @@ export default class CompoStatus extends React.Component<{
 
         const canAdd = schedule.addingEnd && schedule.addingEnd.isAfter(now);
         const canEdit = schedule.editingEnd && schedule.editingEnd.isAfter(now);
-        const { canVoteRightNow } = this;
+        // const { canVoteRightNow } = this;
 
         return (
             <div className="compo-status">
