@@ -53,7 +53,7 @@ export default class CompetitionStatus extends React.Component<{
             content = (
                 <div className="alert alert-info">
                     {signups.map(({ participant_name, id }) => (
-                        <div key={id} className="flex-baseline">
+                        <div key={id}>
                             <div className="flex-fill">
                                 <span className="fa fa-check" />&ensp;
                                 <L
