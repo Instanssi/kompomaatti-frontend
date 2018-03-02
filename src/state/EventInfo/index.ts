@@ -1,4 +1,5 @@
 import { observable, computed } from 'mobx';
+import moment from 'moment';
 
 import InstanssiREST from 'src/api';
 import {
@@ -38,14 +39,32 @@ export default class EventInfo {
         this.event = event;
    }
 
+
+    @computed
+    get voteCodeRequests() {
+        // Should only have one of these active per event.
+        return this.myCodeRequests.value;
+    }
+
     /**
      * True if the current user has a vote code for the event.
      */
     @computed
-    get hasVoteCode() {
-        const { myVoteCodes } = this;
-        const { value } = myVoteCodes;
-        return (value && value.length > 0);
+    get noVoteCode() {
+        const { value } = this.myVoteCodes;
+        const { voteCodeRequests } = this;
+
+        const hasOkRequest = voteCodeRequests && voteCodeRequests.find(vc => {
+            return vc.status === 1;
+        });
+
+        return !(value && value.length) && !hasOkRequest;
+    }
+
+    get hasEnded() {
+        // HACK: Events have no end date, so assume they last a week.
+        // Could compute it from compos, competitions and programme I guess.
+        return moment().isAfter(moment(this.event.date).add(1, 'week'));
     }
 
     getCompoURL(compo: ICompo) {

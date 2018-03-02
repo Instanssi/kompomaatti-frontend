@@ -119,6 +119,7 @@
     "event": {
         "competitions": "Kilpailut",
         "compos": "Kompot",
+        "isOver": "Tapahtuma on päättynyt.",
         "programme": "Ohjelma"
     },
     "events": {

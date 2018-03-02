@@ -26,8 +26,10 @@ enum NoCodeWorkflow {
  * - etc.
  */
 @observer
-export default class FrontStatus extends React.Component<{
+export default class EventStatus extends React.Component<{
     event: EventInfo;
+    /** Show this even if the event has ended or the user has a vote code? */
+    showIfIrrelevant?: boolean;
 }> {
     @observable noCodeMode = NoCodeWorkflow.Info;
 
@@ -36,28 +38,19 @@ export default class FrontStatus extends React.Component<{
         return !globalState.user;
     }
 
-    @computed
-    get noVoteCode() {
-        const { event } = this.props;
-        const { value } = event.myVoteCodes;
-        const { voteCodeRequests } = this;
-
-        const hasOkRequest = voteCodeRequests && voteCodeRequests.find(vc => {
-            return vc.status === 1;
-        });
-
-        return !(value && value.length) && !hasOkRequest;
-    }
-
-    @computed
-    get voteCodeRequests() {
-        // Should only have one of these active per event.
-        return this.props.event.myCodeRequests.value;
-    }
 
     render() {
-        const { notLoggedIn, noVoteCode } = this;
-        const { event } = this.props;
+        const { notLoggedIn } = this;
+        const { event, showIfIrrelevant } = this.props;
+        const { noVoteCode, hasEnded } = event;
+
+        if (!(showIfIrrelevant || hasEnded)) {
+            return null;
+        }
+
+        if (hasEnded) {
+            return this.renderEventOver();
+        }
 
         if (globalState.userStore.isPending) {
             // Don't render anything if the user is unknown at this time.
@@ -137,7 +130,7 @@ export default class FrontStatus extends React.Component<{
 
     renderNoVoteCode() {
         const { noCodeMode } = this;
-        const { voteCodeRequests } = this;
+        const { voteCodeRequests } = this.props.event;
         const hasCodeRequest = voteCodeRequests && voteCodeRequests.length > 0;
 
         const hasRejectedRequest = voteCodeRequests && voteCodeRequests.find(vc => {
@@ -206,6 +199,14 @@ export default class FrontStatus extends React.Component<{
             <div className="alert alert-info">
                 <span className="fa fa-check" />&ensp;
                 <L text="voteCode.hasCodeForEvent" />
+            </div>
+        );
+    }
+
+    renderEventOver() {
+        return (
+            <div className="alert alert-info">
+                <L text="event.isOver" />
             </div>
         );
     }
