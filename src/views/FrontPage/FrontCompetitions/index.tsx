@@ -11,8 +11,8 @@ import globalState from 'src/state';
 import { ICompetition } from 'src/api/interfaces';
 
 
-export function getCompetitionURL(eventId, competition: ICompetition) {
-    return `/events/${eventId}/competitions/${competition.id}`;
+function getCompetitionURL(eventId, competition: ICompetition) {
+    return `/events/${eventId}/competition/${competition.id}`;
 }
 
 

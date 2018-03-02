@@ -63,7 +63,10 @@ export class EventCompo extends React.Component<{
                             <CompoEntry compo={compo} />
                         </Route>
                         <Route exact path={url + '/vote'}>
-                            <CompoVote compo={compo} />
+                            <CompoVote
+                                eventInfo={eventInfo}
+                                compo={compo}
+                            />
                         </Route>
                         <Route>
                             <CompoOverview

@@ -68,7 +68,7 @@ export default class EventInfo {
     }
 
     getCompoURL(compo: ICompo) {
-        return `/events/${this.eventId}/compos/${compo.id}`;
+        return `/${this.eventId}/compo/${compo.id}`;
     }
 
     getCompoEntryAddURL(compo: ICompo) {
@@ -84,10 +84,10 @@ export default class EventInfo {
     }
 
     getProgrammeEventURL(progEvent: IProgrammeEvent) {
-        return `/events/${this.eventId}/programme/${progEvent.id}`;
+        return `/${this.eventId}/programme/${progEvent.id}`;
     }
 
     getCompetitionURL(competition: ICompetition) {
-        return `/events/${this.eventId}/competitions/${competition.id}`;
+        return `/${this.eventId}/competition/${competition.id}`;
     }
 }

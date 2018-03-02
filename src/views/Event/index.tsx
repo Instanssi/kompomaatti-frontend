@@ -41,13 +41,13 @@ export class EventView extends React.Component<{
                             </p>
                         </div>
                         <Switch>
-                            <Route path={url + '/compos/:compoId'}>
+                            <Route path={url + '/compo/:compoId'}>
                                 <EventCompo eventInfo={eventInfo} />
                             </Route>
                             <Route path={url + '/programme/:progId'}>
                                 <EventProgrammeEvent eventInfo={eventInfo} />
                             </Route>
-                            <Route path={url + '/competitions/:cmpId'}>
+                            <Route path={url + '/competition/:cmpId'}>
                                 <EventCompetition eventInfo={eventInfo} />
                             </Route>
                             <Route>

@@ -26,7 +26,7 @@ export default class EventsList extends React.Component<any> {
                                     <FormatTime value={event.date} format="l" />
                                 </span>
                                 <span className="item-name">
-                                    <Link to={'/events/' + event.id + ''}>
+                                    <Link to={'/' + event.id + ''}>
                                         <span>{event.name}</span>
                                     </Link>
                                 </span>

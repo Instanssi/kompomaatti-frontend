@@ -17,7 +17,7 @@ export default class Views extends React.Component<any> {
         return (
             <Switch>
                 <Route exact path="/events"><EventsList /></Route>
-                <Route path="/events/:eventId"><Event /></Route>
+                <Route path="/:eventId"><Event /></Route>
                 <Route><FrontPage /></Route>
             </Switch>
         );
