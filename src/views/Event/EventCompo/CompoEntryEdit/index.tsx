@@ -128,11 +128,6 @@ export class CompoEntryEdit extends React.Component<{
                     input={FormFileInput}
                     currentFileURL={imagefile_original_url}
                 />
-                <FormGroup
-                    label={<L text="data.entry.youtube_url.title" />}
-                    help={<L text="data.entry.youtube_url.help" />}
-                    name="youtube_url"
-                />
                 <div>
                     <button className="btn btn-primary" disabled={this.form.isPending}>
                         <L text="common.submit" />

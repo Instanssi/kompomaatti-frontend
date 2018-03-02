@@ -19,7 +19,6 @@ export default class CompoEntryAdd extends React.Component<{
         name: '',
         creator: '',
         description: '',
-        youtube_url: '',
         entryfile: null as File | null,
         imagefile_original: null as File | null,
         sourcefile: null as File | null,
@@ -87,11 +86,6 @@ export default class CompoEntryAdd extends React.Component<{
                     help={<L text="data.entry.imagefile_original.help" />}
                     name="imagefile_original"
                     type="file"
-                />
-                <FormGroup
-                    label={<L text="data.entry.youtube_url.title" />}
-                    help={<L text="data.entry.youtube_url.help" />}
-                    name="youtube_url"
                 />
                 <div>
                     <button className="btn btn-primary" disabled={this.form.isPending}>

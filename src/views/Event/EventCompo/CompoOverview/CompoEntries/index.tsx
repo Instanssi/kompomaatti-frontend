@@ -58,10 +58,12 @@ export default class CompoEntries extends React.Component<{
                 {(entries && entries.length > 0) ? <ul className="list-k">
                     {entries.map(entry => (
                         <li key={entry.id}>
-                            {entry.rank ? entry.rank + '. ' : ''}
+                            <span className="item-time">
+                                {entry.rank ? entry.rank + '. ' : ''}
+                            </span>
                             <Link to={this.getEntryPath(entry)}>
                                 {entry.name}
-                            </Link> - {entry.creator}
+                            </Link>&nbsp;-&nbsp;{entry.creator}
                         </li>
                     ))}
                 </ul> : <NoResults />}
