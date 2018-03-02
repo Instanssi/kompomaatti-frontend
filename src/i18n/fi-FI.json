@@ -101,7 +101,7 @@
                 "help": "Käyttäjä jolle teos kuuluu.",
                 "title": "Käyttäjä"
             },
-            "youtubeUrl": {
+            "youtube_url": {
                 "help": "Linkki teoksen YouTube-videoon.",
                 "title": "YouTube URL"
             }

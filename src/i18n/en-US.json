@@ -101,7 +101,7 @@
                 "help": "User the entry belongs to.",
                 "title": "User"
             },
-            "youtubeUrl": {
+            "youtube_url": {
                 "help": "Link to a YouTube video of the entry.",
                 "title": "YouTube URL"
             }
