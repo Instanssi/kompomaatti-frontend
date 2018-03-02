@@ -9,6 +9,7 @@
         "loadingRetry": "Try again?",
         "notLoggedIn": "You are not logged in.",
         "results": "Results",
+        "schedule": "Schedule",
         "submit": "Submit"
     },
     "competition": {
@@ -26,6 +27,7 @@
         "compoStart": "Compo starts",
         "editingEnd": "Deadline for editing entries",
         "entries": "Entries",
+        "deadline": "Entry deadline",
         "myEntries": "My entries",
         "schedule": "Schedule",
         "status": "Status",
@@ -145,7 +147,10 @@
         "login": "Log in"
     },
     "programmeEvent": {
-        "presenters": "Presenters"
+        "presenters": "Presenters",
+        "event": "Event",
+        "start": "Event start",
+        "end": "Event end"
     },
     "session": {
         "login": "Log in",

@@ -101,7 +101,7 @@ export default class CompoStatus extends React.Component<{
 
         return (
             <div>
-                <h3><L text="compo.schedule" /></h3>
+                <h3><L text="common.schedule" /></h3>
                 <ul className="list-k">
                     {scheduleField('compo.addingEnd', schedule.addingEnd)}
                     {scheduleField('compo.editingEnd', schedule.editingEnd)}

@@ -9,6 +9,7 @@
         "loadingRetry": "Yritä uudestaan?",
         "notLoggedIn": "Et ole kirjautunut sisään.",
         "results": "Tulokset",
+        "schedule": "Aikataulu",
         "submit": "Lähetä"
     },
     "competition": {
@@ -25,9 +26,9 @@
         "addingEnd": "Entryjen lisääminen päättyy",
         "compoStart": "Kompo alkaa",
         "editingEnd": "Entryjen muokkaaminen päättyy",
+        "deadline": "Entryjen lisääminen päättyy",
         "entries": "Entryt",
         "myEntries": "Omat teokset",
-        "schedule": "Aikataulu",
         "status": "Tila",
         "vote": "Äänestä",
         "votingEnd": "Äänestys päättyy",
@@ -145,7 +146,10 @@
         "login": "Kirjaudu"
     },
     "programmeEvent": {
-        "presenters": "Esiintyjät"
+        "presenters": "Esiintyjät",
+        "event": "Tapahtuma",
+        "start": "Tapahtuma alkaa",
+        "end": "Tapahtuma päättyy"
     },
     "session": {
         "login": "Kirjaudu sisään",
