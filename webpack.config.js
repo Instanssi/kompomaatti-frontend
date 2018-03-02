@@ -132,6 +132,8 @@ if(PRODUCTION_BUILD) {
         proxy: {
             '!/kompomaatti/**': {
                 target: process.env.INSTANSSI_URL || 'http://localhost:8000',
+                secure: false,
+                changeOrigin: true,
             }
         },
         historyApiFallback: {
