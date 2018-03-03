@@ -3,9 +3,11 @@ import { observer } from 'mobx-react';
 import { computed } from 'mobx';
 import { Link } from 'react-router-dom';
 import _orderBy from 'lodash/orderBy';
+import moment from 'moment';
 
 import EventInfo from 'src/state/EventInfo';
 import { FormatTime, L } from 'src/common';
+import globalState from 'src/state';
 
 
 @observer
@@ -24,9 +26,9 @@ export default class FrontSchedule extends React.Component<{
 
         const title = (name, type, url) => (
             <div className="item-title">
-                <span><L text={type} /></span>
-                {': '}
                 <Link to={url}>{name}</Link>
+                {': '}
+                <span><L text={type} /></span>
             </div>
         );
 
@@ -162,18 +164,25 @@ export default class FrontSchedule extends React.Component<{
     }
 
     @computed
+    get currentEvents() {
+        const { allRows } = this;
+        const now = moment(globalState.timeMin).subtract(15, 'minutes');
+        return allRows.filter(item => item.time.valueOf() < now.valueOf());
+    }
+
+    @computed
     get isPending() {
         const { programme, compos, competitions } = this.props.event;
         return programme.isPending || compos.isPending || competitions.isPending;
     }
 
     render() {
-        const { allRows } = this;
+        const { currentEvents } = this;
         return (
             <div className="front-schedule">
                 <h3><L text="common.schedule" /></h3>
                 <ul className="list-k">
-                    {allRows.map(row => (
+                    {currentEvents.map(row => (
                         <li key={row.key}>
                             <div className="item-time">
                                 <FormatTime value={row.time} format="ddd LT" />
