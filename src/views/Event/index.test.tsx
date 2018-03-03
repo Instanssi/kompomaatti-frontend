@@ -2,39 +2,44 @@ import React from 'react';
 import { shallow, ShallowWrapper } from 'enzyme';
 
 import globalState from 'src/state';
-import { mockEvent } from 'src/tests/mocks';
 
-import EventView from './';
+import { EventView } from './';
+// import EventInfo from 'src/state/EventInfo';
 
+jest.mock('src/state', () => {
+    const { mockEvent } = require('src/tests/mocks');
+    const einfo = require('src/state/EventInfo');
+    return {
+        events: {
+            value: [
+                { eventId: mockEvent.id + 1 } as any,
+                new einfo(null as any, mockEvent),
+                { eventId: mockEvent.id + 2 } as any,
+            ],
+        },
+    };
+});
 
 describe(EventView.name, () => {
     let wrapper: ShallowWrapper;
-    let instance;
+    // let instance;
     let mockProps;
 
     beforeEach(() => {
-        jest.spyOn(globalState.api.events, 'get')
-            .mockReturnValue(Promise.resolve(mockEvent));
-
         mockProps = {
             match: {
                 params: {
-                    eventId: '' + mockEvent.id,
+                    eventId: '' + globalState.events.value![1].eventId,
                 },
             },
         };
-        const _EventView = (EventView as any).WrappedComponent;
+        const EventViewInner = (EventView as any).WrappedComponent;
 
-        wrapper = shallow(<_EventView {...mockProps} />);
-        instance = wrapper.instance();
+        wrapper = shallow(<EventViewInner {...mockProps} />);
+        // instance = wrapper.instance();
     });
 
     it('renders', () => {
         expect(wrapper.is('.event-view')).toBe(true);
-    });
-
-    it('calls the API to fetch event information', () => {
-        instance.event.refresh();
-        expect(globalState.api.events.get).toHaveBeenCalledWith(mockEvent.id);
     });
 });

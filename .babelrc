@@ -15,6 +15,14 @@
     ],
     "env": {
         "test": {
+            "presets": [
+                [ "env", {
+                    "targets": {
+                        "browsers": "> 1%"
+                    },
+                    "modules": "commonjs"
+                }]
+            ],
             "plugins": [
                 "transform-react-jsx",
                 "transform-object-rest-spread",
