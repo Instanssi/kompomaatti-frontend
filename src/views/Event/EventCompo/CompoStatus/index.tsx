@@ -120,10 +120,23 @@ export default class CompoStatus extends React.Component<{
 
         const canAdd = schedule.addingEnd && schedule.addingEnd.isAfter(now);
         const canEdit = schedule.editingEnd && schedule.editingEnd.isAfter(now);
-        // const { canVoteRightNow } = this;
+        const { canVoteRightNow } = this;
+        // const { hasVoted } = this;
 
         return (
             <div className="compo-status">
+                {canVoteRightNow && <div className="alert alert-info">
+                    <span className="fa fa-info-circle" />&ensp;
+                    <L text="compo.votingIsOpen" />
+                    <hr />
+                    <Link
+                        className="btn btn-primary"
+                        to={eventInfo.getCompoVoteURL(compo)}
+                    >
+                        <L text="compo.vote" />
+                    </Link>
+                    <div className="clearfix" />
+                </div>}
                 <h3><L text="compo.myEntries" /></h3>
                 {(entries && entries.length > 0) && (
                     <ul className="list-k">

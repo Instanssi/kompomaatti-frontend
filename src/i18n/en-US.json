@@ -32,6 +32,7 @@
         "schedule": "Schedule",
         "status": "Status",
         "vote": "Vote",
+        "votingIsOpen": "Voting is open!",
         "votingEnd": "Voting ends",
         "votingStart": "Voting starts"
     },

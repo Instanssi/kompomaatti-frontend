@@ -31,6 +31,7 @@
         "myEntries": "Omat teokset",
         "status": "Tila",
         "vote": "Äänestä",
+        "votingIsOpen": "Äänestys on avattu!",
         "votingEnd": "Äänestys päättyy",
         "votingStart": "Äänestys alkaa"
     },

@@ -71,6 +71,10 @@ export default class EventInfo {
         return `/${this.eventId}/compo/${compo.id}`;
     }
 
+    getCompoVoteURL(compo: ICompo) {
+        return `/${this.eventId}/compo/${compo.id}/vote`;
+    }
+
     getCompoEntryAddURL(compo: ICompo) {
         return this.getCompoURL(compo) + '/entries/add';
     }
