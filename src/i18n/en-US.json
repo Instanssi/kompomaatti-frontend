@@ -18,7 +18,7 @@
         "end": "Competition end",
         "participate": "Sign up",
         "participationClosed": "Signups are closed.",
-        "participationEnd": "Signing up ends at",
+        "participationEnd": "Signups close",
         "signedUp": "You have signed up for this competition as ${participant_name}.",
         "start": "Competition start",
         "stillOpen": "This competition is still accepting signups."
@@ -175,6 +175,7 @@
         "atLeastOneRequired": "Move at least one entry above the bar to continue.",
         "deadline": "Voting ends on: ${ date }.",
         "divider": "Arrange entries above this bar to give them points. Entries below are ignored.",
+        "placeholder": "Drag entries here to vote",
         "hasChanges": "Don't forget to save. You can change your votes at any time before the voting deadline.",
         "ended": "Voting has concluded.",
         "help": "Drag entries around by the ",

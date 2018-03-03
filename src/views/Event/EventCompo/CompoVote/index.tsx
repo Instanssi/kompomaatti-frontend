@@ -13,6 +13,8 @@ import { L } from 'src/common';
 import { SortableContainer, SortableElement, SortableHandle, arrayMove } from 'react-sortable-hoc';
 import EventStatus from 'src/views/Event/EventStatus';
 
+import './vote.scss';
+
 // tslint:disable variable-name
 
 const DragHandle = SortableHandle(() => (
@@ -33,7 +35,8 @@ const VoteEntryItem = SortableElement((props: {
                 <div className="item-title">
                     {props.value.name} <span className="item-creator">by {props.value.creator}
                         {' '}
-                        ({(props.value as any)._currentVote || '-'})</span>
+                        {/*({(props.value as any)._currentVote || '-'})*/}
+                    </span>
                 </div>
                 <div className="item-actions">
                     {props.value.imagefile_thumbnail_url && (
@@ -54,7 +57,7 @@ const VoteDivider = SortableElement((props: { entryIds: number[] }) => (
     </li>
 ));
 
-const VoteEntryList = SortableContainer(({ items, entryIds }) => {
+const VoteEntryList = SortableContainer(({ items, entryIds, isLocked }) => {
     let foundDivider = false;
     return (
         <ul className="list-k">
@@ -65,7 +68,7 @@ const VoteEntryList = SortableContainer(({ items, entryIds }) => {
                 }
                 return (
                     <VoteEntryItem
-                        disabled={!value}
+                        disabled={!value || isLocked}
                         key={index}
                         index={index}
                         value={value}
@@ -190,8 +193,27 @@ export default class CompoVote extends React.Component<{
     }
 
     @computed
+    get isVotable() {
+        return this.props.compo.is_votable;
+    }
+
+    @computed
+    get votingStart() {
+        return moment(this.props.compo.voting_start);
+    }
+
+    @computed
     get votingEnd() {
         return moment(this.props.compo.voting_end);
+    }
+
+    @computed
+    get canVote() {
+        const { isVotable, votingEnd, votingStart } = this;
+        const { timeMin } = globalState;
+        const now = moment(timeMin);
+        const voteTime = now.isSameOrAfter(votingStart) && now.isBefore(votingEnd);
+        return globalState.user && isVotable && voteTime;
     }
 
     render() {
@@ -220,10 +242,17 @@ export default class CompoVote extends React.Component<{
                         {'. '}
                         <L text="voting.help2" />
                     </p>
+                    {entryIds.length === 0 && (
+                        <div className="voting-item placeholder">
+                            <L text="voting.placeholder" />
+                        </div>
+                    )}
                     <VoteEntryList
                         items={this.items}
                         onSortEnd={this.onSortEnd}
                         entryIds={entryIds}
+                        isLocked={!this.canVote}
+                        lockAxis="y"
                         useDragHandle
                     />
                     <div>
