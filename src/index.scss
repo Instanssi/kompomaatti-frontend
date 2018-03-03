@@ -147,9 +147,10 @@ body > .draggable-item {
 }
 
 .draggable-item.divider {
-    font-variant: italic;
+    font-style: italic;
     font-size: 1.2rem;
     padding: 0 ($spacer * 2);
+    margin: $spacer 0;
 }
 
 .list-k {
