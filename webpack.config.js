@@ -52,6 +52,7 @@ const config = {
                             minimize: PRODUCTION_BUILD
                         }
                     },
+                    { loader: 'postcss-loader' },
                     { loader: 'sass-loader' },
                 ])
             },
