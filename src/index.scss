@@ -87,6 +87,34 @@ main {
     flex: 1 0 auto;
 }
 
+.draggable-item {
+    list-style: none;
+    display: flex;
+    white-space: nowrap;
+
+    .item-handle {
+        // "grab" might be more fitting, but it doesn't work in Chrome
+        cursor: move;
+    }
+    .item-content {
+        display: flex;
+        flex: 1 1 auto;
+
+        .item-index {
+            width: 2em;
+            font-size: 1.5rem;
+        }
+    }
+
+    .item-handle, .item-content {
+        padding: $spacer;
+    }
+}
+body > .draggable-item {
+    // items being dragged seem to end up absolute-positioned directly inside <body>
+    padding: $spacer;
+}
+
 .list-k {
     list-style: none;
     padding: 0;

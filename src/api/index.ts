@@ -10,6 +10,7 @@ import {
     IUser,
     IVoteCodeRequest,
     IVoteCode,
+    IUserVote,
 } from 'src/api/interfaces';
 
 
@@ -29,6 +30,7 @@ export default class InstanssiREST {
     userCompetitionParticipations: UserCompetitionParticipationsAPI;
     voteCodes: UserVoteCodesAPI;
     voteCodeRequests: UserVoteCodeRequestsAPI;
+    userVotes: UserVotesAPI;
 
     constructor(baseUrl: string, config = {}) {
         this.currentUser = new SessionAPI(baseUrl, config);
@@ -43,6 +45,7 @@ export default class InstanssiREST {
         this.songs = new SongsAPI(baseUrl, config);
         this.voteCodes = new UserVoteCodesAPI(baseUrl, config);
         this.voteCodeRequests = new UserVoteCodeRequestsAPI(baseUrl, config);
+        this.userVotes = new UserVotesAPI(baseUrl, config);
     }
 }
 
@@ -225,6 +228,23 @@ class UserVoteCodeRequestsAPI extends BaseAPI<IVoteCodeRequest> {
     }
 
     create(request) {
+        return this.request('POST', this.url, null, request);
+    }
+}
+
+class UserVotesAPI extends BaseAPI<any> {
+    constructor(baseUrl, config) {
+        super(baseUrl + '/user_votes/', config);
+    }
+
+    getVotes(compo: number) {
+        return this.request<IUserVote>('GET', this.url, { compo });
+    }
+
+    /**
+     * Post some votes for a compo. The "entries" is a list of entry ids in preferred order.
+     */
+    setVotes(request: { compo: number, entries: number[] }) {
         return this.request('POST', this.url, null, request);
     }
 }

@@ -184,3 +184,8 @@ export interface IVoteCode {
     time: ISODateTime;
     tickey_key: string;
 }
+
+export interface IUserVote {
+    compo: ReferenceKey;
+    entries: ReferenceKey[];
+}
