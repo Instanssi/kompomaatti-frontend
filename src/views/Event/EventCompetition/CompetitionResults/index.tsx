@@ -4,7 +4,7 @@ import { computed } from 'mobx';
 import _orderBy from 'lodash/orderBy';
 import classNames from 'classnames';
 
-import { L, LoadingWrapper } from 'src/common';
+import { L, LoadingWrapper, NoResults } from 'src/common';
 
 import globalState from 'src/state';
 import { ICompetition } from 'src/api/interfaces';
@@ -37,7 +37,7 @@ export default class CompetitionResults extends React.Component<{
             <div className="competition-results">
                 <h3><L text="common.results" /></h3>
                 <LoadingWrapper store={this.results}>
-                    {resultsSorted && resultsSorted.length && (
+                    {resultsSorted && resultsSorted.length > 0 ? (
                         <ul className="list-k">
                             {resultsSorted.map(comp => (
                                 <li
@@ -52,7 +52,7 @@ export default class CompetitionResults extends React.Component<{
                                 </li>
                             ))}
                         </ul>
-                    )}
+                    ): <NoResults />}
                 </LoadingWrapper>
             </div>
         );
