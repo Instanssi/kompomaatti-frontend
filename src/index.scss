@@ -144,6 +144,8 @@ body > .draggable-item {
     list-style: none;
     padding: 0;
 
+    $item-header-width: 7.25em;
+
     li {
         display: flex;
         align-items: baseline;
@@ -164,11 +166,22 @@ body > .draggable-item {
 
     .item-time {
         // probably enough for dates like "Sun 12:00 AM"
-        flex: 0 0 7.25em;
+        flex: 0 0 $item-header-width;
         white-space: nowrap;
         text-align: right;
         padding-right: $spacer;
     }
+
+    .item-rank, .item-score {
+        flex: 0 0 $item-header-width / 2;
+        white-space: nowrap;
+        text-align: right;
+        padding-right: $spacer;
+    }
+}
+
+.entry-image img {
+    max-width: 100%;
 }
 
 .entry-item {

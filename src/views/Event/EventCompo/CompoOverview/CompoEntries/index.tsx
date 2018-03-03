@@ -8,7 +8,7 @@ import classNames from 'classnames';
 import { ICompo } from 'src/api/interfaces';
 import globalState from 'src/state';
 import { RemoteStore } from 'src/stores';
-import { LoadingWrapper, NoResults } from 'src/common';
+import { LoadingWrapper, NoResults, FormatNumber } from 'src/common';
 
 
 @(withRouter as any)
@@ -65,12 +65,22 @@ export default class CompoEntries extends React.Component<{
                                 { disqualified: entry.disqualified },
                             )}
                         >
-                            <span className="item-time">
-                                {entry.rank ? entry.rank + '. ' : ''}
+                            <span className="item-rank">
+                                {entry.rank ? entry.rank + '. ' : '-'}
                             </span>
-                            <Link to={this.getEntryPath(entry)}>
-                                {entry.name}
-                            </Link>&nbsp;by&nbsp;{entry.creator}
+                            <span className="item-score">
+                                {entry.score ? <>
+                                    <FormatNumber
+                                        value={entry.score}
+                                        precision={1}
+                                    />{' p '}
+                                </> : '-'}
+                            </span>
+                            <span className="item-title">
+                                <Link to={this.getEntryPath(entry)}>
+                                    {entry.name}
+                                </Link>&nbsp;by&nbsp;{entry.creator}
+                            </span>
                         </li>
                     ))}
                 </ul> : <NoResults />}
