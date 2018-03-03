@@ -73,6 +73,15 @@ main {
     margin: 0 !important;
 }
 
+@media screen and (max-width: $screen-xs-max) {
+    .list-k {
+        // Cut through padding around an element through negative margins.
+        // Used to give already-padded lists more space on mobiles.
+        margin-left: -$spacer !important;
+        margin-right: -$spacer !important;
+    }
+}
+
 .text-pre-wrap {
     white-space: pre-wrap;
 }
