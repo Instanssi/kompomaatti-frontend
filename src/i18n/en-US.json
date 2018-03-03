@@ -166,6 +166,10 @@
         "myEntries": "My entries",
         "title": "User profile"
     },
+    "voting": {
+        "help": "Drag entries around by the ",
+        "help2": "Entries moved above the bar will receive points according to their order."
+    },
     "voteCode": {
         "hasCodeForEvent": "You have a valid vote code for this event.",
         "help": "To participate in the event through Kompomaatti, your account needs a vote code for the event. If you bought a ticket online, you can use the ticket's code for this.",

@@ -95,21 +95,22 @@ main {
     .item-handle {
         // "grab" might be more fitting, but it doesn't work in Chrome
         cursor: move;
+        padding: $spacer ($spacer * 2);
+
+        background: #eee;
     }
     .item-content {
         display: flex;
         flex: 1 1 auto;
+        padding: $spacer;
 
         .item-index {
             width: 2em;
             font-size: 1.5rem;
         }
     }
-
-    .item-handle, .item-content {
-        padding: $spacer;
-    }
 }
+
 body > .draggable-item {
     // items being dragged seem to end up absolute-positioned directly inside <body>
     padding: $spacer;

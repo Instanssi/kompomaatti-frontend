@@ -165,6 +165,10 @@
         "myEntries": "Omat kompoentryt",
         "title": "Käyttäjäprofiili"
     },
+    "voting": {
+        "help": "Järjestä entryt laatujärjestykseen vetämällä merkistä ",
+        "help2": "Viivan yläpuolelle nostetut saavat pisteitä järjestyksensä mukaan."
+    },
     "voteCode": {
         "hasCodeForEvent": "Sinulla on äänestysoikeus tähän tapahtumaan.",
         "help": "Jos haluat osallistua tapahtumaan Kompomaatissa, tilillesi on liitettävä äänestyskoodi. Jos ostit lipun verkkokaupasta, voit käyttää lippukoodiasi äänestyskoodina.",

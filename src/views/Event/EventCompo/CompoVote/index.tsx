@@ -79,6 +79,10 @@ export default class CompoVote extends React.Component<{
     @action.bound
     handleSubmit(event) {
         event.preventDefault();
+
+        // Find all entries above the bar
+        //
+
         return globalState.api.userVotes.setVotes({
             compo: this.props.compo.id,
             entries: [], // this.entries.map(entry => entry.id),
@@ -96,6 +100,12 @@ export default class CompoVote extends React.Component<{
         return (
             <form onSubmit={this.handleSubmit}>
                 <h2><L text="compo.vote" /></h2>
+                <p>
+                    <L text="voting.help"/>
+                    <span className="fa fa-sort" />
+                    {'. '}
+                    <L text="voting.help2" />
+                </p>
                 <VoteEntryList
                     items={this.items}
                     onSortEnd={this.onSortEnd}
