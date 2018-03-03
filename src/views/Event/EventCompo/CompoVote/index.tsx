@@ -3,6 +3,7 @@ import { observer } from 'mobx-react';
 import { action, observable, runInAction, computed } from 'mobx';
 import _orderBy from 'lodash/orderBy';
 import _shuffle from 'lodash/shuffle';
+import moment from 'moment';
 
 import globalState from 'src/state';
 import { LazyStore } from 'src/stores';
@@ -184,12 +185,29 @@ export default class CompoVote extends React.Component<{
         this.items = arrayMove(this.items, oldIndex, newIndex);
     }
 
+    @computed
+    get votingEnd() {
+        return moment(this.props.compo.voting_end);
+    }
+
     render() {
         const { entryIds, hasChanges } = this;
+
+        const deadline = moment(this.props.compo.voting_end).locale(globalState.momentLocale);
+        const ended = deadline.isBefore(globalState.timeMin);
 
         return (
             <form onSubmit={this.handleSubmit}>
                 <h3><L text="compo.vote" /></h3>
+                {!ended ? <div className="alert alert-info">
+                    <span className="fa fa-clock-o" />&ensp;
+                    <L
+                        text="voting.deadline"
+                        values={{
+                            date: deadline.format('LLL'),
+                        }}
+                    />
+                </div> : <div className="alert alert-info"><L text="voting.ended" /></div>}
                 <p>
                     <L text="voting.help" />
                     <span className="fa fa-sort" />
