@@ -135,9 +135,21 @@ main {
     }
 }
 
+.draggable-item {
+    background: #fff;
+    box-shadow: rgba(0,0,0,.25) 0 2px 4px;
+}
+
 body > .draggable-item {
     // items being dragged seem to end up absolute-positioned directly inside <body>
     padding: $spacer;
+    opacity: .8;
+}
+
+.draggable-item.divider {
+    font-variant: italic;
+    font-size: 1.2rem;
+    padding: 0 ($spacer * 2);
 }
 
 .list-k {
@@ -188,6 +200,13 @@ body > .draggable-item {
     &.disqualified {
         text-decoration: line-through;
     }
+}
+
+img.vote-thumbnail {
+    margin: -$spacer $spacer;
+    padding: 0;
+    max-width: 64px;
+    height: 32px;
 }
 
 @media screen and (min-width: $screen-sm-min) {

@@ -173,6 +173,7 @@
     "voting": {
         "atLeastOneRequired": "Move at least one entry above the bar to continue.",
         "deadline": "Voting ends on: ${ date }.",
+        "divider": "Arrange entries above this bar to give them points. Entries below are ignored.",
         "hasChanges": "Don't forget to save. You can change your votes at any time before the voting deadline.",
         "ended": "Voting has concluded.",
         "help": "Drag entries around by the ",

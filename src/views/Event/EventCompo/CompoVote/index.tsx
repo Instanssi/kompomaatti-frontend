@@ -24,40 +24,43 @@ const VoteEntryItem = SortableElement((props: {
     value: ICompoEntry;
     num: string;
 }) => (
-        <li className={`draggable-item${!props.value ? ' divider' : ''}`}>
+        <li className="draggable-item">
             <div className="item-content">
                 <div className="item-number">
                     {props.num}&ensp;
-        </div>
+                </div>
                 <div className="item-title flex-fill">
                     {props.value.name} <span className="item-creator">by {props.value.creator}
                         {' '}
                         ({(props.value as any)._currentVote || '-'})</span>
                 </div>
                 <div className="item-actions">
-                    <a className="fa fa-play" />&ensp;
-                <a className="fa fa-video" />&ensp;
-                <a className="fa fa-image" />&ensp;
-            </div>
+                    {props.value.imagefile_thumbnail_url && (
+                        <img
+                            className="vote-thumbnail"
+                            src={props.value.imagefile_thumbnail_url}
+                        />
+                    )}
+                </div>
             </div>
             <DragHandle />
         </li>
     ));
 
-const VoteDivider = SortableElement(() => (
-    <li>
-        ----
+const VoteDivider = SortableElement((props: { entryIds: number[] }) => (
+    <li className="draggable-item divider">
+        <L text="voting.divider" />
     </li>
 ));
 
-const VoteEntryList = SortableContainer(({ items }) => {
+const VoteEntryList = SortableContainer(({ items, entryIds }) => {
     let foundDivider = false;
     return (
         <ul className="list-k">
             {items.map((value, index) => {
                 if (!value) {
                     foundDivider = true;
-                    return <VoteDivider key={index} index={index} />;
+                    return <VoteDivider key={index} index={index} entryIds={entryIds} />;
                 }
                 return (
                     <VoteEntryItem
@@ -217,6 +220,7 @@ export default class CompoVote extends React.Component<{
                 <VoteEntryList
                     items={this.items}
                     onSortEnd={this.onSortEnd}
+                    entryIds={entryIds}
                     useDragHandle
                 />
                 <div>
