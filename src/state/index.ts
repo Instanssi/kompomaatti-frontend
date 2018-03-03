@@ -75,7 +75,7 @@ class GlobalState {
     savePersistentState(state) {
         try {
             localStorage.setItem('kompomaatti', JSON.stringify(state));
-        } catch(error) {
+        } catch (error) {
             console.warn('Failed to save state: ' + error);
         }
     }
@@ -83,11 +83,11 @@ class GlobalState {
     loadPersistentState() {
         try {
             const stored = localStorage.getItem('kompomaatti');
-            if(stored) {
+            if (stored) {
                 const state = JSON.parse(stored);
                 this.language = state.language || config.DEFAULT_LOCALE;
             }
-        } catch(error) {
+        } catch (error) {
             console.warn('Failed to load state: ' + error);
         }
     }
