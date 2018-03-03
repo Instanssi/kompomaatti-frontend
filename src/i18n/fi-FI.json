@@ -170,6 +170,7 @@
         "title": "Käyttäjäprofiili"
     },
     "voting": {
+        "atLeastOneRequired": "Nosta ainakin yksi entry riman yläpuolelle.",
         "help": "Järjestä entryt laatujärjestykseen vetämällä merkistä ",
         "help2": "Viivan yläpuolelle nostetut saavat pisteitä järjestyksensä mukaan."
     },

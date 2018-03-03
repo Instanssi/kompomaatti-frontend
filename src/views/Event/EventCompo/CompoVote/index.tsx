@@ -204,6 +204,9 @@ export default class CompoVote extends React.Component<{
                     <button className="btn btn-primary" disabled={entryIds.length <= 0}>
                         <L text="common.save" />
                     </button>
+                    {!entryIds.length && <span>
+                        &ensp;<L text="voting.atLeastOneRequired" />
+                    </span>}
                 </div>
             </form>
         );

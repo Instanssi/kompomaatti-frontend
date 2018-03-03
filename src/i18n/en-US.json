@@ -171,6 +171,7 @@
         "title": "User profile"
     },
     "voting": {
+        "atLeastOneRequired": "Move at least one entry above the bar to continue.",
         "help": "Drag entries around by the ",
         "help2": "Entries moved above the bar will receive points according to their order."
     },

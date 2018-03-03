@@ -26,7 +26,6 @@ export class CompoEntryEdit extends React.Component<{
         imagefile_original: null as File | null,
         sourcefile: null as File | null,
     }, (formStore) => {
-        console.info('formStore:', formStore.toJS());
         return globalState.api.userCompoEntries.update(
             this.props.entry.id,
             {
