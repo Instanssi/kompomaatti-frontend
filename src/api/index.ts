@@ -238,7 +238,7 @@ class UserVotesAPI extends BaseAPI<any> {
     }
 
     getVotes(compo: number) {
-        return this.request<IUserVote>('GET', this.url, { compo });
+        return this.request<IUserVote[]>('GET', this.url, { compo });
     }
 
     /**

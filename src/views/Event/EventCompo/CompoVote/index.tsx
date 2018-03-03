@@ -1,6 +1,8 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { action, observable, reaction, runInAction } from 'mobx';
+import { action, observable, runInAction } from 'mobx';
+import _orderBy from 'lodash/orderBy';
+import _shuffle from 'lodash/shuffle';
 
 import globalState from 'src/state';
 import { LazyStore } from 'src/stores';
@@ -16,10 +18,22 @@ const DragHandle = SortableHandle(() => (
     </span>
 ));
 
-const VoteEntryItem = SortableElement(({ value, index }) => (
+const VoteEntryItem = SortableElement((props: { value: ICompoEntry } & any) => (
     <li className="draggable-item">
         <div className="item-content">
-            {value.name} by {value.creator}
+            <div className="item-number">
+                {props.num + 1}.&ensp;
+            </div>
+            <div className="item-title flex-fill">
+                {props.value.name} by {props.value.creator}
+                {' '}
+                ({(props.value as any)._currentVote || '-'})
+            </div>
+            <div className="item-actions">
+                <a className="fa fa-play" />&ensp;
+                <a className="fa fa-video" />&ensp;
+                <a className="fa fa-image" />&ensp;
+            </div>
         </div>
         <DragHandle />
     </li>
@@ -28,7 +42,7 @@ const VoteEntryItem = SortableElement(({ value, index }) => (
 const VoteEntryList = SortableContainer(({ items }) => (
     <ul className="list-k">
         {items.map((value, index) => (
-            <VoteEntryItem key={index} index={index} value={value} />
+            <VoteEntryItem key={index} index={index} value={value} num={index} />
         ))}
     </ul>
 ));
@@ -43,37 +57,57 @@ export default class CompoVote extends React.Component<{
         compo: this.props.compo.id,
     }));
 
-    @observable success = false;
+    @observable hasChanges = false;
 
-    @observable votes: number[] = [];
-    @observable entries: ICompoEntry[] = [];
+    @observable.ref votes: number[] = [];
+    @observable.ref entries: ICompoEntry[] = [];
 
     /** Items ordered by votes. */
-    @observable items: ICompoEntry[] = [];
+    @observable.shallow items: ICompoEntry[] = [];
 
     disposers: any[] = [];
 
     componentWillMount() {
-        this.disposers.push(reaction(
-            () => this.myCompoVotes.value,
-            (userVotes) => runInAction(() => {
-                this.votes = userVotes && userVotes.entries || [];
-                this.init();
-            }),
-        ));
-        this.disposers.push(reaction(
-            () => this.compoEntries.value,
-            (compoEntries) => runInAction(() => {
-                this.entries = compoEntries || [];
-                this.init();
-            }),
-        ));
+        this.refresh();
+    }
+
+    componentWillUnmount() {
+        this.disposers.forEach(d => d());
+    }
+
+    refresh() {
+        return Promise.all([
+            this.myCompoVotes.refresh(),
+            this.compoEntries.refresh(),
+        ]).then(([votes, entries]) => runInAction(() => {
+            this.votes = (votes && votes.length > 0) ? votes[0].entries : [];
+            this.entries = _shuffle(entries);
+            this.entries.forEach(e => {
+                (e as any)._currentVote = this.votes.findIndex(v => v === e.id) + 1;
+            });
+            this.init();
+        }));
     }
 
     /** Initialize the sortable compo entries list. */
+    @action
     init() {
-        this.items = this.entries;
-        // this.currentVotes = votes && votes.entries || [];
+        const { votes } = this;
+
+        const voteIndex = {};
+        votes.forEach((entryId, index) => {
+            voteIndex[entryId] = index;
+        });
+
+        const filtered = this.entries.filter(entry => !entry.disqualified);
+
+        this.items = _orderBy(filtered, (entry, index) => {
+            const pos = voteIndex[entry.id];
+            if (typeof pos === 'number') {
+                return pos;
+            }
+            return 9000 + index;
+        });
     }
 
     @action.bound
@@ -81,27 +115,29 @@ export default class CompoVote extends React.Component<{
         event.preventDefault();
 
         // Find all entries above the bar
-        //
+        console.info('this.items:', this.items.map(item => item.name));
 
         return globalState.api.userVotes.setVotes({
             compo: this.props.compo.id,
-            entries: [], // this.entries.map(entry => entry.id),
+            entries: this.items.map(item => item.id),
         }).then(() => {
-            this.success = true;
+            this.hasChanges = false;
+            this.refresh();
         });
     }
 
     @action.bound
     onSortEnd({ oldIndex, newIndex }) {
+        this.hasChanges = true;
         this.items = arrayMove(this.items, oldIndex, newIndex);
     }
 
     render() {
         return (
             <form onSubmit={this.handleSubmit}>
-                <h2><L text="compo.vote" /></h2>
+                <h3><L text="compo.vote" /></h3>
                 <p>
-                    <L text="voting.help"/>
+                    <L text="voting.help" />
                     <span className="fa fa-sort" />
                     {'. '}
                     <L text="voting.help2" />
@@ -111,6 +147,11 @@ export default class CompoVote extends React.Component<{
                     onSortEnd={this.onSortEnd}
                     useDragHandle
                 />
+                <div>
+                    <button className="btn btn-primary">
+                        <L text="common.save" />
+                    </button>
+                </div>
             </form>
         );
     }
