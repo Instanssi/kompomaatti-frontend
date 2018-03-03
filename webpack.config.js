@@ -17,7 +17,7 @@ const config = {
     output: {
         path: path.resolve(__dirname, 'build'),
         filename: namePattern('res/[name].[chunkhash].js'),
-        publicPath: '/kompomaatti/',
+        publicPath: '/kompomaatti2/',
     },
     resolve: {
         modules: [ './', 'node_modules' ],
@@ -66,7 +66,7 @@ const config = {
                 test: /\.(png|jpg|jpeg|svg|ttf|otf|woff|woff2|eot)$/,
                 loader: 'file-loader',
                 options: {
-                    publicPath: '/kompomaatti/',
+                    publicPath: '/kompomaatti2/',
                     outputPath: 'res/'
                 }
             }
@@ -130,7 +130,7 @@ if(PRODUCTION_BUILD) {
         host: '0.0.0.0',
         // proxy the local Instanssi server to get around CORS issues
         proxy: {
-            '!/kompomaatti/**': {
+            '!/kompomaatti2/**': {
                 target: process.env.INSTANSSI_URL || 'http://localhost:8000',
                 secure: false,
                 changeOrigin: true,
@@ -139,16 +139,16 @@ if(PRODUCTION_BUILD) {
         historyApiFallback: {
             rewrites: [
                 {
-                    from: /^\/kompomaatti/,
+                    from: /^\/kompomaatti2/,
                     to: function(context) {
                         // Great. The history fallback doesn't seem to handle public paths.
                         // Handle resource paths manually then.
                         const { pathname } = context.parsedUrl;
                         const resIndex = pathname.indexOf('/res/');
                         if(resIndex < 0) {
-                            return '/kompomaatti/index.html';
+                            return '/kompomaatti2/index.html';
                         } else {
-                            const path = '/kompomaatti' + pathname.slice(resIndex);
+                            const path = '/kompomaatti2' + pathname.slice(resIndex);
                             return path;
                         }
                     },
@@ -156,7 +156,7 @@ if(PRODUCTION_BUILD) {
             ]
         },
         // Emulate actual deployment env
-        publicPath: '/kompomaatti/',
+        publicPath: '/kompomaatti2/',
     };
 }
 
