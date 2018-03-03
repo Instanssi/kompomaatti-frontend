@@ -231,7 +231,7 @@ export default class CompoVote extends React.Component<{
                     <L
                         text="voting.deadline"
                         values={{
-                            date: deadline.format('LLL'),
+                            date: deadline.format('ddd LLL'),
                         }}
                     />
                 </div> : <div className="alert alert-info"><L text="voting.ended" /></div>}
