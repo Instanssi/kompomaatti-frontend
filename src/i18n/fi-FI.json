@@ -10,6 +10,7 @@
         "notLoggedIn": "Et ole kirjautunut sisään.",
         "results": "Tulokset",
         "schedule": "Aikataulu",
+        "scheduleEmpty": "Aikataulussa ei ole mitään juuri nyt.",
         "save": "Tallenna",
         "submit": "Lähetä"
     },

@@ -120,7 +120,7 @@ export default class FrontSchedule extends React.Component<{
             });
         }
         for (const competition of competitions.value || []) {
-            if(competition.participation_end) {
+            if (competition.participation_end) {
                 all.push({
                     key: `competition-${competition.id}-partend`,
                     time: new Date(competition.participation_end),
@@ -183,16 +183,21 @@ export default class FrontSchedule extends React.Component<{
         return (
             <div className="front-schedule">
                 <h3><L text="common.schedule" /></h3>
-                <ul className="list-k">
-                    {currentEvents.map(row => (
-                        <li key={row.key}>
-                            <div className="item-time">
-                                <FormatTime value={row.time} format="ddd LT" />
-                            </div>
-                            {row.title}
-                        </li>
-                    ))}
-                </ul>
+                {currentEvents.length > 0 && (
+                    <ul className="list-k">
+                        {currentEvents.map(row => (
+                            <li key={row.key}>
+                                <div className="item-time">
+                                    <FormatTime value={row.time} format="ddd LT" />
+                                </div>
+                                {row.title}
+                            </li>
+                        ))}
+                    </ul>
+                )}
+                {currentEvents.length === 0 && (
+                    <p><L text="common.scheduleEmpty"/></p>
+                )}
             </div>
         )
     }

@@ -10,6 +10,7 @@
         "notLoggedIn": "You are not logged in.",
         "results": "Results",
         "schedule": "Schedule",
+        "scheduleEmpty": "Nothing scheduled at the moment.",
         "save": "Save",
         "submit": "Submit"
     },
