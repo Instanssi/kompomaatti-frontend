@@ -25,9 +25,9 @@ const VoteEntryItem = SortableElement((props: { value: ICompoEntry } & any) => (
                 {props.num + 1}.&ensp;
             </div>
             <div className="item-title flex-fill">
-                {props.value.name} by {props.value.creator}
+                {props.value.name} <span className="item-creator">by {props.value.creator}
                 {' '}
-                ({(props.value as any)._currentVote || '-'})
+                ({(props.value as any)._currentVote || '-'})</span>
             </div>
             <div className="item-actions">
                 <a className="fa fa-play" />&ensp;
