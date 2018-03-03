@@ -117,10 +117,8 @@ main {
         display: flex;
         flex: 1 1 auto;
         padding: $spacer;
-        .item-title {
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
+
+        // Break the title into two parts on mobiles
         .item-creator {
             display: inline;
         }
