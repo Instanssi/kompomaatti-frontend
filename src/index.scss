@@ -44,6 +44,18 @@ main {
     display: block;
 }
 
+.navbar-header {
+    position: relative;
+    .liability-reducer {
+        position: absolute;
+        top: 0;
+        right: 0;
+        color: $brand-primary;
+        text-transform: uppercase;
+        font-size: 1rem;
+    }
+}
+
 .navbar-toggle {
     color: $brand-primary;
     padding: $spacer/2 $spacer;

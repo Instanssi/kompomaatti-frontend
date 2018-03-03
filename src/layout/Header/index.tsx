@@ -36,6 +36,9 @@ export default class Header extends React.Component {
                     <Link to="/" className="navbar-brand">
                         Kompomaatti
                     </Link>
+                    <span className="liability-reducer">
+                        Beta
+                    </span>
                 </div>
                 <div
                     className={classNames(
