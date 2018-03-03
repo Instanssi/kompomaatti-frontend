@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom';
 import { ICompo } from 'src/api/interfaces';
 import { computed } from 'mobx';
 import { FormatTime, L } from 'src/common';
+import EventStatus from 'src/views/Event/EventStatus';
 
 
 /**
@@ -56,7 +57,7 @@ export default class CompoStatus extends React.Component<{
     }
 
     @computed
-    get canVoteRightNow() {
+    get votingActive() {
         const { schedule } = this;
         const now = moment(globalState.timeSec);
         const { votingStart, votingEnd } = schedule;
@@ -110,19 +111,19 @@ export default class CompoStatus extends React.Component<{
 
         const canAdd = schedule.addingEnd && schedule.addingEnd.isAfter(now);
         const canEdit = schedule.editingEnd && schedule.editingEnd.isAfter(now);
-        const { canVoteRightNow } = this;
-        // const { hasVoted } = this;
+        const { votingActive } = this;
+        const { noVoteCode } = eventInfo;
         const loggedIn = !!globalState.user;
 
         return (
             <div className="compo-status">
-                {canVoteRightNow && <div className="alert alert-info">
+                {votingActive && <div className="alert alert-info">
                     <span className="fa fa-info-circle" />&ensp;
                         {loggedIn
                         ? <L text="compo.votingIsOpen" />
                         : <L text="compo.votingIsOpenNotLoggedIn" />
                     }
-                    {loggedIn && <>
+                    {(loggedIn && !noVoteCode) &&  <>
                         <hr />
                         <Link
                             className="btn btn-primary"
@@ -133,6 +134,7 @@ export default class CompoStatus extends React.Component<{
                     </>}
                     <div className="clearfix" />
                 </div>}
+                <EventStatus event={eventInfo} />
                 {(canAdd || canEdit) && loggedIn && <>
                     <h3><L text="compo.myEntries" /></h3>
                     {(entries && entries.length > 0) && (

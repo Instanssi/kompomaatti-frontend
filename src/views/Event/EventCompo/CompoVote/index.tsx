@@ -11,6 +11,7 @@ import { ICompo, ICompoEntry } from 'src/api/interfaces';
 import EventInfo from 'src/state/EventInfo';
 import { L } from 'src/common';
 import { SortableContainer, SortableElement, SortableHandle, arrayMove } from 'react-sortable-hoc';
+import EventStatus from 'src/views/Event/EventStatus';
 
 // tslint:disable variable-name
 
@@ -200,39 +201,42 @@ export default class CompoVote extends React.Component<{
         const ended = deadline.isBefore(globalState.timeMin);
 
         return (
-            <form onSubmit={this.handleSubmit}>
-                <h3><L text="compo.vote" /></h3>
-                {!ended ? <div className="alert alert-info">
-                    <span className="fa fa-clock-o" />&ensp;
-                    <L
-                        text="voting.deadline"
-                        values={{
-                            date: deadline.format('LLL'),
-                        }}
+            <div className="compo-vote">
+                <EventStatus event={this.props.eventInfo} />
+                <form onSubmit={this.handleSubmit}>
+                    <h3><L text="compo.vote" /></h3>
+                    {!ended ? <div className="alert alert-info">
+                        <span className="fa fa-clock-o" />&ensp;
+                        <L
+                            text="voting.deadline"
+                            values={{
+                                date: deadline.format('LLL'),
+                            }}
+                        />
+                    </div> : <div className="alert alert-info"><L text="voting.ended" /></div>}
+                    <p>
+                        <L text="voting.help" />
+                        <span className="fa fa-sort" />
+                        {'. '}
+                        <L text="voting.help2" />
+                    </p>
+                    <VoteEntryList
+                        items={this.items}
+                        onSortEnd={this.onSortEnd}
+                        entryIds={entryIds}
+                        useDragHandle
                     />
-                </div> : <div className="alert alert-info"><L text="voting.ended" /></div>}
-                <p>
-                    <L text="voting.help" />
-                    <span className="fa fa-sort" />
-                    {'. '}
-                    <L text="voting.help2" />
-                </p>
-                <VoteEntryList
-                    items={this.items}
-                    onSortEnd={this.onSortEnd}
-                    entryIds={entryIds}
-                    useDragHandle
-                />
-                <div>
-                    <button className="btn btn-primary" disabled={entryIds.length <= 0}>
-                        <L text="common.save" />
-                    </button>
-                    &ensp;
-                    {entryIds.length > 0
-                        ? <span>{hasChanges && <L text="voting.hasChanges" />}</span>
-                        : <span><L text="voting.atLeastOneRequired" /></span>}
-                </div>
-            </form>
+                    <div>
+                        <button className="btn btn-primary" disabled={entryIds.length <= 0}>
+                            <L text="common.save" />
+                        </button>
+                        &ensp;
+                        {entryIds.length > 0
+                            ? <span>{hasChanges && <L text="voting.hasChanges" />}</span>
+                            : <span><L text="voting.atLeastOneRequired" /></span>}
+                    </div>
+                </form>
+            </div>
         );
     }
 }
