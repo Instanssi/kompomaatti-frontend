@@ -171,6 +171,8 @@
     },
     "voting": {
         "atLeastOneRequired": "Nosta ainakin yksi entry riman yläpuolelle.",
+        "deadlineWarning": "Äänestys päättyy klo ${ time }.",
+        "hasChanges": "Muistathan tallentaa äänesi. Voit muokata ääniä vielä myöhemmin",
         "help": "Järjestä entryt laatujärjestykseen vetämällä merkistä ",
         "help2": "Viivan yläpuolelle nostetut saavat pisteitä järjestyksensä mukaan."
     },

@@ -23,25 +23,25 @@ const VoteEntryItem = SortableElement((props: {
     value: ICompoEntry;
     num: string;
 }) => (
-    <li className={`draggable-item${!props.value ? ' divider' : ''}`}>
-        <div className="item-content">
-            <div className="item-number">
-                {props.num}&ensp;
+        <li className={`draggable-item${!props.value ? ' divider' : ''}`}>
+            <div className="item-content">
+                <div className="item-number">
+                    {props.num}&ensp;
         </div>
-            <div className="item-title flex-fill">
-                {props.value.name} <span className="item-creator">by {props.value.creator}
-                    {' '}
-                    ({(props.value as any)._currentVote || '-'})</span>
-            </div>
-            <div className="item-actions">
-                <a className="fa fa-play" />&ensp;
+                <div className="item-title flex-fill">
+                    {props.value.name} <span className="item-creator">by {props.value.creator}
+                        {' '}
+                        ({(props.value as any)._currentVote || '-'})</span>
+                </div>
+                <div className="item-actions">
+                    <a className="fa fa-play" />&ensp;
                 <a className="fa fa-video" />&ensp;
                 <a className="fa fa-image" />&ensp;
             </div>
-        </div>
-        <DragHandle />
-    </li>
-));
+            </div>
+            <DragHandle />
+        </li>
+    ));
 
 const VoteDivider = SortableElement(() => (
     <li>
@@ -185,7 +185,8 @@ export default class CompoVote extends React.Component<{
     }
 
     render() {
-        const { entryIds } = this;
+        const { entryIds, hasChanges } = this;
+
         return (
             <form onSubmit={this.handleSubmit}>
                 <h3><L text="compo.vote" /></h3>
@@ -204,9 +205,10 @@ export default class CompoVote extends React.Component<{
                     <button className="btn btn-primary" disabled={entryIds.length <= 0}>
                         <L text="common.save" />
                     </button>
-                    {!entryIds.length && <span>
-                        &ensp;<L text="voting.atLeastOneRequired" />
-                    </span>}
+                    &ensp;
+                    {entryIds.length > 0
+                        ? <span>{hasChanges && <L text="voting.hasChanges" />}</span>
+                        : <span><L text="voting.atLeastOneRequired" /></span>}
                 </div>
             </form>
         );

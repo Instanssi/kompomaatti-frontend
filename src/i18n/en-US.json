@@ -172,6 +172,8 @@
     },
     "voting": {
         "atLeastOneRequired": "Move at least one entry above the bar to continue.",
+        "deadlineWarning": "Voting ends at ${ time }.",
+        "hasChanges": "Don't forget to save. You can change your votes later.",
         "help": "Drag entries around by the ",
         "help2": "Entries moved above the bar will receive points according to their order."
     },
