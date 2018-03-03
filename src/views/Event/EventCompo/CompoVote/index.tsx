@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { action, observable, runInAction } from 'mobx';
+import { action, observable, runInAction, computed } from 'mobx';
 import _orderBy from 'lodash/orderBy';
 import _shuffle from 'lodash/shuffle';
 
@@ -11,6 +11,7 @@ import EventInfo from 'src/state/EventInfo';
 import { L } from 'src/common';
 import { SortableContainer, SortableElement, SortableHandle, arrayMove } from 'react-sortable-hoc';
 
+// tslint:disable variable-name
 
 const DragHandle = SortableHandle(() => (
     <span className="item-handle">
@@ -18,16 +19,19 @@ const DragHandle = SortableHandle(() => (
     </span>
 ));
 
-const VoteEntryItem = SortableElement((props: { value: ICompoEntry } & any) => (
-    <li className="draggable-item">
+const VoteEntryItem = SortableElement((props: {
+    value: ICompoEntry;
+    num: string;
+}) => (
+    <li className={`draggable-item${!props.value ? ' divider' : ''}`}>
         <div className="item-content">
             <div className="item-number">
-                {props.num + 1}.&ensp;
-            </div>
+                {props.num}&ensp;
+        </div>
             <div className="item-title flex-fill">
                 {props.value.name} <span className="item-creator">by {props.value.creator}
-                {' '}
-                ({(props.value as any)._currentVote || '-'})</span>
+                    {' '}
+                    ({(props.value as any)._currentVote || '-'})</span>
             </div>
             <div className="item-actions">
                 <a className="fa fa-play" />&ensp;
@@ -39,13 +43,34 @@ const VoteEntryItem = SortableElement((props: { value: ICompoEntry } & any) => (
     </li>
 ));
 
-const VoteEntryList = SortableContainer(({ items }) => (
-    <ul className="list-k">
-        {items.map((value, index) => (
-            <VoteEntryItem key={index} index={index} value={value} num={index} />
-        ))}
-    </ul>
+const VoteDivider = SortableElement(() => (
+    <li>
+        ----
+    </li>
 ));
+
+const VoteEntryList = SortableContainer(({ items }) => {
+    let foundDivider = false;
+    return (
+        <ul className="list-k">
+            {items.map((value, index) => {
+                if (!value) {
+                    foundDivider = true;
+                    return <VoteDivider key={index} index={index} />;
+                }
+                return (
+                    <VoteEntryItem
+                        disabled={!value}
+                        key={index}
+                        index={index}
+                        value={value}
+                        num={foundDivider ? '-' : `${index + 1}.`}
+                    />
+                );
+            })}
+        </ul>
+    );
+});
 
 @observer
 export default class CompoVote extends React.Component<{
@@ -63,7 +88,7 @@ export default class CompoVote extends React.Component<{
     @observable.ref entries: ICompoEntry[] = [];
 
     /** Items ordered by votes. */
-    @observable.shallow items: ICompoEntry[] = [];
+    @observable.shallow items: Array<ICompoEntry | null> = [];
 
     disposers: any[] = [];
 
@@ -89,7 +114,9 @@ export default class CompoVote extends React.Component<{
         }));
     }
 
-    /** Initialize the sortable compo entries list. */
+    /**
+     * Initialize the sortable compo entries list.
+     */
     @action
     init() {
         const { votes } = this;
@@ -101,25 +128,50 @@ export default class CompoVote extends React.Component<{
 
         const filtered = this.entries.filter(entry => !entry.disqualified);
 
-        this.items = _orderBy(filtered, (entry, index) => {
+        const withDivider: Array<ICompoEntry | null> = filtered;
+        withDivider.push(null);
+
+        this.items = _orderBy(withDivider, (entry, index) => {
+            if (entry === null) {
+                return 9000;
+            }
+            // Order the list of entries and null divider so that entries already
+            // voted for are positioned according to their index in the votes list.
+            // The divider is placed after that, and then the remaining entries
+            // are listed in their shuffled order.
             const pos = voteIndex[entry.id];
             if (typeof pos === 'number') {
                 return pos;
             }
-            return 9000 + index;
+            return 9001 + index;
         });
+    }
+
+    @computed
+    get entryIds() {
+        const entryIds: number[] = [];
+        for (const entry of this.items) {
+            if (entry) {
+                entryIds.push(entry.id);
+            } else {
+                break;
+            }
+        }
+        return entryIds;
     }
 
     @action.bound
     handleSubmit(event) {
         event.preventDefault();
+        const { entryIds } = this;
 
-        // Find all entries above the bar
-        console.info('this.items:', this.items.map(item => item.name));
+        if (!entryIds.length) {
+            return Promise.reject(null);
+        }
 
         return globalState.api.userVotes.setVotes({
             compo: this.props.compo.id,
-            entries: this.items.map(item => item.id),
+            entries: entryIds,
         }).then(() => {
             this.hasChanges = false;
             this.refresh();
@@ -133,6 +185,7 @@ export default class CompoVote extends React.Component<{
     }
 
     render() {
+        const { entryIds } = this;
         return (
             <form onSubmit={this.handleSubmit}>
                 <h3><L text="compo.vote" /></h3>
@@ -148,7 +201,7 @@ export default class CompoVote extends React.Component<{
                     useDragHandle
                 />
                 <div>
-                    <button className="btn btn-primary">
+                    <button className="btn btn-primary" disabled={entryIds.length <= 0}>
                         <L text="common.save" />
                     </button>
                 </div>
