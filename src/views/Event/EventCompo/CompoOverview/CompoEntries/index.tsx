@@ -63,7 +63,7 @@ export default class CompoEntries extends React.Component<{
                             </span>
                             <Link to={this.getEntryPath(entry)}>
                                 {entry.name}
-                            </Link>&nbsp;-&nbsp;{entry.creator}
+                            </Link>&nbsp;by&nbsp;{entry.creator}
                         </li>
                     ))}
                 </ul> : <NoResults />}

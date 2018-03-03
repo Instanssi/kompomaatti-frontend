@@ -29,10 +29,12 @@
         "editingEnd": "Entryjen muokkaaminen päättyy",
         "deadline": "Entryjen lisääminen päättyy",
         "entries": "Entryt",
+        "logInToAddEntries": "Kirjaudu sisään osallistuaksesi.",
         "myEntries": "Omat teokset",
         "status": "Tila",
         "vote": "Äänestä",
         "votingIsOpen": "Äänestys on avattu!",
+        "votingIsOpenNotLoggedIn": "Äänestys on avattu! Kirjaudu sisään äänestääksesi.",
         "votingEnd": "Äänestys päättyy",
         "votingStart": "Äänestys alkaa"
     },

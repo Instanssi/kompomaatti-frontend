@@ -22,9 +22,10 @@ export default class CompoStatus extends React.Component<{
     eventInfo: EventInfo;
     compo: ICompo;
 }> {
-    store = new LazyStore(() => globalState.api.userCompoEntries.list({
+    // Only fetch this if the user is logged in.
+    store = new LazyStore(() => globalState.user ? globalState.api.userCompoEntries.list({
         event: this.props.eventInfo.eventId,
-    }));
+    }) : Promise.reject(null));
 
     @computed
     get entries() {
@@ -122,45 +123,61 @@ export default class CompoStatus extends React.Component<{
         const canEdit = schedule.editingEnd && schedule.editingEnd.isAfter(now);
         const { canVoteRightNow } = this;
         // const { hasVoted } = this;
+        const loggedIn = !!globalState.user;
 
         return (
             <div className="compo-status">
                 {canVoteRightNow && <div className="alert alert-info">
                     <span className="fa fa-info-circle" />&ensp;
-                    <L text="compo.votingIsOpen" />
-                    <hr />
-                    <Link
-                        className="btn btn-primary"
-                        to={eventInfo.getCompoVoteURL(compo)}
-                    >
-                        <L text="compo.vote" />
-                    </Link>
+                        {loggedIn
+                        ? <L text="compo.votingIsOpen" />
+                        : <L text="compo.votingIsOpenNotLoggedIn" />
+                    }
+                    {loggedIn && <>
+                        <hr />
+                        <Link
+                            className="btn btn-primary"
+                            to={eventInfo.getCompoVoteURL(compo)}
+                        >
+                            <L text="compo.vote" />
+                        </Link>
+                    </>}
                     <div className="clearfix" />
                 </div>}
-                <h3><L text="compo.myEntries" /></h3>
-                {(entries && entries.length > 0) && (
-                    <ul className="list-k">
-                    {entries.map(entry => (
-                        <li key={entry.id}>
-                            <div className="flex-fill">
-                                {entry.name}
-                            </div>
-                            <div className="item-time">
-                                {canEdit && (
-                                    <Link to={eventInfo.getCompoEntryEditURL(compo, entry)}>
-                                        <L text="common.edit" />
-                                    </Link>
-                                )}
-                            </div>
-                        </li>
-                    ))}
-                </ul>)}
-                { canAdd && <div>
+                {(canAdd || canEdit) && loggedIn && <>
+                    <h3><L text="compo.myEntries" /></h3>
+                    {(entries && entries.length > 0) && (
+                        <ul className="list-k">
+                            {entries.map(entry => (
+                                <li key={entry.id}>
+                                    <div className="flex-fill">
+                                        {entry.name}
+                                    </div>
+                                    <div className="item-time">
+                                        {canEdit && (
+                                            <Link to={eventInfo.getCompoEntryEditURL(compo, entry)}>
+                                                <L text="common.edit" />
+                                            </Link>
+                                        )}
+                                    </div>
+                                </li>
+                            ))}
+                        </ul>
+                    )}
+                </>}
+                {(canAdd && loggedIn) && <div>
                     <Link to={eventInfo.getCompoEntryAddURL(compo)} className="btn btn-primary">
                         <L text="compo.addEntry" />
                     </Link>
-                </div>}
-            </div>
+                </div>
+                }
+                {!loggedIn && (canAdd || canEdit) && <>
+                    <div className="alert alert-info">
+                        <span className="fa fa-info-circle" />&ensp;
+                        <L text="compo.logInToAddEntries" />
+                    </div>
+                </>}
+            </div >
         );
     }
 }

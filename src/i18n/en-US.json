@@ -29,11 +29,13 @@
         "editingEnd": "Deadline for editing entries",
         "entries": "Entries",
         "deadline": "Entry deadline",
+        "logInToAddEntries": "Log in to add or edit entries.",
         "myEntries": "My entries",
         "schedule": "Schedule",
         "status": "Status",
         "vote": "Vote",
         "votingIsOpen": "Voting is open!",
+        "votingIsOpenNotLoggedIn": "Voting is open! Log in to vote.",
         "votingEnd": "Voting ends",
         "votingStart": "Voting starts"
     },
