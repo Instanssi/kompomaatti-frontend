@@ -73,7 +73,7 @@ export default class EventStatus extends React.Component<{
             content = this.renderNoLogin();
         } else if (noVoteCode) {
             content = this.renderNoVoteCode();
-        } else {
+        } else if (showIfIrrelevant) {
             content = this.renderVoteOk();
         }
 

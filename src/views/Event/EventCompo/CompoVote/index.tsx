@@ -202,18 +202,18 @@ export default class CompoVote extends React.Component<{
 
         return (
             <div className="compo-vote">
+                <h3><L text="compo.vote" /></h3>
                 <EventStatus event={this.props.eventInfo} />
+                {!ended ? <div className="alert alert-info">
+                    <span className="fa fa-clock-o" />&ensp;
+                    <L
+                        text="voting.deadline"
+                        values={{
+                            date: deadline.format('LLL'),
+                        }}
+                    />
+                </div> : <div className="alert alert-info"><L text="voting.ended" /></div>}
                 <form onSubmit={this.handleSubmit}>
-                    <h3><L text="compo.vote" /></h3>
-                    {!ended ? <div className="alert alert-info">
-                        <span className="fa fa-clock-o" />&ensp;
-                        <L
-                            text="voting.deadline"
-                            values={{
-                                date: deadline.format('LLL'),
-                            }}
-                        />
-                    </div> : <div className="alert alert-info"><L text="voting.ended" /></div>}
                     <p>
                         <L text="voting.help" />
                         <span className="fa fa-sort" />
