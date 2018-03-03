@@ -102,6 +102,7 @@ main {
 .voting-item {
     list-style: none;
     display: flex;
+    align-items: baseline;
     white-space: nowrap;
     padding: 0 !important;
 
