@@ -25,12 +25,12 @@ const VoteEntryItem = SortableElement((props: {
     value: ICompoEntry;
     num: string;
 }) => (
-        <li className="draggable-item">
+        <li className="voting-item">
+            <div className="item-number">
+                {props.num}&ensp;
+            </div>
             <div className="item-content">
-                <div className="item-number">
-                    {props.num}&ensp;
-                </div>
-                <div className="item-title flex-fill">
+                <div className="item-title">
                     {props.value.name} <span className="item-creator">by {props.value.creator}
                         {' '}
                         ({(props.value as any)._currentVote || '-'})</span>
@@ -49,7 +49,7 @@ const VoteEntryItem = SortableElement((props: {
     ));
 
 const VoteDivider = SortableElement((props: { entryIds: number[] }) => (
-    <li className="draggable-item divider">
+    <li className="voting-item divider">
         <L text="voting.divider" />
     </li>
 ));

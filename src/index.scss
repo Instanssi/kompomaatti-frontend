@@ -99,24 +99,35 @@ main {
     flex: 1 0 auto;
 }
 
-.draggable-item {
-    // Voting uses this.
-
+.voting-item {
     list-style: none;
     display: flex;
     white-space: nowrap;
+    padding: 0 !important;
 
+    .item-number {
+        padding: $spacer;
+    }
     .item-handle {
         // "grab" might be more fitting, but it doesn't work in Chrome
         cursor: move;
+        margin-left: auto;
         padding: $spacer ($spacer * 2);
-
         background: #eee;
+        align-self: stretch;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
     }
     .item-content {
         display: flex;
+        // This should flex as much as possible to fill the row
         flex: 1 1 auto;
-        padding: $spacer;
+        padding: 0 $spacer $spacer 0;
+        overflow: hidden;
+
+        // This contains item-title and item-actions;
+        justify-content: space-between;
 
         // Break the title into two parts on mobiles
         .item-creator {
@@ -125,6 +136,7 @@ main {
         @media screen and (max-width: $screen-xs-max) {
             .item-creator {
                 display: block;
+                font-size: 1.4rem;
             }
         }
 
@@ -133,23 +145,28 @@ main {
             font-size: 1.5rem;
         }
     }
+    .item-actions {
+        float: right;
+    }
 }
 
-.draggable-item {
+.voting-item {
     background: #fff;
     box-shadow: rgba(0,0,0,.25) 0 2px 4px;
+    user-select: none;
 }
 
-body > .draggable-item {
+body > .voting-item {
     // items being dragged seem to end up absolute-positioned directly inside <body>
     padding: $spacer;
     opacity: .8;
 }
 
-.draggable-item.divider {
+.voting-item.divider {
     font-style: italic;
+    white-space: normal;
     font-size: 1.2rem;
-    padding: 0 ($spacer * 2);
+    padding: 0 $spacer !important;
     margin: $spacer 0;
 }
 
