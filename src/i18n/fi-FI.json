@@ -152,8 +152,8 @@
     "programmeEvent": {
         "presenters": "Esiintyjät",
         "event": "Tapahtuma",
-        "start": "Tapahtuma alkaa",
-        "end": "Tapahtuma päättyy"
+        "start": "Alkaa",
+        "end": "Päättyy"
     },
     "session": {
         "login": "Kirjaudu sisään",

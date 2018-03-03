@@ -3,6 +3,7 @@ import { observer } from 'mobx-react';
 import { autorun, computed } from 'mobx';
 import { Link, withRouter } from 'react-router-dom';
 import _orderBy from 'lodash/orderBy';
+import classNames from 'classnames';
 
 import { ICompo } from 'src/api/interfaces';
 import globalState from 'src/state';
@@ -57,7 +58,13 @@ export default class CompoEntries extends React.Component<{
             <LoadingWrapper store={this.entries}>
                 {(entries && entries.length > 0) ? <ul className="list-k">
                     {entries.map(entry => (
-                        <li key={entry.id}>
+                        <li
+                            key={entry.id}
+                            className={classNames(
+                                'entry-item',
+                                { disqualified: entry.disqualified },
+                            )}
+                        >
                             <span className="item-time">
                                 {entry.rank ? entry.rank + '. ' : ''}
                             </span>

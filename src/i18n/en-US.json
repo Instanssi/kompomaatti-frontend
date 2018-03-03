@@ -153,8 +153,8 @@
     "programmeEvent": {
         "presenters": "Presenters",
         "event": "Event",
-        "start": "Event start",
-        "end": "Event end"
+        "start": "Starts",
+        "end": "Ends"
     },
     "session": {
         "login": "Log in",

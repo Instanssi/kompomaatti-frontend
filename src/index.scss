@@ -171,6 +171,12 @@ body > .draggable-item {
     }
 }
 
+.entry-item {
+    &.disqualified {
+        text-decoration: line-through;
+    }
+}
+
 @media screen and (min-width: $screen-sm-min) {
     .pull-sm-right {
         float: right !important;

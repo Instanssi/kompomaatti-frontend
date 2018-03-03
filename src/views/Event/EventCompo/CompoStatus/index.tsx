@@ -66,17 +66,6 @@ export default class CompoStatus extends React.Component<{
         return false;
     }
 
-    @computed
-    get canVoteEntry() {
-        const { compo } = this.props;
-        if (!compo.is_votable) {
-            return;
-        }
-        const now = moment(globalState.timeMin);
-        const { voting_end, voting_start } = compo;
-        return now.isSameOrAfter(voting_start) && now.isBefore(voting_end);
-    }
-
     render() {
         return (
             <div className="compo-status">

@@ -27,8 +27,10 @@ export default class FrontSchedule extends React.Component<{
         const title = (name, type, url) => (
             <div className="item-title">
                 <Link to={url}>{name}</Link>
-                {': '}
-                <span><L text={type} /></span>
+                {type !== null && <>
+                    {': '}
+                    <span><L text={type} /></span>
+                </>}
             </div>
         );
 
@@ -39,7 +41,7 @@ export default class FrontSchedule extends React.Component<{
                     time: new Date(progEvent.start),
                     title: title(
                         progEvent.title,
-                        'programmeEvent.event',
+                        null,
                         event.getProgrammeEventURL(progEvent)
                     ),
                 });
@@ -166,8 +168,8 @@ export default class FrontSchedule extends React.Component<{
     @computed
     get currentEvents() {
         const { allRows } = this;
-        const now = moment(globalState.timeMin).subtract(15, 'minutes');
-        return allRows.filter(item => item.time.valueOf() < now.valueOf());
+        const now = moment(globalState.timeMin);
+        return allRows.filter(item => item.time.valueOf() > now.valueOf());
     }
 
     @computed
