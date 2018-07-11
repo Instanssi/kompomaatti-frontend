@@ -42,7 +42,7 @@ moment.updateLocale('fi', {
 export default class App extends React.Component {
     render() {
         return (
-            <BrowserRouter basename="/kompomaatti2">
+            <BrowserRouter basename="/kompomaatti">
                 <div className="container">
                     <div id="top" className="app-wrap">
                         <Header />
