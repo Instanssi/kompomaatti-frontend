@@ -1,7 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const getBuildId = require('./scripts/build-id');
 
 
@@ -13,6 +13,7 @@ const PRODUCTION_BUILD = NODE_ENV === 'production';
 const namePattern = name => PRODUCTION_BUILD ? name : name.replace(/\.\[(?:chunk)?hash\]/, '');
 
 const config = {
+    mode: PRODUCTION_BUILD ? 'production' : 'development',
     entry: 'src/index.tsx',
     output: {
         path: path.resolve(__dirname, 'build'),
@@ -20,8 +21,10 @@ const config = {
         publicPath: '/kompomaatti/',
     },
     resolve: {
-        modules: [ './', 'node_modules' ],
-        extensions: ['.ts', '.tsx', '.js', '.jsx'],
+        extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
+        alias: {
+            'src': path.resolve(process.cwd(), 'src'),
+        }
     },
     module: {
         rules: [
@@ -46,14 +49,9 @@ const config = {
                 test: /\.scss$/,
                 // Pass SCSS through the usual loader chain (last is applied first).
                 use: getStyleLoaders([
-                    {
-                        loader: 'css-loader',
-                        options: {
-                            minimize: PRODUCTION_BUILD
-                        }
-                    },
-                    { loader: 'postcss-loader' },
-                    { loader: 'sass-loader' },
+                    'css-loader',
+                    'postcss-loader',
+                    'sass-loader',
                 ])
             },
             {
@@ -67,7 +65,9 @@ const config = {
                 test: /\.(png|jpg|jpeg|svg|ttf|otf|woff|woff2|eot)$/,
                 loader: 'file-loader',
                 options: {
-                    publicPath: '/kompomaatti/',
+                    // Path prefix in deployment environment.
+                    publicPath: '/kompomaatti/res/',
+                    // Relative path in the build directory to save files to.
                     outputPath: 'res/'
                 }
             }
@@ -81,7 +81,10 @@ const config = {
         }),
         // Emit all extracted text (CSS) into a single file.
         // This lets it get loaded in parallel with the JS load/parse
-        new ExtractTextPlugin(namePattern('res/[name].[hash].css')),
+        new MiniCssExtractPlugin({
+            filename: namePattern('res/[name].[hash].css'),
+            chunkfilename: namePattern('[id].[chunkhash].css'),
+        }),
         // DefinePlugin can replace content in the loaded JS modules with new text.
         // Note that in production builds, JS minification will remove any code that is put
         // behind compile-time false condition expressions (e.g. comparisons with NODE_ENV).
@@ -102,18 +105,15 @@ const config = {
  * efficiently. Disabled in development environments because of terminal spam.
  */
 function getStyleLoaders(cssLoaders) {
-    if(PRODUCTION_BUILD) {
-        return ExtractTextPlugin.extract({
-            fallback: 'style-loader',
-            use: cssLoaders,
-        });
-    }
-    return ['style-loader'].concat(cssLoaders);
+    // Package and load CSS separately in production builds.
+    // In development mode, just use style-loader (= CSS in a JS module).
+    const loader = PRODUCTION_BUILD ? MiniCssExtractPlugin.loader : 'style-loader';
+    return [loader, ...cssLoaders];
 }
 
 if(PRODUCTION_BUILD) {
     config.plugins.push(
-        new webpack.optimize.UglifyJsPlugin(),
+        // new webpack.optimize.UglifyJsPlugin(),
         new webpack.optimize.ModuleConcatenationPlugin()
     );
 

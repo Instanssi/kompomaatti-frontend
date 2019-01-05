@@ -1,4 +1,4 @@
-import { Atom, runInAction } from 'mobx';
+import { createAtom, runInAction } from 'mobx';
 
 import { IRemote } from 'src/stores';
 
@@ -21,7 +21,7 @@ export default class LazyStore<T, E = any> implements IRemote<T, E> {
      * Call atom.reportObserved() when observable data is accessed,
      * and atom.reportChanged() then the data changes.
      */
-    protected atom = new Atom(
+    protected atom = createAtom(
         'AtomStore',
         () => this.onObserved(),
         () => this.onUnobserved(),
