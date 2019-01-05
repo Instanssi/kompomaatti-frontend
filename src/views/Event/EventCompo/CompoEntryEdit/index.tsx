@@ -45,7 +45,7 @@ export class CompoEntryEdit extends React.Component<{
             (entry) => {
                 this.updateForm(entry);
             },
-            true,
+            { fireImmediately: true },
         ));
     }
 

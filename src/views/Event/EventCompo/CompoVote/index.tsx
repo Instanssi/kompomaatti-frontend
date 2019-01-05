@@ -57,7 +57,12 @@ const VoteDivider = SortableElement((props: { entryIds: number[] }) => (
     </li>
 ));
 
-const VoteEntryList = SortableContainer(({ items, entryIds, isLocked }) => {
+const VoteEntryList = SortableContainer((props: {
+    items: any;
+    entryIds: number[];
+    isLocked?: boolean;
+}) => {
+    const { items, entryIds, isLocked } = props;
     let foundDivider = false;
     return (
         <ul className="list-k">
