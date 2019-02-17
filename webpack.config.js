@@ -51,7 +51,7 @@ const config = {
                 use: getStyleLoaders([
                     'css-loader',
                     'postcss-loader',
-                    'sass-loader',
+                    { loader: 'sass-loader', options: { implementation: require('sass'), }, },
                 ])
             },
             {

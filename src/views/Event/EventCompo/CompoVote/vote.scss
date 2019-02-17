@@ -1,7 +1,7 @@
 @import 'src/styles/variables';
 
 
-$attention-color: ($brand-primary + $app-bg) / 2;
+$attention-color: mix($brand-primary, $app-bg, 50%);
 
 .voting-item {
     list-style: none;
