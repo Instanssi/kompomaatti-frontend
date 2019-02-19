@@ -30,6 +30,10 @@ export default class EventInfo {
         return this.event.id;
     }
 
+    get eventURL() {
+        return `/${this.eventId}`;
+    }
+
     /** Get query parameters for fetching stuff related to this event. */
     protected get query() {
         return { event: this.eventId };
@@ -68,11 +72,11 @@ export default class EventInfo {
     }
 
     getCompoURL(compo: ICompo) {
-        return `/${this.eventId}/compo/${compo.id}`;
+        return `${this.eventURL}/compo/${compo.id}`;
     }
 
     getCompoVoteURL(compo: ICompo) {
-        return `/${this.eventId}/compo/${compo.id}/vote`;
+        return `${this.eventURL}/compo/${compo.id}/vote`;
     }
 
     getCompoEntryAddURL(compo: ICompo) {
@@ -88,10 +92,10 @@ export default class EventInfo {
     }
 
     getProgrammeEventURL(progEvent: IProgrammeEvent) {
-        return `/${this.eventId}/programme/${progEvent.id}`;
+        return `${this.eventURL}/programme/${progEvent.id}`;
     }
 
     getCompetitionURL(competition: ICompetition) {
-        return `/${this.eventId}/competition/${competition.id}`;
+        return `${this.eventURL}/competition/${competition.id}`;
     }
 }

@@ -73,6 +73,9 @@ main {
     margin: 0 !important;
 }
 
+.ml-auto { margin-left: auto; }
+.mt-auto { margin-top: auto; }
+
 @media screen and (max-width: $screen-xs-max) {
     .list-k {
         // Cut through padding around an element through negative margins.
@@ -97,6 +100,11 @@ main {
 .flex-baseline {
     display: flex;
     align-items: baseline;
+}
+
+.flex-align-middle {
+    display: flex;
+    align-items: center;
 }
 
 .flex-row-even {

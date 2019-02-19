@@ -13,8 +13,20 @@
         "no-consecutive-blank-lines": [true, "error"],
         "no-console": true,
         "object-literal-sort-keys": false,
+        "trailing-comma": [true, { "esSpecCompliant": true }],
         "ordered-imports": false,
-        "variable-name": [true, "check-format", "allow-leading-underscore", "ban-keywords"],
-        "quotemark": [true, "single", "jsx-double", "avoid-escape", "avoid-template"]
+        "variable-name": [
+            true,
+            "check-format",
+            "allow-leading-underscore",
+            "ban-keywords"
+        ],
+        "quotemark": [
+            true,
+            "single",
+            "jsx-double",
+            "avoid-escape",
+            "avoid-template"
+        ]
     }
 }

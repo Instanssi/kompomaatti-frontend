@@ -14,6 +14,7 @@ import FrontCompetitions from './FrontCompetitions';
 import FrontSchedule from './FrontSchedule';
 
 import './frontpage.scss';
+import { Link } from 'react-router-dom';
 
 
 @observer
@@ -31,15 +32,18 @@ export default class FrontPageView extends React.Component<any> {
                 <p><L text="dashboard.welcome" /></p>
                 <LoadingWrapper store={globalState.events}>
                     {currentEvent && <>
-                        <h2>{currentEvent.event.name}</h2>
+                        <div className="flex-baseline">
+                            <h2>{currentEvent.event.name}</h2>
+                            <div className="ml-auto">
+                                <Link to={currentEvent.eventURL} className="btn btn-link">
+                                    <span className="fa fa-calendar" />
+                                    &ensp;
+                                    <L text="event.linkTo" />
+                                </Link>
+                            </div>
+                        </div>
                         <EventStatus event={currentEvent} />
                         <FrontSchedule event={currentEvent} />
-                        {/*<div className="frontpage-boxes">
-                            <FrontEvent event={currentEvent} />
-                            <FrontProgramme event={currentEvent} />
-                            <FrontCompos event={currentEvent} />
-                            <FrontCompetitions event={currentEvent} />
-                        </div>*/}
                     </>}
                 </LoadingWrapper>
             </div>

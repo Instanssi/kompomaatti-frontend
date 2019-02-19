@@ -9,7 +9,6 @@ import EventInfo from 'src/state/EventInfo';
 import { FormatTime, L } from 'src/common';
 import globalState from 'src/state';
 
-
 @observer
 export default class FrontSchedule extends React.Component<{
     event: EventInfo;
@@ -199,6 +198,6 @@ export default class FrontSchedule extends React.Component<{
                     <p><L text="common.scheduleEmpty"/></p>
                 )}
             </div>
-        )
+        );
     }
 }
