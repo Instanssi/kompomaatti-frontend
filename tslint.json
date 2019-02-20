@@ -11,7 +11,7 @@
         "member-access": false,
         "no-bitwise": false,
         "no-consecutive-blank-lines": [true, "error"],
-        "no-console": true,
+        "no-console": false,
         "object-literal-sort-keys": false,
         "trailing-comma": [true, { "esSpecCompliant": true }],
         "ordered-imports": false,
@@ -19,6 +19,7 @@
             true,
             "check-format",
             "allow-leading-underscore",
+            "allow-pascal-case",
             "ban-keywords"
         ],
         "quotemark": [
