@@ -32,6 +32,10 @@ moment.updateLocale('fi', {
     longDateFormat: {
         LT: 'HH:mm',
         LTS: 'HH:mm:ss',
+        LLL: 'Do MMMM[ta] YYYY, [klo] HH:mm',
+        LLLL : 'dddd, Do MMMM[ta] YYYY, [klo] HH:mm',
+        lll : 'Do MMM YYYY, [klo] HH:mm',
+        llll : 'ddd, Do MMM YYYY, [klo] HH:mm'
     } as any,
 });
 
