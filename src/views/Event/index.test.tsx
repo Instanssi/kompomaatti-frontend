@@ -8,7 +8,7 @@ import { EventView } from './';
 
 jest.mock('src/state', () => {
     const { mockEvent } = require('src/tests/mocks');
-    const einfo = require('src/state/EventInfo');
+    const einfo = require('src/state/EventInfo').default;
     return {
         events: {
             value: [
