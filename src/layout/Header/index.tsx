@@ -1,17 +1,18 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { observable, action } from 'mobx';
-import { Link } from 'react-router-dom';
+import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
 import classNames from 'classnames';
 
 import { L } from 'src/common';
 import UserMenu from '../UserMenu';
 import LanguageSwitch from '../LanguageSwitch';
 import NavLink from './NavLink';
+import globalState from 'src/state';
 
 
 @observer
-export default class Header extends React.Component {
+export class Header extends React.Component<RouteComponentProps<any>> {
     @observable isOpen = false;
 
     @action.bound
@@ -20,6 +21,8 @@ export default class Header extends React.Component {
     }
 
     render() {
+        const { currentEvent } = globalState;
+
         return (
             <nav className="navbar navbar-inverse">
                 <div className="navbar-header">
@@ -47,6 +50,11 @@ export default class Header extends React.Component {
                     )}
                 >
                     <ul className="nav navbar-nav">
+                        {currentEvent && (
+                            <NavLink to={currentEvent.eventURL}>
+                                {currentEvent.event.name}
+                            </NavLink>
+                        )}
                         <NavLink to="/events" exact>
                             <L text="nav.events" />
                         </NavLink>
@@ -64,3 +72,5 @@ export default class Header extends React.Component {
         );
     }
 }
+
+export default withRouter(Header);

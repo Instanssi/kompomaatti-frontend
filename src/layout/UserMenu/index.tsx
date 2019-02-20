@@ -17,7 +17,9 @@ export default class UserMenu extends React.Component<any> {
         return (
             <li>
                 {user ? (
-                    <a href="/users/profile">{ user.email }</a>
+                    <a href="/users/profile">
+                        {user.first_name || user.email || '?'}
+                    </a>
                 ) : (
                     <a href="/users/login">
                         {translate('nav.login')}
