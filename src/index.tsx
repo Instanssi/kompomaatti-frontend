@@ -11,6 +11,7 @@ import 'moment/locale/en-gb';
 import 'moment/locale/fi';
 
 import moment from 'moment';
+import { observer } from 'mobx-react';
 
 import './index.scss';
 
@@ -26,6 +27,7 @@ import {
     Footer,
     // Breadcrumbs,
 } from 'src/layout';
+import globalState from './state';
 
 // Make the Finnish locale less confusing (is 15.10 a date or a time of day?)
 moment.updateLocale('fi', {
@@ -62,11 +64,21 @@ export default class App extends React.Component {
                         <Footer />
                     </div>
                     <AutoScrollWR />
+                    <UpdateLang />
                 </div>
             </BrowserRouter>
         );
     }
 }
+
+/**
+ * Update the page-wide language tag to match the active language.
+ */
+const UpdateLang = observer(() => (
+    <Helmet>
+        <html lang={globalState.language} />
+    </Helmet>
+));
 
 /**
  * Scroll to top when the current path changes.
