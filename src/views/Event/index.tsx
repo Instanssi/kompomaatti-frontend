@@ -2,6 +2,7 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { computed } from 'mobx';
 import { Switch, Route, withRouter, RouteComponentProps } from 'react-router';
+import { Helmet } from 'react-helmet';
 
 import globalState from 'src/state';
 import { FormatTime, LoadingWrapper } from 'src/common';
@@ -34,6 +35,9 @@ export class EventView extends React.Component<{
             <div className="event-view">
                 <LoadingWrapper store={globalState.events}>
                     {eventInfo && <>
+                        <Helmet>
+                            <title>{eventInfo.event.name}</title>
+                        </Helmet>
                         <div className="event-title">
                             <h1>{eventInfo.event.name}</h1>
                             <p>

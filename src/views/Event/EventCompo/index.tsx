@@ -1,7 +1,8 @@
 import React from 'react';
+import { computed } from 'mobx';
 import { observer } from 'mobx-react';
 import { Switch, Route, withRouter, RouteComponentProps } from 'react-router';
-import { computed } from 'mobx';
+import { Helmet } from 'react-helmet';
 
 import { FormatTime, LoadingWrapper } from 'src/common';
 
@@ -39,9 +40,16 @@ export class EventCompo extends React.Component<{
         return (
             <LoadingWrapper
                 className="event-compo"
-                store={this.props.eventInfo.compos}
+                store={eventInfo.compos}
             >
                 {compo && <>
+                    <Helmet>
+                        <title>{`${compo.name} @ ${eventInfo.event.name}`}</title>
+                        <meta
+                            property="og:title"
+                            content={`${compo.name} @ ${eventInfo.event.name}`}
+                        />
+                    </Helmet>
                     <div className="compo-title">
                         <h2>{compo.name}</h2>
                         <p><FormatTime value={compo.compo_start} /></p>
@@ -60,7 +68,10 @@ export class EventCompo extends React.Component<{
                             />
                         </Route>
                         <Route path={url + '/entries/:entryId'}>
-                            <CompoEntry compo={compo} />
+                            <CompoEntry
+                                eventInfo={eventInfo}
+                                compo={compo}
+                            />
                         </Route>
                         <Route exact path={url + '/vote'}>
                             <CompoVote

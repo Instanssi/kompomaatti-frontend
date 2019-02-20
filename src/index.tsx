@@ -17,6 +17,7 @@ import './index.scss';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, RouteComponentProps, withRouter } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 
 // import globalState from 'src/state';
 import Views from './views';
@@ -47,6 +48,11 @@ export default class App extends React.Component {
         return (
             <BrowserRouter basename="/kompomaatti">
                 <div className="container">
+                    <Helmet
+                        titleTemplate={'Kompomaatti - %s'}
+                    >
+                        <title>Kompomaatti</title>
+                    </Helmet>
                     <div id="top" className="app-wrap">
                         <Header />
                         <main className="p-3">

@@ -2,15 +2,17 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { autorun } from 'mobx';
 import { withRouter, RouteComponentProps } from 'react-router';
+import { Helmet } from 'react-helmet';
 
 import globalState from 'src/state';
 import { ICompo } from 'src/api/interfaces';
 import { RemoteStore } from 'src/stores';
 import { L, LoadingWrapper } from 'src/common';
-
+import EventInfo from 'src/state/EventInfo';
 
 @observer
 export class CompoEntry extends React.Component<{
+    eventInfo: EventInfo;
     compo: ICompo;
 } & RouteComponentProps<{ entryId: string }>> {
     entry = new RemoteStore(() => {
@@ -35,11 +37,31 @@ export class CompoEntry extends React.Component<{
     }
 
     render() {
+        const { eventInfo } = this.props;
         const entry = this.entry.value;
 
         return (
             <LoadingWrapper className="compo-entry" store={this.entry}>
                 {entry && <div className="entry-info">
+                    <Helmet>
+                        <title>{`${entry.name} @ ${eventInfo.event.name}`}</title>
+                        <meta
+                            property="og:title"
+                            content={entry.name}
+                        />
+                        {entry.description && entry.description.length > 0 && (
+                            <meta
+                                property="og:description"
+                                content={entry.description}
+                            />
+                        )}
+                        {entry.imagefile_original_url && (
+                            <meta
+                                property="og:image"
+                                content={entry.imagefile_original_url}
+                            />
+                        )}
+                    </Helmet>
                     <div className="entry-title">
                         <h3>{entry.name}</h3>
                         <p>{entry.creator}</p>

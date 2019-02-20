@@ -1,5 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react';
+import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 
 import globalState from 'src/state';
 import { L, LoadingWrapper } from 'src/common';
@@ -14,7 +16,6 @@ import FrontCompetitions from './FrontCompetitions';
 import FrontSchedule from './FrontSchedule';
 
 import './frontpage.scss';
-import { Link } from 'react-router-dom';
 
 
 @observer
@@ -32,6 +33,10 @@ export default class FrontPageView extends React.Component<any> {
                 <p><L text="dashboard.welcome" /></p>
                 <LoadingWrapper store={globalState.events}>
                     {currentEvent && <>
+                        <Helmet>
+                            <title>{L.getText('common.schedule')}</title>
+                        </Helmet>
+
                         <div className="flex-baseline">
                             <h2>{currentEvent.event.name}</h2>
                             <div className="ml-auto">
