@@ -16,8 +16,7 @@ import './index.scss';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, RouteComponentProps, withRouter } from 'react-router-dom';
 
 // import globalState from 'src/state';
 import Views from './views';
@@ -56,10 +55,29 @@ export default class App extends React.Component {
                         </main>
                         <Footer />
                     </div>
+                    <AutoScrollWR />
                 </div>
             </BrowserRouter>
         );
     }
 }
+
+/**
+ * Scroll to top when the current path changes.
+ */
+export class AutoScroll extends React.Component<RouteComponentProps<any>> {
+    componentDidUpdate(prevProps: RouteComponentProps<any>) {
+        const { props } = this;
+        if (props.location.pathname !== prevProps.location.pathname) {
+            window.scrollTo(0, 0);
+        }
+    }
+
+    render() {
+        return null;
+    }
+}
+
+const AutoScrollWR = withRouter(AutoScroll);
 
 ReactDOM.render(<App />, document.getElementById('app'));
