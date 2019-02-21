@@ -96,6 +96,7 @@ export default class CompoVote extends React.Component<{
     }));
 
     @observable hasChanges = false;
+    @observable isSubmitting = false;
 
     @observable.ref votes: number[] = [];
     @observable.ref entries: ICompoEntry[] = [];
@@ -178,17 +179,25 @@ export default class CompoVote extends React.Component<{
         event.preventDefault();
         const { entryIds } = this;
 
-        if (!entryIds.length) {
+        if (!entryIds.length || this.isSubmitting) {
             return Promise.reject(null);
         }
+
+        this.isSubmitting = true;
 
         return globalState.api.userVotes.setVotes({
             compo: this.props.compo.id,
             entries: entryIds,
-        }).then(() => {
-            this.hasChanges = false;
-            this.refresh();
-        });
+        }).then(
+            () => runInAction(() => {
+                this.hasChanges = false;
+                this.isSubmitting = false;
+                this.refresh();
+            }),
+            (error) => runInAction(() => {
+                this.isSubmitting = false;
+            }),
+        );
     }
 
     @action.bound
@@ -261,13 +270,20 @@ export default class CompoVote extends React.Component<{
                         useDragHandle
                     />
                     <div>
-                        <button className="btn btn-primary" disabled={entryIds.length <= 0}>
+                        <button
+                            className="btn btn-primary"
+                            disabled={entryIds.length <= 0 || this.isSubmitting}
+                        >
                             <L text="common.save" />
                         </button>
                         &ensp;
-                        {entryIds.length > 0
-                            ? <span>{hasChanges && <L text="voting.hasChanges" />}</span>
-                            : <span><L text="voting.atLeastOneRequired" /></span>}
+                        {this.isSubmitting
+                            ? <span className="fa fa-fw fa-spin fa-spinner" />
+                            : (entryIds.length > 0
+                                ? <span>{hasChanges && <L text="voting.hasChanges" />}</span>
+                                : <span><L text="voting.atLeastOneRequired" /></span>
+                            )
+                        }
                     </div>
                 </form>
             </div>

@@ -20,7 +20,6 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter, RouteComponentProps, withRouter } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 
-// import globalState from 'src/state';
 import Views from './views';
 import {
     Header,

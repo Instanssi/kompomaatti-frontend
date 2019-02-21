@@ -88,9 +88,13 @@ export default class CompoEntryAdd extends React.Component<{
                     type="file"
                 />
                 <div>
-                    <button className="btn btn-primary" disabled={this.form.isPending}>
+                    <button className="btn btn-primary" disabled={form.isPending}>
                         <L text="common.submit" />
                     </button>
+                    {form.isPending && <>
+                        &ensp;
+                        <span className="fa fa-fw fa-spin fa-spinner" />
+                    </>}
                 </div>
             </Form>
         );

@@ -131,6 +131,10 @@ export class CompoEntryEdit extends React.Component<{
                     <button className="btn btn-primary" disabled={this.form.isPending}>
                         <L text="common.submit" />
                     </button>
+                    {form.isPending && <>
+                        &ensp;
+                        <span className="fa fa-fw fa-spin fa-spinner" />
+                    </>}
                 </div>
             </Form>
         );
