@@ -11,6 +11,11 @@ import {
 } from 'src/api/interfaces';
 import { LazyStore } from 'src/stores';
 
+const storeOptions = {
+    // Accommodate changes in the structure of space and time
+    // by auto-refreshing previously fetched stores after a few minutes.
+    refreshInterval: 1000 * 60 * 10,
+};
 
 /**
  * Collects data related to a specific event under one object for easy access and caching.
@@ -18,13 +23,20 @@ import { LazyStore } from 'src/stores';
 export default class EventInfo {
     @observable.ref event: IEvent;
 
-    compos = new LazyStore(() => this.api.compos.list(this.query));
-    competitions = new LazyStore(() => this.api.competitions.list(this.query));
-    programme = new LazyStore(() => this.api.programme.list(this.query));
-    myEntries = new LazyStore(() => this.api.userCompoEntries.list(this.query));
-    myParticipations = new LazyStore(() => this.api.userCompetitionParticipations.list(this.query));
-    myVoteCodes = new LazyStore(() => this.api.voteCodes.list(this.query));
-    myCodeRequests = new LazyStore(() => this.api.voteCodeRequests.list(this.query));
+    compos = new LazyStore(
+        () => this.api.compos.list(this.query), storeOptions);
+    competitions = new LazyStore(
+        () => this.api.competitions.list(this.query), storeOptions);
+    programme = new LazyStore(
+        () => this.api.programme.list(this.query), storeOptions);
+    myEntries = new LazyStore(
+        () => this.api.userCompoEntries.list(this.query), storeOptions);
+    myParticipations = new LazyStore(
+        () => this.api.userCompetitionParticipations.list(this.query), storeOptions);
+    myVoteCodes = new LazyStore(
+        () => this.api.voteCodes.list(this.query), storeOptions);
+    myCodeRequests = new LazyStore(
+        () => this.api.voteCodeRequests.list(this.query), storeOptions);
 
     get eventId() {
         return this.event.id;

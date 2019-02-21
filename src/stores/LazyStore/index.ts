@@ -2,6 +2,13 @@ import { createAtom, runInAction } from 'mobx';
 
 import { IRemote } from 'src/stores';
 
+export interface IStoreOptions {
+    /**
+     * Delay before the data is considered outdated and will be re-fetched on the next access,
+     * in milliseconds. 0 or undefined = no auto refresh.
+     */
+    refreshInterval?: number;
+}
 
 /**
  * Like a RemoteStore, but only fetches its value once something looks at it.
@@ -11,7 +18,7 @@ import { IRemote } from 'src/stores';
 export default class LazyStore<T, E = any> implements IRemote<T, E> {
     protected _value: T | null;
     protected _error: E | null;
-    protected _isPending = false;
+    protected _currentFetch: Promise<T> | null = null;
     protected _lastRefresh: Date | null = null;
     protected _observed = 0;
 
@@ -27,7 +34,7 @@ export default class LazyStore<T, E = any> implements IRemote<T, E> {
         () => this.onUnobserved(),
     );
 
-    constructor(protected fetch: () => Promise<T>) { }
+    constructor(protected fetch: () => Promise<T>, protected options: IStoreOptions = {}) { }
 
     get value() {
         this.handleAccess();
@@ -41,7 +48,7 @@ export default class LazyStore<T, E = any> implements IRemote<T, E> {
 
     get isPending() {
         this.handleAccess();
-        return this._isPending;
+        return this._currentFetch !== null;
     }
 
     get lastRefresh() {
@@ -50,24 +57,28 @@ export default class LazyStore<T, E = any> implements IRemote<T, E> {
     }
 
     refresh() {
-        this._isPending = true;
-        this.atom.reportChanged();
-        return this.fetch().then(
+        if (this._currentFetch) {
+            return this._currentFetch;
+        }
+        const promise = this.fetch().then(
             (result) => runInAction(() => {
-                this._isPending = false;
                 this._value = result;
                 this._error = null;
                 this._lastRefresh = new Date();
+                this._currentFetch = null;
                 this.atom.reportChanged();
                 return result;
             }),
             (error) => runInAction(() => {
-                this._isPending = false;
                 this._error = error;
+                this._currentFetch = null;
                 this.atom.reportChanged();
                 throw error;
             }),
         );
+        this._currentFetch = promise;
+        this.atom.reportChanged();
+        return promise;
     }
 
     protected handleAccess() {
@@ -75,14 +86,24 @@ export default class LazyStore<T, E = any> implements IRemote<T, E> {
             return;
         } else {
             // Called from outside an observer/reaction; cycle anyway just this once.
-            this.onObserved();
+            console.warn('Data accessed outside observer context?', this);
+            this.maybeRefresh();
         }
     }
 
     protected maybeRefresh() {
-        const { _lastRefresh, _isPending } = this;
-        if (!_isPending && _lastRefresh === null) {
-            // console.info('Starting refresh due to observation.', this);
+        const { _lastRefresh, _currentFetch } = this;
+        const { refreshInterval } = this.options;
+
+        const neverFetched = !_currentFetch && !_lastRefresh;
+
+        const now = new Date().getTime();
+        const outdated = (refreshInterval && _lastRefresh)
+            && (now - _lastRefresh.getTime()) > refreshInterval;
+
+        console.info('maybeRefresh:', neverFetched, outdated);
+
+        if (neverFetched || outdated) {
             this.refresh();
         }
     }
