@@ -1,12 +1,11 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { computed } from 'mobx';
-import { Link } from 'react-router-dom';
 import _orderBy from 'lodash/orderBy';
 
-import { LoadingWrapper, NoResults, FormatTime } from 'src/common';
+import { LoadingWrapper, NoResults } from 'src/common';
 import EventInfo from 'src/state/EventInfo';
-
+import { EventComposItem } from './EventComposItem';
 
 @observer
 export default class EventCompos extends React.Component<{
@@ -30,17 +29,7 @@ export default class EventCompos extends React.Component<{
             <LoadingWrapper store={this.compos}>
                 {(compos && compos.length > 0) ? <ul className="list-k event-compos">
                     {compos.map(compo => (
-                        <li key={compo.id} className="compos-item">
-                            <span className="item-time">
-                                <FormatTime value={compo.compo_start} format="ddd LT" />
-                            </span>
-                            {' '}
-                            <span className="item-title">
-                                <Link to={eventInfo.getCompoURL(compo)}>
-                                    {compo.name}
-                                </Link>
-                            </span>
-                        </li>
+                        <EventComposItem key={compo.id} compo={compo} eventInfo={eventInfo} />
                     ))}
                 </ul> : <NoResults />}
             </LoadingWrapper>
