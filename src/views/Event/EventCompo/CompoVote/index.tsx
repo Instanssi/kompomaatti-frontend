@@ -195,6 +195,7 @@ export default class CompoVote extends React.Component<{
                 this.refresh();
             }),
             (error) => runInAction(() => {
+                // FIXME: Indicate error.
                 this.isSubmitting = false;
             }),
         );
