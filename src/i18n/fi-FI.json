@@ -183,7 +183,7 @@
     },
     "voteCode": {
         "hasCodeForEvent": "Sinulla on äänestysoikeus tähän tapahtumaan.",
-        "help": "Jos haluat osallistua tapahtumaan Kompomaatissa, tilillesi on liitettävä äänestyskoodi. Jos ostit lipun verkkokaupasta, voit käyttää lippukoodiasi äänestyskoodina.",
+        "help": "Jos haluat osallistua tapahtuman äänestyksiin Kompomaatissa, tilillesi on liitettävä äänestyskoodi. Jos ostit lippusi verkkokaupasta, voit käyttää lippukoodia äänestyskoodina.",
         "missing": "Ei äänestyskoodia",
         "noTicketCode": "Minulla ei ole lippukoodia",
         "requestPending": "Olet pyytänyt äänestyskoodia",

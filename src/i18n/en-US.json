@@ -184,7 +184,7 @@
     },
     "voteCode": {
         "hasCodeForEvent": "You have a valid vote code for this event.",
-        "help": "To participate in the event through Kompomaatti, your account needs a vote code for the event. If you bought a ticket online, you can use the ticket's code for this.",
+        "help": "To vote in Kompomaatti, your account must have a vote code for the event. If you bought a ticket online, you can use the ticket's code for this.",
         "missing": "No vote code",
         "noTicketCode": "I don't have a ticket code",
         "requestPending": "Vote code request pending",
