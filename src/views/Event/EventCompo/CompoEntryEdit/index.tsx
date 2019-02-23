@@ -78,8 +78,18 @@ export class CompoEntryEdit extends React.Component<{
         );
     }
 
+    @computed
+    get helpValues() {
+        const { compo } = this.props;
+        return {
+            entryFormats: compo.entry_format_list.join(', '),
+            sourceFormats: compo.source_format_list.join(', '),
+            imageFormats: compo.image_format_list.join(', '),
+        };
+    }
+
     render() {
-        const { form } = this;
+        const { form, helpValues } = this;
         const { sourcefile_url, entryfile_url, imagefile_original_url } = this.props.entry;
 
         if (this.success) {
@@ -109,21 +119,21 @@ export class CompoEntryEdit extends React.Component<{
                 <FormGroup
                     name="entryfile"
                     label={<L text="data.entry.entryfile.title" />}
-                    help={<L text="data.entry.entryfile.help" />}
+                    help={<L text="data.entry.entryfile.help" values={helpValues} />}
                     input={FormFileInput}
                     currentFileURL={entryfile_url}
                 />
                 <FormGroup
                     name="sourcefile"
                     label={<L text="data.entry.sourcefile.title" />}
-                    help={<L text="data.entry.sourcefile.help" />}
+                    help={<L text="data.entry.sourcefile.help" values={helpValues} />}
                     input={FormFileInput}
                     currentFileURL={sourcefile_url}
                 />
                 <FormGroup
                     name="imagefile_original"
                     label={<L text="data.entry.imagefile_original.title" />}
-                    help={<L text="data.entry.imagefile_original.help" />}
+                    help={<L text="data.entry.imagefile_original.help" values={helpValues} />}
                     input={FormFileInput}
                     currentFileURL={imagefile_original_url}
                 />

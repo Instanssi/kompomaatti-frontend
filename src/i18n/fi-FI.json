@@ -88,11 +88,11 @@
                 "title": "Diskattu"
             },
             "entryfile": {
-                "help": "Teos paketoituna.",
+                "help": "Teos paketoituna. Sallitut formaatit: ${entryFormats}.",
                 "title": "Tiedosto"
             },
             "imagefile_original": {
-                "help": "Edustava kuva teokselle. Ei pakollinen, mutta suositeltava.",
+                "help": "Edustava kuva teokselle. Ei pakollinen, mutta suositeltava. Sallitut formaatit: ${imageFormats}.",
                 "title": "Kuva"
             },
             "name": {
@@ -100,7 +100,7 @@
                 "title": "Nimi"
             },
             "sourcefile": {
-                "help": "Paketti, jossa lähdekoodi tms. materiaali.",
+                "help": "Paketti, jossa lähdekoodi tms. materiaali. Sallitut formaatit: ${sourceFormats}.",
                 "title": "Lähdekoodi"
             },
             "user": {

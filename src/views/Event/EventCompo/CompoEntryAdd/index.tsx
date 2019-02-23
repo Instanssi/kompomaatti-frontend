@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { action, runInAction, observable } from 'mobx';
+import { action, runInAction, observable, computed } from 'mobx';
 
 import globalState from 'src/state';
 import { Form, FormGroup, L } from 'src/common';
@@ -36,14 +36,25 @@ export default class CompoEntryAdd extends React.Component<{
         this.form.submit().then(
             (success) => runInAction(() => {
                 console.info('success:', success);
+                // TODO: Show a toast or something
                 this.props.eventInfo.myEntries.refresh();
                 this.success = true;
             }),
         );
     }
 
+    @computed
+    get helpValues() {
+        const { compo } = this.props;
+        return {
+            entryFormats: compo.entry_format_list.join(', '),
+            sourceFormats: compo.source_format_list.join(', '),
+            imageFormats: compo.image_format_list.join(', '),
+        };
+    }
+
     render() {
-        const { form } = this;
+        const { form, helpValues } = this;
 
         if (this.success) {
             return <Redirect to={this.props.eventInfo.getCompoURL(this.props.compo)} />;
@@ -71,19 +82,22 @@ export default class CompoEntryAdd extends React.Component<{
                 />
                 <FormGroup
                     label={<L text="data.entry.entryfile.title" />}
-                    help={<L text="data.entry.entryfile.help" />}
+                    help={<L text="data.entry.entryfile.help" values={helpValues} />}
                     name="entryfile"
                     type="file"
                 />
                 <FormGroup
                     label={<L text="data.entry.sourcefile.title" />}
-                    help={<L text="data.entry.sourcefile.help" />}
+                    help={<L text="data.entry.sourcefile.help" values={helpValues} />}
                     name="sourcefile"
                     type="file"
                 />
                 <FormGroup
                     label={<L text="data.entry.imagefile_original.title" />}
-                    help={<L text="data.entry.imagefile_original.help" />}
+                    help={<L
+                        text="data.entry.imagefile_original.help"
+                        values={helpValues}
+                    />}
                     name="imagefile_original"
                     type="file"
                 />

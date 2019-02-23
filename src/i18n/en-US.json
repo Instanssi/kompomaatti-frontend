@@ -89,11 +89,11 @@
                 "title": "Disqualified"
             },
             "entryfile": {
-                "help": "Entry file (e.g. zip archive).",
+                "help": "Entry file. Allowed formats: ${entryFormats}.",
                 "title": "Entry"
             },
             "imagefile_original": {
-                "help": "Image to use for the entry. Not required, but recommended.",
+                "help": "Image to use for the entry. Not required, but recommended. Allowed formats: ${imageFormats}.",
                 "title": "Image"
             },
             "name": {
@@ -101,7 +101,7 @@
                 "title": "Name"
             },
             "sourcefile": {
-                "help": "File containing source code or other material.",
+                "help": "File containing source code or other material. Allowed formats: ${sourceFormats}.",
                 "title": "Source file"
             },
             "user": {
