@@ -37,15 +37,13 @@ export default class FrontPageView extends React.Component<any> {
                             <title>{L.getText('common.schedule')}</title>
                         </Helmet>
 
-                        <div className="flex-baseline">
-                            <h2>{currentEvent.event.name}</h2>
-                            <div className="ml-auto">
-                                <Link to={currentEvent.eventURL} className="btn btn-link">
-                                    <span className="fa fa-calendar" />
-                                    &ensp;
-                                    <L text="event.linkTo" />
-                                </Link>
-                            </div>
+                        <h2>{currentEvent.event.name}</h2>
+                        <div>
+                            <Link to={currentEvent.eventURL} className="btn btn-link">
+                                <span className="fa fa-calendar" />
+                                &ensp;
+                                <L text="event.linkTo" />
+                            </Link>
                         </div>
                         <EventStatus event={currentEvent} />
                         <FrontSchedule event={currentEvent} />
