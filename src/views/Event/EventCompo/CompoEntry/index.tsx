@@ -86,11 +86,13 @@ export class CompoEntry extends React.Component<{
                         <h4><L text="entry.files" /></h4>
                         {entry.entryfile_url && <p>
                             <a target="_blank" href={entry.entryfile_url}>
+                                <span className="fa fa-fw fa-download" />&ensp;
                                 <L text="entry.entryfile" />
                             </a>
                         </p>}
                         {entry.sourcefile_url && <p>
                             <a target="_blank" href={entry.sourcefile_url}>
+                                <span className="fa fa-fw fa-download" />&ensp;
                                 <L text="entry.sourcefile" />
                             </a>
                         </p>}
