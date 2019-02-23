@@ -178,6 +178,7 @@
         "divider": "Arrange entries above this bar to give them points. Entries below are ignored.",
         "placeholder": "Drag entries here to vote",
         "hasChanges": "Don't forget to save. You can change your votes at any time before the voting deadline.",
+        "leaveWithoutSaving": "You have unsaved votes. Leave the page anyway?",
         "ended": "Voting has concluded.",
         "help": "Drag entries around by the ",
         "help2": "Entries moved above the bar will receive points according to their order."

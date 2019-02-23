@@ -4,6 +4,7 @@ import { action, observable, runInAction, computed } from 'mobx';
 import _orderBy from 'lodash/orderBy';
 import _shuffle from 'lodash/shuffle';
 import moment from 'moment';
+import { Prompt } from 'react-router';
 
 import globalState from 'src/state';
 import { LazyStore } from 'src/stores';
@@ -90,14 +91,19 @@ export default class CompoVote extends React.Component<{
     eventInfo: EventInfo;
     compo: ICompo;
 }> {
+    /** User's current vote data. */
     myCompoVotes = new LazyStore(() => globalState.api.userVotes.getVotes(this.props.compo.id));
+    /** Could probably re-use these from somewhere. */
     compoEntries = new LazyStore(() => globalState.api.compoEntries.list({
         compo: this.props.compo.id,
     }));
 
+    /** Has the user made changes to the votes? */
     @observable hasChanges = false;
+    /** Is this trying to send vote changes right now? */
     @observable isSubmitting = false;
 
+    /** In-view state. */
     @observable.ref votes: number[] = [];
     @observable.ref entries: ICompoEntry[] = [];
 
@@ -239,6 +245,10 @@ export default class CompoVote extends React.Component<{
 
         return (
             <div className="compo-vote">
+                {<Prompt
+                    when={hasChanges}
+                    message={L.getText('voting.leaveWithoutSaving')}
+                />}
                 <h3><L text="compo.vote" /></h3>
                 <EventStatus event={this.props.eventInfo} />
                 {!ended ? <div className="alert alert-info">

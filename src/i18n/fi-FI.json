@@ -177,6 +177,7 @@
         "divider": "Pisteytä entryjä järjestämällä niitä tämän riman yläpuolelle. Alle jäävät entryt eivät saa pisteitä.",
         "placeholder": "Vedä entryjä tähän",
         "hasChanges": "Muistathan tallentaa äänesi. Voit muokata ääniä vielä ennen äänestyksen aikarajaa.",
+        "leaveWithoutSaving": "Et ole tallentanut ääniäsi. Poistutaanko sivulta?.",
         "ended": "Äänestys on päättynyt.",
         "help": "Järjestä entryt laatujärjestykseen vetämällä merkistä ",
         "help2": "Viivan yläpuolelle nostetut saavat pisteitä järjestyksensä mukaan."
