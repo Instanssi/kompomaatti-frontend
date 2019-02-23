@@ -158,6 +158,17 @@ main {
         text-align: right;
         padding-right: $spacer;
     }
+
+    .no-results {
+        display: flex;
+        align-items: baseline;
+        .fa {
+            text-align: right;
+            padding-right: $spacer;
+            flex: 0 0 $item-header-width;
+            width: $item-header-width;
+        }
+    }
 }
 
 .entry-image img {

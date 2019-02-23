@@ -28,22 +28,25 @@ export default class EventProgramme extends React.Component<{
 
         return (
             <LoadingWrapper store={this.progEvents}>
-                {(events && events.length > 0) ? <ul className="list-k">
-                    {events.map(event => (
-                        <li key={event.id} className="programme-item">
-                            <span className="item-time">
-                                <FormatTime value={event.start} format="ddd LT" />
-                            </span>
-                            {' '}
-                            <Link
-                                className="item-title"
-                                to={eventInfo.getProgrammeEventURL(event)}
-                            >
-                                {event.title}
-                            </Link>
-                        </li>
-                    ))}
-                </ul> : <NoResults />}
+                <ul className="list-k">
+                    {(events && events.length > 0)
+                        ? events.map(event => (
+                            <li key={event.id} className="programme-item">
+                                <span className="item-time">
+                                    <FormatTime value={event.start} format="ddd LT" />
+                                </span>
+                                {' '}
+                                <Link
+                                    className="item-title"
+                                    to={eventInfo.getProgrammeEventURL(event)}
+                                >
+                                    {event.title}
+                                </Link>
+                            </li>
+                        ))
+                        : <li><NoResults /></li>
+                    }
+                </ul>
             </LoadingWrapper>
         );
     }

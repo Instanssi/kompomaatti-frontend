@@ -65,7 +65,7 @@ export class CompoEntries extends React.Component<RouteComponentProps<any> & {
                             )}
                         >
                             <span className="item-rank">
-                                {entry.rank ? entry.rank + '. ' : '-'}
+                                {entry.rank ? entry.rank + '. ' : ''}
                             </span>
                             <span className="item-score">
                                 {entry.score ? <>
@@ -73,7 +73,7 @@ export class CompoEntries extends React.Component<RouteComponentProps<any> & {
                                         value={entry.score}
                                         precision={1}
                                     />{' p '}
-                                </> : '-'}
+                                </> : ''}
                             </span>
                             <span className="item-title">
                                 <Link to={this.getEntryPath(entry)}>

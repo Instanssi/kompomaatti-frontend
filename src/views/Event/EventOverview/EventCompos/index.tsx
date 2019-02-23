@@ -27,11 +27,18 @@ export default class EventCompos extends React.Component<{
 
         return (
             <LoadingWrapper store={this.compos}>
-                {(compos && compos.length > 0) ? <ul className="list-k event-compos">
-                    {compos.map(compo => (
-                        <EventComposItem key={compo.id} compo={compo} eventInfo={eventInfo} />
-                    ))}
-                </ul> : <NoResults />}
+                <ul className="list-k event-compos">
+                    {(compos && compos.length > 0)
+                        ? compos.map(compo => (
+                            <EventComposItem
+                                key={compo.id}
+                                compo={compo}
+                                eventInfo={eventInfo}
+                            />
+                        ))
+                        : <li><NoResults /></li>
+                    }
+                </ul>
             </LoadingWrapper>
         );
     }
