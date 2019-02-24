@@ -110,7 +110,7 @@ export default class BaseAPI<ItemType = any> {
                 payload._status = status;
             }
             // freeze the object; we don't want to mutate it directly anywhere
-            // (this also speeds up Vue a lot)
+            // (this also speeds up Vue and possibly MobX a lot)
             return Object.freeze(payload);
         }, (error) => {
             // tslint:disable-next-line no-console
