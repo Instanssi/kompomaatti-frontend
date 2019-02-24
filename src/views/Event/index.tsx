@@ -5,7 +5,7 @@ import { Switch, Route, withRouter, RouteComponentProps } from 'react-router';
 import { Helmet } from 'react-helmet';
 
 import globalState from 'src/state';
-import { FormatTime, LoadingWrapper } from 'src/common';
+import { FormatTime, LoadingWrapper, L } from 'src/common';
 
 import EventOverview from './EventOverview';
 import EventCompo from './EventCompo';
@@ -39,6 +39,13 @@ export class EventView extends React.Component<{
                             <title>{eventInfo.event.name}</title>
                         </Helmet>
                         <div className="event-title">
+                            <a
+                                className="pull-right"
+                                title={L.getText('event.mainSite')}
+                                href={eventInfo.event.mainurl}
+                            >
+                                <span className="fa fa-fw fa-external-link" />
+                            </a>
                             <h1>{eventInfo.event.name}</h1>
                             <p>
                                 <FormatTime value={eventInfo.event.date} format="LL" />

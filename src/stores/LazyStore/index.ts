@@ -101,7 +101,7 @@ export default class LazyStore<T, E = any> implements IRemote<T, E> {
         const outdated = (refreshInterval && _lastRefresh)
             && (now - _lastRefresh.getTime()) > refreshInterval;
 
-        console.info('maybeRefresh:', neverFetched, outdated);
+        // console.info('maybeRefresh:', neverFetched, outdated);
 
         if (neverFetched || outdated) {
             this.refresh();
