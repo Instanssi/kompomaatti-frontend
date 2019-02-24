@@ -89,7 +89,12 @@ const config = {
             // theme_color: '#00a8ff',
             // Let's not go standalone until the app's been tested like that.
             display: 'browser',
-            // FIXME: Add favicons here too
+            icons: [
+                {
+                    src: path.resolve('src/favicon.png'),
+                    sizes: [32, 64, 128, 192, 256],
+                }
+            ]
         }),
         // Emit all extracted text (CSS) into a single file.
         // This lets it get loaded in parallel with the JS load/parse
