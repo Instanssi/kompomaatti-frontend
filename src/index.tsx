@@ -13,7 +13,7 @@ import 'moment/locale/fi';
 import moment from 'moment';
 import { observer } from 'mobx-react';
 
-import './index.scss';
+import './styles/index.scss';
 
 import React from 'react';
 import ReactDOM from 'react-dom';

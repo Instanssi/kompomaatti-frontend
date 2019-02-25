@@ -12,6 +12,17 @@ export class EventComposItem extends React.Component<{
     compo: ICompo;
 }> {
     render() {
+
+
+
+
+
+
+
+
+
+
+
         const { compo, eventInfo } = this.props;
         return (
             <li key={compo.id} className="compos-item">
@@ -24,6 +35,20 @@ export class EventComposItem extends React.Component<{
                         {compo.name}
                     </Link>
                 </span>
+
+                <span className="item-note ml-auto">
+                {/*
+                    Accepting entries until 123123
+                    Voting open!
+                    Voted!
+                    1 entry by (you)
+                    Entries closed
+                    Compo soon(tm)
+                    Results @ Sun 1:00 PM
+                */}
+                </span>
+
+
             </li>
         );
     }

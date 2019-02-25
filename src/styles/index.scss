@@ -1,4 +1,5 @@
-@import 'styles/bootstrap';
+// This also imports the custom and Bootstrap variables.
+@import './bootstrap';
 
 body {
     // if we don't use Bootstrap modals, this should avoid some bouncing.
