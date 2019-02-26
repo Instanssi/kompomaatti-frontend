@@ -13,7 +13,7 @@ import globalState from 'src/state';
 interface ICompoHappening {
     time: moment.Moment;
     textKey: string;
-    humanTime: string;
+    humanTime: JSX.Element;
 }
 
 /**
@@ -38,6 +38,7 @@ export class EventComposItem extends React.Component<{
         };
     }
 
+    @computed
     get nextCompoEvent(): ICompoHappening | null {
         const { timeMin } = globalState;
         const { compo } = this.props;
@@ -46,16 +47,10 @@ export class EventComposItem extends React.Component<{
         const { times } = this;
 
         function event(time: moment.Moment, textKey: string): ICompoHappening {
-            const dayNow = moment(timeMin).local().format('ll');
-            const dayEvent = time.clone().local().format('ll');
-            const sameDay = dayNow === dayEvent;
-
-            const humanTime = time.format(sameDay ? 'ddd LT' : 'ddd LT');
-
             return {
                 time,
                 textKey,
-                humanTime,
+                humanTime: <FormatTime value={time} format="ddd LT" />,
             };
         }
         if (times.addingEnd.isAfter(timeMin)) {

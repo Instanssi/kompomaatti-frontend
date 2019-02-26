@@ -7,7 +7,9 @@ import _orderBy from 'lodash/orderBy';
 import { NoResults, LoadingWrapper, FormatTime } from 'src/common';
 import EventInfo from 'src/state/EventInfo';
 
-
+/**
+ * Lists an event's programme events.
+ */
 @observer
 export default class EventProgramme extends React.Component<{
     eventInfo: EventInfo;
