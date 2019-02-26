@@ -8,7 +8,6 @@ import { ICompetition } from 'src/api/interfaces';
 import { FormStore } from 'src/stores';
 import EventInfo from 'src/state/EventInfo';
 
-
 @observer
 export default class CompetitionEnterForm extends React.Component<{
     eventInfo: EventInfo;
@@ -41,7 +40,7 @@ export default class CompetitionEnterForm extends React.Component<{
     render() {
         const { form } = this;
         return (
-            <Form form={form} onSubmit={this.handleSubmit}>
+            <Form form={form} onSubmit={this.handleSubmit} leavePrompt>
                 <h3><L text="competition.participate" /></h3>
                 <FormGroup
                     label={<L text="data.c22n.participant_name.title" />}
