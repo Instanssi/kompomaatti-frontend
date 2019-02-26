@@ -5,11 +5,12 @@ import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
 import classNames from 'classnames';
 
 import { L } from 'src/common';
-import UserMenu from '../UserMenu';
-import LanguageSwitch from '../LanguageSwitch';
-import NavLink from './NavLink';
 import globalState from 'src/state';
+import LanguageSwitch from '../LanguageSwitch';
 
+import UserMenu from '../UserMenu';
+import NavLink from './NavLink';
+import { ActivityCube } from './Cube';
 
 @observer
 export class Header extends React.Component<RouteComponentProps<any>> {
@@ -38,6 +39,8 @@ export class Header extends React.Component<RouteComponentProps<any>> {
                     </button>
                     <Link to="/" className="navbar-brand">
                         Kompomaatti
+                        &ensp;
+                        <ActivityCube />
                     </Link>
                     <span className="liability-reducer">
                         Beta
