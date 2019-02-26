@@ -27,7 +27,7 @@ import {
     // Breadcrumbs,
 } from 'src/layout';
 import globalState from './state';
-import headerImg from './styles/title-logo-96.png';
+// import headerImg from './styles/title-logo-96.png';
 
 // Make the Finnish locale less confusing (is 15.10 a date or a time of day?)
 moment.updateLocale('fi', {
@@ -55,11 +55,11 @@ export default class App extends React.Component {
                     >
                         <title>Kompomaatti</title>
                     </Helmet>
-                    <div id="above-top">
+                    {/*<div id="above-top">
                         <a href="https://instanssi.org" title="Instanssi.org">
                             <img alt="Instanssi.org" src={headerImg} />
                         </a>
-                    </div>
+                    </div>*/}
                     <div id="top" className="app-wrap">
                         <Header />
                         <main className="p-3">
