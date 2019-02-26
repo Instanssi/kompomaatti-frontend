@@ -11,6 +11,7 @@ import EventOverview from './EventOverview';
 import EventCompo from './EventCompo';
 import EventProgrammeEvent from './EventProgrammeEvent';
 import EventCompetition from './EventCompetition';
+import EventStatus from './EventStatus';
 
 
 // Need this or the @observer will prevent <Route /> from working
@@ -53,6 +54,7 @@ export class EventView extends React.Component<RouteComponentProps<any> & {
                                 <FormatTime value={eventInfo.event.date} format="LL" />
                             </p>
                         </div>
+                        <EventStatus event={eventInfo} showIfIrrelevant />
                         <Switch>
                             <Route path={url + '/compo/:compoId'}>
                                 <EventCompo eventInfo={eventInfo} />

@@ -134,7 +134,6 @@ export default class CompoStatus extends React.Component<{
                     </>}
                     <div className="clearfix" />
                 </div>}
-                <EventStatus event={eventInfo} />
                 {(canAdd || canEdit) && loggedIn && <>
                     <h3><L text="compo.myEntries" /></h3>
                     {(ownEntries && ownEntries.length > 0) && (

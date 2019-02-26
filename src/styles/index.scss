@@ -44,9 +44,27 @@ hr {
     }
 }
 
+#above-top {
+    overflow: hidden;
+    max-width: 100vw;
+}
+
+#above-top img {
+    max-height: 64px;
+    max-width: 100%;
+}
+
 main {
     // IE11
     display: block;
+}
+
+.navbar {
+    font-family: 'Exo 2', $font-family-sans-serif;
+}
+
+.navbar-nav > li > a {
+    transition: background-color .1s ease-in-out;
 }
 
 .navbar-header {
@@ -121,6 +139,7 @@ main {
     flex: 1 0 auto;
 }
 
+// Common simple list style.
 .list-k {
     list-style: none;
     padding: 0;
