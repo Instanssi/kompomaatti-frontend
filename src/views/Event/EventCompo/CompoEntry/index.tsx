@@ -75,7 +75,7 @@ export class CompoEntry extends React.Component<{
                         </div>
                     )}
                     {entry.disqualified && <div className="entry-disqualified">
-                        <h4><L text="entry.disqualified" /></h4>
+                        <h4><L text="data.entry.disqualified.title" /></h4>
                         <p>{entry.disqualified_reason}</p>
                     </div>}
                     <div className="entry-description">
