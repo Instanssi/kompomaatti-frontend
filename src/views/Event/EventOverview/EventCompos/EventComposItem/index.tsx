@@ -1,28 +1,83 @@
 import React from 'react';
+import { computed } from 'mobx';
 import { observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
 
 import { ICompo } from 'src/api/interfaces';
 import EventInfo from 'src/state/EventInfo';
-import { FormatTime } from 'src/common';
+import { FormatTime, L } from 'src/common';
+import globalState from 'src/state';
 
+/** It's happening! */
+interface ICompoHappening {
+    time: moment.Moment;
+    textKey: string;
+    humanTime: string;
+}
+
+/**
+ * Displays a single compo in an event overview's compos list.
+ *
+ * Possibly with controls and other info.
+ */
 @observer
 export class EventComposItem extends React.Component<{
     eventInfo: EventInfo;
     compo: ICompo;
 }> {
+    @computed
+    get times() {
+        const { voting_end, voting_start, adding_end, editing_end, compo_start } = this.props.compo;
+        return {
+            votingEnd: moment(voting_end),
+            votingStart: moment(voting_start),
+            addingEnd: moment(adding_end),
+            editingEnd: moment(editing_end),
+            compoStart: moment(compo_start),
+        };
+    }
+
+    get nextCompoEvent(): ICompoHappening | null {
+        const { timeMin } = globalState;
+        const { compo } = this.props;
+        const { is_votable } = compo;
+
+        const { times } = this;
+
+        function event(time: moment.Moment, textKey: string): ICompoHappening {
+            const dayNow = moment(timeMin).local().format('ll');
+            const dayEvent = time.clone().local().format('ll');
+            const sameDay = dayNow === dayEvent;
+
+            const humanTime = time.format(sameDay ? 'ddd LT' : 'ddd LT');
+
+            return {
+                time,
+                textKey,
+                humanTime,
+            };
+        }
+        if (times.addingEnd.isAfter(timeMin)) {
+            return event(times.addingEnd, 'compo.addingEnd');
+        }
+        if (times.editingEnd.isAfter(timeMin)) {
+            return event(times.editingEnd, 'compo.editingEnd');
+        }
+        if (times.compoStart.isAfter(timeMin)) {
+            return event(times.compoStart, 'compo.compoStart');
+        }
+        if (is_votable && times.votingStart.isAfter(timeMin)) {
+            return event(times.votingStart, 'compo.votingStart');
+        }
+        if (is_votable && times.votingEnd.isAfter(timeMin)) {
+            return event(times.votingEnd, 'compo.votingEnd');
+        }
+        return null;
+    }
+
     render() {
-
-
-
-
-
-
-
-
-
-
-
+        const { nextCompoEvent } = this;
         const { compo, eventInfo } = this.props;
         return (
             <li key={compo.id} className="compos-item">
@@ -31,9 +86,18 @@ export class EventComposItem extends React.Component<{
                 </span>
                 {' '}
                 <span className="item-title">
-                    <Link to={eventInfo.getCompoURL(compo)}>
-                        {compo.name}
-                    </Link>
+                    <div>
+                        <Link to={eventInfo.getCompoURL(compo)}>
+                            {compo.name}
+                        </Link>
+                    </div>
+                    {nextCompoEvent && (
+                        <div>
+                            <L text={nextCompoEvent.textKey} />
+                            {': '}
+                            {nextCompoEvent.humanTime}
+                        </div>
+                    )}
                 </span>
 
                 <span className="item-note ml-auto">
