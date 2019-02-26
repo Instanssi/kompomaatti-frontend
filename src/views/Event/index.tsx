@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { computed } from 'mobx';
-import { Switch, Route, withRouter, RouteComponentProps } from 'react-router';
+import { Switch, Route, withRouter, RouteComponentProps, Redirect } from 'react-router';
 import { Helmet } from 'react-helmet';
 
 import globalState from 'src/state';
@@ -14,9 +14,8 @@ import EventCompetition from './EventCompetition';
 
 
 // Need this or the @observer will prevent <Route /> from working
-@(withRouter as any)
 @observer
-export class EventView extends React.Component<{
+export class EventView extends React.Component<RouteComponentProps<any> & {
     eventId: number;
     url: string;
 }> {
@@ -26,6 +25,9 @@ export class EventView extends React.Component<{
         const allEvents = globalState.events.value;
         return allEvents && allEvents.find(event => event.eventId === eventId);
     }
+
+    /** Redirect lost users (and search bots) back to safe territory. */
+    defaultRedirect = () => <Redirect to={this.props.url} />;
 
     render() {
         const { eventInfo } = this;
@@ -61,9 +63,10 @@ export class EventView extends React.Component<{
                             <Route path={url + '/competition/:cmpId'}>
                                 <EventCompetition eventInfo={eventInfo} />
                             </Route>
-                            <Route>
+                            <Route path={url} exact>
                                 <EventOverview eventInfo={eventInfo} />
                             </Route>
+                            <Route render={this.defaultRedirect} />
                         </Switch>
                     </>}
                 </LoadingWrapper>
@@ -72,6 +75,11 @@ export class EventView extends React.Component<{
     }
 }
 
+export const EventViewWR = withRouter(EventView);
+
+/**
+ * Wrapper to get event id from URL matches and render an appropriate EventView.
+ */
 export class EventViewRoute extends React.Component<RouteComponentProps<{
     eventId: string;
 }>> {
@@ -82,7 +90,7 @@ export class EventViewRoute extends React.Component<RouteComponentProps<{
 
     render() {
         const { match } = this.props;
-        return <EventView eventId={this.eventIdParsed} url={match.url} />;
+        return <EventViewWR eventId={this.eventIdParsed} url={match.url} />;
     }
 }
 
