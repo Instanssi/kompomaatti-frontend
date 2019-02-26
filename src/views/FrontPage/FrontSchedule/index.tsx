@@ -11,11 +11,11 @@ import globalState from 'src/state';
 
 @observer
 export default class FrontSchedule extends React.Component<{
-    event: EventInfo;
+    eventInfo: EventInfo;
 }> {
     @computed
     get allRows() {
-        const { event } = this.props;
+        const { eventInfo: event } = this.props;
         const { programme, compos, competitions } = event;
         const all: Array<{
             time: Date,
@@ -173,7 +173,7 @@ export default class FrontSchedule extends React.Component<{
 
     @computed
     get isPending() {
-        const { programme, compos, competitions } = this.props.event;
+        const { programme, compos, competitions } = this.props.eventInfo;
         return programme.isPending || compos.isPending || competitions.isPending;
     }
 
@@ -181,7 +181,7 @@ export default class FrontSchedule extends React.Component<{
         const { currentEvents } = this;
         return (
             <div className="front-schedule">
-                <h3><L text="common.schedule" /></h3>
+                <h2><L text="common.schedule" /></h2>
                 {currentEvents.length > 0 && (
                     <ul className="list-k">
                         {currentEvents.map(row => (

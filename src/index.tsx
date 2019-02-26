@@ -55,11 +55,6 @@ export default class App extends React.Component {
                     >
                         <title>Kompomaatti</title>
                     </Helmet>
-                    {/*<div id="above-top">
-                        <a href="https://instanssi.org" title="Instanssi.org">
-                            <img alt="Instanssi.org" src={headerImg} />
-                        </a>
-                    </div>*/}
                     <div id="top" className="app-wrap">
                         <Header />
                         <main className="p-3">

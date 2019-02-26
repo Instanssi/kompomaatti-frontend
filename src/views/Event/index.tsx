@@ -3,6 +3,7 @@ import { observer } from 'mobx-react';
 import { computed } from 'mobx';
 import { Switch, Route, withRouter, RouteComponentProps, Redirect } from 'react-router';
 import { Helmet } from 'react-helmet';
+import { Link } from 'react-router-dom';
 
 import globalState from 'src/state';
 import { FormatTime, LoadingWrapper, L } from 'src/common';
@@ -12,6 +13,7 @@ import EventCompo from './EventCompo';
 import EventProgrammeEvent from './EventProgrammeEvent';
 import EventCompetition from './EventCompetition';
 import EventStatus from './EventStatus';
+import FrontSchedule from '../FrontPage/FrontSchedule';
 
 
 // Need this or the @observer will prevent <Route /> from working
@@ -42,20 +44,35 @@ export class EventView extends React.Component<RouteComponentProps<any> & {
                             <title>{eventInfo.event.name}</title>
                         </Helmet>
                         <div className="event-title">
-                            <a
+                            {/*<a
                                 className="pull-right"
                                 title={L.getText('event.mainSite')}
                                 href={eventInfo.event.mainurl}
                             >
                                 <span className="fa fa-fw fa-external-link" />
-                            </a>
-                            <h1>{eventInfo.event.name}</h1>
-                            <p>
-                                <FormatTime value={eventInfo.event.date} format="LL" />
-                            </p>
+                            </a>*/}
+                            <h1 className="title-heading">{eventInfo.event.name}</h1>
+                            <div className="title-shortcuts">
+                                <Link to={url} className="btn btn-link">
+                                    <span className="fa fa-fw fa-info-circle" />
+                                    <L text="event.linkTo" />
+                                </Link>
+                                {!eventInfo.hasEnded &&
+                                    <Link to={url + '/schedule'} className="btn btn-link">
+                                        <span className="fa fa-fw fa-calendar" />
+                                        <L text="common.schedule" />
+                                    </Link>
+                                }
+                            </div>
                         </div>
+                        <p>
+                            <FormatTime value={eventInfo.event.date} format="LL" />
+                        </p>
                         <EventStatus event={eventInfo} showIfIrrelevant />
                         <Switch>
+                            <Route path={url} exact>
+                                <EventOverview eventInfo={eventInfo} />
+                            </Route>
                             <Route path={url + '/compo/:compoId'}>
                                 <EventCompo eventInfo={eventInfo} />
                             </Route>
@@ -65,8 +82,8 @@ export class EventView extends React.Component<RouteComponentProps<any> & {
                             <Route path={url + '/competition/:cmpId'}>
                                 <EventCompetition eventInfo={eventInfo} />
                             </Route>
-                            <Route path={url} exact>
-                                <EventOverview eventInfo={eventInfo} />
+                            <Route path={url + '/schedule'}>
+                                <FrontSchedule eventInfo={eventInfo} />
                             </Route>
                             <Route render={this.defaultRedirect} />
                         </Switch>

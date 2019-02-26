@@ -191,6 +191,22 @@ main {
     }
 }
 
+@media screen and (min-width: $screen-sm-min) {
+    .event-title {
+        display: flex;
+        align-items: center;
+
+        .title-heading {
+            // Push the shortcuts to the right.
+            margin-right: auto;
+        }
+
+        .fa {
+            margin-right: $spacer / 2;
+        }
+    }
+}
+
 .entry-image img {
     max-width: 100%;
 }

@@ -46,7 +46,7 @@ export default class FrontPageView extends React.Component<any> {
                             </Link>
                         </div>
                         <EventStatus event={currentEvent} />
-                        <FrontSchedule event={currentEvent} />
+                        <FrontSchedule eventInfo={currentEvent} />
                     </>}
                 </LoadingWrapper>
             </div>
