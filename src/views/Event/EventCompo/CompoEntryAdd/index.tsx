@@ -1,13 +1,13 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { action, runInAction, observable, computed } from 'mobx';
+import { Redirect } from 'react-router';
 
 import globalState from 'src/state';
 import { Form, FormGroup, L } from 'src/common';
 import { ICompo } from 'src/api/interfaces';
 import { FormStore } from 'src/stores';
 import EventInfo from 'src/state/EventInfo';
-import { Redirect } from 'react-router';
 
 
 @observer
@@ -61,7 +61,7 @@ export default class CompoEntryAdd extends React.Component<{
         }
 
         return (
-            <Form form={form} onSubmit={this.handleSubmit}>
+            <Form form={form} onSubmit={this.handleSubmit} leavePrompt>
                 <h2><L text="entry.add" /></h2>
                 <FormGroup
                     label={<L text="data.entry.name.title" />}

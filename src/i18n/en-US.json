@@ -4,6 +4,7 @@
         "edit": "Edit",
         "cancel": "Cancel",
         "description": "Description",
+        "leaveWithoutSaving": "There are unsaved changes. Leave the page anyway?",
         "loading": "Loading...",
         "loadingError": "There was a problem loading this content.",
         "loadingRetry": "Try again?",

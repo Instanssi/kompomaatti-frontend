@@ -4,6 +4,7 @@
         "edit": "Muokkaa",
         "cancel": "Peruuta",
         "description": "Kuvaus",
+        "leaveWithoutSaving": "Poistutaanko sivulta tallentamatta muutoksia?",
         "loading": "Ladataan...",
         "loadingError": "Ongelma sisällön lataamisessa.",
         "loadingRetry": "Yritä uudestaan?",

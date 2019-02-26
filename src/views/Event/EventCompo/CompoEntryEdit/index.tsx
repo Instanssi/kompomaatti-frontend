@@ -97,7 +97,7 @@ export class CompoEntryEdit extends React.Component<{
         }
 
         return (
-            <Form form={form} onSubmit={this.handleSubmit}>
+            <Form form={form} onSubmit={this.handleSubmit} leavePrompt>
                 <h2><L text="entry.edit" /></h2>
                 <FormGroup
                     name="name"
