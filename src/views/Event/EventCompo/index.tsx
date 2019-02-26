@@ -2,6 +2,7 @@ import React from 'react';
 import { computed } from 'mobx';
 import { observer } from 'mobx-react';
 import { Switch, Route, withRouter, RouteComponentProps } from 'react-router';
+import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 
 import { FormatTime, LoadingWrapper } from 'src/common';
@@ -51,7 +52,20 @@ export class EventCompo extends React.Component<{
                         />
                     </Helmet>
                     <div className="compo-title">
-                        <h2>{compo.name}</h2>
+                        {/* Make the title a link, but only when not on the same page
+                        (could and probably should make a general solution for this) */}
+                        <Switch>
+                            <Route exact path={url}>
+                                <h2>{compo.name}</h2>
+                            </Route>
+                            <Route>
+                                <h2>
+                                    <Link to={eventInfo.getCompoURL(compo)}>
+                                        {compo.name}
+                                    </Link>
+                                </h2>
+                            </Route>
+                        </Switch>
                         <p><FormatTime value={compo.compo_start} /></p>
                     </div>
                     <Switch>
