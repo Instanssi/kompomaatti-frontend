@@ -127,9 +127,11 @@
     "event": {
         "competitions": "Competitions",
         "compos": "Compos",
-        "mainSite": "To main site",
+        "mainSite": "Main site",
         "isOver": "This event has ended.",
         "linkTo": "Event info",
+        "summary": "Summary",
+        "schedule": "Schedule",
         "programme": "Programme"
     },
     "events": {

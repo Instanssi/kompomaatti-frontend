@@ -126,8 +126,10 @@
     "event": {
         "competitions": "Kilpailut",
         "compos": "Kompot",
-        "mainSite": "Tapahtuma pääsivustolla",
+        "mainSite": "Pääsivusto",
         "isOver": "Tapahtuma on päättynyt.",
+        "summary": "Tiedot",
+        "schedule": "Aikataulu",
         "linkTo": "Tapahtuman tiedot",
         "programme": "Ohjelma"
     },

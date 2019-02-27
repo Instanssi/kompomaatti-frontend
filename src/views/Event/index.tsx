@@ -48,25 +48,26 @@ export class EventView extends React.Component<RouteComponentProps<any> & {
                             <title>{eventInfo.event.name}</title>
                         </Helmet>
                         <div className="event-title">
-                            {/*<a
-                                className="pull-right"
-                                title={L.getText('event.mainSite')}
-                                href={eventInfo.event.mainurl}
-                            >
-                                <span className="fa fa-fw fa-external-link" />
-                            </a>*/}
                             <h1 className="title-heading">{eventInfo.event.name}</h1>
                             <div className="title-shortcuts">
                                 <Link to={url} className="btn btn-link">
                                     <span className="fa fa-fw fa-info-circle" />
-                                    <L text="event.linkTo" />
+                                    <L text="event.summary" />
                                 </Link>
                                 {!eventInfo.hasEnded &&
                                     <Link to={url + '/schedule'} className="btn btn-link">
                                         <span className="fa fa-fw fa-calendar" />
-                                        <L text="common.schedule" />
+                                        <L text="event.schedule" />
                                     </Link>
                                 }
+                                <a
+                                    className="btn btn-link"
+                                    title={L.getText('event.mainSite')}
+                                    href={eventInfo.event.mainurl}
+                                >
+                                    <span className="fa fa-fw fa-external-link" />
+                                    <L text="event.mainSite" />
+                                </a>
                             </div>
                         </div>
                         <p>
