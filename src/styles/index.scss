@@ -248,8 +248,9 @@ footer {
 
 // ---- route transition animations ----
 
-// note that this also has to be present in the
-$transition-duration: .2s;
+// note that this also has to be set in the JSX code
+// it should be longer there to account for the page animating a bit late
+$transition-duration: .18s;
 
 .transition-group {
     // Use negative margin float tricks to force children to render on top of each other
