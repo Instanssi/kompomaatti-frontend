@@ -245,3 +245,74 @@ footer {
 
     }
 }
+
+// ---- route transition animations ----
+
+// note that this also has to be present in the
+$transition-duration: .2s;
+
+.transition-group {
+    // Use negative margin float tricks to force children to render on top of each other
+    // while keeping the transition group's height properly calculated.
+    float: left;
+    width: 100%;
+    display: block;
+    position: relative;
+
+    > * {
+        position: relative;
+        float: left;
+        left: 100%;
+        width: 100%;
+        margin-left: -100%;
+    }
+
+    &:after {
+        // Make sure we clear the floats
+        content: '';
+        display: table;
+        clear: both;
+    }
+}
+
+// "route" is the prefix set in JSX for routes
+.route-enter {
+    // position: absolute;
+    opacity: 0;
+    z-index: 1;
+}
+
+.route-enter.route-enter-active {
+    // position: static;
+    opacity: 1;
+    transition: opacity $transition-duration ease-in;
+}
+
+.route-exit {
+    opacity: 1;
+    position: absolute;
+}
+.route-exit.route-exit-active {
+    pointer-events: none;
+    // top: 0;
+    // width: 100%;
+    // position: absolute;
+    opacity: 0;
+    transition: opacity $transition-duration linear;
+}
+
+// Heading margins won't collapse/merge because of the transition positioning hack.
+.compo-title,
+.competition-title,
+.progevent-title {
+    h2 {
+        margin-top: 0;
+    }
+}
+
+.event-overview,
+.front-schedule {
+    & > h2:first-child {
+        margin-top: 0;
+    }
+}

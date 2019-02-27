@@ -14,6 +14,7 @@ import EventProgrammeEvent from './EventProgrammeEvent';
 import EventCompetition from './EventCompetition';
 import EventStatus from './EventStatus';
 import FrontSchedule from '../FrontPage/FrontSchedule';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 
 // Need this or the @observer will prevent <Route /> from working
@@ -35,6 +36,9 @@ export class EventView extends React.Component<RouteComponentProps<any> & {
     render() {
         const { eventInfo } = this;
         const { url } = this.props;
+
+        const { location } = this.props;
+        const locationKey = location.pathname.split('/')[2];
 
         return (
             <div className="event-view">
@@ -69,24 +73,28 @@ export class EventView extends React.Component<RouteComponentProps<any> & {
                             <FormatTime value={eventInfo.event.date} format="LL" />
                         </p>
                         <EventStatus event={eventInfo} showIfIrrelevant />
-                        <Switch>
-                            <Route path={url} exact>
-                                <EventOverview eventInfo={eventInfo} />
-                            </Route>
-                            <Route path={url + '/compo/:compoId'}>
-                                <EventCompo eventInfo={eventInfo} />
-                            </Route>
-                            <Route path={url + '/programme/:progId'}>
-                                <EventProgrammeEvent eventInfo={eventInfo} />
-                            </Route>
-                            <Route path={url + '/competition/:cmpId'}>
-                                <EventCompetition eventInfo={eventInfo} />
-                            </Route>
-                            <Route path={url + '/schedule'}>
-                                <FrontSchedule eventInfo={eventInfo} />
-                            </Route>
-                            <Route render={this.defaultRedirect} />
-                        </Switch>
+                        <TransitionGroup className="transition-group">
+                            <CSSTransition key={locationKey} classNames="route" timeout={300}>
+                                <Switch location={location}>
+                                    <Route path={url} exact>
+                                        <EventOverview eventInfo={eventInfo} />
+                                    </Route>
+                                    <Route path={url + '/compo/:compoId'}>
+                                        <EventCompo eventInfo={eventInfo} />
+                                    </Route>
+                                    <Route path={url + '/programme/:progId'}>
+                                        <EventProgrammeEvent eventInfo={eventInfo} />
+                                    </Route>
+                                    <Route path={url + '/competition/:cmpId'}>
+                                        <EventCompetition eventInfo={eventInfo} />
+                                    </Route>
+                                    <Route path={url + '/schedule'}>
+                                        <FrontSchedule eventInfo={eventInfo} />
+                                    </Route>
+                                    <Route render={this.defaultRedirect} />
+                                </Switch>
+                            </CSSTransition>
+                        </TransitionGroup>
                     </>}
                 </LoadingWrapper>
             </div>
@@ -108,7 +116,7 @@ export class EventViewRoute extends React.Component<RouteComponentProps<{
     }
 
     render() {
-        const { match } = this.props;
+        const { match, location } = this.props;
         return <EventViewWR eventId={this.eventIdParsed} url={match.url} />;
     }
 }
