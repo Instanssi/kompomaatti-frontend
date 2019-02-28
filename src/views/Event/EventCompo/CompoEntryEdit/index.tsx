@@ -89,6 +89,7 @@ export class CompoEntryEdit extends React.Component<{
     }
 
     render() {
+        const { compo } = this.props;
         const { form, helpValues } = this;
         const { sourcefile_url, entryfile_url, imagefile_original_url } = this.props.entry;
 
@@ -130,13 +131,13 @@ export class CompoEntryEdit extends React.Component<{
                     input={FormFileInput}
                     currentFileURL={sourcefile_url}
                 />
-                <FormGroup
+                {compo.is_imagefile_allowed && <FormGroup
                     name="imagefile_original"
                     label={<L text="data.entry.imagefile_original.title" />}
                     help={<L text="data.entry.imagefile_original.help" values={helpValues} />}
                     input={FormFileInput}
                     currentFileURL={imagefile_original_url}
-                />
+                />}
                 <div>
                     <button className="btn btn-primary" disabled={this.form.isPending}>
                         <L text="common.submit" />

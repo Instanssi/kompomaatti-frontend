@@ -54,6 +54,7 @@ export default class CompoEntryAdd extends React.Component<{
     }
 
     render() {
+        const { compo } = this.props;
         const { form, helpValues } = this;
 
         if (this.success) {
@@ -92,7 +93,7 @@ export default class CompoEntryAdd extends React.Component<{
                     name="sourcefile"
                     type="file"
                 />
-                <FormGroup
+                {compo.is_imagefile_allowed && <FormGroup
                     label={<L text="data.entry.imagefile_original.title" />}
                     help={<L
                         text="data.entry.imagefile_original.help"
@@ -100,7 +101,7 @@ export default class CompoEntryAdd extends React.Component<{
                     />}
                     name="imagefile_original"
                     type="file"
-                />
+                />}
                 <div>
                     <button className="btn btn-primary" disabled={form.isPending}>
                         <L text="common.submit" />
