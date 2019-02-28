@@ -8,7 +8,7 @@ import globalState from 'src/state';
 @observer
 export default class FormatNumber extends React.Component<{
     value: number | null | undefined,
-    fallback?: string | JSX.Element;
+    fallback?: string;
     options?: Intl.NumberFormatOptions,
     precision: number,
 }> {

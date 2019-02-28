@@ -83,8 +83,11 @@ export class CompoEntryEdit extends React.Component<{
         const { compo } = this.props;
         return {
             entryFormats: compo.entry_format_list.join(', '),
-            sourceFormats: compo.source_format_list.join(', '),
+            entryMaxSize: Math.floor(compo.max_entry_size / 1024),
             imageFormats: compo.image_format_list.join(', '),
+            imageMaxSize: Math.floor(compo.max_image_size / 1024),
+            sourceFormats: compo.source_format_list.join(', '),
+            sourceMaxSize: Math.floor(compo.max_source_size / 1024),
         };
     }
 

@@ -8,6 +8,7 @@
         "loading": "Ladataan...",
         "loadingError": "Ongelma sisällön lataamisessa.",
         "loadingRetry": "Yritä uudestaan?",
+        "maxFileSize": "Tiedoston maksimikoko on ${size} ${unit}",
         "notLoggedIn": "Et ole kirjautunut sisään.",
         "results": "Tulokset",
         "schedule": "Aikataulu",

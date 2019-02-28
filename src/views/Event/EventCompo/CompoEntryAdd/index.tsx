@@ -48,8 +48,11 @@ export default class CompoEntryAdd extends React.Component<{
         const { compo } = this.props;
         return {
             entryFormats: compo.entry_format_list.join(', '),
-            sourceFormats: compo.source_format_list.join(', '),
+            entryMaxSize: Math.floor(compo.max_entry_size / 1024),
             imageFormats: compo.image_format_list.join(', '),
+            imageMaxSize: Math.floor(compo.max_image_size / 1024),
+            sourceFormats: compo.source_format_list.join(', '),
+            sourceMaxSize: Math.floor(compo.max_source_size / 1024),
         };
     }
 
@@ -86,12 +89,14 @@ export default class CompoEntryAdd extends React.Component<{
                     help={<L text="data.entry.entryfile.help" values={helpValues} />}
                     name="entryfile"
                     type="file"
+                    maxFileSize={compo.max_entry_size}
                 />
                 <FormGroup
                     label={<L text="data.entry.sourcefile.title" />}
                     help={<L text="data.entry.sourcefile.help" values={helpValues} />}
                     name="sourcefile"
                     type="file"
+                    maxFileSize={compo.max_source_size}
                 />
                 {compo.is_imagefile_allowed && <FormGroup
                     label={<L text="data.entry.imagefile_original.title" />}
@@ -101,6 +106,7 @@ export default class CompoEntryAdd extends React.Component<{
                     />}
                     name="imagefile_original"
                     type="file"
+                    maxFileSize={compo.max_image_size}
                 />}
                 <div>
                     <button className="btn btn-primary" disabled={form.isPending}>

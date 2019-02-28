@@ -6,7 +6,7 @@ import _get from 'lodash/get';
 
 import { FormStore } from 'src/stores';
 import FormFeedback from '../FormFeedback';
-
+import L from '../L';
 
 export interface IFormGroupProps<T> {
     name: string;
@@ -32,6 +32,9 @@ export interface IFormGroupProps<T> {
 
     /** Actually passed via MobX provider + inject (context). */
     formStore?: FormStore<T>;
+
+    /** If uploading a file, this sets a max allowed size. */
+    maxFileSize?: number;
 }
 
 /**
@@ -39,7 +42,9 @@ export interface IFormGroupProps<T> {
  */
 @inject('formStore')
 @observer
-export default class FormGroup<T> extends React.Component<IFormGroupProps<T> & any> {
+export default class FormGroup<T> extends React.Component<
+    IFormGroupProps<T> & any
+> {
     componentWillMount() {
         // sanity checks
         const { name, formStore } = this.props;
@@ -87,7 +92,7 @@ export default class FormGroup<T> extends React.Component<IFormGroupProps<T> & a
 
     @computed
     get errors() {
-        const { name, formStore } = this.props;
+        const { name, formStore, type } = this.props;
         if (!formStore.error) {
             return null;
         }
@@ -97,12 +102,31 @@ export default class FormGroup<T> extends React.Component<IFormGroupProps<T> & a
 
     render() {
         const { id, props, value, onChange } = this;
-        const { name, label, help, input, children, formStore, type, readOnly, ...rest } = props;
+        const {
+            name,
+            label,
+            help,
+            input,
+            children,
+            formStore,
+            type,
+            maxFileSize,
+            readOnly,
+            ...rest
+        } = props;
 
-        const className = classNames(
-            'form-group',
-            { 'has-error': !!this.errors },
-        );
+        let fileSizeWarning = false;
+
+        if (type === 'file' && maxFileSize && value && value instanceof File) {
+            if (value.size > maxFileSize) {
+                fileSizeWarning = true;
+            }
+        }
+
+        const className = classNames('form-group', {
+            'has-error': !!this.errors || fileSizeWarning,
+        });
+
 
         return (
             <div className={className}>
@@ -112,23 +136,38 @@ export default class FormGroup<T> extends React.Component<IFormGroupProps<T> & a
                         {label}
                     </label>
                 )}
-                {children || (
+                {children ||
                     // If no input field was provided, render a text input bound to
                     // the appropriate form field. This could handle like 50% of cases.
                     React.createElement(input || 'input', {
                         id,
                         // HTML forms, please don't suck this hard
-                        value: type !== 'file' ? value : (value && value.filename),
+                        value:
+                            type !== 'file' ? value : value && value.filename,
                         type,
                         onChange,
                         className: 'form-control',
                         readOnly: readOnly || formStore!.isPending,
                         ...rest,
-                    })
-                )}
+                    })}
                 {help && (
                     // Render help text using Bootstrap 3 markup.
                     <p className="help-block">{help}</p>
+                )}
+                {fileSizeWarning && (
+                    <div className="alert alert-danger">
+                        <L
+                            text="common.maxFileSize"
+                            values={{
+                                // FIXME: Localize number properly
+                                // - may need some refactoring in FormatNumber
+                                size: (
+                                    maxFileSize / (1024 * 1024)
+                                ).toFixed(1),
+                                unit: 'MB',
+                            }}
+                        />
+                    </div>
                 )}
                 <FormFeedback form={formStore!} name={name} />
             </div>
