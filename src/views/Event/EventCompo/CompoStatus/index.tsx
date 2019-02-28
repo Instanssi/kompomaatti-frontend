@@ -134,7 +134,7 @@ export default class CompoStatus extends React.Component<{
                     </>}
                     <div className="clearfix" />
                 </div>}
-                {(canAdd || canEdit) && loggedIn && <>
+                {loggedIn && <>
                     <h3><L text="compo.myEntries" /></h3>
                     {(ownEntries && ownEntries.length > 0) && (
                         <ul className="list-k">
