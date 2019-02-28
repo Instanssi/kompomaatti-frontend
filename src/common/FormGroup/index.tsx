@@ -34,7 +34,8 @@ export interface IFormGroupProps<T> {
     formStore?: FormStore<T>;
 
     /** If uploading a file, this sets a max allowed size. */
-    maxFileSize?: number;
+    fileMaxSize?: number;
+    showClearButton?: boolean;
 }
 
 /**
@@ -45,6 +46,8 @@ export interface IFormGroupProps<T> {
 export default class FormGroup<T> extends React.Component<
     IFormGroupProps<T> & any
 > {
+    inputRef: HTMLInputElement | null = null;
+
     componentWillMount() {
         // sanity checks
         const { name, formStore } = this.props;
@@ -84,6 +87,18 @@ export default class FormGroup<T> extends React.Component<
         return form.onChange(name, eventOrValue);
     }
 
+    @action.bound
+    clearValue() {
+        const { name, type } = this.props;
+        const form = this.props.formStore!;
+
+        if (this.inputRef && type === 'file') {
+            this.inputRef.value = '';
+        }
+
+        return form.onChange(name, null);
+    }
+
     @computed
     get value() {
         const { formStore, name } = this.props;
@@ -100,6 +115,10 @@ export default class FormGroup<T> extends React.Component<
         return formStore.error[name!] as (string[] | null);
     }
 
+    handleRef = ref => {
+        this.inputRef = ref;
+    };
+
     render() {
         const { id, props, value, onChange } = this;
         const {
@@ -110,15 +129,16 @@ export default class FormGroup<T> extends React.Component<
             children,
             formStore,
             type,
-            maxFileSize,
+            fileMaxSize,
             readOnly,
+            showClearButton,
             ...rest
         } = props;
 
         let fileSizeWarning = false;
 
-        if (type === 'file' && maxFileSize && value && value instanceof File) {
-            if (value.size > maxFileSize) {
+        if (type === 'file' && fileMaxSize && value && value instanceof File) {
+            if (value.size > fileMaxSize) {
                 fileSizeWarning = true;
             }
         }
@@ -127,6 +147,22 @@ export default class FormGroup<T> extends React.Component<
             'has-error': !!this.errors || fileSizeWarning,
         });
 
+        // If no input field was provided, render a text input bound to
+        //  the appropriate form field. This could handle like 50% of cases.
+
+        const inputContent = children
+            ? children
+            : React.createElement(input || 'input', {
+                  id,
+                  // HTML forms, please don't suck this hard
+                  value: type !== 'file' ? value : value && value.filename,
+                  type,
+                  onChange,
+                  className: 'form-control',
+                  readOnly: readOnly || formStore!.isPending,
+                  ref: this.handleRef,
+                  ...rest,
+              });
 
         return (
             <div className={className}>
@@ -136,35 +172,36 @@ export default class FormGroup<T> extends React.Component<
                         {label}
                     </label>
                 )}
-                {children ||
-                    // If no input field was provided, render a text input bound to
-                    // the appropriate form field. This could handle like 50% of cases.
-                    React.createElement(input || 'input', {
-                        id,
-                        // HTML forms, please don't suck this hard
-                        value:
-                            type !== 'file' ? value : value && value.filename,
-                        type,
-                        onChange,
-                        className: 'form-control',
-                        readOnly: readOnly || formStore!.isPending,
-                        ...rest,
-                    })}
+                {showClearButton ? (
+                    <div className="input-group">
+                        {inputContent}
+                        <span className="input-group-btn">
+                            <button
+                                type="button"
+                                className="btn btn-default"
+                                disabled={!value}
+                                onClick={this.clearValue}
+                            >
+                                <span className="fa fa-fw fa-trash" />
+                            </button>
+                        </span>
+                    </div>
+                ) : (
+                    inputContent
+                )}
                 {help && (
                     // Render help text using Bootstrap 3 markup.
                     <p className="help-block">{help}</p>
                 )}
-                {fileSizeWarning && (
-                    <div className="alert alert-danger">
+                {fileMaxSize && fileSizeWarning && (
+                    <div className="alert alert-warning">
                         <L
-                            text="common.maxFileSize"
+                            text="common.fileMaxSize"
                             values={{
                                 // FIXME: Localize number properly
                                 // - may need some refactoring in FormatNumber
-                                size: (
-                                    maxFileSize / (1024 * 1024)
-                                ).toFixed(1),
-                                unit: 'MB',
+                                size: (fileMaxSize / (1024 * 1024)).toFixed(1),
+                                unit: 'MiB',
                             }}
                         />
                     </div>

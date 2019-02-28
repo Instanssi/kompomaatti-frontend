@@ -77,7 +77,7 @@ export default class CompoEntryAdd extends React.Component<{
                     help={<L text="data.entry.description.help" />}
                     name="description"
                     input="textarea"
-                    lines={5}
+                    rows={5}
                 />
                 <FormGroup
                     label={<L text="data.entry.creator.title" />}
@@ -89,14 +89,16 @@ export default class CompoEntryAdd extends React.Component<{
                     help={<L text="data.entry.entryfile.help" values={helpValues} />}
                     name="entryfile"
                     type="file"
-                    maxFileSize={compo.max_entry_size}
+                    fileMaxSize={compo.max_entry_size}
+                    showClearButton
                 />
                 <FormGroup
                     label={<L text="data.entry.sourcefile.title" />}
                     help={<L text="data.entry.sourcefile.help" values={helpValues} />}
                     name="sourcefile"
                     type="file"
-                    maxFileSize={compo.max_source_size}
+                    fileMaxSize={compo.max_source_size}
+                    showClearButton
                 />
                 {compo.is_imagefile_allowed && <FormGroup
                     label={<L text="data.entry.imagefile_original.title" />}
@@ -106,7 +108,8 @@ export default class CompoEntryAdd extends React.Component<{
                     />}
                     name="imagefile_original"
                     type="file"
-                    maxFileSize={compo.max_image_size}
+                    fileMaxSize={compo.max_image_size}
+                    showClearButton
                 />}
                 <div>
                     <button className="btn btn-primary" disabled={form.isPending}>

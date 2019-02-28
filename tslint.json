@@ -10,6 +10,7 @@
         "max-line-length": [true, 100],
         "member-access": false,
         "no-bitwise": false,
+        "semicolon": [true, "ignore-bound-class-methods"],
         "no-consecutive-blank-lines": [true, "error"],
         "no-console": false,
         "object-literal-sort-keys": false,
