@@ -195,7 +195,7 @@
         "requestPendingHelp": "Jos mitään ei näytä tapahtuvan vähään aikaan, käy tökkimässä infopöydän porukkaa.",
         "requestRejectedHelp": "Äänestyskoodipyyntösi on hylätty.",
         "requestTextPlaceholder": "(selitä tilanteesi)",
-        "ticketKeyPlaceholder": "(lippukoodi)",
+        "ticketKeyPlaceholder": "(lippukoodin 8 ensimmäistä merkkiä)",
         "title": "Äänestyskoodi",
         "useTicketCode": "Syötä lippukoodi"
     }
