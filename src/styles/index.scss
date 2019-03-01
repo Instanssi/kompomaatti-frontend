@@ -211,6 +211,11 @@ main {
     max-width: 100%;
 }
 
+.entry-description {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .entry-item {
     &.disqualified {
         text-decoration: line-through;
