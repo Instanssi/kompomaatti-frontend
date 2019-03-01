@@ -9,6 +9,7 @@ import { ICompo } from 'src/api/interfaces';
 import { RemoteStore } from 'src/stores';
 import { L, LoadingWrapper } from 'src/common';
 import EventInfo from 'src/state/EventInfo';
+import EntryInfo from '../EntryInfo';
 
 @observer
 export class CompoEntry extends React.Component<{
@@ -62,41 +63,7 @@ export class CompoEntry extends React.Component<{
                             />
                         )}
                     </Helmet>
-                    <div className="entry-title">
-                        <h3>{entry.name}</h3>
-                        <p>{entry.creator}</p>
-                    </div>
-                    {entry.imagefile_medium_url && (
-                        <div className="entry-image">
-                            <h4><L text="entry.image" /></h4>
-                            <a target="_blank" href={entry.imagefile_original_url || ''}>
-                                <img src={entry.imagefile_medium_url} />
-                            </a>
-                        </div>
-                    )}
-                    {entry.disqualified && <div className="entry-disqualified">
-                        <h4><L text="data.entry.disqualified.title" /></h4>
-                        <p>{entry.disqualified_reason}</p>
-                    </div>}
-                    <div className="entry-description">
-                        <h4><L text="entry.description" /></h4>
-                        <p className="text-pre-wrap">{entry.description}</p>
-                    </div>
-                    <div className="entry-files">
-                        <h4><L text="entry.files" /></h4>
-                        {entry.entryfile_url && <p>
-                            <a target="_blank" href={entry.entryfile_url}>
-                                <span className="fa fa-fw fa-download" />&ensp;
-                                <L text="entry.entryfile" />
-                            </a>
-                        </p>}
-                        {entry.sourcefile_url && <p>
-                            <a target="_blank" href={entry.sourcefile_url}>
-                                <span className="fa fa-fw fa-download" />&ensp;
-                                <L text="entry.sourcefile" />
-                            </a>
-                        </p>}
-                    </div>
+                    <EntryInfo entry={entry} />
                 </div>}
             </LoadingWrapper>
         );

@@ -10,6 +10,7 @@ ul.messages {
     z-index: 9000;
 
     > .message {
+        box-shadow: rgba(0,0,0,.5) 0 1px 3px;
         padding: $spacer;
         margin-bottom: $spacer;
     }

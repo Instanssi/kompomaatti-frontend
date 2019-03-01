@@ -9,11 +9,13 @@
         "loading": "Ladataan...",
         "loadingError": "Ongelma sisällön lataamisessa.",
         "loadingRetry": "Yritä uudestaan?",
+        "noImageAvailable": "Kuvaa ei saatavilla",
         "notLoggedIn": "Et ole kirjautunut sisään.",
         "results": "Tulokset",
         "schedule": "Aikataulu",
         "scheduleEmpty": "Aikataulussa ei ole mitään juuri nyt.",
         "save": "Tallenna",
+        "showDetails": "Näytä tiedot",
         "submit": "Lähetä"
     },
     "competition": {
@@ -124,6 +126,7 @@
         "entryfile": "Teos tiedostona",
         "files": "Tiedostot",
         "image": "Kuva",
+        "info": "Entryn tiedot",
         "sourcefile": "Lähdetiedosto"
     },
     "event": {
@@ -187,6 +190,8 @@
         "hasChanges": "Muistathan tallentaa äänesi. Voit muokata ääniä vielä ennen äänestyksen aikarajaa.",
         "leaveWithoutSaving": "Et ole tallentanut ääniäsi. Poistutaanko sivulta?.",
         "ended": "Äänestys on päättynyt.",
+        "saveOk": "Äänet tallennettu.",
+        "saveFail": "Ääniä ei voitu tallentaa.",
         "help": "Järjestä entryt laatujärjestykseen vetämällä merkistä ",
         "help2": "Viivan yläpuolelle nostetut saavat pisteitä järjestyksensä mukaan."
     },

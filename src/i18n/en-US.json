@@ -9,11 +9,13 @@
         "loading": "Loading...",
         "loadingError": "There was a problem loading this content.",
         "loadingRetry": "Try again?",
+        "noImageAvailable": "No image available",
         "notLoggedIn": "You are not logged in.",
         "results": "Results",
         "schedule": "Schedule",
         "scheduleEmpty": "Nothing scheduled at the moment.",
         "save": "Save",
+        "showDetails": "Show details",
         "submit": "Submit"
     },
     "competition": {
@@ -125,6 +127,7 @@
         "entryfile": "Entry file",
         "files": "Files",
         "image": "Image",
+        "info": "Entry info",
         "sourcefile": "Source file"
     },
     "event": {
@@ -188,6 +191,8 @@
         "hasChanges": "Don't forget to save. You can change your votes at any time before the voting deadline.",
         "leaveWithoutSaving": "You have unsaved votes. Leave the page anyway?",
         "ended": "Voting has concluded.",
+        "saveOk": "Votes saved.",
+        "saveFail": "Saving votes failed.",
         "help": "Drag entries around by the ",
         "help2": "Entries moved above the bar will receive points according to their order."
     },

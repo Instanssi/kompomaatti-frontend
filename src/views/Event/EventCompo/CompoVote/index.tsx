@@ -5,18 +5,16 @@ import _orderBy from 'lodash/orderBy';
 import _shuffle from 'lodash/shuffle';
 import moment from 'moment';
 import { Prompt } from 'react-router';
+import { SortableContainer, SortableElement, SortableHandle, arrayMove } from 'react-sortable-hoc';
 
 import globalState from 'src/state';
 import { LazyStore } from 'src/stores';
 import { ICompo, ICompoEntry } from 'src/api/interfaces';
 import EventInfo from 'src/state/EventInfo';
 import { L } from 'src/common';
-import { SortableContainer, SortableElement, SortableHandle, arrayMove } from 'react-sortable-hoc';
-import EventStatus from 'src/views/Event/EventStatus';
 
+import EntryModal from '../EntryModal';
 import './vote.scss';
-
-// tslint:disable variable-name
 
 const DragHandle = SortableHandle(() => (
     <span className="item-handle">
@@ -27,6 +25,7 @@ const DragHandle = SortableHandle(() => (
 const VoteEntryItem = SortableElement((props: {
     value: ICompoEntry;
     num: string;
+    onShowDetails: (entry: ICompoEntry) => any;
 }) => (
         <li className="voting-item">
             <div className="item-number">
@@ -44,8 +43,17 @@ const VoteEntryItem = SortableElement((props: {
                         <img
                             className="vote-thumbnail"
                             src={props.value.imagefile_thumbnail_url}
+                            onClick={() => props.onShowDetails(props.value)}
                         />
                     )}
+                    <button
+                        className="btn btn-link"
+                        type="button"
+                        onClick={() => props.onShowDetails(props.value)}
+                        title={L.getText('common.showDetails')}
+                    >
+                        <span className="fa fa-fw fa-info-circle" />
+                    </button>
                 </div>
             </div>
             <DragHandle />
@@ -62,6 +70,7 @@ const VoteEntryList = SortableContainer((props: {
     items: any;
     entryIds: number[];
     isLocked?: boolean;
+    onShowDetails: (entry: ICompoEntry) => any;
 }) => {
     const { items, entryIds, isLocked } = props;
     let foundDivider = false;
@@ -78,6 +87,7 @@ const VoteEntryList = SortableContainer((props: {
                         key={index}
                         index={index}
                         value={value}
+                        onShowDetails={props.onShowDetails}
                         num={foundDivider ? '-' : `${index + 1}.`}
                     />
                 );
@@ -102,6 +112,8 @@ export default class CompoVote extends React.Component<{
     @observable hasChanges = false;
     /** Is this trying to send vote changes right now? */
     @observable isSubmitting = false;
+    /** Show detailed info for an entry? */
+    @observable.ref showDetailsFor: ICompoEntry | null = null;
 
     /** In-view state. */
     @observable.ref votes: number[] = [];
@@ -198,10 +210,11 @@ export default class CompoVote extends React.Component<{
             () => runInAction(() => {
                 this.hasChanges = false;
                 this.isSubmitting = false;
+                globalState.postMessage('success', 'voting.saveOk');
                 this.refresh();
             }),
             (error) => runInAction(() => {
-                // FIXME: Indicate error.
+                globalState.postMessage('error', 'voting.saveFail');
                 this.isSubmitting = false;
             }),
         );
@@ -235,6 +248,16 @@ export default class CompoVote extends React.Component<{
         const now = moment(timeMin);
         const voteTime = now.isSameOrAfter(votingStart) && now.isBefore(votingEnd);
         return globalState.user && isVotable && voteTime;
+    }
+
+    @action.bound
+    openEntryDetails(entry: ICompoEntry) {
+        this.showDetailsFor = entry;
+    }
+
+    @action.bound
+    hideEntryDetails() {
+        this.showDetailsFor = null;
     }
 
     render() {
@@ -276,6 +299,7 @@ export default class CompoVote extends React.Component<{
                         onSortEnd={this.onSortEnd}
                         entryIds={entryIds}
                         isLocked={!this.canVote}
+                        onShowDetails={this.openEntryDetails}
                         lockAxis="y"
                         useDragHandle
                     />
@@ -296,6 +320,10 @@ export default class CompoVote extends React.Component<{
                         }
                     </div>
                 </form>
+                {this.showDetailsFor && <EntryModal
+                    entry={this.showDetailsFor}
+                    onClose={this.hideEntryDetails}
+                />}
             </div>
         );
     }
