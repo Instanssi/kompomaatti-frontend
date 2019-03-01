@@ -6,6 +6,7 @@ import _orderBy from 'lodash/orderBy';
 
 import { NoResults, LoadingWrapper, FormatTime } from 'src/common';
 import EventInfo from 'src/state/EventInfo';
+import { IProgrammeEvent } from 'src/api/interfaces';
 
 /**
  * Lists an event's programme events.
@@ -28,6 +29,8 @@ export default class EventProgramme extends React.Component<{
         const { eventInfo } = this.props;
         const events = this.sortedEvents;
 
+        const hasContent = (pe: IProgrammeEvent) => !!(pe.description || pe.presenters);
+
         return (
             <LoadingWrapper store={this.progEvents}>
                 <ul className="list-k">
@@ -38,12 +41,16 @@ export default class EventProgramme extends React.Component<{
                                     <FormatTime value={event.start} format="ddd LT" />
                                 </span>
                                 {' '}
-                                <Link
-                                    className="item-title"
-                                    to={eventInfo.getProgrammeEventURL(event)}
-                                >
-                                    {event.title}
-                                </Link>
+                                {hasContent(event)
+                                    ? (
+                                        <Link
+                                            className="item-title"
+                                            to={eventInfo.getProgrammeEventURL(event)}
+                                        >
+                                            {event.title}
+                                        </Link>
+                                    ) : <span>{event.title}</span>
+                                }
                             </li>
                         ))
                         : <li><NoResults /></li>

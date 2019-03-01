@@ -8,6 +8,7 @@ import moment from 'moment';
 import EventInfo from 'src/state/EventInfo';
 import { FormatTime, L } from 'src/common';
 import globalState from 'src/state';
+import { IProgrammeEvent } from 'src/api/interfaces';
 
 @observer
 export default class FrontSchedule extends React.Component<{
@@ -23,15 +24,24 @@ export default class FrontSchedule extends React.Component<{
             key: string,
         }> = [];
 
-        const title = (name, type, url) => (
-            <div className="item-title">
-                <Link to={url}>{name}</Link>
-                {type !== null && <>
-                    {': '}
-                    <span><L text={type} /></span>
-                </>}
-            </div>
-        );
+        const title = (name: string, type: string | null, url: string, pe?: IProgrammeEvent) => {
+            const hasContent = pe
+                ? !!(pe.description || pe.presenters)
+                : true;
+
+            return (
+                <div className="item-title">
+                    {hasContent
+                        ? <Link to={url}>{name}</Link>
+                        : <span>{name}</span>
+                    }
+                    {type !== null && <>
+                        {': '}
+                        <span><L text={type} /></span>
+                    </>}
+                </div>
+            );
+        };
 
         for (const progEvent of programme.value || []) {
             if (!progEvent.end || progEvent.end === progEvent.start) {
@@ -41,7 +51,8 @@ export default class FrontSchedule extends React.Component<{
                     title: title(
                         progEvent.title,
                         null,
-                        event.getProgrammeEventURL(progEvent)
+                        event.getProgrammeEventURL(progEvent),
+                        progEvent,
                     ),
                 });
             } else {
@@ -51,7 +62,8 @@ export default class FrontSchedule extends React.Component<{
                     title: title(
                         progEvent.title,
                         'programmeEvent.start',
-                        event.getProgrammeEventURL(progEvent)
+                        event.getProgrammeEventURL(progEvent),
+                        progEvent,
                     ),
                 });
                 all.push({
@@ -60,7 +72,8 @@ export default class FrontSchedule extends React.Component<{
                     title: title(
                         progEvent.title,
                         'programmeEvent.end',
-                        event.getProgrammeEventURL(progEvent)
+                        event.getProgrammeEventURL(progEvent),
+                        progEvent,
                     ),
                 });
             }
