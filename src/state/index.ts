@@ -1,7 +1,7 @@
 import _get from 'lodash/get';
 import _template from 'lodash/template';
 import _orderBy from 'lodash/orderBy';
-import { runInAction, computed, reaction } from 'mobx';
+import { runInAction, computed, reaction, action } from 'mobx';
 import { observable } from 'mobx';
 
 import config from 'src/config';
@@ -12,6 +12,12 @@ import EventInfo from './EventInfo';
 
 
 const api = new InstanssiREST(config.API_URL);
+
+export interface INotificationMessage {
+    id: number;
+    text: string;
+    type?: string;
+}
 
 /**
  * Application-wide state.
@@ -34,6 +40,9 @@ class GlobalState {
     @observable.ref timeSec = new Date().valueOf();
     /** Current time in milliseconds, updating once per minute. */
     @observable.ref timeMin = new Date().valueOf();
+    /** Messages the user should probably see. */
+    @observable.shallow messages: INotificationMessage[] = [];
+    nextMessageId = 0;
 
     /** Several things could use a list of party events, so it's available here. */
     events = new LazyStore(async () => {
@@ -135,6 +144,28 @@ class GlobalState {
      */
     async continueSession() {
         return this.userStore.refresh();
+    }
+
+    /**
+     * Clear the current user's info and maybe notify them about this.
+     */
+    sessionExpired() {
+        if (this.user) {
+            this.userStore.clear();
+            this.postMessage('danger', 'session.expired');
+        }
+    }
+
+    @action
+    postMessage(type: string, text: string) {
+        this.messages.push({
+            id: this.nextMessageId++,
+            type,
+            text,
+        });
+        setTimeout(action(() => {
+            this.messages.splice(0, 1);
+        }), 10000);
     }
 
     /**

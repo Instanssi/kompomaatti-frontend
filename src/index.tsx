@@ -27,6 +27,7 @@ import {
     // Breadcrumbs,
 } from 'src/layout';
 import globalState from './state';
+import { Messages } from './common/Messages';
 // import headerImg from './styles/title-logo-96.png';
 
 // Make the Finnish locale less confusing (is 15.10 a date or a time of day?)
@@ -58,6 +59,7 @@ export default class App extends React.Component {
                     <div id="top" className="app-wrap">
                         <Header />
                         <main className="p-3">
+                            <Messages />
                             {/*<Breadcrumbs />*/}
                             <Views />
                         </main>

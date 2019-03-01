@@ -3,6 +3,7 @@ import Cookies from 'cookies-js';
 import { observable, action } from 'mobx';
 
 import { PrimaryKey } from 'src/api/interfaces';
+import globalState from 'src/state';
 
 /**
  * API state tracking.
@@ -123,6 +124,9 @@ export default class BaseAPI<ItemType = any> {
      * @param {Response} response
      */
     protected handleResponse(response: Response) {
+        if (response.status === 401) {
+            globalState.sessionExpired();
+        }
         if (!response.ok) {
             throw response;
         }

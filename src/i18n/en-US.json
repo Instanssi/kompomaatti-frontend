@@ -164,6 +164,7 @@
         "end": "Ends"
     },
     "session": {
+        "expired": "Your session has expired. Log in at the main site to continue.",
         "login": "Log in",
         "loginTitle": "Log in",
         "logout": "Log out"

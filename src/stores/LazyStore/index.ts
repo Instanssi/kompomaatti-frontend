@@ -56,6 +56,11 @@ export default class LazyStore<T, E = any> implements IRemote<T, E> {
         return this._lastRefresh;
     }
 
+    clear() {
+        this._value = null;
+        this.atom.reportChanged();
+    }
+
     refresh() {
         if (this._currentFetch) {
             return this._currentFetch;

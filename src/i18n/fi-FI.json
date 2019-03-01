@@ -163,6 +163,7 @@
         "end": "Päättyy"
     },
     "session": {
+        "expired": "Istuntosi on vanhentunut. Kirjaudu sisään uudelleen jatkaaksesi.",
         "login": "Kirjaudu sisään",
         "loginTitle": "Kirjautuminen",
         "logout": "Kirjaudu ulos"
