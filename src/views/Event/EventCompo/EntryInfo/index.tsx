@@ -7,13 +7,29 @@ import { L } from 'src/common';
 
 /**
  * Tries to guess if a URL refers to an image.
- * @param url URL to check.
+ * @param urlString URL to check.
  */
 export function isImageURL(urlString: string): boolean {
     try {
         const url = new URL(urlString);
         const path = url.pathname.toLowerCase();
         return !!path.match(/(jpg|jpeg|png|webp|gif|bmp)/);
+
+    } catch (error) {
+        console.error(error);
+        return false;
+    }
+}
+
+/**
+ * Tries to guess if a URL refers to an audio file.
+ * @param urlString URL to check.
+ */
+export function isAudioURL(urlString: string): boolean {
+    try {
+        const url = new URL(urlString);
+        const path = url.pathname.toLowerCase();
+        return !!path.match(/(mp3|opus|wav|flac)/);
 
     } catch (error) {
         console.error(error);
@@ -46,15 +62,29 @@ export default class EntryInfo extends React.Component<{
         return null;
     }
 
+    @computed
+    get isAudioEntry(): boolean {
+        const { entryfile_url } = this.props.entry;
+        return !!entryfile_url && isAudioURL(entryfile_url);
+    }
+
     render() {
         const { entry } = this.props;
         const { entryImageURLs } = this;
+        const { isAudioEntry } = this;
         return (
             <>
                 <div className="entry-title">
                     <h3>{entry.name}</h3>
                     <p>by {entry.creator}</p>
                 </div>
+                {isAudioEntry && entry.entryfile_url && (
+                    <div className="entry-audio">
+                        <h4><L text="entry.audio" /></h4>
+                        <audio src={entry.entryfile_url} autoPlay={false} controls />
+                        <p><L text="entry.audioHelp" /></p>
+                    </div>
+                )}
                 {entry.imagefile_medium_url && (
                     <div className="entry-image">
                         <h4><L text="entry.image" /></h4>

@@ -120,6 +120,8 @@
     "entry": {
         "add": "Lisää teos",
         "addOk": "Teos \"${name}\" lisätty.",
+        "audio": "Äänitiedosto",
+        "audioHelp": "Jos selaimesi ei pysty toistamaan tiedostoa, voit ladata sen koneellesi alempaa.",
         "description": "Teoksen kuvaus",
         "edit": "Muokkaa teosta",
         "editOk": "Teos \"${name}\" päivitetty.",
