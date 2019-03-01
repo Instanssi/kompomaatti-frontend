@@ -10,13 +10,13 @@ import InstanssiREST from '../api';
 import { LazyStore } from 'src/stores';
 import EventInfo from './EventInfo';
 
-
 const api = new InstanssiREST(config.API_URL);
 
 export interface INotificationMessage {
     id: number;
     text: string;
     type?: string;
+    values?: {};
 }
 
 /**
@@ -157,11 +157,12 @@ class GlobalState {
     }
 
     @action
-    postMessage(type: string, text: string) {
+    postMessage(type: string, text: string, values?: {}) {
         this.messages.push({
             id: this.nextMessageId++,
             type,
             text,
+            values,
         });
         setTimeout(action(() => {
             this.messages.splice(0, 1);

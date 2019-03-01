@@ -20,7 +20,7 @@ export class Messages extends React.Component {
                         key={msg.id}
                         className={`message alert alert-${msg.type || 'info'}`}
                     >
-                        <L text={msg.text} />
+                        <L text={msg.text} values={msg.values} />
                     </div>
                 ))}
             </ul>

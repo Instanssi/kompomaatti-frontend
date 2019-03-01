@@ -118,8 +118,10 @@
     },
     "entry": {
         "add": "Add entry",
+        "addOk": "Entry \"${name}\" added.",
         "description": "Entry description",
         "edit": "Edit entry",
+        "editOk": "Entry \"${name}\" updated.",
         "entryfile": "Entry file",
         "files": "Files",
         "image": "Image",

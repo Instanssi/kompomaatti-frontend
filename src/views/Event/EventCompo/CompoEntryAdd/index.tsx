@@ -36,9 +36,9 @@ export default class CompoEntryAdd extends React.Component<{
         this.form.submit().then(
             (success) => runInAction(() => {
                 console.info('success:', success);
-                // TODO: Show a toast or something
                 this.props.eventInfo.myEntries.refresh();
                 this.success = true;
+                globalState.postMessage('success', 'entry.addOk', this.form.toJS());
             }),
         );
     }

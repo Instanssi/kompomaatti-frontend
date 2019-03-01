@@ -117,8 +117,10 @@
     },
     "entry": {
         "add": "Lisää teos",
+        "addOk": "Teos \"${name}\" lisätty.",
         "description": "Teoksen kuvaus",
         "edit": "Muokkaa teosta",
+        "editOk": "Teos \"${name}\" päivitetty.",
         "entryfile": "Teos tiedostona",
         "files": "Tiedostot",
         "image": "Kuva",

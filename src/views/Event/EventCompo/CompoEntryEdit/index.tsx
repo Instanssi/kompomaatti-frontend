@@ -74,6 +74,7 @@ export class CompoEntryEdit extends React.Component<{
                 console.info('success:', success);
                 this.props.eventInfo.myEntries.refresh();
                 this.success = true;
+                globalState.postMessage('success', 'entry.editOk', this.form.toJS());
             }),
         );
     }
