@@ -17,6 +17,11 @@ const storeOptions = {
     refreshInterval: 1000 * 60 * 10,
 };
 
+const progOptions = {
+    // Actually, compos change even faster than that.
+    refreshInterval: 1000 * 60 * 5,
+};
+
 /**
  * Collects data related to a specific event under one object for easy access and caching.
  */
@@ -24,11 +29,11 @@ export default class EventInfo {
     @observable.ref event: IEvent;
 
     compos = new LazyStore(
-        () => this.api.compos.list(this.query), storeOptions);
+        () => this.api.compos.list(this.query), progOptions);
     competitions = new LazyStore(
-        () => this.api.competitions.list(this.query), storeOptions);
+        () => this.api.competitions.list(this.query), progOptions);
     programme = new LazyStore(
-        () => this.api.programme.list(this.query), storeOptions);
+        () => this.api.programme.list(this.query), progOptions);
     myEntries = new LazyStore(
         () => this.api.userCompoEntries.list(this.query), storeOptions);
     myParticipations = new LazyStore(
@@ -63,7 +68,7 @@ export default class EventInfo {
     }
 
     /**
-     * True if the current user has a vote code for the event.
+     * True if the current user has no vote code for the event.
      */
     @computed
     get noVoteCode() {
