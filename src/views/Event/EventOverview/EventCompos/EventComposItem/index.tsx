@@ -28,7 +28,13 @@ export class EventComposItem extends React.Component<{
 }> {
     @computed
     get times() {
-        const { voting_end, voting_start, adding_end, editing_end, compo_start } = this.props.compo;
+        const {
+            voting_end,
+            voting_start,
+            adding_end,
+            editing_end,
+            compo_start,
+        } = this.props.compo;
         return {
             votingEnd: moment(voting_end),
             votingStart: moment(voting_start),
@@ -71,15 +77,29 @@ export class EventComposItem extends React.Component<{
         return null;
     }
 
+    @computed
+    get votingIsOpen() {
+        const { timeMin } = globalState;
+        const { compo } = this.props;
+        const { times } = this;
+        const { is_votable } = compo;
+
+        return is_votable && (
+            times.votingStart.isSameOrBefore(timeMin) &&
+            times.votingEnd.isAfter(timeMin)
+        );
+    }
+
     render() {
         const { nextCompoEvent } = this;
         const { compo, eventInfo } = this.props;
+        const { votingIsOpen } = this;
+
         return (
             <li key={compo.id} className="compos-item">
                 <span className="item-time">
                     <FormatTime value={compo.compo_start} format="ddd LT" />
-                </span>
-                {' '}
+                </span>{' '}
                 <span className="item-title">
                     <div>
                         <Link to={eventInfo.getCompoURL(compo)}>
@@ -94,8 +114,11 @@ export class EventComposItem extends React.Component<{
                         </div>
                     )}
                 </span>
-
-                <span className="item-note ml-auto">
+                {votingIsOpen && <span className="item-note ml-auto">
+                    <Link to={eventInfo.getCompoVoteURL(compo)}>
+                        <L text="compo.vote" />
+                    </Link>
+                </span>}
                 {/*
                     Accepting entries until 123123
                     Voting open!
@@ -105,9 +128,6 @@ export class EventComposItem extends React.Component<{
                     Compo soon(tm)
                     Results @ Sun 1:00 PM
                 */}
-                </span>
-
-
             </li>
         );
     }
