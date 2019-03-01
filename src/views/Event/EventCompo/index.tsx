@@ -22,6 +22,13 @@ import CompoVote from './CompoVote';
 export class EventCompo extends React.Component<{
     eventInfo: EventInfo;
 } & RouteComponentProps<{ compoId: string }>> {
+
+    componentDidMount() {
+        // Ugh, the schedule is changing too fast.
+        // Force refresh the compo info when viewing any individual compo.
+        this.props.eventInfo.compos.refresh();
+    }
+
     @computed
     get compo() {
         const compos = this.props.eventInfo.compos.value;
