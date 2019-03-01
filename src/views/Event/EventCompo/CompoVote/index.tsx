@@ -250,7 +250,6 @@ export default class CompoVote extends React.Component<{
                     message={L.getText('voting.leaveWithoutSaving')}
                 />}
                 <h3><L text="compo.vote" /></h3>
-                <EventStatus event={this.props.eventInfo} />
                 {!ended ? <div className="alert alert-info">
                     <span className="fa fa-clock-o" />&ensp;
                     <L
