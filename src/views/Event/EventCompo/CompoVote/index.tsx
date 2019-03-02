@@ -11,7 +11,7 @@ import globalState from 'src/state';
 import { LazyStore } from 'src/stores';
 import { ICompo, ICompoEntry } from 'src/api/interfaces';
 import EventInfo from 'src/state/EventInfo';
-import { L } from 'src/common';
+import { L, FormatNumber } from 'src/common';
 
 import EntryModal from '../EntryModal';
 import './vote.scss';
@@ -25,11 +25,25 @@ const DragHandle = SortableHandle(() => (
 const VoteEntryItem = SortableElement((props: {
     value: ICompoEntry;
     num: string;
+    pos: number | null;
     onShowDetails: (entry: ICompoEntry) => any;
 }) => (
         <li className="voting-item">
             <div className="item-number">
-                {props.num}&ensp;
+                <div className="item-number-pos">
+                    {props.num}&ensp;
+                </div>
+                <div className="item-number-score">
+                    {typeof props.pos === 'number' &&
+                        <>
+                            <FormatNumber
+                                value={1.0 / props.pos}
+                                precision={1}
+                            />
+                            {' p'}
+                        </>
+                    }
+                </div>
             </div>
             <div className="item-content">
                 <div className="item-title">
@@ -89,6 +103,7 @@ const VoteEntryList = SortableContainer((props: {
                         value={value}
                         onShowDetails={props.onShowDetails}
                         num={foundDivider ? '-' : `${index + 1}.`}
+                        pos={!foundDivider ? (index + 1) : null}
                     />
                 );
             })}

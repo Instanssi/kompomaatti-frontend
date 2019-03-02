@@ -1,15 +1,13 @@
 import { IEvent, ICompoEntry, ICompo } from 'src/api/interfaces';
 
-const mockEvent: IEvent = {
+export const mockEvent: IEvent = {
     id: 1,
     name: 'Intanssi 20017',
     date: '2018-02-08T20:31:43.000Z',
     mainurl: 'http://intanssi.org/20017',
 };
 
-export { mockEvent };
-
-const mockCompoEntry: ICompoEntry = {
+export const mockCompoEntry: ICompoEntry = {
     id: 123,
     compo: 44,
     name: 'Stochastic Mock Coverage Tracer',
@@ -27,9 +25,7 @@ const mockCompoEntry: ICompoEntry = {
     rank: 1,
 };
 
-export { mockCompoEntry };
-
-const mockCompo: ICompo = {
+export const mockCompo: ICompo = {
     id: 420,
     event: 10,
     name: 'Testing compo',
@@ -51,5 +47,3 @@ const mockCompo: ICompo = {
     is_imagefile_allowed: true,
     is_imagefile_required: true,
 };
-
-export { mockCompo };
