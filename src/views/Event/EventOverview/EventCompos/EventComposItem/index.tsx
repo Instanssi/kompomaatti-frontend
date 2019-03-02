@@ -91,6 +91,7 @@ export class EventComposItem extends React.Component<{
     }
 
     render() {
+        const { user } = globalState;
         const { nextCompoEvent } = this;
         const { compo, eventInfo } = this.props;
         const { votingIsOpen } = this;
@@ -114,7 +115,13 @@ export class EventComposItem extends React.Component<{
                         </div>
                     )}
                 </span>
-                {votingIsOpen && <span className="item-note ml-auto">
+                {user && votingIsOpen && <span className="item-note ml-auto">
+                    {eventInfo.hasVotedInCompo(compo) && (
+                        <>
+                            <span className="fa fa-fw fa-check" />
+                            &ensp;
+                        </>
+                    )}
                     <Link to={eventInfo.getCompoVoteURL(compo)}>
                         <L text="compo.vote" />
                     </Link>

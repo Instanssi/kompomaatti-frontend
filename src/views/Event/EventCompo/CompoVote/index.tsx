@@ -101,9 +101,6 @@ export default class CompoVote extends React.Component<{
     eventInfo: EventInfo;
     compo: ICompo;
 }> {
-    /** User's current vote data. */
-    myCompoVotes = new LazyStore(() => globalState.api.userVotes.getVotes(this.props.compo.id));
-    /** Could probably re-use these from somewhere. */
     compoEntries = new LazyStore(() => globalState.api.compoEntries.list({
         compo: this.props.compo.id,
     }));
@@ -132,11 +129,18 @@ export default class CompoVote extends React.Component<{
         this.disposers.forEach(d => d());
     }
 
+    /**
+     * Fetch new info on the compo's entries list and the user's votes
+     */
     refresh() {
+        const { compo, eventInfo } = this.props;
         return Promise.all([
-            this.myCompoVotes.refresh(),
+            // Let's just fetch all the votes now.
+            eventInfo.myVotes.refresh(),
+            // Make sure we have up-to-date info on the compo's entries.
             this.compoEntries.refresh(),
-        ]).then(([votes, entries]) => runInAction(() => {
+        ]).then(([allVotes, entries]) => runInAction(() => {
+            const votes = allVotes.filter(userVote => userVote.compo === compo.id);
             this.votes = (votes && votes.length > 0) ? votes[0].entries : [];
             this.entries = _shuffle(entries);
             this.entries.forEach(e => {
