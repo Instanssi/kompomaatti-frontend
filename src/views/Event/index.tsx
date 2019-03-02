@@ -4,9 +4,10 @@ import { computed } from 'mobx';
 import { Switch, Route, withRouter, RouteComponentProps, Redirect } from 'react-router';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
 
 import globalState from 'src/state';
-import { FormatTime, LoadingWrapper, L } from 'src/common';
+import { FormatTime, LoadingWrapper, L, TimeZoneIndicator } from 'src/common';
 
 import EventOverview from './EventOverview';
 import EventCompo from './EventCompo';
@@ -40,6 +41,8 @@ export class EventView extends React.Component<RouteComponentProps<any> & {
         const { location } = this.props;
         const locationKey = location.pathname.split('/')[2];
 
+
+
         return (
             <div className="event-view">
                 <LoadingWrapper store={globalState.events}>
@@ -70,8 +73,14 @@ export class EventView extends React.Component<RouteComponentProps<any> & {
                                 </a>
                             </div>
                         </div>
-                        <p>
-                            <FormatTime value={eventInfo.event.date} format="LL" />
+                        <p className="flex-baseline">
+                            <span>
+                                <FormatTime value={eventInfo.event.date} format="LL" />
+                            </span>
+                            &ensp;
+                            <span className="ml-auto">
+                                <TimeZoneIndicator time={eventInfo.event.date} />
+                            </span>
                         </p>
                         <EventStatus event={eventInfo} showIfIrrelevant />
                         <TransitionGroup className="transition-group">

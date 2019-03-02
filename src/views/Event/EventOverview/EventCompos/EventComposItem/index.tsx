@@ -92,9 +92,8 @@ export class EventComposItem extends React.Component<{
 
     render() {
         const { user } = globalState;
-        const { nextCompoEvent } = this;
+        const { nextCompoEvent, votingIsOpen } = this;
         const { compo, eventInfo } = this.props;
-        const { votingIsOpen } = this;
 
         return (
             <li key={compo.id} className="compos-item">

@@ -8,3 +8,4 @@ export { default as L } from './L';
 export { default as LoadingWrapper } from './LoadingWrapper';
 export { default as NotLoggedIn } from './NotLoggedIn';
 export { NoResults } from './NoResults';
+export { TimeZoneIndicator } from './TimeZoneIndicator';
