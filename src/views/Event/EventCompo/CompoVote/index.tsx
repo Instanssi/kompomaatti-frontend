@@ -267,7 +267,8 @@ export default class CompoVote extends React.Component<{
     render() {
         const { entryIds, hasChanges } = this;
 
-        const deadline = moment(this.props.compo.voting_end).locale(globalState.momentLocale);
+        const deadline = globalState.getMoment(this.props.compo.voting_end)
+            .locale(globalState.momentLocale);
         const ended = deadline.isBefore(globalState.timeMin);
 
         return (

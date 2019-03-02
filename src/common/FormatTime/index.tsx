@@ -5,7 +5,6 @@ import { computed } from 'mobx';
 import moment from 'moment';
 import globalState from 'src/state';
 
-
 export interface IFormatTimeProps {
     value: number | Date | moment.Moment | string | null;
     format?: string;
@@ -27,7 +26,7 @@ export default class FormatTime extends React.Component<IFormatTimeProps> {
         if (!value) {
             return placeholder || '-';
         }
-        return moment(value)
+        return globalState.getMoment(value)
             .locale(locale || globalState.momentLocale || 'en')
             .format(format || 'LLL');
     }

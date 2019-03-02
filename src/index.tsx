@@ -7,6 +7,7 @@ import 'whatwg-fetch';
 
 import 'regenerator-runtime/runtime';
 
+import 'moment-timezone';
 import 'moment/locale/en-gb';
 import 'moment/locale/fi';
 

@@ -3,6 +3,7 @@ import _template from 'lodash/template';
 import _orderBy from 'lodash/orderBy';
 import { runInAction, computed, reaction, action } from 'mobx';
 import { observable } from 'mobx';
+import moment from 'moment';
 
 import config from 'src/config';
 import i18n from '../i18n';
@@ -24,6 +25,18 @@ export interface INotificationMessage {
  */
 class GlobalState {
     userStore = new LazyStore(() => api.currentUser.get());
+
+    /** Default party time zone. */
+    partyTimeZone = 'Europe/Helsinki';
+
+    /**
+     * Override default browser timezone behavior by setting this
+     * to a moment-timezone tz id. Null leaves the formatting as-is
+     * and shows device-local time.
+     *
+     * This should only matter where times are displayed.
+     */
+    @observable tzOverride: string | null = this.partyTimeZone;
 
     /** Current user, if known. Don't even try to mutate. */
     get user() {
@@ -73,6 +86,18 @@ class GlobalState {
         );
         this.setLanguage(this.languageCode);
         this.continueSession();
+    }
+
+    /**
+     * Construct a Moment object that behaves according to the party's time zone when
+     * formatting to text, querying start/end of day and so on.
+     * @param value Input to construct timestamp from.
+     */
+    getMoment(value: number | string | moment.Moment | Date) {
+        if (this.tzOverride) {
+            return moment(value).tz(this.tzOverride);
+        }
+        return moment(value);
     }
 
     get persistentState() {

@@ -176,6 +176,7 @@
         "logout": "Kirjaudu ulos"
     },
     "timeZone": {
+        "partyTZ": "Partyn aikavyöhyke on ${name}.",
         "yourTZ": "Kellonajat näytetään laitteesi aikavyöhykkeen mukaan."
     },
     "user": {

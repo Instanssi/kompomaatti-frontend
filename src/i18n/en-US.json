@@ -177,7 +177,8 @@
         "logout": "Log out"
     },
     "timeZone": {
-        "yourTZ": "Times are shown according to your device's time zone."
+        "partyTZ": "The party's time zone is ${name}.",
+        "yourTZ": "Using your device's time zone."
     },
     "user": {
         "password": "Password",
