@@ -29,7 +29,7 @@ export function isAudioURL(urlString: string): boolean {
     try {
         const url = new URL(urlString);
         const path = url.pathname.toLowerCase();
-        return !!path.match(/(mp3|opus|wav|flac)/);
+        return !!path.match(/(mp3|ogg|opus|wav|flac)/);
 
     } catch (error) {
         console.error(error);
