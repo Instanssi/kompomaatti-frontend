@@ -176,6 +176,9 @@
         "loginTitle": "Log in",
         "logout": "Log out"
     },
+    "timeZone": {
+        "yourTZ": "Times are shown according to your device's time zone."
+    },
     "user": {
         "password": "Password",
         "username": "User name"

@@ -175,6 +175,9 @@
         "loginTitle": "Kirjautuminen",
         "logout": "Kirjaudu ulos"
     },
+    "timeZone": {
+        "yourTZ": "Kellonajat näytetään laitteesi aikavyöhykkeen mukaan."
+    },
     "user": {
         "password": "Salasana",
         "username": "Käyttäjätunnus"
