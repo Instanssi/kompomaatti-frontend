@@ -9,6 +9,8 @@ import EventInfo from 'src/state/EventInfo';
 import { FormatTime, L } from 'src/common';
 import globalState from 'src/state';
 
+import './compositem.scss';
+
 /** It's happening! */
 interface ICompoHappening {
     time: moment.Moment;
@@ -84,9 +86,10 @@ export class EventComposItem extends React.Component<{
         const { times } = this;
         const { is_votable } = compo;
 
-        return is_votable && (
-            times.votingStart.isSameOrBefore(timeMin) &&
-            times.votingEnd.isAfter(timeMin)
+        return (
+            is_votable &&
+            (times.votingStart.isSameOrBefore(timeMin) &&
+                times.votingEnd.isAfter(timeMin))
         );
     }
 
@@ -95,36 +98,46 @@ export class EventComposItem extends React.Component<{
         const { nextCompoEvent, votingIsOpen } = this;
         const { compo, eventInfo } = this.props;
 
+        const hasVoted = eventInfo.hasVotedInCompo(compo);
+
         return (
             <li key={compo.id} className="compos-item">
                 <span className="item-time">
                     <FormatTime value={compo.compo_start} format="ddd LT" />
                 </span>{' '}
                 <span className="item-title">
-                    <div>
-                        <Link to={eventInfo.getCompoURL(compo)}>
-                            {compo.name}
-                        </Link>
-                    </div>
-                    {nextCompoEvent && (
+                    <span className="item-title-info">
                         <div>
-                            <L text={nextCompoEvent.textKey} />
-                            {': '}
-                            {nextCompoEvent.humanTime}
+                            <Link to={eventInfo.getCompoURL(compo)}>
+                                {compo.name}
+                            </Link>
                         </div>
-                    )}
+                        {nextCompoEvent && (
+                            <div>
+                                <L text={nextCompoEvent.textKey} />
+                                {': '}
+                                {nextCompoEvent.humanTime}
+                            </div>
+                        )}
+                    </span>
+                    <span className="item-title-actions">
+                        {user && votingIsOpen && (
+                            <span className="item-action">
+                                {hasVoted && (
+                                    <>
+                                        <span
+                                            className="fa fa-fw
+                                        fa-check"
+                                        />{' '}
+                                    </>
+                                )}
+                                <Link to={eventInfo.getCompoVoteURL(compo)}>
+                                    <L text="compo.vote" />
+                                </Link>
+                            </span>
+                        )}
+                    </span>
                 </span>
-                {user && votingIsOpen && <span className="item-note ml-auto">
-                    {eventInfo.hasVotedInCompo(compo) && (
-                        <>
-                            <span className="fa fa-fw fa-check" />
-                            &ensp;
-                        </>
-                    )}
-                    <Link to={eventInfo.getCompoVoteURL(compo)}>
-                        <L text="compo.vote" />
-                    </Link>
-                </span>}
                 {/*
                     Accepting entries until 123123
                     Voting open!

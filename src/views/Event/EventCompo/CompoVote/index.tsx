@@ -1,6 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { action, observable, runInAction, computed } from 'mobx';
+import { Link } from 'react-router-dom';
 import _orderBy from 'lodash/orderBy';
 import _shuffle from 'lodash/shuffle';
 import moment from 'moment';
@@ -338,6 +339,11 @@ export default class CompoVote extends React.Component<{
                                 : <span><L text="voting.atLeastOneRequired" /></span>
                             )
                         }
+                    </div>
+                    <div>
+                        <Link to={this.props.eventInfo.getCompoURL(this.props.compo)}>
+                            <L text="common.back" />
+                        </Link>
                     </div>
                 </form>
                 {this.showDetailsFor && <EntryModal
