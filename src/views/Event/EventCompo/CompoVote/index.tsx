@@ -38,7 +38,7 @@ const VoteEntryItem = SortableElement((props: {
                         <>
                             <FormatNumber
                                 value={1.0 / props.pos}
-                                precision={1}
+                                precision={2}
                             />
                             {' p'}
                         </>

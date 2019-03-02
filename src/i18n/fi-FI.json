@@ -129,7 +129,9 @@
         "files": "Tiedostot",
         "image": "Kuva",
         "info": "Entryn tiedot",
-        "sourcefile": "Lähdetiedosto"
+        "sourcefile": "Lähdetiedosto",
+        "video": "Video",
+        "youtubeLink": "Katso YouTubessa"
     },
     "event": {
         "competitions": "Kilpailut",

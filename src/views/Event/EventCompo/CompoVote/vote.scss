@@ -33,7 +33,7 @@ $attention-color: mix($brand-primary, $app-bg, 50%);
         display: flex;
         // This should flex as much as possible to fill the row
         flex: 1 1 auto;
-        padding: 0 $spacer $spacer 0;
+        padding: ($spacer / 2);
         overflow: hidden;
 
         // This contains item-title and item-actions;

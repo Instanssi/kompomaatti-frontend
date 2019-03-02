@@ -130,7 +130,9 @@
         "files": "Files",
         "image": "Image",
         "info": "Entry info",
-        "sourcefile": "Source file"
+        "sourcefile": "Source file",
+        "video": "Video",
+        "youtubeLink": "Watch in YouTube"
     },
     "event": {
         "competitions": "Competitions",
