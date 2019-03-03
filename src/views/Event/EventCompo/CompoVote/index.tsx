@@ -304,12 +304,19 @@ export default class CompoVote extends React.Component<{
                     />
                 </div> : <div className="alert alert-info"><L text="voting.ended" /></div>}
                 <form onSubmit={this.handleSubmit}>
-                    <p>
-                        <L text="voting.help" />
-                        <span className="fa fa-sort" />
-                        {'. '}
-                        <L text="voting.help2" />
-                    </p>
+                    <ul>
+                        <li>
+                            <L text="voting.help" />
+                            <span className="fa fa-sort" />
+                            {'. '}
+                            <L text="voting.help2" />
+                        </li>
+                        <li>
+                            <L text="voting.help3" />
+                            <span className="fa fa-info-circle" />
+                            {'.'}
+                        </li>
+                    </ul>
                     {entryIds.length === 0 && (
                         <div className="voting-item placeholder">
                             <L text="voting.placeholder" />
@@ -335,9 +342,9 @@ export default class CompoVote extends React.Component<{
                         {this.isSubmitting && <span className="fa fa-fw fa-spin fa-spinner" />}
                         <Link
                             className="btn btn-link"
-                            to={this.props.eventInfo.getCompoURL(this.props.compo)}
+                            to={this.props.eventInfo.eventURL}
                         >
-                            <L text="common.back" />
+                            <L text="voting.backToEvent" />
                         </Link>
                     </div>
                     <p>

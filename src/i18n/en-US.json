@@ -195,6 +195,7 @@
     },
     "voting": {
         "atLeastOneRequired": "Move at least one entry above the bar to continue.",
+        "backToEvent": "Return to event page",
         "deadline": "Voting ends on: ${ date }.",
         "divider": "Arrange entries above this bar to give them points. Entries below are ignored.",
         "placeholder": "Drag entries here to vote",
@@ -204,7 +205,8 @@
         "saveOk": "Votes saved.",
         "saveFail": "Saving votes failed.",
         "help": "Drag entries around by the ",
-        "help2": "Entries moved above the bar will receive points according to their order."
+        "help2": "Entries moved above the bar will receive points according to their order.",
+        "help3": "You can review entries by clicking the "
     },
     "voteCode": {
         "hasCodeForEvent": "You have a valid vote code for this event.",

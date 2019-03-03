@@ -194,6 +194,7 @@
     },
     "voting": {
         "atLeastOneRequired": "Nosta ainakin yksi entry riman yläpuolelle.",
+        "backToEvent": "Palaa tapahtumasivulle",
         "deadline": "Äänestys päättyy: ${ date }.",
         "divider": "Pisteytä entryjä järjestämällä niitä tämän riman yläpuolelle. Alle jäävät entryt eivät saa pisteitä.",
         "placeholder": "Vedä entryjä tähän",
@@ -203,7 +204,8 @@
         "saveOk": "Äänet tallennettu.",
         "saveFail": "Ääniä ei voitu tallentaa.",
         "help": "Järjestä entryt laatujärjestykseen vetämällä merkistä ",
-        "help2": "Viivan yläpuolelle nostetut saavat pisteitä järjestyksensä mukaan."
+        "help2": "Viivan yläpuolelle nostetut saavat pisteitä järjestyksensä mukaan.",
+        "help3": "Voit katsoa entryn tietoja klikkaamalla "
     },
     "voteCode": {
         "hasCodeForEvent": "Sinulla on äänestysoikeus tähän tapahtumaan.",
