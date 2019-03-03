@@ -120,11 +120,13 @@
     "entry": {
         "add": "Lisää teos",
         "addOk": "Teos \"${name}\" lisätty.",
+        "addFail": "Teoksen lisäys ei onnistunut.",
         "audio": "Äänitiedosto",
         "audioHelp": "Jos selaimesi ei pysty toistamaan tiedostoa, voit ladata sen koneellesi alempaa.",
         "description": "Teoksen kuvaus",
         "edit": "Muokkaa teosta",
         "editOk": "Teos \"${name}\" päivitetty.",
+        "editFail": "Teoksen päivitys ei onnistunut.",
         "entryfile": "Teos tiedostona",
         "files": "Tiedostot",
         "image": "Kuva",

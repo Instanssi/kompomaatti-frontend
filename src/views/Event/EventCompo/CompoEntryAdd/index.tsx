@@ -40,6 +40,9 @@ export default class CompoEntryAdd extends React.Component<{
                 this.success = true;
                 globalState.postMessage('success', 'entry.addOk', this.form.toJS());
             }),
+            (_error) => runInAction(() => {
+                globalState.postMessage('danger', 'entry.addFail', this.form.toJS());
+            }),
         );
     }
 

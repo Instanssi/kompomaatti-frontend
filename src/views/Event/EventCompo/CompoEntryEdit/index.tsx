@@ -76,6 +76,9 @@ export class CompoEntryEdit extends React.Component<{
                 this.success = true;
                 globalState.postMessage('success', 'entry.editOk', this.form.toJS());
             }),
+            (_error) => runInAction(() => {
+                globalState.postMessage('danger', 'entry.editFail', this.form.toJS());
+            }),
         );
     }
 

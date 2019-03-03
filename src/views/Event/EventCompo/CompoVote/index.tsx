@@ -332,19 +332,20 @@ export default class CompoVote extends React.Component<{
                             <L text="common.save" />
                         </button>
                         &ensp;
-                        {this.isSubmitting
-                            ? <span className="fa fa-fw fa-spin fa-spinner" />
-                            : (entryIds.length > 0
-                                ? <span>{hasChanges && <L text="voting.hasChanges" />}</span>
-                                : <span><L text="voting.atLeastOneRequired" /></span>
-                            )
-                        }
-                    </div>
-                    <div>
-                        <Link to={this.props.eventInfo.getCompoURL(this.props.compo)}>
+                        {this.isSubmitting && <span className="fa fa-fw fa-spin fa-spinner" />}
+                        <Link
+                            className="btn btn-link"
+                            to={this.props.eventInfo.getCompoURL(this.props.compo)}
+                        >
                             <L text="common.back" />
                         </Link>
                     </div>
+                    <p>
+                        {entryIds.length > 0
+                            ? <span>{hasChanges && <L text="voting.hasChanges" />}</span>
+                            : <span><L text="voting.atLeastOneRequired" /></span>
+                        }
+                    </p>
                 </form>
                 {this.showDetailsFor && <EntryModal
                     entry={this.showDetailsFor}

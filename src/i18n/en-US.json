@@ -121,11 +121,13 @@
     "entry": {
         "add": "Add entry",
         "addOk": "Entry \"${name}\" added.",
+        "addFail": "Could not add entry.",
         "audio": "Audio file",
         "audioHelp": "If your browser can't play the audio, you can download the file below.",
         "description": "Entry description",
         "edit": "Edit entry",
         "editOk": "Entry \"${name}\" updated.",
+        "editFail": "Could not update entry.",
         "entryfile": "Entry file",
         "files": "Files",
         "image": "Image",
