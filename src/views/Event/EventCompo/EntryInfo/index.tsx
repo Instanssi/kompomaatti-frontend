@@ -122,12 +122,6 @@ export default class EntryInfo extends React.Component<{
                 </div>
                 <div className="entry-files">
                     <h4><L text="entry.files" /></h4>
-                    {entry.youtube_url && <p>
-                        <a target="_blank" href={entry.youtube_url}>
-                            <span className="fa fa-fw fa-youtube" />&ensp;
-                            <L text="entry.youtubeLink" />
-                        </a>
-                    </p>}
                     {entry.entryfile_url && <p>
                         <a target="_blank" href={entry.entryfile_url}>
                             <span className="fa fa-fw fa-download" />&ensp;
