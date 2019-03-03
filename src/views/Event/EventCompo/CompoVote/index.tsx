@@ -234,7 +234,7 @@ export default class CompoVote extends React.Component<{
                 this.refresh();
             }),
             (error) => runInAction(() => {
-                globalState.postMessage('error', 'voting.saveFail');
+                globalState.postMessage('danger', 'voting.saveFail');
                 this.isSubmitting = false;
             }),
         );
