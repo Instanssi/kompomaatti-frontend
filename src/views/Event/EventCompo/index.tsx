@@ -2,7 +2,7 @@ import React from 'react';
 import { computed } from 'mobx';
 import { observer } from 'mobx-react';
 import { Switch, Route, withRouter, RouteComponentProps } from 'react-router';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 
 import { FormatTime, LoadingWrapper } from 'src/common';
@@ -44,6 +44,10 @@ export class EventCompo extends React.Component<{
         const { eventInfo } = this.props;
         const { compo } = this;
         const { url } = this.props.match;
+
+        if (!eventInfo.compos.isPending && !compo) {
+            return <Redirect to={eventInfo.eventURL} />;
+        }
 
         return (
             <LoadingWrapper
