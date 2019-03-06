@@ -149,6 +149,11 @@
     "events": {
         "title": "All events"
     },
+    "error": {
+        "retry": "Try again",
+        "title": "Error",
+        "text": "There seems to be a problem with the Internet. The following may have something to do with it."
+    },
     "fileInput": {
         "delete": "Delete",
         "keep": "Keep current file",

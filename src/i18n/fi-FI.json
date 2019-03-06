@@ -148,6 +148,11 @@
     "events": {
         "title": "Kaikki tapahtumat"
     },
+    "error": {
+        "retry": "Yritä uudestaan",
+        "title": "Virhe",
+        "text": "Internetissä on jotain vikaa tänään. Seuraava teksti saattaa liittyä asiaan."
+    },
     "fileInput": {
         "delete": "Poista",
         "keep": "Nykyinen tiedosto",
