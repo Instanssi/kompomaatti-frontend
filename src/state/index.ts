@@ -191,7 +191,7 @@ class GlobalState {
         });
         setTimeout(action(() => {
             this.messages.splice(0, 1);
-        }), 10000);
+        }), 5000);
     }
 
     /**
