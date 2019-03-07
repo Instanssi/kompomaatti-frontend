@@ -52,6 +52,12 @@ export class CompoEntry extends React.Component<{
                         />
                         {entry.description && entry.description.length > 0 && (
                             <meta
+                                name="description"
+                                content={entry.description}
+                            />
+                        )}
+                        {entry.description && entry.description.length > 0 && (
+                            <meta
                                 property="og:description"
                                 content={entry.description}
                             />

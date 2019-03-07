@@ -47,6 +47,10 @@ export class EventProgrammeEvent extends React.Component<{
                     <Helmet>
                         <title>{`${progEvent.title} @ ${eventInfo.event.name}`}</title>
                         <meta
+                            name="description"
+                            content={`${progEvent.title} @ ${eventInfo.event.name}`}
+                        />
+                        <meta
                             property="og:title"
                             content={`${progEvent.title} @ ${eventInfo.event.name}`}
                         />

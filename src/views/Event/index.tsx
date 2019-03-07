@@ -41,14 +41,18 @@ export class EventView extends React.Component<RouteComponentProps<any> & {
         const { location } = this.props;
         const locationKey = location.pathname.split('/')[2];
 
-
-
         return (
             <div className="event-view">
                 <LoadingWrapper store={globalState.events}>
                     {eventInfo && <>
+                        {/* https://developers.google.com/search/reference/robots_meta_tag?csw=1 */}
                         <Helmet>
                             <title>{eventInfo.event.name}</title>
+                            <meta
+                                name="description"
+                                content={`${eventInfo.event.name} @ Kompomaatti`}
+                            />
+                            <meta name="googlebot" content="all" />
                         </Helmet>
                         <div className="event-title">
                             <h1 className="title-heading">{eventInfo.event.name}</h1>

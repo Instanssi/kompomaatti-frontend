@@ -61,6 +61,15 @@ export class EventCompo extends React.Component<{
                             property="og:title"
                             content={`${compo.name} @ ${eventInfo.event.name}`}
                         />
+                        <meta
+                            name="description"
+                            content={compo.name}
+                        />
+                        {/* TODO: Need to strip the HTML.
+                        <meta
+                            name="description"
+                            content={compo.description}
+                        />*/}
                     </Helmet>
                     <div className="compo-title">
                         {/* Make the title a link, but only when not on the same page

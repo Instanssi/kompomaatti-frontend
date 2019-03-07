@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import _orderBy from 'lodash/orderBy';
 import _shuffle from 'lodash/shuffle';
 import moment from 'moment';
+import { Helmet } from 'react-helmet';
 import { Prompt } from 'react-router';
 import { SortableContainer, SortableElement, SortableHandle, arrayMove } from 'react-sortable-hoc';
 
@@ -289,6 +290,10 @@ export default class CompoVote extends React.Component<{
 
         return (
             <div className="compo-vote">
+                <Helmet>
+                    {/* This page might not be available later. */}
+                    <meta name="googlebot" content="noindex" />
+                </Helmet>
                 {<Prompt
                     when={hasChanges}
                     message={L.getText('voting.leaveWithoutSaving')}

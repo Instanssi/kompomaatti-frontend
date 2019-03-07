@@ -2,6 +2,7 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { action, runInAction, reaction, computed, observable } from 'mobx';
 import { RouteComponentProps, withRouter, Redirect } from 'react-router';
+import { Helmet } from 'react-helmet';
 
 import globalState from 'src/state';
 import { Form, FormGroup, FormFileInput, L } from 'src/common';
@@ -179,16 +180,21 @@ export class CompoEntryEditView extends React.Component<{
         const { entry } = this;
         if (entry) {
             return (
-                <CompoEntryEdit
-                    eventInfo={eventInfo}
-                    compo={compo}
-                    entry={entry}
-                />
+                <>
+                    <Helmet>
+                        {/* This page might not be available later. */}
+                        <meta name="googlebot" content="noindex" />
+                    </Helmet>
+
+                    <CompoEntryEdit
+                        eventInfo={eventInfo}
+                        compo={compo}
+                        entry={entry}
+                    />
+                </>
             );
         }
-        // FIXME: Show a 404 page if no entry is found in the event info.
-        // - force refresh myEntries once if this happens
-        return null;
+        return <Redirect to={eventInfo.eventURL} />;
     }
 }
 

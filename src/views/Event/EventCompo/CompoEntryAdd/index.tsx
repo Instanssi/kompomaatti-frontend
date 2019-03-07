@@ -2,6 +2,7 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { action, runInAction, observable, computed } from 'mobx';
 import { Redirect } from 'react-router';
+import { Helmet } from 'react-helmet';
 
 import globalState from 'src/state';
 import { Form, FormGroup, L } from 'src/common';
@@ -69,6 +70,10 @@ export default class CompoEntryAdd extends React.Component<{
 
         return (
             <Form form={form} onSubmit={this.handleSubmit} leavePrompt>
+                <Helmet>
+                    {/* This page might not be available later. */}
+                    <meta name="googlebot" content="noindex" />
+                </Helmet>
                 <h2><L text="entry.add" /></h2>
                 <FormGroup
                     label={<L text="data.entry.name.title" />}
