@@ -6,6 +6,8 @@ export default class FormStore<T extends {}> {
     @observable value: T;
     @observable.ref error: any = null;
     @observable isPending = false;
+    /** Tracks dirty state, for "leave without saving?" prompts and so on. */
+    @observable isDirty = false;
 
     constructor(
         protected initialValue: T,
@@ -32,6 +34,7 @@ export default class FormStore<T extends {}> {
             (response) => runInAction(() => {
                 this.isPending = false;
                 this.error = null;
+                this.isDirty = false;
                 return response;
             }),
             (error) => runInAction(() => {
@@ -45,20 +48,23 @@ export default class FormStore<T extends {}> {
     @action
     reset() {
         this.value = _cloneDeep(this.initialValue);
+        this.isDirty = false;
     }
 
     @action
     onChange(name, value) {
         if (!this.value.hasOwnProperty(name)) {
-            throw new Error('Attempted to add new value to a form?');
+            throw new Error('Attempted to add new field to a form?');
         }
         this.value[name] = value;
+        this.isDirty = true;
     }
 
     @action
     setValue(value) {
         // TODO: Validate that the field names sort of match?
         this.value = value;
+        this.isDirty = false;
     }
 
     @action

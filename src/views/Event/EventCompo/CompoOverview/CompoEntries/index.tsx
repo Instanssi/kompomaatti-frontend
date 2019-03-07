@@ -1,20 +1,19 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { autorun, computed } from 'mobx';
-import { Link, withRouter } from 'react-router-dom';
+import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
 import _orderBy from 'lodash/orderBy';
 import classNames from 'classnames';
 
 import { ICompo } from 'src/api/interfaces';
+import { LoadingWrapper, NoResults, FormatNumber } from 'src/common';
 import globalState from 'src/state';
 import { RemoteStore } from 'src/stores';
-import { LoadingWrapper, NoResults, FormatNumber } from 'src/common';
 
 
-@(withRouter as any)
 @observer
-export default class CompoEntries extends React.Component<{
-    compo: ICompo; match?: any;
+export class CompoEntries extends React.Component<RouteComponentProps<any> & {
+    compo: ICompo;
 }> {
     entries = new RemoteStore(() => {
         return globalState.api.compoEntries.list({ compo: this.compoId });
@@ -66,7 +65,7 @@ export default class CompoEntries extends React.Component<{
                             )}
                         >
                             <span className="item-rank">
-                                {entry.rank ? entry.rank + '. ' : '-'}
+                                {entry.rank ? entry.rank + '. ' : ''}
                             </span>
                             <span className="item-score">
                                 {entry.score ? <>
@@ -74,7 +73,7 @@ export default class CompoEntries extends React.Component<{
                                         value={entry.score}
                                         precision={1}
                                     />{' p '}
-                                </> : '-'}
+                                </> : ''}
                             </span>
                             <span className="item-title">
                                 <Link to={this.getEntryPath(entry)}>
@@ -88,3 +87,5 @@ export default class CompoEntries extends React.Component<{
         );
     }
 }
+
+export default withRouter(CompoEntries);

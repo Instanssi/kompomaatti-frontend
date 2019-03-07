@@ -1,20 +1,11 @@
 import React from 'react';
-import { observer } from 'mobx-react';
 
-import globalState from 'src/state';
+import L from '../L';
 
-
-const { translate } = globalState;
-
-@observer
-export default class NoResults extends React.Component<any> {
-    render() {
-        return (
-            <div>
-                <span className="fa fa-fw fa-info-circle" />
-                {' '}
-                {translate('list.noResults')}
-            </div>
-        );
-    }
-}
+export const NoResults = () => (
+    <div className="no-results">
+        <span className="fa fa-fw fa-info-circle" />
+        {' '}
+        {L.getText('list.noResults')}
+    </div>
+);

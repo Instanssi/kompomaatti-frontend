@@ -1,13 +1,14 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { action, runInAction, observable } from 'mobx';
+import { action, runInAction, observable, computed } from 'mobx';
+import { Redirect } from 'react-router';
+import { Helmet } from 'react-helmet';
 
 import globalState from 'src/state';
 import { Form, FormGroup, L } from 'src/common';
 import { ICompo } from 'src/api/interfaces';
 import { FormStore } from 'src/stores';
 import EventInfo from 'src/state/EventInfo';
-import { Redirect } from 'react-router';
 
 
 @observer
@@ -38,19 +39,41 @@ export default class CompoEntryAdd extends React.Component<{
                 console.info('success:', success);
                 this.props.eventInfo.myEntries.refresh();
                 this.success = true;
+                globalState.postMessage('success', 'entry.addOk', this.form.toJS());
+            }),
+            (_error) => runInAction(() => {
+                globalState.postMessage('danger', 'entry.addFail', this.form.toJS());
             }),
         );
     }
 
+    @computed
+    get helpValues() {
+        const { compo } = this.props;
+        return {
+            entryFormats: compo.entry_format_list.join(', '),
+            entryMaxSize: Math.floor(compo.max_entry_size / 1024),
+            imageFormats: compo.image_format_list.join(', '),
+            imageMaxSize: Math.floor(compo.max_image_size / 1024),
+            sourceFormats: compo.source_format_list.join(', '),
+            sourceMaxSize: Math.floor(compo.max_source_size / 1024),
+        };
+    }
+
     render() {
-        const { form } = this;
+        const { compo } = this.props;
+        const { form, helpValues } = this;
 
         if (this.success) {
             return <Redirect to={this.props.eventInfo.getCompoURL(this.props.compo)} />;
         }
 
         return (
-            <Form form={form} onSubmit={this.handleSubmit}>
+            <Form form={form} onSubmit={this.handleSubmit} leavePrompt>
+                <Helmet>
+                    {/* This page might not be available later. */}
+                    <meta name="googlebot" content="noindex" />
+                </Helmet>
                 <h2><L text="entry.add" /></h2>
                 <FormGroup
                     label={<L text="data.entry.name.title" />}
@@ -62,7 +85,7 @@ export default class CompoEntryAdd extends React.Component<{
                     help={<L text="data.entry.description.help" />}
                     name="description"
                     input="textarea"
-                    lines={5}
+                    rows={5}
                 />
                 <FormGroup
                     label={<L text="data.entry.creator.title" />}
@@ -71,26 +94,39 @@ export default class CompoEntryAdd extends React.Component<{
                 />
                 <FormGroup
                     label={<L text="data.entry.entryfile.title" />}
-                    help={<L text="data.entry.entryfile.help" />}
+                    help={<L text="data.entry.entryfile.help" values={helpValues} />}
                     name="entryfile"
                     type="file"
+                    fileMaxSize={compo.max_entry_size}
+                    showClearButton
                 />
                 <FormGroup
                     label={<L text="data.entry.sourcefile.title" />}
-                    help={<L text="data.entry.sourcefile.help" />}
+                    help={<L text="data.entry.sourcefile.help" values={helpValues} />}
                     name="sourcefile"
                     type="file"
+                    fileMaxSize={compo.max_source_size}
+                    showClearButton
                 />
-                <FormGroup
+                {compo.is_imagefile_allowed && <FormGroup
                     label={<L text="data.entry.imagefile_original.title" />}
-                    help={<L text="data.entry.imagefile_original.help" />}
+                    help={<L
+                        text="data.entry.imagefile_original.help"
+                        values={helpValues}
+                    />}
                     name="imagefile_original"
                     type="file"
-                />
+                    fileMaxSize={compo.max_image_size}
+                    showClearButton
+                />}
                 <div>
-                    <button className="btn btn-primary" disabled={this.form.isPending}>
+                    <button className="btn btn-primary" disabled={form.isPending}>
                         <L text="common.submit" />
                     </button>
+                    {form.isPending && <>
+                        &ensp;
+                        <span className="fa fa-fw fa-spin fa-spinner" />
+                    </>}
                 </div>
             </Form>
         );

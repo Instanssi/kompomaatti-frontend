@@ -1,8 +1,9 @@
 import _get from 'lodash/get';
 import _template from 'lodash/template';
 import _orderBy from 'lodash/orderBy';
-import { runInAction, computed, reaction } from 'mobx';
+import { runInAction, computed, reaction, action } from 'mobx';
 import { observable } from 'mobx';
+import moment from 'moment';
 
 import config from 'src/config';
 import i18n from '../i18n';
@@ -10,14 +11,32 @@ import InstanssiREST from '../api';
 import { LazyStore } from 'src/stores';
 import EventInfo from './EventInfo';
 
-
 const api = new InstanssiREST(config.API_URL);
+
+export interface INotificationMessage {
+    id: number;
+    text: string;
+    type?: string;
+    values?: {};
+}
 
 /**
  * Application-wide state.
  */
 class GlobalState {
     userStore = new LazyStore(() => api.currentUser.get());
+
+    /** Default party time zone. */
+    partyTimeZone = 'Europe/Helsinki';
+
+    /**
+     * Override default browser timezone behavior by setting this
+     * to a moment-timezone tz id. Null leaves the formatting as-is
+     * and shows device-local time.
+     *
+     * This should only matter where times are displayed.
+     */
+    @observable tzOverride: string | null = this.partyTimeZone;
 
     /** Current user, if known. Don't even try to mutate. */
     get user() {
@@ -34,6 +53,9 @@ class GlobalState {
     @observable.ref timeSec = new Date().valueOf();
     /** Current time in milliseconds, updating once per minute. */
     @observable.ref timeMin = new Date().valueOf();
+    /** Messages the user should probably see. */
+    @observable.shallow messages: INotificationMessage[] = [];
+    nextMessageId = 0;
 
     /** Several things could use a list of party events, so it's available here. */
     events = new LazyStore(async () => {
@@ -64,6 +86,18 @@ class GlobalState {
         );
         this.setLanguage(this.languageCode);
         this.continueSession();
+    }
+
+    /**
+     * Construct a Moment object that behaves according to the party's time zone when
+     * formatting to text, querying start/end of day and so on.
+     * @param value Input to construct timestamp from.
+     */
+    getMoment(value: number | string | moment.Moment | Date) {
+        if (this.tzOverride) {
+            return moment(value).tz(this.tzOverride);
+        }
+        return moment(value);
     }
 
     get persistentState() {
@@ -135,6 +169,29 @@ class GlobalState {
      */
     async continueSession() {
         return this.userStore.refresh();
+    }
+
+    /**
+     * Clear the current user's info and maybe notify them about this.
+     */
+    sessionExpired() {
+        if (this.user) {
+            this.userStore.clear();
+            this.postMessage('danger', 'session.expired');
+        }
+    }
+
+    @action
+    postMessage(type: string, text: string, values?: {}) {
+        this.messages.push({
+            id: this.nextMessageId++,
+            type,
+            text,
+            values,
+        });
+        setTimeout(action(() => {
+            this.messages.splice(0, 1);
+        }), 5000);
     }
 
     /**

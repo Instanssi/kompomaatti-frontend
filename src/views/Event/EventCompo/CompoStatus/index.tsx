@@ -29,7 +29,7 @@ export default class CompoStatus extends React.Component<{
     }) : Promise.reject(null));
 
     @computed
-    get entries() {
+    get ownEntries() {
         const ownEntries = this.store.value;
         const compoId = this.props.compo.id;
         return ownEntries ? ownEntries.filter(entry => entry.compo === compoId) : null;
@@ -106,7 +106,7 @@ export default class CompoStatus extends React.Component<{
 
     renderActions() {
         const { compo, eventInfo } = this.props;
-        const { entries, schedule } = this;
+        const { ownEntries, schedule } = this;
         const now = globalState.timeMin;
 
         const canAdd = schedule.addingEnd && schedule.addingEnd.isAfter(now);
@@ -134,22 +134,21 @@ export default class CompoStatus extends React.Component<{
                     </>}
                     <div className="clearfix" />
                 </div>}
-                <EventStatus event={eventInfo} />
-                {(canAdd || canEdit) && loggedIn && <>
+                {loggedIn && <>
                     <h3><L text="compo.myEntries" /></h3>
-                    {(entries && entries.length > 0) && (
+                    {(ownEntries && ownEntries.length > 0) && (
                         <ul className="list-k">
-                            {entries.map(entry => (
+                            {ownEntries.map(entry => (
                                 <li key={entry.id}>
-                                    <div className="flex-fill">
-                                        {entry.name}
-                                    </div>
                                     <div className="item-time">
                                         {canEdit && (
                                             <Link to={eventInfo.getCompoEntryEditURL(compo, entry)}>
                                                 <L text="common.edit" />
                                             </Link>
                                         )}
+                                    </div>
+                                    <div className="flex-fill">
+                                        {entry.name}
                                     </div>
                                 </li>
                             ))}

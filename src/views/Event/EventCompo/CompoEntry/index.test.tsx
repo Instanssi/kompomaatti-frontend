@@ -16,6 +16,9 @@ describe(CompoEntry.name, () => {
             .mockReturnValue(Promise.resolve(mockCompoEntry));
 
         mockProps = {
+            eventInfo: {
+                event: {},
+            },
             compo: mockCompo,
             match: {
                 params: {

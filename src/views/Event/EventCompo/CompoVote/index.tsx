@@ -1,21 +1,22 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { action, observable, runInAction, computed } from 'mobx';
+import { Link } from 'react-router-dom';
 import _orderBy from 'lodash/orderBy';
 import _shuffle from 'lodash/shuffle';
 import moment from 'moment';
+import { Helmet } from 'react-helmet';
+import { Prompt } from 'react-router';
+import { SortableContainer, SortableElement, SortableHandle, arrayMove } from 'react-sortable-hoc';
 
 import globalState from 'src/state';
 import { LazyStore } from 'src/stores';
 import { ICompo, ICompoEntry } from 'src/api/interfaces';
 import EventInfo from 'src/state/EventInfo';
-import { L } from 'src/common';
-import { SortableContainer, SortableElement, SortableHandle, arrayMove } from 'react-sortable-hoc';
-import EventStatus from 'src/views/Event/EventStatus';
+import { L, FormatNumber } from 'src/common';
 
+import EntryModal from '../EntryModal';
 import './vote.scss';
-
-// tslint:disable variable-name
 
 const DragHandle = SortableHandle(() => (
     <span className="item-handle">
@@ -26,10 +27,25 @@ const DragHandle = SortableHandle(() => (
 const VoteEntryItem = SortableElement((props: {
     value: ICompoEntry;
     num: string;
+    pos: number | null;
+    onShowDetails: (entry: ICompoEntry) => any;
 }) => (
         <li className="voting-item">
             <div className="item-number">
-                {props.num}&ensp;
+                <div className="item-number-pos">
+                    {props.num}&ensp;
+                </div>
+                <div className="item-number-score">
+                    {typeof props.pos === 'number' &&
+                        <>
+                            <FormatNumber
+                                value={1.0 / props.pos}
+                                precision={2}
+                            />
+                            {' p'}
+                        </>
+                    }
+                </div>
             </div>
             <div className="item-content">
                 <div className="item-title">
@@ -43,8 +59,17 @@ const VoteEntryItem = SortableElement((props: {
                         <img
                             className="vote-thumbnail"
                             src={props.value.imagefile_thumbnail_url}
+                            onClick={() => props.onShowDetails(props.value)}
                         />
                     )}
+                    <button
+                        className="btn btn-link"
+                        type="button"
+                        onClick={() => props.onShowDetails(props.value)}
+                        title={L.getText('common.showDetails')}
+                    >
+                        <span className="fa fa-fw fa-info-circle" />
+                    </button>
                 </div>
             </div>
             <DragHandle />
@@ -61,6 +86,7 @@ const VoteEntryList = SortableContainer((props: {
     items: any;
     entryIds: number[];
     isLocked?: boolean;
+    onShowDetails: (entry: ICompoEntry) => any;
 }) => {
     const { items, entryIds, isLocked } = props;
     let foundDivider = false;
@@ -77,7 +103,9 @@ const VoteEntryList = SortableContainer((props: {
                         key={index}
                         index={index}
                         value={value}
+                        onShowDetails={props.onShowDetails}
                         num={foundDivider ? '-' : `${index + 1}.`}
+                        pos={!foundDivider ? (index + 1) : null}
                     />
                 );
             })}
@@ -90,13 +118,18 @@ export default class CompoVote extends React.Component<{
     eventInfo: EventInfo;
     compo: ICompo;
 }> {
-    myCompoVotes = new LazyStore(() => globalState.api.userVotes.getVotes(this.props.compo.id));
     compoEntries = new LazyStore(() => globalState.api.compoEntries.list({
         compo: this.props.compo.id,
     }));
 
+    /** Has the user made changes to the votes? */
     @observable hasChanges = false;
+    /** Is this trying to send vote changes right now? */
+    @observable isSubmitting = false;
+    /** Show detailed info for an entry? */
+    @observable.ref showDetailsFor: ICompoEntry | null = null;
 
+    /** In-view state. */
     @observable.ref votes: number[] = [];
     @observable.ref entries: ICompoEntry[] = [];
 
@@ -113,11 +146,18 @@ export default class CompoVote extends React.Component<{
         this.disposers.forEach(d => d());
     }
 
+    /**
+     * Fetch new info on the compo's entries list and the user's votes
+     */
     refresh() {
+        const { compo, eventInfo } = this.props;
         return Promise.all([
-            this.myCompoVotes.refresh(),
+            // Let's just fetch all the votes now.
+            eventInfo.myVotes.refresh(),
+            // Make sure we have up-to-date info on the compo's entries.
             this.compoEntries.refresh(),
-        ]).then(([votes, entries]) => runInAction(() => {
+        ]).then(([allVotes, entries]) => runInAction(() => {
+            const votes = allVotes.filter(userVote => userVote.compo === compo.id);
             this.votes = (votes && votes.length > 0) ? votes[0].entries : [];
             this.entries = _shuffle(entries);
             this.entries.forEach(e => {
@@ -178,17 +218,27 @@ export default class CompoVote extends React.Component<{
         event.preventDefault();
         const { entryIds } = this;
 
-        if (!entryIds.length) {
+        if (!entryIds.length || this.isSubmitting) {
             return Promise.reject(null);
         }
+
+        this.isSubmitting = true;
 
         return globalState.api.userVotes.setVotes({
             compo: this.props.compo.id,
             entries: entryIds,
-        }).then(() => {
-            this.hasChanges = false;
-            this.refresh();
-        });
+        }).then(
+            () => runInAction(() => {
+                this.hasChanges = false;
+                this.isSubmitting = false;
+                globalState.postMessage('success', 'voting.saveOk');
+                this.refresh();
+            }),
+            (error) => runInAction(() => {
+                globalState.postMessage('danger', 'voting.saveFail');
+                this.isSubmitting = false;
+            }),
+        );
     }
 
     @action.bound
@@ -221,16 +271,34 @@ export default class CompoVote extends React.Component<{
         return globalState.user && isVotable && voteTime;
     }
 
+    @action.bound
+    openEntryDetails(entry: ICompoEntry) {
+        this.showDetailsFor = entry;
+    }
+
+    @action.bound
+    hideEntryDetails() {
+        this.showDetailsFor = null;
+    }
+
     render() {
         const { entryIds, hasChanges } = this;
 
-        const deadline = moment(this.props.compo.voting_end).locale(globalState.momentLocale);
+        const deadline = globalState.getMoment(this.props.compo.voting_end)
+            .locale(globalState.momentLocale);
         const ended = deadline.isBefore(globalState.timeMin);
 
         return (
             <div className="compo-vote">
+                <Helmet>
+                    {/* This page might not be available later. */}
+                    <meta name="googlebot" content="noindex" />
+                </Helmet>
+                {<Prompt
+                    when={hasChanges}
+                    message={L.getText('voting.leaveWithoutSaving')}
+                />}
                 <h3><L text="compo.vote" /></h3>
-                <EventStatus event={this.props.eventInfo} />
                 {!ended ? <div className="alert alert-info">
                     <span className="fa fa-clock-o" />&ensp;
                     <L
@@ -241,12 +309,19 @@ export default class CompoVote extends React.Component<{
                     />
                 </div> : <div className="alert alert-info"><L text="voting.ended" /></div>}
                 <form onSubmit={this.handleSubmit}>
-                    <p>
-                        <L text="voting.help" />
-                        <span className="fa fa-sort" />
-                        {'. '}
-                        <L text="voting.help2" />
-                    </p>
+                    <ul>
+                        <li>
+                            <L text="voting.help" />
+                            <span className="fa fa-sort" />
+                            {'. '}
+                            <L text="voting.help2" />
+                        </li>
+                        <li>
+                            <L text="voting.help3" />
+                            <span className="fa fa-info-circle" />
+                            {'.'}
+                        </li>
+                    </ul>
                     {entryIds.length === 0 && (
                         <div className="voting-item placeholder">
                             <L text="voting.placeholder" />
@@ -257,19 +332,37 @@ export default class CompoVote extends React.Component<{
                         onSortEnd={this.onSortEnd}
                         entryIds={entryIds}
                         isLocked={!this.canVote}
+                        onShowDetails={this.openEntryDetails}
                         lockAxis="y"
                         useDragHandle
                     />
                     <div>
-                        <button className="btn btn-primary" disabled={entryIds.length <= 0}>
+                        <button
+                            className="btn btn-primary"
+                            disabled={entryIds.length <= 0 || this.isSubmitting}
+                        >
                             <L text="common.save" />
                         </button>
                         &ensp;
+                        {this.isSubmitting && <span className="fa fa-fw fa-spin fa-spinner" />}
+                        <Link
+                            className="btn btn-link"
+                            to={this.props.eventInfo.eventURL}
+                        >
+                            <L text="voting.backToEvent" />
+                        </Link>
+                    </div>
+                    <p>
                         {entryIds.length > 0
                             ? <span>{hasChanges && <L text="voting.hasChanges" />}</span>
-                            : <span><L text="voting.atLeastOneRequired" /></span>}
-                    </div>
+                            : <span><L text="voting.atLeastOneRequired" /></span>
+                        }
+                    </p>
                 </form>
+                {this.showDetailsFor && <EntryModal
+                    entry={this.showDetailsFor}
+                    onClose={this.hideEntryDetails}
+                />}
             </div>
         );
     }

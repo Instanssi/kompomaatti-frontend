@@ -10,11 +10,25 @@
         "max-line-length": [true, 100],
         "member-access": false,
         "no-bitwise": false,
+        "semicolon": [true, "ignore-bound-class-methods"],
         "no-consecutive-blank-lines": [true, "error"],
-        "no-console": true,
+        "no-console": false,
         "object-literal-sort-keys": false,
+        "trailing-comma": [true, { "esSpecCompliant": true }],
         "ordered-imports": false,
-        "variable-name": [true, "check-format", "allow-leading-underscore", "ban-keywords"],
-        "quotemark": [true, "single", "jsx-double", "avoid-escape", "avoid-template"]
+        "variable-name": [
+            true,
+            "check-format",
+            "allow-leading-underscore",
+            "allow-pascal-case",
+            "ban-keywords"
+        ],
+        "quotemark": [
+            true,
+            "single",
+            "jsx-double",
+            "avoid-escape",
+            "avoid-template"
+        ]
     }
 }

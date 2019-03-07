@@ -232,7 +232,7 @@ class UserVoteCodeRequestsAPI extends BaseAPI<IVoteCodeRequest> {
     }
 }
 
-class UserVotesAPI extends BaseAPI<any> {
+class UserVotesAPI extends BaseAPI<IUserVote> {
     constructor(baseUrl, config) {
         super(baseUrl + '/user_votes/', config);
     }

@@ -1,7 +1,9 @@
 import React from 'react';
+import { computed } from 'mobx';
 import { observer } from 'mobx-react';
 import { Switch, Route, withRouter, RouteComponentProps } from 'react-router';
-import { computed } from 'mobx';
+import { Link, Redirect } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 
 import { FormatTime, LoadingWrapper } from 'src/common';
 
@@ -20,6 +22,13 @@ import CompoVote from './CompoVote';
 export class EventCompo extends React.Component<{
     eventInfo: EventInfo;
 } & RouteComponentProps<{ compoId: string }>> {
+
+    componentDidMount() {
+        // Ugh, the schedule is changing too fast.
+        // Force refresh the compo info when viewing any individual compo.
+        this.props.eventInfo.compos.refresh();
+    }
+
     @computed
     get compo() {
         const compos = this.props.eventInfo.compos.value;
@@ -36,14 +45,47 @@ export class EventCompo extends React.Component<{
         const { compo } = this;
         const { url } = this.props.match;
 
+        if (!eventInfo.compos.isPending && !compo) {
+            return <Redirect to={eventInfo.eventURL} />;
+        }
+
         return (
             <LoadingWrapper
                 className="event-compo"
-                store={this.props.eventInfo.compos}
+                store={eventInfo.compos}
             >
                 {compo && <>
+                    <Helmet>
+                        <title>{`${compo.name} @ ${eventInfo.event.name}`}</title>
+                        <meta
+                            property="og:title"
+                            content={`${compo.name} @ ${eventInfo.event.name}`}
+                        />
+                        <meta
+                            name="description"
+                            content={compo.name}
+                        />
+                        {/* TODO: Need to strip the HTML.
+                        <meta
+                            name="description"
+                            content={compo.description}
+                        />*/}
+                    </Helmet>
                     <div className="compo-title">
-                        <h2>{compo.name}</h2>
+                        {/* Make the title a link, but only when not on the same page
+                        (could and probably should make a general solution for this) */}
+                        <Switch>
+                            <Route exact path={url}>
+                                <h2>{compo.name}</h2>
+                            </Route>
+                            <Route>
+                                <h2>
+                                    <Link to={eventInfo.getCompoURL(compo)}>
+                                        {compo.name}
+                                    </Link>
+                                </h2>
+                            </Route>
+                        </Switch>
                         <p><FormatTime value={compo.compo_start} /></p>
                     </div>
                     <Switch>
@@ -60,7 +102,10 @@ export class EventCompo extends React.Component<{
                             />
                         </Route>
                         <Route path={url + '/entries/:entryId'}>
-                            <CompoEntry compo={compo} />
+                            <CompoEntry
+                                eventInfo={eventInfo}
+                                compo={compo}
+                            />
                         </Route>
                         <Route exact path={url + '/vote'}>
                             <CompoVote

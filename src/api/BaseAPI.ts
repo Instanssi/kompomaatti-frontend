@@ -1,8 +1,27 @@
 import qs from 'qs';
 import Cookies from 'cookies-js';
+import { observable, action } from 'mobx';
 
 import { PrimaryKey } from 'src/api/interfaces';
+import globalState from 'src/state';
 
+/**
+ * API state tracking.
+ */
+export const apiState = observable({
+    /** Requests in progress. */
+    requests: 0,
+
+    requestStarted: action((method: string, url: string) => {
+        apiState.requests++;
+    }),
+    requestSucceeded: action((method: string, url: string) => {
+        apiState.requests--;
+    }),
+    requestFailed: action((method: string, url: string) => {
+        apiState.requests--;
+    }),
+});
 
 /**
  * Common code for accessing web services.
@@ -39,6 +58,11 @@ export default class BaseAPI<ItemType = any> {
 
         const fetchImpl = this.config.fetch || fetch;
 
+        // Run this outside the request context to avoid MobX invariant violations.
+        setTimeout(() => {
+            apiState.requestStarted(method, url);
+        }, 0);
+
         return fetchImpl(this.encodeQuery(url, query), {
             method,
             body: this.encodePayload(payload),
@@ -49,8 +73,15 @@ export default class BaseAPI<ItemType = any> {
                 // This better be up to date, no way to update it right now.
                 'X-CSRFToken': Cookies.get('csrftoken'),
             },
-        }).then((res) => this.handleResponse(res),
-        ).catch((err) => this.handleError(err));
+        }).then(res => this.handleResponse(res)
+        ).catch(err => this.handleError(err)
+        ).then((success) => {
+            apiState.requestSucceeded(method, url);
+            return success;
+        }, (error) => {
+            apiState.requestFailed(method, url);
+            throw error;
+        });
     }
 
     /**
@@ -93,6 +124,9 @@ export default class BaseAPI<ItemType = any> {
      * @param {Response} response
      */
     protected handleResponse(response: Response) {
+        if (response.status === 401) {
+            globalState.sessionExpired();
+        }
         if (!response.ok) {
             throw response;
         }
@@ -110,7 +144,7 @@ export default class BaseAPI<ItemType = any> {
                 payload._status = status;
             }
             // freeze the object; we don't want to mutate it directly anywhere
-            // (this also speeds up Vue a lot)
+            // (this also speeds up Vue and possibly MobX a lot)
             return Object.freeze(payload);
         }, (error) => {
             // tslint:disable-next-line no-console

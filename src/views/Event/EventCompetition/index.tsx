@@ -2,6 +2,7 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { computed } from 'mobx';
 import { withRouter, RouteComponentProps } from 'react-router';
+import { Helmet } from 'react-helmet';
 
 import { FormatTime, LoadingWrapper, L } from 'src/common';
 
@@ -37,6 +38,7 @@ export class EventCompetition extends React.Component<{
     }
 
     render() {
+        const { eventInfo } = this.props;
         const { competition } = this;
 
         return (
@@ -45,6 +47,13 @@ export class EventCompetition extends React.Component<{
                 store={this.props.eventInfo.competitions}
             >
                 {competition && <>
+                    <Helmet>
+                        <title>{`${competition.name} @ ${eventInfo.event.name}`}</title>
+                        <meta
+                            property="og:title"
+                            content={`${competition.name} @ ${eventInfo.event.name}`}
+                        />
+                    </Helmet>
                     <div className="competition-title">
                         <h2>{competition.name}</h2>
                         <p>

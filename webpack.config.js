@@ -2,8 +2,9 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const getBuildId = require('./scripts/build-id');
+const WebpackPwaManifest = require('webpack-pwa-manifest');
 
+const getBuildId = require('./scripts/build-id');
 
 const NODE_ENV = process.env.NODE_ENV;
 const PRODUCTION_BUILD = NODE_ENV === 'production';
@@ -51,7 +52,7 @@ const config = {
                 use: getStyleLoaders([
                     'css-loader',
                     'postcss-loader',
-                    'sass-loader',
+                    { loader: 'sass-loader', options: { implementation: require('sass'), }, },
                 ])
             },
             {
@@ -78,6 +79,22 @@ const config = {
         // any entry bundles emitted by Webpack as <script/> tags.
         new HtmlWebpackPlugin({
             template: 'src/index.template.ejs',
+        }),
+        // Emit a manifest.json with some basic info about the app.
+        new WebpackPwaManifest({
+            name: 'Kompomaatti',
+            short_name: 'Kompomaatti',
+            description: 'Instanssi.org compo management system.',
+            // This wasn't very readable in Android Chrome. Let's try something else.
+            // theme_color: '#00a8ff',
+            // Let's not go standalone until the app's been tested like that.
+            display: 'browser',
+            icons: [
+                {
+                    src: path.resolve('src/favicon.png'),
+                    sizes: [32, 64, 128, 192, 256],
+                }
+            ]
         }),
         // Emit all extracted text (CSS) into a single file.
         // This lets it get loaded in parallel with the JS load/parse

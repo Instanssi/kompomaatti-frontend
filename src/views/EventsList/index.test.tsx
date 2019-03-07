@@ -4,13 +4,15 @@ import { shallow, ShallowWrapper } from 'enzyme';
 import globalState from 'src/state';
 import EventsListView from './';
 
-
 describe(EventsListView.name, () => {
     let wrapper: ShallowWrapper;
 
+    let mockGetter;
+
     beforeEach(() => {
-        // FIXME: Return an actual event object.
-        jest.spyOn(globalState.api.events, 'list').mockReturnValue(Promise.resolve([]));
+        mockGetter = jest.fn();
+        // FIXME: Return a list of mocked event objects.
+        jest.spyOn(globalState.events, 'value', 'get').mockImplementation(mockGetter);
         wrapper = shallow(<EventsListView />);
     });
 
@@ -18,7 +20,7 @@ describe(EventsListView.name, () => {
         expect(wrapper.is('.events-list-view')).toBe(true);
     });
 
-    it('calls the API to fetch an events list', () => {
-        expect(globalState.api.events.list).toHaveBeenCalled();
+    it('accesses the global events list', () => {
+        expect(mockGetter).toHaveBeenCalled();
     });
 });

@@ -2,11 +2,11 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { computed } from 'mobx';
 import { withRouter, RouteComponentProps } from 'react-router';
+import { Helmet } from 'react-helmet';
 
 import { FormatTime, LoadingWrapper, L } from 'src/common';
 
 import EventInfo from 'src/state/EventInfo';
-
 
 /**
  * Displays details of a single programme event within a party event.
@@ -35,6 +35,7 @@ export class EventProgrammeEvent extends React.Component<{
     }
 
     render() {
+        const { eventInfo } = this.props;
         const { progEvent } = this;
 
         return (
@@ -43,6 +44,23 @@ export class EventProgrammeEvent extends React.Component<{
                 store={this.props.eventInfo.programme}
             >
                 {progEvent && <>
+                    <Helmet>
+                        <title>{`${progEvent.title} @ ${eventInfo.event.name}`}</title>
+                        <meta
+                            name="description"
+                            content={`${progEvent.title} @ ${eventInfo.event.name}`}
+                        />
+                        <meta
+                            property="og:title"
+                            content={`${progEvent.title} @ ${eventInfo.event.name}`}
+                        />
+                        {progEvent.description && progEvent.description.length > 0 && (
+                            <meta
+                                property="og:description"
+                                content={progEvent.description}
+                            />
+                        )}
+                    </Helmet>
                     <div className="progevent-title">
                         <h2>{progEvent.title}</h2>
                         { progEvent.end ? <p>
@@ -62,7 +80,10 @@ export class EventProgrammeEvent extends React.Component<{
                     {progEvent.presenters && (<>
                         <h3><L text="programmeEvent.presenters" /></h3>
                         <p className="progevent-presenters">
-                            {progEvent.presenters}, {progEvent.presenters_titles}
+                            {progEvent.presenters}
+                            {!!progEvent.presenters_titles && <>
+                                , {progEvent.presenters_titles}
+                            </>}
                         </p>
                     </>)}
                     <h3><L text="common.description" /></h3>

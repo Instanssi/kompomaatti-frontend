@@ -3,17 +3,13 @@ import { observer } from 'mobx-react';
 import { action, observable } from 'mobx';
 import moment from 'moment';
 
-
-export interface IFormatDurationProps {
-    /** Date or ISO 8601 string to show time to. */
-    to: Date | string;
-}
-
 /**
  * Displays current time to or from a given date.
  */
 @observer
-export default class FormatDuration extends React.Component<IFormatDurationProps> {
+export default class FormatDuration extends React.Component<{
+    to: Date | string | moment.Moment;
+}> {
     @observable now = new Date();
     @observable diff: number;
 

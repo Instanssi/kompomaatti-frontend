@@ -5,7 +5,9 @@ import { Link } from 'react-router-dom';
 import { L, LoadingWrapper, FormatTime } from 'src/common';
 import globalState from 'src/state';
 
-
+/**
+ * Lists all events, including past ones.
+ */
 @observer
 export default class EventsList extends React.Component<any> {
     get events() {

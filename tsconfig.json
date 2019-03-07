@@ -12,7 +12,7 @@
         "moduleResolution": "node",
         "noImplicitThis": true,
         "noImplicitAny": false,
-        "noUnusedLocals": true,
+        "noUnusedLocals": false,
         "sourceMap": true,
         "strictNullChecks": true,
         "target": "es5"

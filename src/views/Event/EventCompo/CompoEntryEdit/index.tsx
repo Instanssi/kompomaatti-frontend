@@ -2,6 +2,7 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { action, runInAction, reaction, computed, observable } from 'mobx';
 import { RouteComponentProps, withRouter, Redirect } from 'react-router';
+import { Helmet } from 'react-helmet';
 
 import globalState from 'src/state';
 import { Form, FormGroup, FormFileInput, L } from 'src/common';
@@ -74,12 +75,30 @@ export class CompoEntryEdit extends React.Component<{
                 console.info('success:', success);
                 this.props.eventInfo.myEntries.refresh();
                 this.success = true;
+                globalState.postMessage('success', 'entry.editOk', this.form.toJS());
+            }),
+            (_error) => runInAction(() => {
+                globalState.postMessage('danger', 'entry.editFail', this.form.toJS());
             }),
         );
     }
 
+    @computed
+    get helpValues() {
+        const { compo } = this.props;
+        return {
+            entryFormats: compo.entry_format_list.join(', '),
+            entryMaxSize: Math.floor(compo.max_entry_size / 1024),
+            imageFormats: compo.image_format_list.join(', '),
+            imageMaxSize: Math.floor(compo.max_image_size / 1024),
+            sourceFormats: compo.source_format_list.join(', '),
+            sourceMaxSize: Math.floor(compo.max_source_size / 1024),
+        };
+    }
+
     render() {
-        const { form } = this;
+        const { compo } = this.props;
+        const { form, helpValues } = this;
         const { sourcefile_url, entryfile_url, imagefile_original_url } = this.props.entry;
 
         if (this.success) {
@@ -87,7 +106,7 @@ export class CompoEntryEdit extends React.Component<{
         }
 
         return (
-            <Form form={form} onSubmit={this.handleSubmit}>
+            <Form form={form} onSubmit={this.handleSubmit} leavePrompt>
                 <h2><L text="entry.edit" /></h2>
                 <FormGroup
                     name="name"
@@ -109,28 +128,32 @@ export class CompoEntryEdit extends React.Component<{
                 <FormGroup
                     name="entryfile"
                     label={<L text="data.entry.entryfile.title" />}
-                    help={<L text="data.entry.entryfile.help" />}
+                    help={<L text="data.entry.entryfile.help" values={helpValues} />}
                     input={FormFileInput}
                     currentFileURL={entryfile_url}
                 />
                 <FormGroup
                     name="sourcefile"
                     label={<L text="data.entry.sourcefile.title" />}
-                    help={<L text="data.entry.sourcefile.help" />}
+                    help={<L text="data.entry.sourcefile.help" values={helpValues} />}
                     input={FormFileInput}
                     currentFileURL={sourcefile_url}
                 />
-                <FormGroup
+                {compo.is_imagefile_allowed && <FormGroup
                     name="imagefile_original"
                     label={<L text="data.entry.imagefile_original.title" />}
-                    help={<L text="data.entry.imagefile_original.help" />}
+                    help={<L text="data.entry.imagefile_original.help" values={helpValues} />}
                     input={FormFileInput}
                     currentFileURL={imagefile_original_url}
-                />
+                />}
                 <div>
                     <button className="btn btn-primary" disabled={this.form.isPending}>
                         <L text="common.submit" />
                     </button>
+                    {form.isPending && <>
+                        &ensp;
+                        <span className="fa fa-fw fa-spin fa-spinner" />
+                    </>}
                 </div>
             </Form>
         );
@@ -157,16 +180,21 @@ export class CompoEntryEditView extends React.Component<{
         const { entry } = this;
         if (entry) {
             return (
-                <CompoEntryEdit
-                    eventInfo={eventInfo}
-                    compo={compo}
-                    entry={entry}
-                />
+                <>
+                    <Helmet>
+                        {/* This page might not be available later. */}
+                        <meta name="googlebot" content="noindex" />
+                    </Helmet>
+
+                    <CompoEntryEdit
+                        eventInfo={eventInfo}
+                        compo={compo}
+                        entry={entry}
+                    />
+                </>
             );
         }
-        // FIXME: Show a 404 page if no entry is found in the event info.
-        // - force refresh myEntries once if this happens
-        return null;
+        return <Redirect to={eventInfo.eventURL} />;
     }
 }
 

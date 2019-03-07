@@ -7,7 +7,9 @@ import _orderBy from 'lodash/orderBy';
 import { NoResults, LoadingWrapper, FormatTime } from 'src/common';
 import EventInfo from 'src/state/EventInfo';
 
-
+/**
+ * Lists an event's competitions.
+ */
 @observer
 export default class EventCompetitions extends React.Component<{
     eventInfo: EventInfo;
@@ -24,13 +26,13 @@ export default class EventCompetitions extends React.Component<{
 
     render() {
         const { eventInfo } = this.props;
-        const competitions = this.sortedCompetitions;
+        const items = this.sortedCompetitions;
 
         return (
             <LoadingWrapper store={this.competitionsStore}>
-                {(competitions && competitions.length > 0) ? (
-                    <ul className="list-k event-competitions">
-                        {competitions.map(competition => (
+                <ul className="list-k event-competitions">
+                    {items && items.length > 0
+                        ? items.map(competition => (
                             <li key={competition.name} className="competitions-item">
                                 <span className="item-time">
                                     <FormatTime value={competition.start} format="ddd LT" />
@@ -43,9 +45,10 @@ export default class EventCompetitions extends React.Component<{
                                     {competition.name}
                                 </Link>
                             </li>
-                        ))}
-                    </ul>
-                ) : <NoResults />}
+                        ))
+                        : <li><NoResults /></li>
+                    }
+                </ul>
             </LoadingWrapper>
         );
     }

@@ -4,14 +4,18 @@
         "edit": "Edit",
         "cancel": "Cancel",
         "description": "Description",
+        "fileMaxSize": "Maximum file size is ${size} ${unit}",
+        "leaveWithoutSaving": "There are unsaved changes. Leave the page anyway?",
         "loading": "Loading...",
         "loadingError": "There was a problem loading this content.",
         "loadingRetry": "Try again?",
+        "noImageAvailable": "No image available",
         "notLoggedIn": "You are not logged in.",
         "results": "Results",
         "schedule": "Schedule",
         "scheduleEmpty": "Nothing scheduled at the moment.",
         "save": "Save",
+        "showDetails": "Show details",
         "submit": "Submit"
     },
     "competition": {
@@ -89,11 +93,11 @@
                 "title": "Disqualified"
             },
             "entryfile": {
-                "help": "Entry file (e.g. zip archive).",
+                "help": "Entry file. Allowed formats: ${entryFormats}.",
                 "title": "Entry"
             },
             "imagefile_original": {
-                "help": "Image to use for the entry. Not required, but recommended.",
+                "help": "Image to use for the entry. Not required, but recommended. Allowed formats: ${imageFormats}.",
                 "title": "Image"
             },
             "name": {
@@ -101,7 +105,7 @@
                 "title": "Name"
             },
             "sourcefile": {
-                "help": "File containing source code or other material.",
+                "help": "File containing source code or other material. Allowed formats: ${sourceFormats}.",
                 "title": "Source file"
             },
             "user": {
@@ -116,21 +120,39 @@
     },
     "entry": {
         "add": "Add entry",
+        "addOk": "Entry \"${name}\" added.",
+        "addFail": "Could not add entry.",
+        "audio": "Audio file",
+        "audioHelp": "If your browser can't play the audio, you can download the file below.",
         "description": "Entry description",
         "edit": "Edit entry",
+        "editOk": "Entry \"${name}\" updated.",
+        "editFail": "Could not update entry.",
         "entryfile": "Entry file",
         "files": "Files",
         "image": "Image",
-        "sourcefile": "Source file"
+        "info": "Entry info",
+        "sourcefile": "Source file",
+        "video": "Video",
+        "youtubeLink": "Watch in YouTube"
     },
     "event": {
         "competitions": "Competitions",
         "compos": "Compos",
+        "mainSite": "Main site",
         "isOver": "This event has ended.",
+        "linkTo": "Event info",
+        "summary": "Summary",
+        "schedule": "Schedule",
         "programme": "Programme"
     },
     "events": {
         "title": "All events"
+    },
+    "error": {
+        "retry": "Try again",
+        "title": "Error",
+        "text": "There seems to be a problem with the Internet. The following may have something to do with it."
     },
     "fileInput": {
         "delete": "Delete",
@@ -139,7 +161,7 @@
         "replace": "Replace"
     },
     "footer": {
-        "copyright": "(c) 2018",
+        "copyright": "(c) 2019",
         "toTop": "Back to top"
     },
     "list": {
@@ -158,9 +180,14 @@
         "end": "Ends"
     },
     "session": {
+        "expired": "Your session has expired. Log in at the main site to continue.",
         "login": "Log in",
         "loginTitle": "Log in",
         "logout": "Log out"
+    },
+    "timeZone": {
+        "partyTZ": "The party's time zone is ${name}.",
+        "yourTZ": "Using your device's time zone."
     },
     "user": {
         "password": "Password",
@@ -173,24 +200,29 @@
     },
     "voting": {
         "atLeastOneRequired": "Move at least one entry above the bar to continue.",
+        "backToEvent": "Return to event page",
         "deadline": "Voting ends on: ${ date }.",
         "divider": "Arrange entries above this bar to give them points. Entries below are ignored.",
         "placeholder": "Drag entries here to vote",
         "hasChanges": "Don't forget to save. You can change your votes at any time before the voting deadline.",
+        "leaveWithoutSaving": "You have unsaved votes. Leave the page anyway?",
         "ended": "Voting has concluded.",
+        "saveOk": "Votes saved.",
+        "saveFail": "Saving votes failed.",
         "help": "Drag entries around by the ",
-        "help2": "Entries moved above the bar will receive points according to their order."
+        "help2": "Entries moved above the bar will receive points according to their order.",
+        "help3": "You can review entries by clicking the "
     },
     "voteCode": {
         "hasCodeForEvent": "You have a valid vote code for this event.",
-        "help": "To participate in the event through Kompomaatti, your account needs a vote code for the event. If you bought a ticket online, you can use the ticket's code for this.",
+        "help": "To vote in Kompomaatti, your account must have a vote code for the event. If you bought a ticket online, you can use the ticket's code for this.",
         "missing": "No vote code",
         "noTicketCode": "I don't have a ticket code",
         "requestPending": "Vote code request pending",
         "requestPendingHelp": "If nothing happens for a while, try poking the people at the infodesk.",
         "requestRejectedHelp": "Your vote code request has been rejected.",
         "requestTextPlaceholder": "(explain your situation here)",
-        "ticketKeyPlaceholder": "(ticket code)",
+        "ticketKeyPlaceholder": "(first 8 characters of your ticket code)",
         "title": "Vote code",
         "useTicketCode": "Enter ticket code"
     }

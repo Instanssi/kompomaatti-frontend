@@ -7,3 +7,9 @@ import Adapter from 'enzyme-adapter-react-16';
 configure({
     adapter: new Adapter(),
 });
+
+// quality mock, pls don't steal
+window.localStorage = {
+    setItem: () => {},
+    getItem: () => {},
+};

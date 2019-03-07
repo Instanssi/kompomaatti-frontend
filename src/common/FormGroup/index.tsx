@@ -6,7 +6,7 @@ import _get from 'lodash/get';
 
 import { FormStore } from 'src/stores';
 import FormFeedback from '../FormFeedback';
-
+import L from '../L';
 
 export interface IFormGroupProps<T> {
     name: string;
@@ -32,6 +32,10 @@ export interface IFormGroupProps<T> {
 
     /** Actually passed via MobX provider + inject (context). */
     formStore?: FormStore<T>;
+
+    /** If uploading a file, this sets a max allowed size. */
+    fileMaxSize?: number;
+    showClearButton?: boolean;
 }
 
 /**
@@ -39,7 +43,11 @@ export interface IFormGroupProps<T> {
  */
 @inject('formStore')
 @observer
-export default class FormGroup<T> extends React.Component<IFormGroupProps<T> & any> {
+export default class FormGroup<T> extends React.Component<
+    IFormGroupProps<T> & any
+> {
+    inputRef: HTMLInputElement | null = null;
+
     componentWillMount() {
         // sanity checks
         const { name, formStore } = this.props;
@@ -79,6 +87,18 @@ export default class FormGroup<T> extends React.Component<IFormGroupProps<T> & a
         return form.onChange(name, eventOrValue);
     }
 
+    @action.bound
+    clearValue() {
+        const { name, type } = this.props;
+        const form = this.props.formStore!;
+
+        if (this.inputRef && type === 'file') {
+            this.inputRef.value = '';
+        }
+
+        return form.onChange(name, null);
+    }
+
     @computed
     get value() {
         const { formStore, name } = this.props;
@@ -87,7 +107,7 @@ export default class FormGroup<T> extends React.Component<IFormGroupProps<T> & a
 
     @computed
     get errors() {
-        const { name, formStore } = this.props;
+        const { name, formStore, type } = this.props;
         if (!formStore.error) {
             return null;
         }
@@ -95,14 +115,54 @@ export default class FormGroup<T> extends React.Component<IFormGroupProps<T> & a
         return formStore.error[name!] as (string[] | null);
     }
 
+    handleRef = ref => {
+        this.inputRef = ref;
+    };
+
     render() {
         const { id, props, value, onChange } = this;
-        const { name, label, help, input, children, formStore, type, readOnly, ...rest } = props;
+        const {
+            name,
+            label,
+            help,
+            input,
+            children,
+            formStore,
+            type,
+            fileMaxSize,
+            readOnly,
+            showClearButton,
+            ...rest
+        } = props;
 
-        const className = classNames(
-            'form-group',
-            { 'has-error': !!this.errors },
-        );
+        let fileSizeWarning = false;
+
+        if (type === 'file' && fileMaxSize && value && value instanceof File) {
+            if (value.size > fileMaxSize) {
+                fileSizeWarning = true;
+            }
+        }
+
+        const className = classNames('form-group', {
+            'has-error': !!this.errors || fileSizeWarning,
+        });
+
+        // If no input field was provided, render a text input bound to
+        //  the appropriate form field. This could handle like 50% of cases.
+
+        const inputContent = children
+            ? children
+            : React.createElement(input || 'input', {
+                  id,
+                  // HTML forms, please don't suck this hard
+                  value: type !== 'file' ? value : value && value.filename,
+                  type,
+                  onChange,
+                  className: 'form-control',
+                  readOnly: readOnly || formStore!.isPending,
+                  ref: this.handleRef,
+                  ...rest,
+              });
 
         return (
             <div className={className}>
@@ -112,23 +172,39 @@ export default class FormGroup<T> extends React.Component<IFormGroupProps<T> & a
                         {label}
                     </label>
                 )}
-                {children || (
-                    // If no input field was provided, render a text input bound to
-                    // the appropriate form field. This could handle like 50% of cases.
-                    React.createElement(input || 'input', {
-                        id,
-                        // HTML forms, please don't suck this hard
-                        value: type !== 'file' ? value : (value && value.filename),
-                        type,
-                        onChange,
-                        className: 'form-control',
-                        readOnly: readOnly || formStore!.isPending,
-                        ...rest,
-                    })
+                {showClearButton ? (
+                    <div className="input-group">
+                        {inputContent}
+                        <span className="input-group-btn">
+                            <button
+                                type="button"
+                                className="btn btn-default"
+                                disabled={!value}
+                                onClick={this.clearValue}
+                            >
+                                <span className="fa fa-fw fa-trash" />
+                            </button>
+                        </span>
+                    </div>
+                ) : (
+                    inputContent
                 )}
                 {help && (
                     // Render help text using Bootstrap 3 markup.
                     <p className="help-block">{help}</p>
+                )}
+                {fileMaxSize && fileSizeWarning && (
+                    <div className="alert alert-warning">
+                        <L
+                            text="common.fileMaxSize"
+                            values={{
+                                // FIXME: Localize number properly
+                                // - may need some refactoring in FormatNumber
+                                size: (fileMaxSize / (1024 * 1024)).toFixed(1),
+                                unit: 'MiB',
+                            }}
+                        />
+                    </div>
                 )}
                 <FormFeedback form={formStore!} name={name} />
             </div>

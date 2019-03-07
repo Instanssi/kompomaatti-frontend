@@ -19,11 +19,11 @@ Made available under the terms of the MIT license. See LICENSE for details.
 
 Clone the repository and copy `src/config.dist.ts` to `src/config.ts`. The example configuration should work when deploying the frontend to instanssi.org.
 
-Get Node.js 6 or 8 LTS (or higher) and npm or yarn, and try building the application with:
+Get Node.js 8 LTS (or higher) and npm or yarn, and try building the application with:
 
     yarn&&yarn run build
 
-This will download dependencies from npm and try to build the application.
+This will download dependencies from npm / yarnpkg and try to build the application.
 
 ## Deploying
 
