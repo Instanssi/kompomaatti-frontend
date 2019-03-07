@@ -98,6 +98,8 @@ export class EventComposItem extends React.Component<{
         const { nextCompoEvent, votingIsOpen } = this;
         const { compo, eventInfo } = this.props;
 
+        const hasVoteCode = !eventInfo.noVoteCode;
+
         const hasVoted = eventInfo.hasVotedInCompo(compo);
 
         return (
@@ -121,7 +123,7 @@ export class EventComposItem extends React.Component<{
                         )}
                     </span>
                     <span className="item-title-actions">
-                        {user && votingIsOpen && (
+                        {user && votingIsOpen && hasVoteCode && (
                             <span className="item-action">
                                 {hasVoted && (
                                     <>
