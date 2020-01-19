@@ -16,6 +16,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - name: yarn install, test and build
       run: |
+        cp src/config.dist.ts src/config.ts
         yarn --frozen-lockfile
         yarn run test
         yarn run build
