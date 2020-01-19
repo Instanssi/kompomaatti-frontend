@@ -104,6 +104,10 @@
                 "help": "Name for the entry.",
                 "title": "Name"
             },
+            "platform": {
+                "help": "Operating system or other platform the entry runs on, if relevant.",
+                "title": "Platform"
+            },
             "sourcefile": {
                 "help": "File containing source code or other material. Allowed formats: ${sourceFormats}.",
                 "title": "Source file"

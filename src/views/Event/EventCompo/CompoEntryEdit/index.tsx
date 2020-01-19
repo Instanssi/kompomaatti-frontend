@@ -126,6 +126,11 @@ export class CompoEntryEdit extends React.Component<{
                     help={<L text="data.entry.creator.help" />}
                 />
                 <FormGroup
+                    label={<L text="data.entry.platform.title" />}
+                    help={<L text="data.entry.platform.help" />}
+                    name="platform"
+                />
+                <FormGroup
                     name="entryfile"
                     label={<L text="data.entry.entryfile.title" />}
                     help={<L text="data.entry.entryfile.help" values={helpValues} />}

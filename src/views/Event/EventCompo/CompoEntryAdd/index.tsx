@@ -20,6 +20,7 @@ export default class CompoEntryAdd extends React.Component<{
         name: '',
         creator: '',
         description: '',
+        platform: '',
         entryfile: null as File | null,
         imagefile_original: null as File | null,
         sourcefile: null as File | null,
@@ -91,6 +92,11 @@ export default class CompoEntryAdd extends React.Component<{
                     label={<L text="data.entry.creator.title" />}
                     help={<L text="data.entry.creator.help" />}
                     name="creator"
+                />
+                <FormGroup
+                    label={<L text="data.entry.platform.title" />}
+                    help={<L text="data.entry.platform.help" />}
+                    name="platform"
                 />
                 <FormGroup
                     label={<L text="data.entry.entryfile.title" />}
