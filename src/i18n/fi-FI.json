@@ -103,6 +103,10 @@
                 "help": "Teoksen nimi.",
                 "title": "Nimi"
             },
+            "platform": {
+                "help": "Käyttöjärjestelmä tms. alusta jolla teosta voidaan ajaa, jos tällä on väliä.",
+                "title": "Alusta"
+            },
             "sourcefile": {
                 "help": "Paketti, jossa lähdekoodi tms. materiaali. Sallitut formaatit: ${sourceFormats}.",
                 "title": "Lähdekoodi"
@@ -160,7 +164,7 @@
         "replace": "Korvaa"
     },
     "footer": {
-        "copyright": "(c) 2019",
+        "copyright": "(c) 2019-2020",
         "toTop": "Palaa alkuun"
     },
     "list": {

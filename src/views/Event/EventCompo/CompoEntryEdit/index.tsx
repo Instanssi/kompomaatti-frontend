@@ -21,6 +21,7 @@ export class CompoEntryEdit extends React.Component<{
         name: '',
         creator: '',
         description: '',
+        platform: '',
         // This should allow "undefined" values when the file is to remain unchanged.
         // To delete the file, set this to an empty string; pass a new file to replace it.
         entryfile: null as File | null,
@@ -61,6 +62,7 @@ export class CompoEntryEdit extends React.Component<{
             creator: entry.creator || '',
             description: entry.description || '',
             youtube_url: entry.youtube_url || '',
+            platform: entry.platform || '',
             // The file inputs should show placeholders for any existing values.
             entryfile: undefined,
             imagefile_original: undefined,
@@ -126,6 +128,11 @@ export class CompoEntryEdit extends React.Component<{
                     help={<L text="data.entry.creator.help" />}
                 />
                 <FormGroup
+                    label={<L text="data.entry.platform.title" />}
+                    help={<L text="data.entry.platform.help" />}
+                    name="platform"
+                />
+                <FormGroup
                     name="entryfile"
                     label={<L text="data.entry.entryfile.title" />}
                     help={<L text="data.entry.entryfile.help" values={helpValues} />}
@@ -175,6 +182,10 @@ export class CompoEntryEditView extends React.Component<{
         return value && value.find(entry => entry.id === this.idParsed);
     }
 
+    get isPending() {
+        return this.props.eventInfo.myEntries.isPending;
+    }
+
     render() {
         const { eventInfo, compo } = this.props;
         const { entry } = this;
@@ -194,7 +205,10 @@ export class CompoEntryEditView extends React.Component<{
                 </>
             );
         }
-        return <Redirect to={eventInfo.eventURL} />;
+        if (!this.isPending) {
+            return <Redirect to={eventInfo.eventURL} />;
+        }
+        return null;
     }
 }
 

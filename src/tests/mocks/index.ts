@@ -13,6 +13,7 @@ export const mockCompoEntry: ICompoEntry = {
     name: 'Stochastic Mock Coverage Tracer',
     description: '',
     creator: 'anon',
+    platform: 'PC',
     entryfile_url: 'http://intanssi.org/files/123.zip',
     sourcefile_url: 'http://intanssi.org/files/123.src.zip',
     imagefile_original_url: 'http://intanssi.org/files/123.img.jpg',

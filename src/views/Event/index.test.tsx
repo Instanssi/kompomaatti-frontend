@@ -26,16 +26,19 @@ describe(EventView.name, () => {
     let mockProps;
 
     beforeEach(() => {
+        const eventId = globalState.events.value![1].eventId;
         mockProps = {
             match: {
                 params: {
-                    eventId: '' + globalState.events.value![1].eventId,
+                    eventId: String(eventId),
                 },
             },
+            location: {
+                pathname: `/events/${eventId}`,
+            }
         };
-        const EventViewInner = (EventView as any).WrappedComponent;
 
-        wrapper = shallow(<EventViewInner {...mockProps} />);
+        wrapper = shallow(<EventView {...mockProps} />);
         // instance = wrapper.instance();
     });
 

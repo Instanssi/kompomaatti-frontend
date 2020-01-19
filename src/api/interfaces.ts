@@ -81,6 +81,7 @@ export interface ICompoEntry {
     name: string;
     description: string;
     creator: string;
+    platform: string | null;
     entryfile_url: URLString | null;
     sourcefile_url: URLString | null;
     imagefile_original_url: URLString | null;

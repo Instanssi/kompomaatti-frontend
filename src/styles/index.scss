@@ -14,7 +14,7 @@ h1 {
 
 h2 {
     font-size: 2.7rem;
-    font-family: 'Exo 2', $font-family-sans-serif;
+    font-family: 'Courier Prime', 'Courier New', monospace;
     border-bottom: 1px solid $brand-primary;
     padding-bottom: $spacer / 2;
 }
@@ -60,7 +60,7 @@ main {
 }
 
 .navbar {
-    font-family: 'Exo 2', $font-family-sans-serif;
+    font-family: $font-family-sans-serif;
 }
 
 .navbar-nav > li > a {
