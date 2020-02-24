@@ -3,6 +3,7 @@ import { observer } from 'mobx-react';
 import { action, runInAction, observable, computed } from 'mobx';
 import { Redirect } from 'react-router';
 import { Helmet } from 'react-helmet';
+import { Link } from 'react-router-dom';
 
 import globalState from 'src/state';
 import { Form, FormGroup, L } from 'src/common';
@@ -65,8 +66,10 @@ export default class CompoEntryAdd extends React.Component<{
         const { compo } = this.props;
         const { form, helpValues } = this;
 
+        const returnUrl = this.props.eventInfo.getCompoURL(this.props.compo);
+
         if (this.success) {
-            return <Redirect to={this.props.eventInfo.getCompoURL(this.props.compo)} />;
+            return <Redirect to={returnUrl} />;
         }
 
         return (
@@ -126,13 +129,15 @@ export default class CompoEntryAdd extends React.Component<{
                     showClearButton
                 />}
                 <div>
-                    <button className="btn btn-primary" disabled={form.isPending}>
+                    <button className="btn btn-primary" disabled={this.form.isPending}>
+                        <span className={`fa fa-fw ${form.isPending ? 'fa-spin fa-spinner' : 'fa-check'}`} />
+                        &ensp;
                         <L text="common.submit" />
                     </button>
-                    {form.isPending && <>
-                        &ensp;
-                        <span className="fa fa-fw fa-spin fa-spinner" />
-                    </>}
+
+                    <Link to={returnUrl} className="btn btn-text">
+                        <L text="common.cancel" />
+                    </Link>
                 </div>
             </Form>
         );

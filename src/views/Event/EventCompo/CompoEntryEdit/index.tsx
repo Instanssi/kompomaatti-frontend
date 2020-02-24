@@ -2,6 +2,7 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { action, runInAction, reaction, computed, observable } from 'mobx';
 import { RouteComponentProps, withRouter, Redirect } from 'react-router';
+import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 
 import globalState from 'src/state';
@@ -103,8 +104,10 @@ export class CompoEntryEdit extends React.Component<{
         const { form, helpValues } = this;
         const { sourcefile_url, entryfile_url, imagefile_original_url } = this.props.entry;
 
+        const returnUrl = this.props.eventInfo.getCompoURL(this.props.compo);
+
         if (this.success) {
-            return <Redirect to={this.props.eventInfo.getCompoURL(this.props.compo)} />;
+            return <Redirect to={returnUrl} />;
         }
 
         return (
@@ -155,12 +158,14 @@ export class CompoEntryEdit extends React.Component<{
                 />}
                 <div>
                     <button className="btn btn-primary" disabled={this.form.isPending}>
+                        <span className={`fa fa-fw ${form.isPending ? 'fa-spin fa-spinner' : 'fa-check'}`} />
+                        &ensp;
                         <L text="common.submit" />
                     </button>
-                    {form.isPending && <>
-                        &ensp;
-                        <span className="fa fa-fw fa-spin fa-spinner" />
-                    </>}
+
+                    <Link to={returnUrl} className="btn btn-text">
+                        <L text="common.cancel" />
+                    </Link>
                 </div>
             </Form>
         );
