@@ -10,6 +10,7 @@ import { Form, FormGroup, FormFileInput, L } from 'src/common';
 import { ICompo, ICompoEntry } from 'src/api/interfaces';
 import { FormStore } from 'src/stores';
 import EventInfo from 'src/state/EventInfo';
+import { toast } from 'react-toastify';
 
 
 @observer
@@ -78,10 +79,10 @@ export class CompoEntryEdit extends React.Component<{
                 console.info('success:', success);
                 this.props.eventInfo.myEntries.refresh();
                 this.success = true;
-                globalState.postMessage('success', 'entry.editOk', this.form.toJS());
+                toast.success(<L text="entry.editOk" values={this.form.toJS()} />);
             }),
             (_error) => runInAction(() => {
-                globalState.postMessage('danger', 'entry.editFail', this.form.toJS());
+                toast.error(<L text="entry.editFail" values={this.form.toJS()} />);
             }),
         );
     }

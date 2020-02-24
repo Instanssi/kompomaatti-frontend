@@ -10,6 +10,7 @@ import { Form, FormGroup, L } from 'src/common';
 import { ICompo } from 'src/api/interfaces';
 import { FormStore } from 'src/stores';
 import EventInfo from 'src/state/EventInfo';
+import { toast } from 'react-toastify';
 
 
 @observer
@@ -38,13 +39,12 @@ export default class CompoEntryAdd extends React.Component<{
     handleSubmit(event) {
         this.form.submit().then(
             (success) => runInAction(() => {
-                console.info('success:', success);
                 this.props.eventInfo.myEntries.refresh();
                 this.success = true;
-                globalState.postMessage('success', 'entry.addOk', this.form.toJS());
+                toast.success(<L text="entry.addOk" values={this.form.toJS()} />);
             }),
             (_error) => runInAction(() => {
-                globalState.postMessage('danger', 'entry.addFail', this.form.toJS());
+                toast.error(<L text="entry.addFail" values={this.form.toJS()} />);
             }),
         );
     }

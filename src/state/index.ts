@@ -10,6 +10,8 @@ import i18n from '../i18n';
 import InstanssiREST from '../api';
 import { LazyStore } from 'src/stores';
 import EventInfo from './EventInfo';
+import { toast } from 'react-toastify';
+import { L } from 'src/common';
 
 const api = new InstanssiREST(config.API_URL);
 
@@ -177,6 +179,9 @@ class GlobalState {
     sessionExpired() {
         if (this.user) {
             this.userStore.clear();
+
+            // FIXME yay, dependency loop
+            // toast.info(L.getText('session.expired'));
             this.postMessage('danger', 'session.expired');
         }
     }
