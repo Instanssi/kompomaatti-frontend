@@ -83,6 +83,7 @@ export default class CompoEntryAdd extends React.Component<{
                     label={<L text="data.entry.name.title" />}
                     help={<L text="data.entry.name.help" />}
                     name="name"
+                    required
                 />
                 <FormGroup
                     label={<L text="data.entry.description.title" />}
@@ -90,11 +91,13 @@ export default class CompoEntryAdd extends React.Component<{
                     name="description"
                     input="textarea"
                     rows={5}
+                    required
                 />
                 <FormGroup
                     label={<L text="data.entry.creator.title" />}
                     help={<L text="data.entry.creator.help" />}
                     name="creator"
+                    required
                 />
                 <FormGroup
                     label={<L text="data.entry.platform.title" />}
@@ -108,6 +111,7 @@ export default class CompoEntryAdd extends React.Component<{
                     type="file"
                     fileMaxSize={compo.max_entry_size}
                     showClearButton
+                    required
                 />
                 <FormGroup
                     label={<L text="data.entry.sourcefile.title" />}
