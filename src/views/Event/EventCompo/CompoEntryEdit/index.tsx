@@ -118,6 +118,7 @@ export class CompoEntryEdit extends React.Component<{
                     name="name"
                     label={<L text="data.entry.name.title" />}
                     help={<L text="data.entry.name.help" />}
+                    required
                 />
                 <FormGroup
                     name="description"
@@ -125,11 +126,13 @@ export class CompoEntryEdit extends React.Component<{
                     help={<L text="data.entry.description.help" />}
                     input="textarea"
                     lines={5}
+                    required
                 />
                 <FormGroup
                     name="creator"
                     label={<L text="data.entry.creator.title" />}
                     help={<L text="data.entry.creator.help" />}
+                    required
                 />
                 <FormGroup
                     label={<L text="data.entry.platform.title" />}
@@ -142,6 +145,7 @@ export class CompoEntryEdit extends React.Component<{
                     help={<L text="data.entry.entryfile.help" values={helpValues} />}
                     input={FormFileInput}
                     currentFileURL={entryfile_url}
+                    required
                 />
                 <FormGroup
                     name="sourcefile"
