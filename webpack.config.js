@@ -56,6 +56,14 @@ const config = {
                 ])
             },
             {
+                test: /\.css$/,
+                // Pass CSS through the usual loader chain (last is applied first).
+                use: getStyleLoaders([
+                    'css-loader',
+                    'postcss-loader',
+                ])
+            },
+            {
                 test: /\.html$/,
                 loader: 'html-loader',
                 options: {

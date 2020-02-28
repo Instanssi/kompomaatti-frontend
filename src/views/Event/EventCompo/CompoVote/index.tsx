@@ -17,6 +17,7 @@ import { L, FormatNumber } from 'src/common';
 
 import EntryModal from '../EntryModal';
 import './vote.scss';
+import { toast } from 'react-toastify';
 
 const DragHandle = SortableHandle(() => (
     <span className="item-handle">
@@ -231,11 +232,11 @@ export default class CompoVote extends React.Component<{
             () => runInAction(() => {
                 this.hasChanges = false;
                 this.isSubmitting = false;
-                globalState.postMessage('success', 'voting.saveOk');
+                toast.success(<L text="voting.saveOk" />);
                 this.refresh();
             }),
             (error) => runInAction(() => {
-                globalState.postMessage('danger', 'voting.saveFail');
+                toast.error(<L text="voting.saveFail" />);
                 this.isSubmitting = false;
             }),
         );

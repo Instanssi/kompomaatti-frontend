@@ -3,12 +3,14 @@ import { observer } from 'mobx-react';
 import { action, runInAction, observable, computed } from 'mobx';
 import { Redirect } from 'react-router';
 import { Helmet } from 'react-helmet';
+import { Link } from 'react-router-dom';
 
 import globalState from 'src/state';
 import { Form, FormGroup, L } from 'src/common';
 import { ICompo } from 'src/api/interfaces';
 import { FormStore } from 'src/stores';
 import EventInfo from 'src/state/EventInfo';
+import { toast } from 'react-toastify';
 
 
 @observer
@@ -37,13 +39,12 @@ export default class CompoEntryAdd extends React.Component<{
     handleSubmit(event) {
         this.form.submit().then(
             (success) => runInAction(() => {
-                console.info('success:', success);
                 this.props.eventInfo.myEntries.refresh();
                 this.success = true;
-                globalState.postMessage('success', 'entry.addOk', this.form.toJS());
+                toast.success(<L text="entry.addOk" values={this.form.toJS()} />);
             }),
             (_error) => runInAction(() => {
-                globalState.postMessage('danger', 'entry.addFail', this.form.toJS());
+                toast.error(<L text="entry.addFail" values={this.form.toJS()} />);
             }),
         );
     }
@@ -65,8 +66,10 @@ export default class CompoEntryAdd extends React.Component<{
         const { compo } = this.props;
         const { form, helpValues } = this;
 
+        const returnUrl = this.props.eventInfo.getCompoURL(this.props.compo);
+
         if (this.success) {
-            return <Redirect to={this.props.eventInfo.getCompoURL(this.props.compo)} />;
+            return <Redirect to={returnUrl} />;
         }
 
         return (
@@ -80,6 +83,7 @@ export default class CompoEntryAdd extends React.Component<{
                     label={<L text="data.entry.name.title" />}
                     help={<L text="data.entry.name.help" />}
                     name="name"
+                    required
                 />
                 <FormGroup
                     label={<L text="data.entry.description.title" />}
@@ -87,11 +91,13 @@ export default class CompoEntryAdd extends React.Component<{
                     name="description"
                     input="textarea"
                     rows={5}
+                    required
                 />
                 <FormGroup
                     label={<L text="data.entry.creator.title" />}
                     help={<L text="data.entry.creator.help" />}
                     name="creator"
+                    required
                 />
                 <FormGroup
                     label={<L text="data.entry.platform.title" />}
@@ -105,6 +111,7 @@ export default class CompoEntryAdd extends React.Component<{
                     type="file"
                     fileMaxSize={compo.max_entry_size}
                     showClearButton
+                    required
                 />
                 <FormGroup
                     label={<L text="data.entry.sourcefile.title" />}
@@ -126,13 +133,15 @@ export default class CompoEntryAdd extends React.Component<{
                     showClearButton
                 />}
                 <div>
-                    <button className="btn btn-primary" disabled={form.isPending}>
+                    <button className="btn btn-primary" disabled={this.form.isPending}>
+                        <span className={`fa fa-fw ${form.isPending ? 'fa-spin fa-spinner' : 'fa-check'}`} />
+                        &ensp;
                         <L text="common.submit" />
                     </button>
-                    {form.isPending && <>
-                        &ensp;
-                        <span className="fa fa-fw fa-spin fa-spinner" />
-                    </>}
+
+                    <Link to={returnUrl} className="btn btn-text">
+                        <L text="common.cancel" />
+                    </Link>
                 </div>
             </Form>
         );

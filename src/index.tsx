@@ -16,10 +16,17 @@ import { observer } from 'mobx-react';
 
 import './styles/index.scss';
 
+import 'react-toastify/dist/ReactToastify.css';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, RouteComponentProps, withRouter } from 'react-router-dom';
+import {
+    BrowserRouter,
+    RouteComponentProps,
+    withRouter,
+} from 'react-router-dom';
 import { Helmet } from 'react-helmet';
+import { ToastContainer } from 'react-toastify';
 
 import Views from './views';
 import {
@@ -37,38 +44,36 @@ moment.updateLocale('fi', {
         LT: 'HH:mm',
         LTS: 'HH:mm:ss',
         LLL: 'Do MMMM[ta] YYYY, [klo] HH:mm',
-        LLLL : 'dddd, Do MMMM[ta] YYYY, [klo] HH:mm',
-        lll : 'Do MMM YYYY, [klo] HH:mm',
-        llll : 'ddd, Do MMM YYYY, [klo] HH:mm'
+        LLLL: 'dddd, Do MMMM[ta] YYYY, [klo] HH:mm',
+        lll: 'Do MMM YYYY, [klo] HH:mm',
+        llll: 'ddd, Do MMM YYYY, [klo] HH:mm',
     } as any,
 });
 
 // Provide Webpack build id in the window env
 (window as any).BUILD_ID = process.env.BUILD_ID;
 
-
 export default class App extends React.Component {
     render() {
         return (
             <BrowserRouter basename="/kompomaatti">
-                <div className="container">
-                    <Helmet
-                        titleTemplate={'Kompomaatti - %s'}
-                    >
-                        <title>Kompomaatti</title>
-                    </Helmet>
-                    <div id="top" className="app-wrap">
-                        <Header />
-                        <main className="p-3">
-                            <Messages />
-                            {/*<Breadcrumbs />*/}
-                            <Views />
-                        </main>
-                        <Footer />
+                <ToastContainer draggable={false} hideProgressBar />
+                    <div className="container">
+                        <Helmet titleTemplate={'Kompomaatti - %s'}>
+                            <title>Kompomaatti</title>
+                        </Helmet>
+                        <div id="top" className="app-wrap">
+                            <Header />
+                            <main className="p-3">
+                                <Messages />
+                                {/*<Breadcrumbs />*/}
+                                <Views />
+                            </main>
+                            <Footer />
+                        </div>
+                        <AutoScrollWR />
+                        <UpdateLang />
                     </div>
-                    <AutoScrollWR />
-                    <UpdateLang />
-                </div>
             </BrowserRouter>
         );
     }

@@ -2,6 +2,7 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { action, runInAction, reaction, computed, observable } from 'mobx';
 import { RouteComponentProps, withRouter, Redirect } from 'react-router';
+import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 
 import globalState from 'src/state';
@@ -9,6 +10,7 @@ import { Form, FormGroup, FormFileInput, L } from 'src/common';
 import { ICompo, ICompoEntry } from 'src/api/interfaces';
 import { FormStore } from 'src/stores';
 import EventInfo from 'src/state/EventInfo';
+import { toast } from 'react-toastify';
 
 
 @observer
@@ -77,10 +79,10 @@ export class CompoEntryEdit extends React.Component<{
                 console.info('success:', success);
                 this.props.eventInfo.myEntries.refresh();
                 this.success = true;
-                globalState.postMessage('success', 'entry.editOk', this.form.toJS());
+                toast.success(<L text="entry.editOk" values={this.form.toJS()} />);
             }),
             (_error) => runInAction(() => {
-                globalState.postMessage('danger', 'entry.editFail', this.form.toJS());
+                toast.error(<L text="entry.editFail" values={this.form.toJS()} />);
             }),
         );
     }
@@ -103,8 +105,10 @@ export class CompoEntryEdit extends React.Component<{
         const { form, helpValues } = this;
         const { sourcefile_url, entryfile_url, imagefile_original_url } = this.props.entry;
 
+        const returnUrl = this.props.eventInfo.getCompoURL(this.props.compo);
+
         if (this.success) {
-            return <Redirect to={this.props.eventInfo.getCompoURL(this.props.compo)} />;
+            return <Redirect to={returnUrl} />;
         }
 
         return (
@@ -114,6 +118,7 @@ export class CompoEntryEdit extends React.Component<{
                     name="name"
                     label={<L text="data.entry.name.title" />}
                     help={<L text="data.entry.name.help" />}
+                    required
                 />
                 <FormGroup
                     name="description"
@@ -121,11 +126,13 @@ export class CompoEntryEdit extends React.Component<{
                     help={<L text="data.entry.description.help" />}
                     input="textarea"
                     lines={5}
+                    required
                 />
                 <FormGroup
                     name="creator"
                     label={<L text="data.entry.creator.title" />}
                     help={<L text="data.entry.creator.help" />}
+                    required
                 />
                 <FormGroup
                     label={<L text="data.entry.platform.title" />}
@@ -138,6 +145,7 @@ export class CompoEntryEdit extends React.Component<{
                     help={<L text="data.entry.entryfile.help" values={helpValues} />}
                     input={FormFileInput}
                     currentFileURL={entryfile_url}
+                    required
                 />
                 <FormGroup
                     name="sourcefile"
@@ -155,12 +163,14 @@ export class CompoEntryEdit extends React.Component<{
                 />}
                 <div>
                     <button className="btn btn-primary" disabled={this.form.isPending}>
+                        <span className={`fa fa-fw ${form.isPending ? 'fa-spin fa-spinner' : 'fa-check'}`} />
+                        &ensp;
                         <L text="common.submit" />
                     </button>
-                    {form.isPending && <>
-                        &ensp;
-                        <span className="fa fa-fw fa-spin fa-spinner" />
-                    </>}
+
+                    <Link to={returnUrl} className="btn btn-text">
+                        <L text="common.cancel" />
+                    </Link>
                 </div>
             </Form>
         );

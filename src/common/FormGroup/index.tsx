@@ -36,6 +36,9 @@ export interface IFormGroupProps<T> {
     /** If uploading a file, this sets a max allowed size. */
     fileMaxSize?: number;
     showClearButton?: boolean;
+
+    /** Indicate that this field is required. */
+    required?: boolean;
 }
 
 /**
@@ -132,6 +135,7 @@ export default class FormGroup<T> extends React.Component<
             fileMaxSize,
             readOnly,
             showClearButton,
+            required,
             ...rest
         } = props;
 
@@ -170,6 +174,7 @@ export default class FormGroup<T> extends React.Component<
                     // Tie the label contents to the form input to ease navigation.
                     <label className="control-label" htmlFor={id}>
                         {label}
+                        {required && ' *'}
                     </label>
                 )}
                 {showClearButton ? (
