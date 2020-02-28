@@ -43,7 +43,7 @@ export class Header extends React.Component<RouteComponentProps<any>> {
                         <ActivityCube />
                     </Link>
                     <span className="liability-reducer">
-                        Beta
+                        RC1
                     </span>
                 </div>
                 <div
