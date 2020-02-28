@@ -57,7 +57,7 @@ const config = {
             },
             {
                 test: /\.css$/,
-                // Pass SCSS through the usual loader chain (last is applied first).
+                // Pass CSS through the usual loader chain (last is applied first).
                 use: getStyleLoaders([
                     'css-loader',
                     'postcss-loader',

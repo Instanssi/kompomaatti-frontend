@@ -4,7 +4,6 @@ import { computed } from 'mobx';
 import { Switch, Route, withRouter, RouteComponentProps, Redirect } from 'react-router';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
-import moment from 'moment';
 
 import globalState from 'src/state';
 import { FormatTime, LoadingWrapper, L, TimeZoneIndicator } from 'src/common';
@@ -18,7 +17,6 @@ import FrontSchedule from '../FrontPage/FrontSchedule';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 
-// Need this or the @observer will prevent <Route /> from working
 @observer
 export class EventView extends React.Component<RouteComponentProps<any> & {
     eventId: number;
