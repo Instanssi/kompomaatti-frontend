@@ -4,38 +4,7 @@ import { computed } from 'mobx';
 
 import { ICompoEntry } from 'src/api/interfaces';
 import { L } from 'src/common';
-
-/**
- * Tries to guess if a URL refers to an image.
- * @param urlString URL to check.
- */
-export function isImageURL(urlString: string): boolean {
-    try {
-        const url = new URL(urlString);
-        const path = url.pathname.toLowerCase();
-        return !!path.match(/(jpg|jpeg|png|webp|gif|bmp)/);
-
-    } catch (error) {
-        console.error(error);
-        return false;
-    }
-}
-
-/**
- * Tries to guess if a URL refers to an audio file.
- * @param urlString URL to check.
- */
-export function isAudioURL(urlString: string): boolean {
-    try {
-        const url = new URL(urlString);
-        const path = url.pathname.toLowerCase();
-        return !!path.match(/(mp3|ogg|opus|wav|flac)/);
-
-    } catch (error) {
-        console.error(error);
-        return false;
-    }
-}
+import { isImageURL, isAudioURL } from 'src/utils';
 
 interface IImageURLs {
     medium: string;
