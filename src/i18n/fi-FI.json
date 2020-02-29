@@ -210,6 +210,7 @@
         "hasChanges": "Muistathan tallentaa äänesi. Voit muokata ääniä vielä ennen äänestyksen aikarajaa.",
         "leaveWithoutSaving": "Et ole tallentanut ääniäsi. Poistutaanko sivulta?.",
         "ended": "Äänestys on päättynyt.",
+        "quickMoveHelp": "Voit siirtää teoksen nopeasti kärkeen tai pohjalle tuplaklikkaamalla merkkiä ",
         "saveOk": "Äänet tallennettu.",
         "saveFail": "Ääniä ei voitu tallentaa.",
         "help": "Järjestä entryt laatujärjestykseen vetämällä merkistä ",

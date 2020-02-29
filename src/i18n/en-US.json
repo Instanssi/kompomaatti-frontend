@@ -211,6 +211,7 @@
         "hasChanges": "Don't forget to save. You can change your votes at any time before the voting deadline.",
         "leaveWithoutSaving": "You have unsaved votes. Leave the page anyway?",
         "ended": "Voting has concluded.",
+        "quickMoveHelp": "To quickly move an item above or below the bar, you can double click the ",
         "saveOk": "Votes saved.",
         "saveFail": "Saving votes failed.",
         "help": "Drag entries around by the ",
