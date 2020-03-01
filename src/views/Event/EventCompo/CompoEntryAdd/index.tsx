@@ -4,14 +4,23 @@ import { action, runInAction, observable, computed } from 'mobx';
 import { Redirect } from 'react-router';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import * as yup from 'yup';
 
 import globalState from 'src/state';
 import { Form, FormGroup, L } from 'src/common';
 import { ICompo } from 'src/api/interfaces';
 import { FormStore } from 'src/stores';
 import EventInfo from 'src/state/EventInfo';
-import { toast } from 'react-toastify';
 
+const addEntrySchema = yup.object({
+    name: yup.string().required(),
+    creator: yup.string().required(),
+    description: yup.string().min(5).required(),
+    platform: yup.string().notRequired(),
+    // It's required, this time.
+    entryfile: yup.mixed().required(),
+});
 
 @observer
 export default class CompoEntryAdd extends React.Component<{
@@ -31,7 +40,7 @@ export default class CompoEntryAdd extends React.Component<{
             ...formStore.toJS(),
             compo: this.props.compo.id,
         });
-    });
+    }, addEntrySchema);
 
     @observable success = false;
 

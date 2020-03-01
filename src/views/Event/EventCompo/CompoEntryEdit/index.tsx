@@ -4,14 +4,21 @@ import { action, runInAction, reaction, computed, observable } from 'mobx';
 import { RouteComponentProps, withRouter, Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
+import { toast } from 'react-toastify';
+import * as yup from 'yup';
 
 import globalState from 'src/state';
 import { Form, FormGroup, FormFileInput, L } from 'src/common';
 import { ICompo, ICompoEntry } from 'src/api/interfaces';
 import { FormStore } from 'src/stores';
 import EventInfo from 'src/state/EventInfo';
-import { toast } from 'react-toastify';
 
+const editEntrySchema = yup.object({
+    name: yup.string().required(),
+    creator: yup.string().required(),
+    description: yup.string().min(5).required(),
+    platform: yup.string().notRequired(),
+});
 
 @observer
 export class CompoEntryEdit extends React.Component<{
@@ -37,7 +44,7 @@ export class CompoEntryEdit extends React.Component<{
                 compo: this.props.compo.id,
             },
         );
-    });
+    }, editEntrySchema);
 
     @observable success = false;
 
@@ -56,7 +63,6 @@ export class CompoEntryEdit extends React.Component<{
     componentWillUnmount() {
         this.disposers.forEach(d => d());
     }
-
 
     updateForm(entry: ICompoEntry) {
         this.form.setValue({

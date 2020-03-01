@@ -1,5 +1,6 @@
 import { action, observable, toJS, runInAction } from 'mobx';
 import _cloneDeep from 'lodash/cloneDeep';
+import { ObjectSchema } from 'yup';
 
 
 export default class FormStore<T extends {}> {
@@ -12,6 +13,7 @@ export default class FormStore<T extends {}> {
     constructor(
         protected initialValue: T,
         protected submitHandler: (formStore: FormStore<T>) => Promise<any>,
+        protected validator?: ObjectSchema,
     ) {
         this.value = _cloneDeep(initialValue);
     }
@@ -23,12 +25,34 @@ export default class FormStore<T extends {}> {
      * Returns a promise, which resolves or rejects to a success or error response.
      */
     @action
-    submit() {
+    async submit() {
         if (this.isPending) {
             // The UI should try to disable "submit" actions, etc. when this is pending,
             // but let's just make sure.
             return Promise.reject(null);
         }
+
+        // Try to validate the form. If the validator throws,
+        // it should throw an error compatible with the form.
+        if (this.validator) {
+            try {
+                await this.validator.validate(this.value, {
+                    // Try to grab _all_ the errors.
+                    abortEarly: false,
+                });
+            } catch (error) {
+                console.error(error);
+                if (error?.name === 'ValidationError' && error.inner?.[0]) {
+                    const err = {};
+                    for (const inner of error.inner) {
+                        err[inner.path] = [inner.message];
+                    }
+                    this.error = err;
+                }
+                return Promise.reject(null);
+            }
+        }
+
         this.isPending = true;
         return this.submitHandler(this).then(
             (response) => runInAction(() => {
