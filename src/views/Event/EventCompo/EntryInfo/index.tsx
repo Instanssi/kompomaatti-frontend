@@ -85,6 +85,12 @@ export default class EntryInfo extends React.Component<{
                     <h4><L text="data.entry.disqualified.title" /></h4>
                     <p>{entry.disqualified_reason}</p>
                 </div>}
+                {entry.platform && (
+                    <>
+                        <h4><L text="data.entry.platform.title" /></h4>
+                        <p>{entry.platform}</p>
+                    </>
+                )}
                 <div className="entry-description">
                     <h4><L text="entry.description" /></h4>
                     <p className="text-pre-wrap">{entry.description}</p>
