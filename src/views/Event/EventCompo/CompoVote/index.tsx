@@ -21,6 +21,8 @@ import { toast } from 'react-toastify';
 
 const DragHandle = SortableHandle((props: {
     onTripleClick: () => void;
+    onMoveUp: () => void;
+    onMoveDown: () => void;
 }) => {
     const onClick = React.useCallback((event: React.MouseEvent<any>) => {
         try {
@@ -33,8 +35,24 @@ const DragHandle = SortableHandle((props: {
         }
     }, [props.onTripleClick]);
 
+    const onKeyDown = React.useCallback((event: React.KeyboardEvent<any>) => {
+        switch (event.key) {
+            case "ArrowUp": {
+                event.preventDefault();
+                props.onMoveUp();
+                break;
+            }
+            case "ArrowDown": {
+                event.preventDefault();
+                props.onMoveDown();
+                break;
+            }
+            default: /* */
+        }
+    }, [props.onMoveUp, props.onMoveDown]);
+
     return (
-        <span className="item-handle" onMouseDown={onClick}>
+        <span className="item-handle" onMouseDown={onClick} onKeyDown={onKeyDown} tabIndex={0}>
             <span className="fa fa-sort" />
         </span>
     );
@@ -48,6 +66,8 @@ const VoteEntryItem = SortableElement((props: {
     onShowDetails: (entry: ICompoEntry) => void;
     onMoveToTop: (entry: ICompoEntry) => void;
     onMoveBelow: (entry: ICompoEntry) => void;
+    onMoveUp: (entry: ICompoEntry) => void;
+    onMoveDown: (entry: ICompoEntry) => void;
 }) => (
         <li className="voting-item">
             <div className="item-number">
@@ -93,6 +113,8 @@ const VoteEntryItem = SortableElement((props: {
             </div>
             <DragHandle
                 onTripleClick={() => props.isAboveBar ? props.onMoveBelow(props.value) : props.onMoveToTop(props.value)}
+                onMoveUp={() => props.onMoveUp(props.value)}
+                onMoveDown={() => props.onMoveDown(props.value)}
             />
         </li>
     ));
@@ -112,6 +134,10 @@ const VoteEntryList = SortableContainer((props: {
     onMoveToTop: (index: number, entry: ICompoEntry) => void;
     /** Called when an entry wants to move below the bar. */
     onMoveBelow: (index: number, entry: ICompoEntry) => void;
+    /** Called when an entry wants to move up. */
+    onMoveUp: (index: number, entry: ICompoEntry) => void;
+    /** Called when an entry wants to move down. */
+    onMoveDown: (index: number, entry: ICompoEntry) => void;
 }) => {
     const { items, entryIds, isLocked } = props;
     let foundDivider = false;
@@ -120,18 +146,20 @@ const VoteEntryList = SortableContainer((props: {
             {items.map((value, index: number) => {
                 if (!value) {
                     foundDivider = true;
-                    return <VoteDivider key={index} index={index} entryIds={entryIds} />;
+                    return <VoteDivider key="_divider" index={index} entryIds={entryIds} />;
                 }
                 return (
                     <VoteEntryItem
                         disabled={!value || isLocked}
-                        key={index}
+                        key={value.id}
                         index={index}
                         value={value}
                         onShowDetails={props.onShowDetails}
                         isAboveBar={!foundDivider}
                         onMoveToTop={() => props.onMoveToTop(index, value)}
                         onMoveBelow={() => props.onMoveBelow(index, value)}
+                        onMoveUp={() => props.onMoveUp(index, value)}
+                        onMoveDown={() => props.onMoveDown(index, value)}
                         num={foundDivider ? '-' : `${index + 1}.`}
                         pos={!foundDivider ? (index + 1) : null}
                     />
@@ -293,6 +321,21 @@ export default class CompoVote extends React.Component<{
         this.items = arrayMove(this.items, index, this.items.length - 1);
     }
 
+    @action.bound
+    moveUp(index: number) {
+        // If the index isn't at the top yet, swap the item and the one immediately above it
+        if (index > 0) {
+            this.items = arrayMove(this.items, index, index - 1);
+        }
+    }
+
+    @action.bound
+    moveDown(index: number) {
+        if (index < this.items.length - 1) {
+            this.items = arrayMove(this.items, index, index + 1);
+        }
+    }
+
     @computed
     get isVotable() {
         return this.props.compo.is_votable;
@@ -386,6 +429,8 @@ export default class CompoVote extends React.Component<{
                         onShowDetails={this.openEntryDetails}
                         onMoveToTop={this.moveToTop}
                         onMoveBelow={this.moveBelow}
+                        onMoveUp={this.moveUp}
+                        onMoveDown={this.moveDown}
                         lockAxis="y"
                         useDragHandle
                     />
