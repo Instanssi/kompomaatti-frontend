@@ -1,6 +1,6 @@
 // Common MobX store code.
 
-export {
+export type {
     IRemote,
 } from './interfaces';
 

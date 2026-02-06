@@ -10,11 +10,11 @@ interface ILanguage {
 const languages: {[key: string]: ILanguage} = {
     'en-US': {
         name: 'English',
-        fetch: () => import('./en-US.json').then(obj => Object.freeze(obj)),
+        fetch: () => import('./en-US.json'),
     },
     'fi-FI': {
         name: 'Suomi',
-        fetch: () => import('./fi-FI.json').then(obj => Object.freeze(obj)),
+        fetch: () => import('./fi-FI.json'),
     },
 };
 

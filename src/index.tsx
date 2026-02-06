@@ -1,17 +1,11 @@
-// IE11 compatibility
-import 'core-js/es6/promise';
-import 'core-js/es6/number';
-import 'core-js/es6/array';
-import 'core-js/es6/object';
-import 'whatwg-fetch';
+import moment from 'moment';
 
-import 'regenerator-runtime/runtime';
-
+// FIXME this is easily half the app's build size
 import 'moment-timezone';
+
 import 'moment/locale/en-gb';
 import 'moment/locale/fi';
 
-import moment from 'moment';
 import { observer } from 'mobx-react';
 
 import './styles/index.scss';
@@ -50,8 +44,8 @@ moment.updateLocale('fi', {
     } as any,
 });
 
-// Provide Webpack build id in the window env
-(window as any).BUILD_ID = process.env.BUILD_ID;
+// Provide build id in the window env
+(window as any).BUILD_ID = __BUILD_ID__;
 
 export default class App extends React.Component {
     render() {
