@@ -183,7 +183,7 @@ export interface IVoteCode {
     id: PrimaryKey;
     event: ReferenceKey;
     time: ISODateTime;
-    tickey_key: string;
+    ticket_key: string;
 }
 
 export interface IUserVote {

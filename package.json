@@ -11,9 +11,6 @@
         "test": "vitest",
         "clean": "rimraf build"
     },
-    "resolutions": {
-        "@types/react": "18.2.60"
-    },
     "dependencies": {
         "@fontsource-variable/exo-2": "^5.2.8",
         "bootstrap-sass": "^3.4.0",

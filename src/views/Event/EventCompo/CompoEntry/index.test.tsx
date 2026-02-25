@@ -1,6 +1,6 @@
 import React from 'react';
 import {  act, RenderResult, waitFor } from '@testing-library/react';
-import { vi, describe, beforeEach, it, expect } from 'vitest';
+import { describe, beforeEach, it, expect } from 'vitest';
 import { mockCompoEntry, mockCompo } from 'src/tests/mocks';
 import globalState from 'src/state';
 import { CompoEntry } from './';
@@ -12,10 +12,6 @@ describe(CompoEntry.name, () => {
     let mockProps;
 
     beforeEach(async () => {
-        vi.spyOn(globalState.api.currentUser, 'get').mockImplementation(vi.fn());
-        vi.spyOn(globalState.api.compoEntries, 'get')
-            .mockReturnValue(Promise.resolve(mockCompoEntry));
-
         mockProps = {
             eventInfo: {
                 event: {},
@@ -27,10 +23,11 @@ describe(CompoEntry.name, () => {
                 },
             },
         };
-        act(() => {
+        // Render the view and wait for it to stop loading things
+        await act(async () => {
             rendered = testRender(<CompoEntry {...mockProps} />);
+            await waitFor(() => !rendered.queryByTestId('loading'))
         });
-
     });
 
     it('renders after fetching the entry', async () => {

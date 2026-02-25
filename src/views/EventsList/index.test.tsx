@@ -1,6 +1,6 @@
 import React from 'react';
 import { it, vi, describe, beforeEach, expect, afterEach, beforeAll } from 'vitest';
-import { act, RenderResult } from '@testing-library/react';
+import { act, RenderResult, waitFor } from '@testing-library/react';
 import EventsListView from './';
 import { api } from 'src/api';
 import { testRender } from 'src/tests';
@@ -11,7 +11,6 @@ describe(EventsListView.name, () => {
     let mockGetter;
 
     beforeAll(() => {
-        vi.spyOn(api.currentUser, 'get').mockImplementation(vi.fn());
         // FIXME: Return a list of mocked event objects.
         vi.spyOn(api.events, 'list').mockImplementation(() => Promise.resolve([]));
 
@@ -20,9 +19,12 @@ describe(EventsListView.name, () => {
     beforeEach(async () => {
         mockGetter = vi.fn();
         vi.spyOn(globalState.events, 'value', 'get').mockImplementation(mockGetter);
+
+        // Render the view and wait for it to stop loading things
         await act(async () => {
             rendered = testRender(<EventsListView />);
-        })
+            await waitFor(() => !rendered.queryByTestId('loading'))
+        });
     });
 
     it('renders', async () => {

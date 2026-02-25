@@ -32,7 +32,7 @@ export default class LoadingWrapper extends React.Component<{
                 )}
             >
                 {(store.isPending && !store.value) && (
-                    <div className="alert">
+                    <div className="alert" test-id="loading">
                         <span className="fa fa-fw fa-spin fa-spinner"/>&ensp;
                         <L text="common.loading" />
                     </div>

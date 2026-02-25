@@ -6,8 +6,7 @@ import globalState from 'src/state';
 
 
 describe('Front page', () => {
-    beforeEach(async () => {
-        vi.spyOn(globalState, 'events', 'get').mockImplementation(vi.fn(() => ({ value: [] })));
+    beforeEach(() => {
     });
 
     it('renders', async () => {
