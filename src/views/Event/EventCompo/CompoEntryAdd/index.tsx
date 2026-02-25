@@ -12,7 +12,6 @@ import { FormStore } from 'src/stores';
 import EventInfo from 'src/state/EventInfo';
 import { toast } from 'react-toastify';
 
-
 @observer
 export default class CompoEntryAdd extends React.Component<{
     eventInfo: EventInfo;
@@ -147,4 +146,3 @@ export default class CompoEntryAdd extends React.Component<{
         );
     }
 }
-

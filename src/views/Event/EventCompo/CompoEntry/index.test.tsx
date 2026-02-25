@@ -1,18 +1,19 @@
 import React from 'react';
-import { shallow, ShallowWrapper } from 'enzyme';
-// import createRouterContext from 'react-router-test-context';
-
+import {  act, RenderResult, waitFor } from '@testing-library/react';
+import { vi, describe, beforeEach, it, expect } from 'vitest';
 import { mockCompoEntry, mockCompo } from 'src/tests/mocks';
 import globalState from 'src/state';
-import CompoEntry from './';
+import { CompoEntry } from './';
+import { testRender } from 'src/tests';
 
 
 describe(CompoEntry.name, () => {
-    let wrapper: ShallowWrapper;
+    let rendered: RenderResult;
     let mockProps;
 
-    beforeEach(() => {
-        jest.spyOn(globalState.api.compoEntries, 'get')
+    beforeEach(async () => {
+        vi.spyOn(globalState.api.currentUser, 'get').mockImplementation(vi.fn());
+        vi.spyOn(globalState.api.compoEntries, 'get')
             .mockReturnValue(Promise.resolve(mockCompoEntry));
 
         mockProps = {
@@ -26,17 +27,18 @@ describe(CompoEntry.name, () => {
                 },
             },
         };
+        act(() => {
+            rendered = testRender(<CompoEntry {...mockProps} />);
+        });
 
-        const _CompoEntry = (CompoEntry as any).WrappedComponent;
-
-        wrapper = shallow(<_CompoEntry {...mockProps} />);
     });
 
-    it('renders', () => {
-        expect(wrapper.is('.compo-entry')).toBe(true);
+    it('renders after fetching the entry', async () => {
+        await waitFor(() => rendered.findByText(mockCompoEntry.name));
     });
 
-    it('calls the API to fetch entry details', () => {
+    it('calls the API to fetch entry details', async () => {
+        await waitFor(() => rendered.findByText(mockCompoEntry.name));
         expect(globalState.api.compoEntries.get)
             .toHaveBeenCalledWith(mockCompoEntry.id);
     });

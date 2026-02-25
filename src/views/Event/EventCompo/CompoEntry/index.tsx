@@ -22,7 +22,7 @@ export class CompoEntry extends React.Component<{
 
     disposers = [] as any[];
 
-    componentWillMount() {
+    componentDidMount() {
         this.disposers = [
             autorun(() => this.entry.refresh()),
         ];

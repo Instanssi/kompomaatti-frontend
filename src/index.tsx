@@ -8,6 +8,7 @@ import 'moment/locale/fi';
 
 import { observer } from 'mobx-react';
 
+import '@fontsource-variable/exo-2';
 import './styles/index.scss';
 
 import 'react-toastify/dist/ReactToastify.css';

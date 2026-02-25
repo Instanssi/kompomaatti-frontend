@@ -43,7 +43,7 @@ export class CompoEntryEdit extends React.Component<{
 
     disposers: any[] = [];
 
-    componentWillMount() {
+    componentDidMount() {
         this.disposers.push(reaction(
             () => this.props.entry,
             (entry) => {

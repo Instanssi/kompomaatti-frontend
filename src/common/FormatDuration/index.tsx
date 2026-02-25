@@ -15,7 +15,7 @@ export default class FormatDuration extends React.Component<{
 
     protected timeout = null as any;
 
-    componentWillMount() {
+    componentDidMount() {
         this.refresh();
     }
 

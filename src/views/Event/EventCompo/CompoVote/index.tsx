@@ -194,7 +194,7 @@ export default class CompoVote extends React.Component<{
 
     disposers: any[] = [];
 
-    componentWillMount() {
+    componentDidMount() {
         this.refresh();
     }
 

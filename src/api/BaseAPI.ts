@@ -30,7 +30,7 @@ export default class BaseAPI<ItemType = any> {
     url: string;
     config: any;
 
-    constructor(baseUrl, config) {
+    constructor(baseUrl: string, config) {
         this.url = baseUrl;
         this.config = config || {};
     }
@@ -53,7 +53,8 @@ export default class BaseAPI<ItemType = any> {
      */
     protected request<T = any>(method: string, url: string, query?, payload?): Promise<T> {
         if (process.env.NODE_ENV === 'test') {
-            throw new Error('Unmocked request: ' + method + ' ' + url);
+            console.trace('Unmocked API request:', method, url);
+            return Promise.reject();
         }
 
         const fetchImpl = this.config.fetch || fetch;

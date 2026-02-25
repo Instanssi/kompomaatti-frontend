@@ -1,4 +1,5 @@
 import { isImageURL, isAudioURL } from './';
+import { test, expect } from 'vitest';
 
 const audioUrls = [
     [false, 'https://test.test/stuff/image.jpg'],
@@ -10,7 +11,7 @@ const audioUrls = [
     [true, 'spdy://host.srvr/classic.wav'],
     [true, 'ftp://host.srvr/classic.flac'],
     [true, 'test://host.srvr/something/file.ogg#'],
-];
+] as const;
 
 test.each(audioUrls)('Recognizes audio files in URLs', (isAudio, urlString) => {
     expect(isAudioURL(urlString)).toBe(isAudio);
@@ -28,7 +29,7 @@ const imageUrls = [
     [false, 'spdy://host.srvr/classic.wav'],
     [false, 'ftp://host.srvr/classic.flac'],
     [false, 'http://host.srvr/something/file.ogg#'],
-];
+] as const;
 
 test.each(imageUrls)('Recognizes image files in URLs', (isAudio, urlString) => {
     expect(isImageURL(urlString)).toBe(isAudio);

@@ -15,6 +15,7 @@
         "@types/react": "18.2.60"
     },
     "dependencies": {
+        "@fontsource-variable/exo-2": "^5.2.8",
         "bootstrap-sass": "^3.4.0",
         "classnames": "^2.2.6",
         "cookies-js": "^1.2.3",
@@ -34,12 +35,14 @@
         "react-router-dom": "^5.0.1",
         "react-sortable-hoc": "^0.8.4",
         "react-toastify": "^5.5.0",
-        "react-transition-group": "^2.6.0",
+        "react-transition-group": "^4.4.5",
         "whatwg-fetch": "^3.0.0"
     },
     "devDependencies": {
         "@babel/core": "^7.2.2",
         "@babel/plugin-proposal-decorators": "^7.24.0",
+        "@testing-library/dom": "^10.4.1",
+        "@testing-library/react": "^16.3.2",
         "@types/classnames": "^2.2.7",
         "@types/history": "^4.7.2",
         "@types/lodash": "^4.14.136",
@@ -52,7 +55,8 @@
         "@types/react-router-dom": "^5.3.3",
         "@types/react-transition-group": "^2.0.16",
         "@vitejs/plugin-react": "^4.2.1",
-        "prettier": "^1.16.4",
+        "jsdom": "^28.0.0",
+        "prettier": "^3.8.1",
         "react-router-test-context": "^0.1.0",
         "rimraf": "^4.0",
         "sass": "^1.71.1",

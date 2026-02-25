@@ -51,7 +51,7 @@ export default class FormGroup<T> extends React.Component<
 > {
     inputRef: HTMLInputElement | null = null;
 
-    componentWillMount() {
+    componentDidMount() {
         // sanity checks
         const { name, formStore } = this.props;
 
