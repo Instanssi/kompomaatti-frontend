@@ -3,8 +3,8 @@ import moment from 'moment';
 // FIXME this is easily half the app's build size
 import 'moment-timezone';
 
-import 'moment/locale/en-gb';
-import 'moment/locale/fi';
+import 'moment/dist/locale/fi';
+import 'moment/dist/locale/en-gb';
 
 import { observer } from 'mobx-react';
 
