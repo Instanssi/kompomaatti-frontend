@@ -47,17 +47,15 @@ export default class EntryInfo extends React.Component<{
                     <h3>{entry.name}</h3>
                     <p>by {entry.creator}</p>
                 </div>
-                {/* TOOD: Need to sanitize these somehow first; some links are broken
-                    and lead to download links for SWF files instead.
-                <div className="entry-video">
+                {!!entry.youtube_url && <div className="entry-video">
                     <h4><L text="entry.video" /></h4>
-                    {entry.youtube_url && <p>
+                    <p>
                         <a target="_blank" href={entry.youtube_url}>
                             <span className="fa fa-fw fa-youtube" />&ensp;
                             <L text="entry.youtubeLink" />
                         </a>
-                    </p>}
-                    </div>*/}
+                    </p>
+                </div>}
                 {isAudioEntry && entry.entryfile_url && (
                     <div className="entry-audio">
                         <h4><L text="entry.audio" /></h4>
