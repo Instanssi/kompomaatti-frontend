@@ -19,6 +19,7 @@
         "submit": "Lähetä"
     },
     "competition": {
+        "competition": "Kilpailu",
         "end": "Kilpailu päättyy",
         "participate": "Osallistu kilpailuun",
         "participationClosed": "Ilmoittautuminen on päättynyt.",

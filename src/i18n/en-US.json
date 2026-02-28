@@ -19,6 +19,7 @@
         "submit": "Submit"
     },
     "competition": {
+        "competition": "Competition",
         "end": "Competition end",
         "participate": "Sign up",
         "participationClosed": "Signups are closed.",
