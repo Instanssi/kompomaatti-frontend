@@ -1,4 +1,11 @@
-import { IEvent, ICompoEntry, ICompo } from 'src/api/interfaces';
+import type { IEvent, ICompoEntry, ICompo, IUser, ICompetition } from 'src/api/interfaces';
+
+export const mockUser: IUser = {
+    id: 1234567,
+    first_name: 'test',
+    last_name: 'user',
+    email: 'test.user@example.com'
+};
 
 export const mockEvent: IEvent = {
     id: 1,
@@ -47,4 +54,19 @@ export const mockCompo: ICompo = {
     is_votable: true,
     is_imagefile_allowed: true,
     is_imagefile_required: true,
+};
+
+export const mockCompetition: ICompetition = {
+    id: 23452345,
+    event: mockEvent.id,
+    name: 'Bread Compo',
+    description: 'Bread.',
+    participation_end: '2026-02-27T20:00:00.000Z',
+    start: '2026-02-27T19:00:00.000Z',
+    end: '2026-02-27T21:00:00.000Z',
+    /** Unit (plural) for scoring */
+    score_type: 'crumbs',
+    score_sort: 1,
+    /** Are the results public yet? */
+    show_results: false,
 };

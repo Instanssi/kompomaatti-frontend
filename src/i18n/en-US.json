@@ -19,6 +19,7 @@
         "submit": "Submit"
     },
     "competition": {
+        "competition": "Competition",
         "end": "Competition end",
         "participate": "Sign up",
         "participationClosed": "Signups are closed.",
@@ -165,7 +166,7 @@
         "replace": "Replace"
     },
     "footer": {
-        "copyright": "(c) 2019-2020",
+        "copyright": "(c) 2019-2026",
         "toTop": "Back to top"
     },
     "list": {
@@ -220,7 +221,7 @@
     },
     "voteCode": {
         "hasCodeForEvent": "You have a valid vote code for this event.",
-        "help": "To vote in Kompomaatti, your account must have a vote code for the event. If you bought a ticket online, you can use the ticket's code for this.",
+        "help": "To vote in Kompomaatti, your account must have a vote code for the event. If you bought a ticket online, you can use the ticket's code for this. You do not need a code to post entries.",
         "missing": "No vote code",
         "noTicketCode": "I don't have a ticket code",
         "requestPending": "Vote code request pending",

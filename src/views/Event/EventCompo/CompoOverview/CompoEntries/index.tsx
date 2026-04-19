@@ -21,7 +21,7 @@ export class CompoEntries extends React.Component<RouteComponentProps<any> & {
 
     disposers = [] as any[];
 
-    componentWillMount() {
+    componentDidMount() {
         this.disposers.push(autorun(() => {
             this.entries.refresh();
         }));

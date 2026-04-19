@@ -7,13 +7,12 @@ import moment from 'moment';
 
 import config from 'src/config';
 import i18n from '../i18n';
-import InstanssiREST from '../api';
+import { api } from '../api';
 import { LazyStore } from 'src/stores';
 import EventInfo from './EventInfo';
 import { toast } from 'react-toastify';
 import { L } from 'src/common';
 
-const api = new InstanssiREST(config.API_URL);
 
 export interface INotificationMessage {
     id: number;

@@ -1,11 +1,16 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 import FrontPageView from './';
+import { testRender } from 'src/tests';
+import globalState from 'src/state';
 
 
 describe('Front page', () => {
-    it('renders', () => {
-        const wrapper = shallow(<FrontPageView />);
-        expect(wrapper.is('.frontpage-view')).toBe(true);
+    beforeEach(() => {
+    });
+
+    it('renders', async () => {
+        const wrapper = testRender(<FrontPageView />);
+        await expect(wrapper.findByText('Kompomaatti')).resolves.toBeTruthy();
     });
 });

@@ -1,27 +1,31 @@
 import React from 'react';
-import { shallow, ShallowWrapper } from 'enzyme';
+import { it, vi, describe, beforeEach, expect } from 'vitest';
 
 import globalState from 'src/state';
 
 import { EventView } from './';
+import { RenderResult } from '@testing-library/react';
+import { testRender } from 'src/tests';
 // import EventInfo from 'src/state/EventInfo';
 
-jest.mock('src/state', () => {
-    const { mockEvent } = require('src/tests/mocks');
-    const einfo = require('src/state/EventInfo').default;
+vi.mock('src/state', async () => {
+    const { mockEvent } = await import ('src/tests');
+    const einfo = (await import('src/state/EventInfo')).default;
     return {
-        events: {
-            value: [
-                { eventId: mockEvent.id + 1 } as any,
-                new einfo(null as any, mockEvent),
-                { eventId: mockEvent.id + 2 } as any,
-            ],
-        },
+        default: {
+            events: {
+                value: [
+                    { eventId: mockEvent.id + 1 } as any,
+                    new einfo(null as any, mockEvent),
+                    { eventId: mockEvent.id + 2 } as any,
+                ],
+            },
+        }
     };
 });
 
 describe(EventView.name, () => {
-    let wrapper: ShallowWrapper;
+    let wrapper: RenderResult;
     // let instance;
     let mockProps;
 
@@ -38,11 +42,11 @@ describe(EventView.name, () => {
             }
         };
 
-        wrapper = shallow(<EventView {...mockProps} />);
+        wrapper = testRender(<EventView {...mockProps} />);
         // instance = wrapper.instance();
     });
 
     it('renders', () => {
-        expect(wrapper.is('.event-view')).toBe(true);
+        expect(wrapper.baseElement.querySelector('.event-view')).toBeDefined();
     });
 });

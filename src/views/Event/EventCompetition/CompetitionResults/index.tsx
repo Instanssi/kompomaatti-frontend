@@ -47,7 +47,7 @@ export default class CompetitionResults extends React.Component<{
                                 >
                                     {comp.rank}. {comp.participant_name}
                                     {comp.disqualified_reason
-                                        && ` ${comp.disqualified_reason}`}
+                                        && ` ${comp.disqualified_reason}`
                                     }
                                 </li>
                             ))}

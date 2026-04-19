@@ -1,5 +1,4 @@
-const cp = require('child_process');
-
+import cp from 'node:child_process';
 
 function getBuildId() {
     const gitClean = checkGitClean();
@@ -39,4 +38,4 @@ function checkGitHash() {
 }
 
 
-module.exports = getBuildId;
+export default getBuildId;

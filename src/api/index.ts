@@ -13,6 +13,7 @@ import {
     IUserVote,
 } from 'src/api/interfaces';
 
+import config from 'src/config';
 
 /**
  * The Instanssi REST service, abstracted for convenience (and not fetch()'ing from components).
@@ -248,3 +249,5 @@ class UserVotesAPI extends BaseAPI<IUserVote> {
         return this.request('POST', this.url, null, request);
     }
 }
+
+export const api = new InstanssiREST(config.API_URL);
